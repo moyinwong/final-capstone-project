@@ -10,7 +10,7 @@ const knex = Knex(knexConfig["development"]);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// import { createIsLoggedIn } from "./guards";
+import { createIsLoggedIn } from "./guards";
 
 import { UserService } from "./services/UserService";
 import { UserController } from "./controllers/UserController";
@@ -18,18 +18,25 @@ import { UserController } from "./controllers/UserController";
 const userService = new UserService(knex);
 export const userController = new UserController(userService);
 
-// export const isLoggedIn = createIsLoggedIn(userService);
+//create guards
+export const isLoggedIn = createIsLoggedIn(userService);
 
 import { routes } from "./routes";
-const API_VERSION = "/api/";
+import { logger } from "./logger";
+const API_VERSION = "/api";
 
 app.use(API_VERSION, routes);
-// app.get(`${API_VERSION}/test`, isLoggedIn, (req, res) => {
-//     console.log(req.user);
-//     res.json({ message: "hello, world" });
-// });
 
+//dummy check if guards works
+app.get(`${API_VERSION}/test`, isLoggedIn, (req, res) => {
+  logger.info(req.user);
+
+  //if success, hello world, fail, permission denied
+  res.json({ message: "hello, world" });
+});
+
+//listen to port
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
-  console.log(`listening to Port: ${PORT}`);
+  logger.info(`listening to Port: ${PORT}`);
 });
