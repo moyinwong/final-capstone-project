@@ -3,7 +3,7 @@ import { ILessonState, initLessonState } from "./state";
 // import { IBoardActions } from "./actions";
 
 // Reducer is Function
-export const boardReducers = (
+export const lessonReducers = (
   state: ILessonState = initLessonState,
   action: any
 ): ILessonState => {

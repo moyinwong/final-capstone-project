@@ -1,7 +1,8 @@
 export interface ILessonState {
-  url: string | null;
+  url: string;
 }
 
 export const initLessonState: ILessonState = {
-  url: null,
+  //testing
+  url: "https://youtu.be/oZCM4u7d_6U",
 };

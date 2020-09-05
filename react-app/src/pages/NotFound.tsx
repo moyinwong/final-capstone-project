@@ -8,10 +8,9 @@ const NotFound = () => {
   //redirect to Home Page
   useEffect(() => {
     setTimeout(() => {
-      console.log("test");
       dispatch(push("/"));
     }, 3000);
-  }, []);
+  });
 
   return (
     <div>

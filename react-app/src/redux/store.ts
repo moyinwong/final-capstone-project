@@ -10,24 +10,25 @@ import { createBrowserHistory } from "history";
 // FRD007
 import thunk, { ThunkDispatch as OldThunkDispatch } from "redux-thunk";
 
-// import { IStudentState } from "./student/state";
-// import { studentReducers } from "./student/reducers";
+import { ILessonState } from "./lesson/state";
+import { ILessonActions } from "./lesson/actions";
+import { lessonReducers } from "./lesson/reducers";
 // import { IStudentActions } from "./student/actions";
 
 export const history = createBrowserHistory();
 
 // step 1: IRootState
 export interface IRootState {
-  // student: IStudentState;
+  lesson: ILessonState;
   router: RouterState;
 }
 
 // step 2: IRootAction
-export type IRootAction = /*IStudentActions*/ CallHistoryMethodAction;
+export type IRootAction = ILessonActions | CallHistoryMethodAction;
 
 // step 3: rootReducer
 const rootReducer = combineReducers<IRootState>({
-  // student: studentReducers,
+  lesson: lessonReducers,
   router: connectRouter(history),
 });
 
