@@ -8,6 +8,7 @@ export default function Home () {
     return (
         <View style={globalStyles.container}>
             <Text>Home Screen</Text>
+            <Text>Home Screen</Text>
         </View>
     )
 }
