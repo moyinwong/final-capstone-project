@@ -1,7 +1,7 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
 import { enableScreens } from 'react-native-screens';
 
+import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -15,11 +15,9 @@ import Tab2 from './screens/bottomTap/tab2';
 
 import Course from './screens/courseStack/course';
 import Lesson from './screens/courseStack/lesson';
+import Quiz from './screens/courseStack/quiz';
 
 import Login from './screens/login/login';
-
-// Before rendering any navigation stack
-enableScreens();
 
 const Drawer = createDrawerNavigator();
 const MaterialBottomTabs = createMaterialBottomTabNavigator();
@@ -46,10 +44,12 @@ function bottomTap() {
 }
 
 function courseStack() {
+
   return (
     <Stack.Navigator initialRouteName="Course">
       <Stack.Screen name="Course" component={Course} />
       <Stack.Screen name="Lesson" component={Lesson} />
+      <Stack.Screen name="Quiz" component={Quiz} />
     </Stack.Navigator>
   )
 }
@@ -58,13 +58,16 @@ function courseStack() {
 const isSignIn = true;
 
 export default function App() {
+  // Before rendering any navigation stack
+  enableScreens();
+
   return (
     isSignIn ? (
       <NavigationContainer>
         {leftDrawer()}
       </NavigationContainer>
     ) : (
-      <Login />
+        <Login />
       )
   );
 }

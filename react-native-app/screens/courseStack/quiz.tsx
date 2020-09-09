@@ -5,22 +5,18 @@ import { useNavigation } from '@react-navigation/native';
 // Styles
 import globalStyles from '../../styles/globalStyles';
 
-const Lesson = () => {
+const Quiz = () => {
     const navigation = useNavigation();
 
     return (
         <View style={globalStyles.container}>
-            <Text>Lesson Screen</Text>
+            <Text>Quiz Screen</Text>
             <Button
-                title="Go Back to Course"
+                title="Go Back to Lesson"
                 onPress={() => navigation.goBack()}
-            />
-            <Button
-                title="Go to Quiz"
-                onPress={() => navigation.navigate('Quiz')}
             />
         </View>
     )
 }
 
-export default Lesson;
+export default Quiz;
