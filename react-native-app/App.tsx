@@ -16,6 +16,8 @@ import Tab2 from './screens/bottomTap/tab2';
 import Course from './screens/courseStack/course';
 import Lesson from './screens/courseStack/lesson';
 
+import Login from './screens/login/login';
+
 // Before rendering any navigation stack
 enableScreens();
 
@@ -52,10 +54,17 @@ function courseStack() {
   )
 }
 
+// Dummy Variable
+const isSignIn = true;
+
 export default function App() {
   return (
-    <NavigationContainer>
-      {leftDrawer()}
-    </NavigationContainer>
+    isSignIn ? (
+      <NavigationContainer>
+        {leftDrawer()}
+      </NavigationContainer>
+    ) : (
+      <Login />
+      )
   );
 }

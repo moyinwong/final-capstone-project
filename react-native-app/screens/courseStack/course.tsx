@@ -4,10 +4,12 @@ import { View, Text } from 'react-native';
 // Styles
 import globalStyles from '../../styles/globalStyles';
 
-export default function Course () {
+const Course = () => {
     return (
         <View style={globalStyles.container}>
             <Text>Course Screen</Text>
         </View>
     )
 }
+
+export default Course;
