@@ -11,7 +11,7 @@ import globalStyles from '../../styles/globalStyles';
 // Dummy variable
 const showSignInScreen = true;
 
-const Login = () => {
+export default function Login() {
     return (
         <View style={globalStyles.container}>
             <Text>Login Screen</Text>
@@ -23,5 +23,3 @@ const Login = () => {
         </View>
     )
 }
-
-export default Login;

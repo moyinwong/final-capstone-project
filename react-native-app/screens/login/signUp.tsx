@@ -4,12 +4,10 @@ import { View, Text } from 'react-native';
 // Styles
 import globalStyles from '../../styles/globalStyles';
 
-const SignUp = () => {
+export default function SignUp() {
     return (
         <View>
             <Text>Sign Up Screen</Text>
         </View>
     )
 }
-
-export default SignUp;

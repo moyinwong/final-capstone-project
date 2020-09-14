@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 // Styles
 import globalStyles from '../../styles/globalStyles';
 
-const Course = () => {
+export default function Course() {
     const navigation = useNavigation();
 
     return (
@@ -18,5 +18,3 @@ const Course = () => {
         </View>
     )
 }
-
-export default Course;
