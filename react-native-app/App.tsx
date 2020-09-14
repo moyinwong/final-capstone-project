@@ -4,7 +4,7 @@ import { enableScreens } from 'react-native-screens';
 import { NavigationContainer } from '@react-navigation/native'
 
 // Routes
-import leftDrawer from './routes/leftDrawer';
+import LeftDrawer from './routes/leftDrawer';
 
 // Screens
 import Login from './screens/login/login';
@@ -19,7 +19,7 @@ export default function App() {
   return (
     isSignIn ? (
       <NavigationContainer>
-        {leftDrawer()}
+        {LeftDrawer()}
       </NavigationContainer>
     ) : (
         <Login />
