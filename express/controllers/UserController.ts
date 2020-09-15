@@ -9,14 +9,14 @@ export class UserController {
 
   login = async (req: Request, res: Response) => {
     try {
-      if (!req.body.username || !req.body.password) {
-        res.status(401).json({ msg: "Missing Username/Password" });
+      if (!req.body.email || !req.body.password) {
+        res.status(401).json({ msg: "Missing Email/Password" });
         return;
       }
-      const { username, password } = req.body;
-      const user = await this.userService.getUserByUsername(username);
+      const { email, password } = req.body;
+      const user = await this.userService.getUserByEmail(email);
       if (!user || !(await checkPassword(password, user.password))) {
-        res.status(401).json({ msg: "Wrong Username/Password" });
+        res.status(401).json({ msg: "Wrong Email/Password" });
         return;
       }
 

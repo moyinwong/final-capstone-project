@@ -26,6 +26,7 @@
     "winston": "^3.3.3"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "bs": "./build-server.sh"
   }
 }

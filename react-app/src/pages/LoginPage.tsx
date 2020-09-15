@@ -14,7 +14,7 @@ function LoginPage() {
     <div>
       <Form.Group controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
-        <Form.Control {...text("username")} required placeholder="Username" />
+        <Form.Control {...text("email")} required placeholder="Email" />
         <Form.Text className="text-muted"></Form.Text>
       </Form.Group>
 

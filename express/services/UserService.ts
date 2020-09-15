@@ -5,7 +5,7 @@ import { tables } from "../tables";
 export class UserService {
   constructor(private knex: Knex) {}
 
-  getUserByUsername = async (username: string) => {
+  getUserByEmail = async (username: string) => {
     const user = await this.knex<IUser>(tables.USERS)
       .where("username", username)
       .first();
