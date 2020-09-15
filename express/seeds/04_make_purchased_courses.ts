@@ -17,5 +17,21 @@ export async function seed(knex: Knex): Promise<void> {
       rated_score: null,
       comment: null,
     },
+    {
+      user_id: 2,
+      course_id: 1,
+      payment_method: "credit card",
+      paid_amount: 99,
+      rated_score: null,
+      comment: null,
+    },
+    {
+      user_id: 2,
+      course_id: 2,
+      payment_method: "credit card",
+      paid_amount: 199,
+      rated_score: null,
+      comment: null,
+    },
   ]);
 }

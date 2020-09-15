@@ -2,18 +2,22 @@ export interface IUser {
   id: number;
   email: string;
   password: string;
+  name: string;
   image: string;
-  isTutor: boolean;
+  is_tutor: boolean;
   title: string;
   introduction: string;
   linkedin: string;
-  googleId: string;
-  facebookId: string;
+  google_id: string;
+  facebook_id: string;
 }
 
-// export interface {
-
-// }
+export interface ICategory {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+}
 
 //in order to add "user" in Request
 declare global {
@@ -23,12 +27,12 @@ declare global {
         id: number;
         email: string;
         image: string;
-        isTutor: boolean;
+        is_tutor: boolean;
         title: string;
         introduction: string;
         linkedin: string;
-        googleId: string;
-        facebookId: string;
+        google_id: string;
+        facebook_id: string;
       };
     }
   }

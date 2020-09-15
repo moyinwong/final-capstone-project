@@ -44,5 +44,40 @@ export async function seed(knex: Knex): Promise<void> {
       video_url: "https://youtu.be/8xSFY3LK77k",
       course_id: 1,
     },
+    {
+      name:
+        "DSE 英文寫作 Paper 2 五大致命傷！ (2021 DSE 必看 Mini Course 課程🔥)",
+      description: `好多同學想係英文 Paper 2 Writing 有顯著既進步 (上一至兩個Grade)，平時只係注重去 (無目標、無明確方向咁) 操練作文、背句式、讀生字、學又難又複雜既 Grammar (但其實係 Paper 2未必用到。就算用到，自己都好可能會用錯，因為唔夠熟)。可惜地，同學仔往往作左好幾篇文都無進步！點解？因為佢地無一個好有系統既計劃、可行既升級策略！`,
+      is_trial: true,
+      video_url: "https://youtu.be/PcawIctezy8",
+      course_id: 2,
+    },
+    {
+      name:
+        "DSE 英文 Paper 2 寫作: 必讀5**滿分內容 CAR 口訣框架 (輕易拎7/7分內容!)",
+      description: `今次同大家分享左 Paper 2 寫作 CAR 既內容口訣，幫大家 KO 青少年、上癮既題目，攞滿分內容。其他既口訣可以係【三週昇華寫作】睇到，有興趣可以留意以下既資料。`,
+      is_trial: false,
+      video_url: "https://youtu.be/j9v-daDI3M4",
+      course_id: 2,
+    },
+    {
+      name: "DSE 英文寫作 Paper 2 文法Grammar補底 Mini Course (5**同學都錯)",
+      description: `今次同大家分享左英文 Grammar 文法補底 Mini Course，教左4個創意招去幫大家記：
+      1) passive voice 被打論
+      2) ED VS ING 高潮論
+      3) Number + increasing 數文火箭
+      4) everyday 我每日既刀
+      希望幫到你地啦！有咩都可以留言同我講！`,
+      is_trial: false,
+      video_url: "https://youtu.be/XzYpSqQgAkw",
+      course_id: 2,
+    },
+    {
+      name: "DSE 英文: 四招永別港式英文 (輕鬆寫出一手流利英文)",
+      description: `今次同大家分享 4 招去輕鬆改善港式英文！尤其你作文、Oral 會特別適用！希望會幫到大家！`,
+      is_trial: false,
+      video_url: "https://youtu.be/2GqLEE6AJ7I",
+      course_id: 2,
+    },
   ]);
 }

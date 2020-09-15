@@ -1,5 +1,6 @@
 import express from "express";
 import { userRoutes } from "./routes/userRoutes";
+import { courseRoutes } from "./routes/courseRoutes";
 
 export const routes = express.Router();
 
@@ -9,3 +10,4 @@ export const routes = express.Router();
 // });
 
 routes.use("/user", userRoutes);
+routes.use("/course", courseRoutes);
