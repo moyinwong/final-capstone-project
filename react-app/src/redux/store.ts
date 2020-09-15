@@ -12,6 +12,9 @@ import thunk, { ThunkDispatch as OldThunkDispatch } from "redux-thunk";
 import { ILessonState } from "./lesson/state";
 import { ILessonActions } from "./lesson/actions";
 import { lessonReducers } from "./lesson/reducers";
+import { IAuthState } from "./auth/state";
+import { IAuthAction } from "./auth/actions";
+import { authReducer } from "./auth/reducer";
 // import { IStudentActions } from "./student/actions";
 
 export const history = createBrowserHistory();
@@ -19,15 +22,17 @@ export const history = createBrowserHistory();
 // step 1: IRootState
 export interface IRootState {
   lesson: ILessonState;
+  auth: IAuthState
   router: RouterState;
 }
 
 // step 2: IRootAction
-export type IRootAction = ILessonActions | CallHistoryMethodAction;
+export type IRootAction = ILessonActions | IAuthAction | CallHistoryMethodAction;
 
 // step 3: rootReducer
 const rootReducer = combineReducers<IRootState>({
   lesson: lessonReducers,
+  auth: authReducer,
   router: connectRouter(history),
 });
 

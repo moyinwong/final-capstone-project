@@ -1,13 +1,19 @@
 import React from "react";
 import { useFormState } from "react-use-form-state";
 import { Form, Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../redux/auth/thunk";
+import { IRootState } from "../redux/store";
+import { Alert } from "react-bootstrap";
 
 function LoginPage() {
   const [formState, { text, password }] = useFormState();
-
+  const dispatch = useDispatch();
+  const errMessage = useSelector((state: IRootState) => state.auth.message);
+  
   //handle submit
   function submitHandler(event: React.MouseEvent<HTMLElement, MouseEvent>) {
-    console.log(formState.values);
+    dispatch(login(formState.values.email, formState.values.password))
   }
 
   return (
@@ -27,7 +33,7 @@ function LoginPage() {
           placeholder="Password"
         />
       </Form.Group>
-
+      {errMessage ? <Alert variant='danger'>{errMessage}</Alert> : ''}
       <Button variant="primary" type="submit" onClick={submitHandler}>
         Submit
       </Button>

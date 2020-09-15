@@ -36,4 +36,19 @@ export class UserController {
       res.status(500).json({ message: "internal server error" });
     }
   };
+
+  getInfo = async (req: Request, res: Response) => {
+    try {
+      const user = req.user;
+      res.status(200).json({
+        user: {
+          email: user?.email
+        }
+      })
+    } catch(e) {
+      console.log(e)
+      res.status(401).json({message: "unauthorized"})
+    }
+  }
+
 }
