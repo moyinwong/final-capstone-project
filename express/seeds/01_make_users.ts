@@ -16,6 +16,7 @@ export async function seed(knex: Knex): Promise<void> {
     {
       email: "apple@abc.com",
       password: hashedPassword,
+      name: "Apple",
       image: "test-1.png",
       is_tutor: false,
       title: "student",
@@ -24,6 +25,7 @@ export async function seed(knex: Knex): Promise<void> {
     {
       email: "banana@abc.com",
       password: hashedPassword,
+      name: "Banana",
       image: "test-1.png",
       is_tutor: false,
       title: "tecky alumni",
@@ -32,9 +34,19 @@ export async function seed(knex: Knex): Promise<void> {
     {
       email: "cat@abc.com",
       password: hashedPassword,
+      name: "teacher01",
       image: "test-1.png",
       is_tutor: true,
-      title: "DSE 補習教師",
+      title: "DSE 補習教師1",
+      introduction: "hi my name is tutor, i am a good teacher",
+    },
+    {
+      email: "dog@abc.com",
+      password: hashedPassword,
+      name: "teacher02",
+      image: "test-1.png",
+      is_tutor: true,
+      title: "DSE 補習教師2",
       introduction: "hi my name is tutor, i am a good teacher",
     },
   ]);

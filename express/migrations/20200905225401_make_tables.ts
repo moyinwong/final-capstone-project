@@ -17,6 +17,7 @@ export async function up(knex: Knex): Promise<void> {
     table.increments();
     table.string("email").notNullable().unique();
     table.string("password").notNullable();
+    table.string("name").notNullable();
     table.string("image");
     table.boolean("is_tutor");
     table.string("title");

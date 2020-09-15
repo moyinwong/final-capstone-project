@@ -36,9 +36,14 @@ import { createIsLoggedIn } from "./guards";
 //set up services & controllers
 import { UserService } from "./services/UserService";
 import { UserController } from "./controllers/UserController";
+import { CourseService } from "./services/CourseService";
+import { CourseController } from "./controllers/CourseController";
 
 const userService = new UserService(knex);
 export const userController = new UserController(userService);
+
+const courseService = new CourseService(knex);
+export const courseController = new CourseController(courseService);
 
 //create guards
 export const isLoggedIn = createIsLoggedIn(userService);
