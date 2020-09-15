@@ -31,6 +31,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "bs": "./build-server.sh"
+    "bs": "./build-server.sh",
+    "rb": "knex migrate:rollback"
   }
 }

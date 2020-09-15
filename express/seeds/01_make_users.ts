@@ -29,5 +29,13 @@ export async function seed(knex: Knex): Promise<void> {
       title: "tecky alumni",
       introduction: "hi my name is banana, i am a good person",
     },
+    {
+      email: "cat@abc.com",
+      password: hashedPassword,
+      image: "test-1.png",
+      is_tutor: true,
+      title: "DSE 補習教師",
+      introduction: "hi my name is tutor, i am a good teacher",
+    },
   ]);
 }

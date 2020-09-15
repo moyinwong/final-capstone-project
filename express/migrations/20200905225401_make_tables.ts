@@ -1,14 +1,16 @@
 import * as Knex from "knex";
+import { tables } from "../tables";
 
-const usersTable = "users";
-const categoriesTable = "categories";
-const coursesTable = "courses";
-const purchasedCoursesTable = "purchased_courses_table";
-const lessonsTable = "lessons";
-const filesTable = "files";
-const questionsTable = "questions";
-const submissionsTable = "submissions";
-const savedAnswersTable = "saved_answers";
+const usersTable = tables.USERS;
+const categoriesTable = tables.CATEGORIES;
+const coursesTable = tables.COURSES;
+const purchasedCoursesTable = tables.PURCHASED_COURSES;
+const lessonsTable = tables.LESSONS;
+const filesTable = tables.FILES;
+const questionsTable = tables.QUESTIONS;
+const mcAnswersTable = tables.MC_ANSWERS;
+const submissionsTable = tables.SUBMISSIONS;
+const savedAnswersTable = tables.SAVED_ANSWERS;
 
 export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable(usersTable, (table) => {
@@ -63,6 +65,7 @@ export async function up(knex: Knex): Promise<void> {
     table.increments();
     table.string("name").notNullable().unique();
     table.text("description");
+    table.boolean("is_trial");
     table.string("video_url");
     table
       .integer("course_id")
@@ -85,14 +88,26 @@ export async function up(knex: Knex): Promise<void> {
 
   await knex.schema.createTable(questionsTable, (table) => {
     table.increments();
-    table.string("name").notNullable().unique();
-    table.text("body");
+    table.text("question");
     table.text("answer");
+    table.boolean("is_MC").notNullable();
     table
       .integer("lesson_id")
       .references("id")
       .inTable("lessons")
       .notNullable();
+    table.timestamps(false, true);
+  });
+
+  await knex.schema.createTable(mcAnswersTable, (table) => {
+    table.increments();
+    table
+      .integer("question_id")
+      .references("id")
+      .inTable("questions")
+      .notNullable();
+    table.string("answer_body");
+    table.boolean("is_correct_answer");
     table.timestamps(false, true);
   });
 
@@ -120,7 +135,8 @@ export async function up(knex: Knex): Promise<void> {
       .inTable("submissions")
       .notNullable();
     table.text("submitted_answer");
-    table.boolean("is_correct");
+    table.text("submitted_mc_answer");
+    table.boolean("is_done");
     table.timestamps(false, true);
   });
 }
@@ -128,6 +144,7 @@ export async function up(knex: Knex): Promise<void> {
 export async function down(knex: Knex): Promise<void> {
   await knex.schema.dropTable(savedAnswersTable);
   await knex.schema.dropTable(submissionsTable);
+  await knex.schema.dropTable(mcAnswersTable);
   await knex.schema.dropTable(questionsTable);
   await knex.schema.dropTable(filesTable);
   await knex.schema.dropTable(lessonsTable);
