@@ -15,6 +15,7 @@ const HomePage = () => {
       <button onClick={() => dispatch(push("/login"))}>Login</button>
       <h1>This is HomePage</h1>
       <Responsive></Responsive>
+      {/* <img src={`http://localhost:8080${"/img/test-1.png"}`} /> */}
     </div>
   );
 };

@@ -5,8 +5,12 @@ const usersTable = "users";
 export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable(usersTable, (table) => {
     table.increments();
-    table.string("username").notNullable().unique();
+    table.string("email").notNullable().unique();
     table.string("password").notNullable();
+    table.string("image");
+    table.boolean("is_tutor");
+    table.string("title");
+    table.text("introduction");
     table.timestamps(false, true);
   });
 }

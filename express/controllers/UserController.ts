@@ -3,11 +3,14 @@ import jwtSimple from "jwt-simple";
 import jwt from "../jwt";
 import { checkPassword } from "../hash";
 import { Request, Response } from "express";
+import { logger } from "../logger";
 
 export class UserController {
   constructor(private userService: UserService) {}
 
   login = async (req: Request, res: Response) => {
+    logger.debug(req.body.email);
+    logger.debug(req.body.password);
     try {
       if (!req.body.email || !req.body.password) {
         res.status(401).json({ msg: "Missing Email/Password" });

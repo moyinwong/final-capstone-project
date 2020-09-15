@@ -7,7 +7,6 @@ import {
 } from "connected-react-router";
 import { createBrowserHistory } from "history";
 
-// FRD007
 import thunk, { ThunkDispatch as OldThunkDispatch } from "redux-thunk";
 
 import { ILessonState } from "./lesson/state";

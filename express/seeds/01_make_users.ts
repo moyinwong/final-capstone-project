@@ -13,7 +13,21 @@ export async function seed(knex: Knex): Promise<void> {
 
   // Inserts seed entries
   await knex(usersTable).insert([
-    { id: 1, username: "Apple", password: hashedPassword },
-    { id: 2, username: "Banana", password: hashedPassword },
+    {
+      email: "apple@abc.com",
+      password: hashedPassword,
+      image: "test-1.png",
+      is_tutor: false,
+      title: "student",
+      introduction: "hi my name is apple, i am a From 4 student",
+    },
+    {
+      email: "banana@abc.com",
+      password: hashedPassword,
+      image: "test-1.png",
+      is_tutor: false,
+      title: "tecky alumni",
+      introduction: "hi my name is banana, i am a good person",
+    },
   ]);
 }
