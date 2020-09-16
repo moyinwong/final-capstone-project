@@ -82,3 +82,24 @@ export const loginGoogleThunk = (accessToken: string) => {
     }
   };
 };
+
+export function loginFacebook(accessToken: string) {
+  return async (dispatch:ThunkDispatch) => {
+    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/login/facebook`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': "application/json"
+      },
+      body: JSON.stringify({ accessToken })
+    });
+    const result = await res.json();
+    
+    if (res.status === 200) {
+      localStorage.setItem('token', result.token);
+      dispatch(loginSuccess(result.token))
+      dispatch(push('/'))
+    } else {
+      dispatch(loginFail(result.message))
+    }
+  }
+}

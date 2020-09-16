@@ -33,7 +33,7 @@ export class UserController {
         token: token,
       });
     } catch (e) {
-      console.log(e.message);
+      logger.error(e.message);
       res.status(500).json({ message: "internal server error" });
     }
   };
@@ -47,7 +47,7 @@ export class UserController {
         },
       });
     } catch (e) {
-      console.log(e);
+      logger.error(e.message);
       res.status(401).json({ message: "unauthorized" });
     }
   };
@@ -106,9 +106,58 @@ export class UserController {
       res.json({
         token: token,
       });
-    } catch (err) {
-      console.log(err.message);
+    } catch (e) {
+      logger.error(e.message);
       res.status(500).json({ message: "internal server error" });
     }
   };
+
+  loginFacebook = async (req: Request, res: Response) => {
+    try {
+      if (!req.body.accessToken) {
+        res.status(401).json({message: "Wrong Access Token!" });
+        return;
+      }
+
+      const { accessToken } = req.body;
+      const fetchResponse = await fetch(`https://graph.facebook.com/me?access_token=${accessToken}&fields=id,name,email,picture`);
+      const result = await fetchResponse.json();
+      if (result.error) {
+        res.status(401).json({message: "Wrong Access Token!" });
+        return;
+      }
+
+      //debug
+      logger.debug(result);
+
+      let user = await this.userService.getUserByFacebookId(result.id)
+
+      //debug
+      logger.debug(user);
+
+      if (!user) {
+        const password = await hashPassword("noPasswordProvided");
+        user = (await this.userService.createUserWithFacebook(
+          result.email,
+          password,
+          result.id,
+          result.name,
+          result.picture
+        ))[0];
+      }
+
+      const payload = {
+        id: user?.id,
+        email: user?.email
+      }
+
+      const token = jwtSimple.encode(payload, jwt.jwtSecret);
+      res.json({
+        token: token
+      })
+    } catch(e) {
+      logger.error(e.message)
+      res.status(500).json({ message: "Internal server error"})
+    }
+  }
 }

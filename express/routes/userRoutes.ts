@@ -6,3 +6,4 @@ export const userRoutes = express.Router();
 userRoutes.post("/login", userController.login);
 userRoutes.get("/info", isLoggedIn, userController.getInfo);
 userRoutes.post("/login/google", userController.loginGoogle);
+userRoutes.post("/login/facebook", userController.loginFacebook)

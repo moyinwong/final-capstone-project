@@ -49,4 +49,34 @@ export class UserService {
     console.log(user);
     return user;
   };
+
+  createUserWithFacebook = async (
+    email: string,
+    password: string,
+    facebook_id: string,
+    name: string,
+    image: string
+  ) => {
+    try {
+      return await this.knex(tables.USERS)
+      .insert({
+        email,
+        password,
+        facebook_id,
+        name,
+        image
+      })
+      .returning(['id', 'email'])
+    } catch(err) {
+      throw err;
+    }
+  };
+
+  getUserByFacebookId = async (facebookId: string) => {
+    const user: IUser = await this.knex(tables.USERS)
+    .select("*")
+    .where(`facebook_id`, facebookId)
+    .first();
+    return user;
+  }
 }
