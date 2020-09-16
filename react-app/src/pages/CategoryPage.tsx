@@ -1,11 +1,14 @@
+import { push } from "connected-react-router";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Accordion, Card, Dropdown } from "react-bootstrap";
 import { DropdownButton } from "react-bootstrap";
 import { Button } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Redirect, useParams } from "react-router-dom";
 import "./CategoryPage.scss";
+import NotFound from "./NotFound";
 
 interface ICourse {
   category_id: number;
@@ -34,7 +37,14 @@ const CategoryPage: React.FC = () => {
     const fetchRes = await fetch(
       `${process.env.REACT_APP_BACKEND_URL}/category/${categoryName}`
     );
+
+    //if no such category
+    if (fetchRes.status === 500) {
+      return <NotFound />;
+    }
+
     const result = await fetchRes.json();
+
     setCourses(result.courses);
   };
 
