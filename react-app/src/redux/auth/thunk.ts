@@ -1,4 +1,4 @@
-import { ThunkDispatch } from "../store";
+import { ThunkDispatch, IRootState } from "../store";
 import { loginSuccess, loginFail, getUser, loginProcessing } from "./actions";
 import { push } from "connected-react-router";
 import { Dispatch } from "redux";
@@ -29,7 +29,7 @@ export function login(email: string, password: string) {
 }
 
 export function restoreLogin() {
-  return async (dispatch: ThunkDispatch) => {
+  return async (dispatch: ThunkDispatch, getState:() => IRootState) => {
     const token = localStorage.getItem("token");
 
     if (token) {
@@ -46,7 +46,8 @@ export function restoreLogin() {
       if (res.status === 200) {
         dispatch(loginSuccess(token));
         dispatch(getUser(json.user.email));
-        dispatch(push("/"));
+        // dispatch(push("/"));
+        dispatch(push(getState().router.location.pathname));
       } else {
         dispatch(loginFail(""));
       }
