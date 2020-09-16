@@ -1,32 +1,64 @@
-
-
-export function loginSuccess(token: string) {
-    return {
-        type: '@@AUTH/LOGIN_SUCCESS' as '@@AUTH/LOGIN_SUCCESS',
-        token: token
-    }
+interface ILoginProcessing {
+  type: "@@AUTH/LOGIN_PROCESSING";
 }
 
-export function getUser(userEmail: string) {
-    return {
-        type: '@@AUTH/GET_USER' as '@@AUTH/GET_USER',
-        userEmail
-    }
+interface ILoginSuccess {
+  type: "@@AUTH/LOGIN_SUCCESS";
+  token: string;
 }
 
-export function logout() {
-    return {
-        type: '@@AUTH/LOGOUT' as '@@AUTH/LOGOUT'
-    }
+interface ILoginFail {
+  type: "@@AUTH/LOGIN_FAIL";
+  message: string;
 }
 
-export function loginFail(message: string) {
-    return {
-        type: '@@AUTH/LOGIN_FAIL' as '@@AUTH/LOGIN_FAIL',
-        message
-    }
+interface IGetUser {
+  type: "@@AUTH/GET_USER";
+  userEmail: string;
 }
 
-type AuthAction = typeof loginSuccess | typeof getUser | typeof logout | typeof loginFail
+interface ILogout {
+  type: "@@AUTH/LOGOUT";
+}
 
-export type IAuthAction = ReturnType<AuthAction>
+export function loginSuccess(token: string): ILoginSuccess {
+  return {
+    type: "@@AUTH/LOGIN_SUCCESS" as "@@AUTH/LOGIN_SUCCESS",
+    token: token,
+  };
+}
+
+export function getUser(userEmail: string): IGetUser {
+  return {
+    type: "@@AUTH/GET_USER" as "@@AUTH/GET_USER",
+    userEmail,
+  };
+}
+
+export function logout(): ILogout {
+  return {
+    type: "@@AUTH/LOGOUT" as "@@AUTH/LOGOUT",
+  };
+}
+
+export function loginFail(message: string): ILoginFail {
+  return {
+    type: "@@AUTH/LOGIN_FAIL" as "@@AUTH/LOGIN_FAIL",
+    message,
+  };
+}
+
+export const loginProcessing = (): ILoginProcessing => {
+  return {
+    type: "@@AUTH/LOGIN_PROCESSING",
+  };
+};
+
+type AuthAction =
+  | typeof loginSuccess
+  | typeof getUser
+  | typeof logout
+  | typeof loginFail
+  | typeof loginProcessing;
+
+export type IAuthAction = ReturnType<AuthAction>;

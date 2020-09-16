@@ -79,5 +79,37 @@ export async function seed(knex: Knex): Promise<void> {
       video_url: "https://youtu.be/2GqLEE6AJ7I",
       course_id: 2,
     },
+    {
+      name: "荀子《勸學》",
+      description: `細路，記得，只吃罐頭會營養不良的。
+
+      這些影片只是一張粗略的地圖，讓你在溫習時容易找到所在的方位，容易把所學分類整理。所以拿着地圖，就拜託你們真的抬抬腿，踏踏實實走進書本筆記和試題庫。
+      
+      加油吧。`,
+      is_trial: false,
+      video_url: "https://youtu.be/k_azP6gm884",
+      course_id: 3,
+    },
+    {
+      name: "〈莊子．逍遙遊〉（節錄）",
+      description: `一個腦圖丶一段簡述，絶不能涵蓋文章的深刻思想。
+      所以影片只是最基本的整理，請務必作更深入的認識和思考，課堂學習和日常積累決不可少。
+      時間有限，製作倉促，如發現錯漏，請幫忙指正，以免影響同學理解。
+      望大家學而不厭，盡力而為，能獲得與付出相稱的回報。`,
+      is_trial: false,
+      video_url: "https://youtu.be/YAXe5XhaKek",
+      course_id: 3,
+    },
+    {
+      name: "孟子《魚我所欲也》",
+      description: `細路，記得，只吃罐頭會營養不良的。
+
+      這些影片只是一張粗略的地圖，讓你在溫習時容易找到所在的方位，容易把所學分類整理。所以拿着地圖，就拜託你們真的抬抬腿，踏踏實實走進書本筆記和試題庫。
+      
+      加油吧。`,
+      is_trial: false,
+      video_url: "https://youtu.be/6-DvzmgM-Vc",
+      course_id: 3,
+    },
   ]);
 }

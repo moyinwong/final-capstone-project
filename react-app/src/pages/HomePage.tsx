@@ -15,10 +15,10 @@ const HomePage = () => {
   return (
     <div>
       {/* <NavBar></NavBar> */}
-      <BurgerMenu></BurgerMenu>
+      <BurgerMenu />
       {isAuthenticated ? <div> Welcome back {userEmail}</div> : <button onClick={() => dispatch(push("/login"))}>Login</button>}
       <h1>This is HomePage</h1>
-      <Responsive></Responsive>
+      <Responsive />
       {/* <img src={`http://localhost:8080${"/img/test-1.png"}`} /> */}
     </div>
   );

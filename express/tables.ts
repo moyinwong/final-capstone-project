@@ -2,6 +2,7 @@
 export const tables = Object.freeze({
   USERS: "users",
   CATEGORIES: "categories",
+  SUBCATEGORIES: "subcategories",
   COURSES: "courses",
   PURCHASED_COURSES: "purchased_courses",
   LESSONS: "lessons",

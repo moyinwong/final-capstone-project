@@ -3,6 +3,7 @@ import { tables } from "../tables";
 
 const usersTable = tables.USERS;
 const categoriesTable = tables.CATEGORIES;
+const subCategoriesTable = tables.SUBCATEGORIES;
 const coursesTable = tables.COURSES;
 const purchasedCoursesTable = tables.PURCHASED_COURSES;
 const lessonsTable = tables.LESSONS;
@@ -19,6 +20,9 @@ export async function up(knex: Knex): Promise<void> {
     table.string("password").notNullable();
     table.string("name").notNullable();
     table.string("image");
+    table.string("linkedin");
+    table.string("google_id");
+    table.string("facebook_id");
     table.boolean("is_tutor");
     table.string("title");
     table.text("introduction");
@@ -31,15 +35,28 @@ export async function up(knex: Knex): Promise<void> {
     table.timestamps(false, true);
   });
 
-  await knex.schema.createTable(coursesTable, (table) => {
+  await knex.schema.createTable(subCategoriesTable, (table) => {
     table.increments();
     table.string("name").notNullable().unique();
-    table.decimal("price").notNullable();
     table
       .integer("category_id")
       .references("id")
       .inTable("categories")
       .notNullable();
+    table.timestamps(false, true);
+  });
+
+  await knex.schema.createTable(coursesTable, (table) => {
+    table.increments();
+    table.string("name").notNullable().unique();
+    table.decimal("price").notNullable();
+    table.string("image");
+    table
+      .integer("category_id")
+      .references("id")
+      .inTable("categories")
+      .notNullable();
+    table.integer("subcategory_id").references("id").inTable("subcategories");
     table.integer("tutor_id").references("id").inTable("users").notNullable();
     table.text("description");
     table.text("objective");
@@ -151,6 +168,7 @@ export async function down(knex: Knex): Promise<void> {
   await knex.schema.dropTable(lessonsTable);
   await knex.schema.dropTable(purchasedCoursesTable);
   await knex.schema.dropTable(coursesTable);
+  await knex.schema.dropTable(subCategoriesTable);
   await knex.schema.dropTable(categoriesTable);
   await knex.schema.dropTable(usersTable);
 }
