@@ -10,17 +10,20 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "./redux/store";
 import { restoreLogin } from "./redux/auth/thunk";
+import CategoryPage from "./pages/CategoryPage";
 
 function App() {
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector((state: IRootState) => state.auth.isAuthenticated)
+  const isAuthenticated = useSelector(
+    (state: IRootState) => state.auth.isAuthenticated
+  );
 
   useEffect(() => {
-    if(isAuthenticated === null) {
-      dispatch(restoreLogin())
+    if (isAuthenticated === null) {
+      dispatch(restoreLogin());
     }
-  }, [isAuthenticated])
-  
+  }, [isAuthenticated]);
+
   return (
     <div className="App">
       {/* routes */}
@@ -28,7 +31,11 @@ function App() {
         <Route path="/" exact={true} component={HomePage} />
         <Route path="/lesson" exact={true} component={LessonPage} />
         <Route path="/login" exact={true} component={LoginPage} />
-
+        <Route
+          path="/category/:categoryName"
+          exact={true}
+          component={CategoryPage}
+        />
         {/* ... */}
         <Route component={NotFound} />
       </Switch>
