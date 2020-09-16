@@ -79,7 +79,6 @@ export class UserController {
       logger.debug(result);
       let payload: { id: number };
 
-      console.log("haha");
       const user = await this.userService.getUserByGoogleId(result.id);
 
       //debug
