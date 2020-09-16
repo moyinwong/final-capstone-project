@@ -1,4 +1,5 @@
 import Knex from "knex";
+import { logger } from "../logger";
 import { tables } from "../tables";
 import { ICategory } from "./models";
 // import { logger } from "../logger";
@@ -14,7 +15,7 @@ export class CategoryService {
         .limit(1)
     )[0];
 
-    console.log(category.id);
+    logger.debug(category.id);
 
     const courses = this.knex(tables.COURSES)
       .select("*")
