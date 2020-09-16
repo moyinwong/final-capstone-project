@@ -17,14 +17,19 @@ export default function BottomTap() {
     const Tab = createMaterialBottomTabNavigator();
 
     return (
-        <Tab.Navigator>
+        <Tab.Navigator
+            activeColor="#5c5e63"
+            inactiveColor="#9da0a8"
+            barStyle={{ backgroundColor: '#ffffff' }
+            }
+        >
             <Tab.Screen
                 name="Home"
                 component={HomeStack}
                 options={{
                     tabBarLabel: 'Home',
-                    tabBarIcon: () => (
-                        <FontAwesome name="home" size={24} />
+                    tabBarIcon: ({color}) => (
+                        <FontAwesome name="home" color={color} size={24} />
                     ),
                 }}
             />
@@ -33,8 +38,8 @@ export default function BottomTap() {
                 children={CategoryStack}
                 options={{
                     tabBarLabel: 'Category',
-                    tabBarIcon: () => (
-                        <FontAwesome name="list" size={24} />
+                    tabBarIcon: ({color}) => (
+                        <FontAwesome name="list" color={color} size={24} />
                     ),
                 }}
             />
@@ -43,8 +48,8 @@ export default function BottomTap() {
                 component={Tab1}
                 options={{
                     tabBarLabel: 'Tab 1',
-                    tabBarIcon: () => (
-                        <AntDesign name="areachart" size={24} />
+                    tabBarIcon: ({color}) => (
+                        <AntDesign name="areachart" color={color} size={24} />
                     ),
                 }}
             />
@@ -53,11 +58,11 @@ export default function BottomTap() {
                 component={Tab2}
                 options={{
                     tabBarLabel: 'Tab 2',
-                    tabBarIcon: () => (
-                        <AntDesign name="team" size={24} />
+                    tabBarIcon: ({color}) => (
+                        <AntDesign name="team" color={color} size={24} />
                     ),
                 }}
             />
-        </Tab.Navigator>
+        </Tab.Navigator >
     )
 }
