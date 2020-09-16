@@ -111,8 +111,8 @@ const CategoryPage: React.FC = () => {
             </Card>
           </Accordion>
         </div>
-        {courses.map((e, i) => (
-          <h1 key={i}>{e.name}</h1>
+        {courses.map((course, i) => (
+          <h1 key={i}>{course.name}</h1>
         ))}
       </div>
     </div>

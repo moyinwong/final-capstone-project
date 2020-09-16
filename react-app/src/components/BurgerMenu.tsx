@@ -28,11 +28,11 @@ const BurgerMenu: React.FC = () => {
 
   return (
     <Menu>
-      {categories.map((e, i) => {
+      {categories.map((category, i) => {
         return (
           <div className="">
-            <Link to={`/category/${e}`} key={i} id={e}>
-              {e}
+            <Link to={`/category/${category}`} key={i} id={category}>
+              {category}
             </Link>
           </div>
         );
