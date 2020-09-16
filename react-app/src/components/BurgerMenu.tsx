@@ -30,9 +30,11 @@ const BurgerMenu: React.FC = () => {
     <Menu>
       {categories.map((e, i) => {
         return (
-          <Link to={`/category/${e}`} key={i} id={e} className="menu-item">
-            {e}
-          </Link>
+          <div className="">
+            <Link to={`/category/${e}`} key={i} id={e}>
+              {e}
+            </Link>
+          </div>
         );
       })}
     </Menu>
