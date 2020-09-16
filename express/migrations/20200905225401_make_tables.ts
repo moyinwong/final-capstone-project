@@ -19,6 +19,9 @@ export async function up(knex: Knex): Promise<void> {
     table.string("password").notNullable();
     table.string("name").notNullable();
     table.string("image");
+    table.string("linkedin");
+    table.string("google_id");
+    table.string("facebook_id");
     table.boolean("is_tutor");
     table.string("title");
     table.text("introduction");
@@ -35,6 +38,7 @@ export async function up(knex: Knex): Promise<void> {
     table.increments();
     table.string("name").notNullable().unique();
     table.decimal("price").notNullable();
+    table.string("image");
     table
       .integer("category_id")
       .references("id")
