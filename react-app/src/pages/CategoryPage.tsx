@@ -9,20 +9,18 @@ import { useDispatch } from "react-redux";
 import { Redirect, useLocation, useParams } from "react-router-dom";
 import "./CategoryPage.scss";
 import NotFound from "./NotFound";
+import FlattedCard from "../components/FlattedCard";
 
-interface ICourse {
-  category_id: number;
-  created_at: string;
-  description: string;
-  id: number;
-  image: string;
-  name: string;
+export interface ICourse {
+  course_name: string;
   objective: string;
   prerequisites: string;
-  price: string;
-  subcategory_id: number | null;
-  tutor_id: number;
-  updated_at: string;
+  price: number;
+  id: number;
+  tutor_name: string;
+  lessons_number: number;
+  avg: number;
+  image: string;
 }
 
 const CategoryPage: React.FC = () => {
@@ -121,8 +119,9 @@ const CategoryPage: React.FC = () => {
             </Card>
           </Accordion>
         </div>
+
         {courses.map((course, i) => (
-          <h1 key={i}>{course.name}</h1>
+          <FlattedCard key={i} {...course}></FlattedCard>
         ))}
       </div>
     </div>

@@ -74,7 +74,7 @@ export async function up(knex: Knex): Promise<void> {
       .notNullable();
     table.string("payment_method");
     table.decimal("paid_amount");
-    table.integer("rated_score");
+    table.decimal("rated_score");
     table.text("comment");
     table.timestamps(false, true);
   });
