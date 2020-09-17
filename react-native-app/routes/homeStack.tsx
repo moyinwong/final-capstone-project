@@ -11,11 +11,39 @@ export default function HomeStack() {
     const Stack = createStackNavigator();
 
     return (
-        <Stack.Navigator initialRouteName="Course">
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Course" component={Course} />
-            <Stack.Screen name="Lesson" component={Lesson} />
-            <Stack.Screen name="Quiz" component={Quiz} />
+        <Stack.Navigator
+            headerMode="float"
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: "#5b96f7"
+                },
+                headerTintColor: '#fff',
+                headerTitleStyle: {
+                    fontWeight: 'bold',
+                    alignSelf: 'center'
+                }
+            }}
+        >
+            <Stack.Screen
+                name="Home"
+                component={Home}
+                options={{ title: '首頁' }}
+            />
+            <Stack.Screen
+                name="Course"
+                component={Course}
+                options={{ title: '課程' }}
+            />
+            <Stack.Screen
+                name="Lesson"
+                component={Lesson}
+                options={{ title: '課堂' }}
+            />
+            <Stack.Screen
+                name="Quiz"
+                component={Quiz}
+                options={{ title: '測驗' }}
+            />
         </Stack.Navigator>
     )
 }

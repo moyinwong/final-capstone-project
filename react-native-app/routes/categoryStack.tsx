@@ -11,11 +11,29 @@ export default function CategoryStack() {
     const Stack = createStackNavigator();
 
     return (
-        <Stack.Navigator>
-            <Stack.Screen name="Category" component={Category} />
-            <Stack.Screen name="Course" component={Course} />
-            <Stack.Screen name="Lesson" component={Lesson} />
-            <Stack.Screen name="Quiz" component={Quiz} />
+        <Stack.Navigator
+            headerMode="float"
+        >
+            <Stack.Screen
+                name="Category"
+                component={Category}
+                options={{ title: '科目' }}
+            />
+            <Stack.Screen
+                name="Course"
+                component={Course}
+                options={{ title: '課程' }}
+            />
+            <Stack.Screen
+                name="Lesson"
+                component={Lesson}
+                options={{ title: '課堂' }}
+            />
+            <Stack.Screen
+                name="Quiz"
+                component={Quiz}
+                options={{ title: '測驗' }}
+            />
         </Stack.Navigator>
     )
 }
