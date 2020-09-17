@@ -1,14 +1,21 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
+// Icons
+import { FontAwesome } from '@expo/vector-icons';
+
 // Screens
 import Home from '../screens/bottomTap/homeStack/home';
 import Course from '../screens/bottomTap/categoryStack/course';
 import Lesson from '../screens/bottomTap/categoryStack/lesson';
 import Quiz from '../screens/bottomTap/categoryStack/quiz';
 
-export default function HomeStack() {
+export default function HomeStack(props: { navigation: { toggleDrawer: () => void; }; }) {
     const Stack = createStackNavigator();
+
+    function toggleDrawerClick(): void {
+        props.navigation.toggleDrawer();
+    }
 
     return (
         <Stack.Navigator
@@ -18,9 +25,19 @@ export default function HomeStack() {
                     backgroundColor: "#5b96f7"
                 },
                 headerTintColor: '#fff',
+                headerTitleAlign: 'center',
                 headerTitleStyle: {
-                    fontWeight: 'bold',
-                    alignSelf: 'center'
+                    fontWeight: 'bold'
+                },
+                headerLeft: (props) => (
+                    <FontAwesome name="navicon" color={props.tintColor} size={24}
+                        onPress={() => {
+                            toggleDrawerClick();
+                        }}
+                    />
+                ),
+                headerLeftContainerStyle: {
+                    marginLeft: 18
                 }
             }}
         >
