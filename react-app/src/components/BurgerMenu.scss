@@ -79,3 +79,57 @@
 :focus {
   outline: 0px !important;
 }
+
+.dropdown {
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  border: none;
+  outline: none;
+  color: white;
+  // padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.dropdown-content {
+  display: block;
+  // position: absolute;
+  height: 0px;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  transition: all 0.3s;
+}
+
+.dropdown-content a {
+  // float: none;
+  // color: black;
+  // padding: 12px 16px;
+  // text-decoration: none;
+  margin: 5px;
+  display: block;
+  // text-align: left;
+}
+.dropdown-caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  vertical-align: middle;
+  content: "";
+  border-top-style: solid;
+  border-top-width: 4px;
+  border-right: 4px solid transparent;
+  border-bottom: 0 solid transparent;
+  border-left: 4px solid transparent;
+}
+
+.dropdown:hover .dropdown-content {
+  height: 160px;
+}
+
+.dropdown:hover .dropdown-caret {
+  color: rgba(65, 233, 255, 0.623);
+}

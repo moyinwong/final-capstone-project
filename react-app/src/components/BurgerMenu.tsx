@@ -23,7 +23,6 @@ const BurgerMenu: React.FC = () => {
     "視覺藝術",
     "M1",
     "M2",
-    "其他",
   ];
 
   return (
@@ -37,6 +36,16 @@ const BurgerMenu: React.FC = () => {
           </div>
         );
       })}
+      <div className="bm-item dropdown">
+        <button className="dropbtn">其他</button>
+        <span className="dropdown-caret"></span>
+        <div className="dropdown-content">
+          <Link to="/">編程</Link>
+          <Link to="/">廚藝</Link>
+          <Link to="/">DIY</Link>
+          <Link to="/">美容</Link>
+        </div>
+      </div>
     </Menu>
   );
 };
