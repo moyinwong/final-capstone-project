@@ -10,6 +10,9 @@ import Course from '../screens/bottomTap/categoryStack/course';
 import Lesson from '../screens/bottomTap/categoryStack/lesson';
 import Quiz from '../screens/bottomTap/categoryStack/quiz';
 
+// Functions
+import stackTransition from '../functions/stackTransition';
+
 export default function CategoryStack(props: { navigation: { toggleDrawer: () => void; }; }) {
     const Stack = createStackNavigator();
 
@@ -44,22 +47,34 @@ export default function CategoryStack(props: { navigation: { toggleDrawer: () =>
             <Stack.Screen
                 name="Category"
                 component={Category}
-                options={{ title: '科目' }}
+                options={{
+                    title: '科目',
+                    ...stackTransition
+                }}
             />
             <Stack.Screen
                 name="Course"
                 component={Course}
-                options={{ title: '課程' }}
+                options={{
+                    title: '課程',
+                    ...stackTransition
+                }}
             />
             <Stack.Screen
                 name="Lesson"
                 component={Lesson}
-                options={{ title: '課堂' }}
+                options={{
+                    title: '課堂',
+                    ...stackTransition
+                }}
             />
             <Stack.Screen
                 name="Quiz"
                 component={Quiz}
-                options={{ title: '測驗' }}
+                options={{
+                    title: '測驗',
+                    ...stackTransition
+                }}
             />
         </Stack.Navigator>
     )
