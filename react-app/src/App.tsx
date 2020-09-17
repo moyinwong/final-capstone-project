@@ -36,6 +36,11 @@ function App() {
           exact={true}
           component={CategoryPage}
         />
+        <Route
+          path="/category/others/:categoryName"
+          exact={true}
+          component={CategoryPage}
+        />
         {/* ... */}
         <Route component={NotFound} />
       </Switch>

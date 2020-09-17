@@ -6,7 +6,7 @@ import { Accordion, Card, Dropdown } from "react-bootstrap";
 import { DropdownButton } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { Redirect, useParams } from "react-router-dom";
+import { Redirect, useLocation, useParams } from "react-router-dom";
 import "./CategoryPage.scss";
 import NotFound from "./NotFound";
 
@@ -33,9 +33,19 @@ const CategoryPage: React.FC = () => {
 
   const { categoryName } = param;
 
+  //to check current route
+  let location = useLocation();
+
   const getAllCoursesByCategory = async () => {
+    let queryRoute: string = "/category/";
+
+    //if is "others" category, change the api route
+    if (location.pathname.match(/others/)) {
+      queryRoute += "others/";
+    }
+
     const fetchRes = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}/category/${categoryName}`
+      `${process.env.REACT_APP_BACKEND_URL}${queryRoute}${categoryName}`
     );
 
     //if no such category

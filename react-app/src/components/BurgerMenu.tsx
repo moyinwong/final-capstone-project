@@ -40,10 +40,10 @@ const BurgerMenu: React.FC = () => {
         <button className="dropbtn">其他</button>
         <span className="dropdown-caret"></span>
         <div className="dropdown-content">
-          <Link to="/">編程</Link>
-          <Link to="/">廚藝</Link>
-          <Link to="/">DIY</Link>
-          <Link to="/">美容</Link>
+          <Link to="/category/others/編程">編程</Link>
+          <Link to="/category/others/廚藝">廚藝</Link>
+          <Link to="/category/others/DIY">DIY</Link>
+          <Link to="/category/others/美容">美容</Link>
         </div>
       </div>
     </Menu>
