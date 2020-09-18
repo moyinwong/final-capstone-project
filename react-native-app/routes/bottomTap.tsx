@@ -2,11 +2,12 @@ import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 // Icons
-import { FontAwesome, AntDesign } from '@expo/vector-icons';
+import { FontAwesome, MaterialIcons, AntDesign } from '@expo/vector-icons';
 
 // Routes
 import HomeStack from './homeStack';
 import SubjectStack from './subjectStack';
+import TutorStack from './turorStack';
 
 // Screens
 import Tab1 from '../screens/bottomTap/tab1';
@@ -39,17 +40,17 @@ export default function BottomTap() {
                 options={{
                     tabBarLabel: '科目',
                     tabBarIcon: ({ color }) => (
-                        <FontAwesome name="list" color={color} size={24} />
+                        <MaterialIcons name="subject" color={color} size={24} />
                     ),
                 }}
             />
             <Tab.Screen
-                name="Tab1"
-                component={Tab1}
+                name="Tutor"
+                component={TutorStack}
                 options={{
-                    tabBarLabel: 'Tab 1',
+                    tabBarLabel: '導師',
                     tabBarIcon: ({ color }) => (
-                        <AntDesign name="areachart" color={color} size={24} />
+                        <AntDesign name="team" color={color} size={24} />
                     ),
                 }}
             />

@@ -1,8 +1,8 @@
 import { HeaderStyleInterpolators, CardStyleInterpolators } from '@react-navigation/stack';
 
 const stackTransition = {
-    headerStyleInterpolator: HeaderStyleInterpolators.forFade,
-    cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid
+    headerStyleInterpolator: HeaderStyleInterpolators.forUIKit,
+    cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
 }
 
 export default stackTransition;
