@@ -1,23 +1,21 @@
 import React from 'react';
 import { View, Text, Button } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 // Styles
 import globalStyles from '../../../styles/globalStyles';
 
-export default function Lesson() {
-    const navigation = useNavigation();
+export default function Lesson(props: { navigation: { goBack: () => void; navigate: (arg0: string) => void; }; }) {
 
     return (
         <View style={globalStyles.container}>
             <Text>Lesson Screen</Text>
             <Button
                 title="Go Back to Course"
-                onPress={() => navigation.goBack()}
+                onPress={() => props.navigation.goBack()}
             />
             <Button
                 title="Go to Quiz"
-                onPress={() => navigation.navigate('Quiz')}
+                onPress={() => props.navigation.navigate('Quiz')}
             />
         </View>
     )
