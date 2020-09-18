@@ -2,16 +2,13 @@ import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 // Icons
-import { FontAwesome, MaterialIcons, AntDesign } from '@expo/vector-icons';
+import { FontAwesome, MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons';
 
 // Routes
 import HomeStack from './homeStack';
 import SubjectStack from './subjectStack';
-import TutorStack from './turorStack';
-
-// Screens
-import Tab1 from '../screens/bottomTap/tab1';
-import Tab2 from '../screens/bottomTap/tab2';
+import TutorStack from './tutorStack';
+import MyCoursesStack from './myCoursesStack';
 
 export default function BottomTap() {
     const Tab = createMaterialBottomTabNavigator();
@@ -46,7 +43,7 @@ export default function BottomTap() {
             />
             <Tab.Screen
                 name="Tutor"
-                component={TutorStack}
+                children={TutorStack}
                 options={{
                     tabBarLabel: '導師',
                     tabBarIcon: ({ color }) => (
@@ -55,12 +52,12 @@ export default function BottomTap() {
                 }}
             />
             <Tab.Screen
-                name="Tab2"
-                component={Tab2}
+                name="MyCourse"
+                children={MyCoursesStack}
                 options={{
-                    tabBarLabel: 'Tab 2',
+                    tabBarLabel: '我的課程',
                     tabBarIcon: ({ color }) => (
-                        <AntDesign name="team" color={color} size={24} />
+                        <Ionicons name="ios-school" color={color} size={24} />
                     ),
                 }}
             />
