@@ -27,8 +27,8 @@ export class CategoryService {
             "users.name as tutor_name",
             "courses.image"
           )
+          .count("purchased_courses.user_id", { as: "purchased_users_num" })
           .avg("rated_score")
-          //.count("lessons.id")
           .from(tables.PURCHASED_COURSES)
           .rightJoin(
             "courses",
@@ -54,6 +54,7 @@ export class CategoryService {
         "price",
         "T1.id",
         "category_id",
+        "purchased_users_num",
         "avg",
         "tutor_name",
         "image"
@@ -68,6 +69,7 @@ export class CategoryService {
         "price",
         "T1.id",
         "category_id",
+        "purchased_users_num",
         "avg",
         "tutor_name",
         "image"

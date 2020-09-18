@@ -18,8 +18,8 @@ const testKnex = knex
         "users.name as tutor_name",
         "courses.image"
       )
+      .count("purchased_courses.user_id", { as: "purchased_users_num" })
       .avg("rated_score")
-      //.count("lessons.id")
       .from(tables.PURCHASED_COURSES)
       .rightJoin(
         "courses",
@@ -45,6 +45,7 @@ const testKnex = knex
     "price",
     "T1.id",
     "category_id",
+    "purchased_users_num",
     "avg",
     "tutor_name",
     "image"
@@ -59,11 +60,12 @@ const testKnex = knex
     "price",
     "T1.id",
     "category_id",
+    "purchased_users_num",
     "avg",
     "tutor_name",
     "image"
-  )
-  .where("category_id", 1);
+  );
+//.where("category_id", 1);
 //.innerJoin("lessons", "courses.id", "lessons.course_id");
 //.where("courses.category_id", 1);
 
