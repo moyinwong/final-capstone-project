@@ -5,10 +5,10 @@ import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerI
 import { FontAwesome, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
 // Routes
-import BottomTap from './bottomTap';
+import BottomTap from '../bottomTap/bottomTap';
 
 // Screens
-import Feedback from '../screens/leftDrawer/feedback';
+import Feedback from '../../screens/leftDrawer/feedback';
 
 export default function LeftDrawer() {
     const Drawer = createDrawerNavigator();

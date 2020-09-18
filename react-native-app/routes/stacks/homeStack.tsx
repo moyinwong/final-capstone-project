@@ -5,15 +5,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { FontAwesome } from '@expo/vector-icons';
 
 // Screens
-import MyCourses from '../screens/bottomTap/myCoursesStack/myCourses';
-import Course from '../screens/bottomTap/subjectStack/course';
-import Lesson from '../screens/bottomTap/subjectStack/lesson';
-import Quiz from '../screens/bottomTap/subjectStack/quiz';
+import Home from '../../screens/bottomTap/homeStack/home';
+import Course from '../../screens/bottomTap/subjectStack/course';
+import Lesson from '../../screens/bottomTap/subjectStack/lesson';
+import Quiz from '../../screens/bottomTap/subjectStack/quiz';
 
 // Functions
-import stackTransition from '../functions/stackTransition';
+import stackTransition from '../../functions/stackTransition';
 
-export default function TutorStack(props: { navigation: { toggleDrawer: () => void; }; }) {
+export default function HomeStack(props: { navigation: { toggleDrawer: () => void; }; }) {
     const Stack = createStackNavigator();
 
     function toggleDrawerClick(): void {
@@ -41,14 +41,14 @@ export default function TutorStack(props: { navigation: { toggleDrawer: () => vo
                 ),
                 headerLeftContainerStyle: {
                     marginLeft: 18
-                }
+                },
             }}
         >
             <Stack.Screen
-                name="MyCourses"
-                component={MyCourses}
+                name="Home"
+                component={Home}
                 options={{
-                    title: '我的課程',
+                    title: '首頁',
                     ...stackTransition
                 }}
             />

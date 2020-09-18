@@ -5,16 +5,17 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { FontAwesome, MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons';
 
 // Routes
-import HomeStack from './homeStack';
-import SubjectStack from './subjectStack';
-import TutorStack from './tutorStack';
-import MyCoursesStack from './myCoursesStack';
+import HomeStack from '../stacks/homeStack';
+import SubjectStack from '../stacks/subjectStack';
+import TutorStack from '../stacks/tutorStack';
+import MyCoursesStack from '../stacks/myCoursesStack';
 
 export default function BottomTap() {
     const Tab = createMaterialBottomTabNavigator();
 
     return (
         <Tab.Navigator
+            initialRouteName="Home"
             activeColor="#5b96f7"
             inactiveColor="#9da0a8"
             barStyle={{
@@ -28,7 +29,7 @@ export default function BottomTap() {
                     tabBarLabel: '首頁',
                     tabBarIcon: ({ color }) => (
                         <FontAwesome name="home" color={color} size={24} />
-                    ),
+                    )
                 }}
             />
             <Tab.Screen
@@ -38,7 +39,7 @@ export default function BottomTap() {
                     tabBarLabel: '科目',
                     tabBarIcon: ({ color }) => (
                         <MaterialIcons name="subject" color={color} size={24} />
-                    ),
+                    )
                 }}
             />
             <Tab.Screen
@@ -48,7 +49,7 @@ export default function BottomTap() {
                     tabBarLabel: '導師',
                     tabBarIcon: ({ color }) => (
                         <AntDesign name="team" color={color} size={24} />
-                    ),
+                    )
                 }}
             />
             <Tab.Screen
@@ -58,7 +59,7 @@ export default function BottomTap() {
                     tabBarLabel: '我的課程',
                     tabBarIcon: ({ color }) => (
                         <Ionicons name="ios-school" color={color} size={24} />
-                    ),
+                    )
                 }}
             />
         </Tab.Navigator >

@@ -5,13 +5,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { FontAwesome } from '@expo/vector-icons';
 
 // Screens
-import Tutor from '../screens/bottomTap/tutorStack/tutor';
-import Course from '../screens/bottomTap/subjectStack/course';
-import Lesson from '../screens/bottomTap/subjectStack/lesson';
-import Quiz from '../screens/bottomTap/subjectStack/quiz';
+import Tutor from '../../screens/bottomTap/tutorStack/tutor';
+import Course from '../../screens/bottomTap/subjectStack/course';
+import Lesson from '../../screens/bottomTap/subjectStack/lesson';
+import Quiz from '../../screens/bottomTap/subjectStack/quiz';
 
 // Functions
-import stackTransition from '../functions/stackTransition';
+import stackTransition from '../../functions/stackTransition';
 
 export default function TutorStack(props: { navigation: { toggleDrawer: () => void; }; }) {
     const Stack = createStackNavigator();

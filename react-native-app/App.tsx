@@ -4,7 +4,7 @@ import { enableScreens } from 'react-native-screens';
 import { NavigationContainer } from '@react-navigation/native'
 
 // Routes
-import LeftDrawer from './routes/leftDrawer';
+import LeftDrawer from './routes/drawer/leftDrawer';
 
 // Screens
 import Login from './screens/login/login';
