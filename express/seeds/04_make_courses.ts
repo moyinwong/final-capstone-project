@@ -14,8 +14,7 @@ export async function seed(knex: Knex): Promise<void> {
       price: 99,
       category_id: "1",
       tutor_id: 3,
-      image:
-        "https://i.ytimg.com/an_webp/6A_HQhYwlrI/mqdefault_6s.webp?du=3000&sqp=CP6qkPsF&rs=AOn4CLD5ZX24vY2WEU91QpbDfWotG0FOzg",
+      image: "https://i.ytimg.com/vi/6A_HQhYwlrI/maxresdefault.jpg",
       description: "DSE中文卷一由2升到5*",
       objective: "幫助提升中文",
       prerequisites: "DSE 準考生",
@@ -25,8 +24,7 @@ export async function seed(knex: Knex): Promise<void> {
       price: 199,
       category_id: "2",
       tutor_id: 4,
-      image:
-        "https://i.ytimg.com/an_webp/YUNzWH27CTo/mqdefault_6s.webp?du=3000&sqp=CJKfh_sF&rs=AOn4CLCCiXLCImpJaPDEVhZ4yn72wOHRNg",
+      image: "https://i.ytimg.com/vi/YUNzWH27CTo/maxresdefault.jpg",
       description:
         "想 DSE 英文 Paper 2 作文進步、拎高分？我幫大家做左少少準備、又分享左唔少 TIPS! 希望大家鍾意呢個 Playlist!  我地一齊係作文卷上 1-2 個 Grade!",
       objective: "幫助提升英文",

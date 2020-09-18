@@ -9,6 +9,7 @@ import "./CategoryPage.scss";
 import NotFound from "./NotFound";
 import FlattedCard from "../components/FlattedCard";
 import { Dropdown } from "react-bootstrap";
+import { DropdownButton } from "react-bootstrap";
 
 export interface ICourse {
   course_name: string;
@@ -71,6 +72,11 @@ const CategoryPage: React.FC = () => {
     transition: "all 0.3s ease-in",
   };
 
+  const cardStyle = {
+    border: isFilterOpen ? "1px solid rgba(0,0,0,.125)" : "none",
+    transition: "all 0.3s ease-in",
+  };
+
   //run once when init
   useEffect(() => {
     getAllCoursesByCategory();
@@ -89,22 +95,21 @@ const CategoryPage: React.FC = () => {
         篩選
       </Button>
 
-      <Dropdown>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          Dropdown Button
-        </Dropdown.Toggle>
-
-        <Dropdown.Menu>
-          <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-          <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-          <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
+      <DropdownButton
+        variant="outline-secondary"
+        id="dropdown-basic-button"
+        title={orderMethod}
+      >
+        <Dropdown.Item onClick={handleOrderButtonClick}>最受歡迎</Dropdown.Item>
+        <Dropdown.Item onClick={handleOrderButtonClick}>最低價錢</Dropdown.Item>
+        <Dropdown.Item onClick={handleOrderButtonClick}>最受好評</Dropdown.Item>
+        <Dropdown.Item onClick={handleOrderButtonClick}>最受好評</Dropdown.Item>
+      </DropdownButton>
 
       <div className={"panel-card-container"}>
         <div className={"panel"} style={panelStyle}>
-          {/* <Accordion defaultActiveKey="0">
-            <Card>
+          <Accordion defaultActiveKey="0">
+            <Card style={cardStyle}>
               <Accordion.Toggle as={Card.Header} eventKey="0">
                 評分
               </Accordion.Toggle>
@@ -114,7 +119,7 @@ const CategoryPage: React.FC = () => {
             </Card>
           </Accordion>
           <Accordion defaultActiveKey="0">
-            <Card>
+            <Card style={cardStyle}>
               <Accordion.Toggle as={Card.Header} eventKey="0">
                 價錢
               </Accordion.Toggle>
@@ -122,7 +127,7 @@ const CategoryPage: React.FC = () => {
                 <Card.Body>價錢選項</Card.Body>
               </Accordion.Collapse>
             </Card>
-          </Accordion> */}
+          </Accordion>
         </div>
 
         <div className="all-course-container">

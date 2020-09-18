@@ -42,6 +42,10 @@
   background: #373a47;
   padding: 2em 1.5em 0;
   font-size: 1.15em;
+
+  .dropdown {
+    overflow: hidden;
+  }
 }
 
 /* Morph shape necessary with bubble or elastic */
@@ -78,10 +82,6 @@
 
 :focus {
   outline: 0px !important;
-}
-
-.dropdown {
-  overflow: hidden;
 }
 
 .dropdown .dropbtn {
