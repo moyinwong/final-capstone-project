@@ -58,6 +58,11 @@
     width: 260px;
   }
 
+  img,
+  .course-content :hover {
+    cursor: pointer;
+  }
+
   .price {
     flex: 2;
     font-weight: bold;

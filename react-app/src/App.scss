@@ -5,6 +5,17 @@
   text-align: center;
 }
 
+.dark {
+  filter: invert(100%) hue-rotate(180deg);
+
+  img {
+    filter: invert(100%) hue-rotate(180deg) !important;
+  }
+  video {
+    filter: invert(100%) hue-rotate(180deg) !important;
+  }
+}
+
 /* .App-logo {
   height: 40vmin;
   pointer-events: none;

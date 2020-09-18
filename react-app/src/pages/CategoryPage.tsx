@@ -6,11 +6,13 @@ import { Accordion, Card } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { useLocation, useParams } from "react-router-dom";
 import "./CategoryPage.scss";
-import NotFound from "./NotFound";
 import FlattedCard from "../components/FlattedCard";
 import { Dropdown } from "react-bootstrap";
 import { DropdownButton } from "react-bootstrap";
 import { Form } from "react-bootstrap";
+import Rating from "react-rating";
+import { useDispatch } from "react-redux";
+import { push } from "connected-react-router";
 
 export interface ICourse {
   course_name: string;
@@ -33,12 +35,20 @@ const CategoryPage: React.FC = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(true);
   const [orderMethod, setOrderMethod] = useState("最受歡迎");
   const [ratingSelection, setRatingSelection] = useState("0");
+  const [priceSelection, setPriceSelection] = useState("0");
   const param: { categoryName: string } = useParams();
 
   const { categoryName } = param;
 
+  const dispatch = useDispatch();
+
   //to check current route
   let location = useLocation();
+
+  //run once when init
+  useEffect(() => {
+    getAllCoursesByCategory();
+  }, []);
 
   const getAllCoursesByCategory = async () => {
     let queryRoute: string = "/category/";
@@ -54,7 +64,7 @@ const CategoryPage: React.FC = () => {
 
     //if no such category
     if (fetchRes.status === 500) {
-      return <NotFound />;
+      dispatch(push("/404"));
     }
 
     const result = await fetchRes.json();
@@ -95,10 +105,9 @@ const CategoryPage: React.FC = () => {
     setCourses(newOrderedCourses);
   }
 
-  //handle rating selection, if not 0, set to element's id, otherwise reset
+  //handle rating selection, set to element's id to selection, otherwise reset
   function handleRatingFormClick(event: React.MouseEvent<HTMLInputElement>) {
-    console.log(event.currentTarget.checked);
-    if (ratingSelection !== "0") {
+    if (ratingSelection === event.currentTarget.id) {
       setRatingSelection("0");
       return;
     }
@@ -107,33 +116,41 @@ const CategoryPage: React.FC = () => {
 
   //if rating selection change, courses list will reset / change filter
   useEffect(() => {
-    const newOrderedCourses = initCourses.filter((e) => {
-      return (
-        parseFloat(e.rated_score ? e.rated_score : "0") >=
-        parseFloat(ratingSelection)
-      );
-    });
+    const newOrderedCourses = initCourses
+      .filter((e) => {
+        return (
+          parseFloat(e.rated_score ? e.rated_score : "0") >=
+          parseFloat(ratingSelection)
+        );
+      })
+      .filter((e) => {
+        return (
+          parseFloat(e.price) <= parseFloat(priceSelection) ||
+          priceSelection === "0"
+        );
+      });
     setCourses(newOrderedCourses);
-  }, [ratingSelection]);
+  }, [ratingSelection, priceSelection]);
 
-  //handle rating on change
-  function handleRatingFormChange(event: any) {}
+  //handle rating selection, set to element's id to selection, otherwise reset
+  function handlePriceFormClick(event: React.MouseEvent<HTMLInputElement>) {
+    if (priceSelection === event.currentTarget.id.slice(5, 8)) {
+      setPriceSelection("0");
+      return;
+    }
+    setPriceSelection(event.currentTarget.id.slice(5, 8));
+  }
 
   //control panel
   const panelStyle = {
     width: isFilterOpen ? 300 : 0,
-    transition: "all 0.2s ease-in",
+    transition: "all 0.3s ease-in",
   };
 
   const cardStyle = {
     border: isFilterOpen ? "1px solid rgba(0,0,0,.125)" : "none",
     transition: "all 0.2s",
   };
-
-  //run once when init
-  useEffect(() => {
-    getAllCoursesByCategory();
-  }, []);
 
   return (
     <div className={"category-main-container"}>
@@ -176,33 +193,43 @@ const CategoryPage: React.FC = () => {
                 <Card.Body>
                   <div>
                     <Form>
-                      <Form.Check
-                        className="rating-form"
-                        type="radio"
-                        id={"4.5"}
-                        label={"4.5"}
-                        onClick={handleRatingFormClick}
-                        onChange={handleRatingFormChange}
-                        checked={ratingSelection === "4.5"}
-                      />
-                      <Form.Check
-                        className="rating-form"
-                        type="radio"
-                        id={"4"}
-                        label={"4"}
-                        onClick={handleRatingFormClick}
-                        onChange={handleRatingFormChange}
-                        checked={ratingSelection === "4"}
-                      />
-                      <Form.Check
-                        className="rating-form"
-                        type="radio"
-                        id={"3.5"}
-                        label={"3.5"}
-                        onClick={handleRatingFormClick}
-                        onChange={handleRatingFormChange}
-                        checked={ratingSelection === "3.5"}
-                      />
+                      {["4.5", "4.0", "3.5"].map((e) => {
+                        return (
+                          <Form.Check
+                            className="rating-form"
+                            type="radio"
+                            id={e}
+                            key={e}
+                            label={
+                              <>
+                                {e}
+                                <Rating
+                                  stop={5}
+                                  emptySymbol={[
+                                    "far fa-star fa-2x",
+                                    "far fa-star fa-2x",
+                                    "far fa-star fa-2x",
+                                    "far fa-star fa-2x",
+                                    "far fa-star fa-2x",
+                                  ]}
+                                  fullSymbol={[
+                                    "fas fa-star fa-2x",
+                                    "fas fa-star fa-2x",
+                                    "fas fa-star fa-2x",
+                                    "fas fa-star fa-2x",
+                                    "fas fa-star fa-2x",
+                                  ]}
+                                  readonly={true}
+                                  initialRating={parseFloat(e)}
+                                />
+                              </>
+                            }
+                            onClick={handleRatingFormClick}
+                            checked={ratingSelection === e}
+                            readOnly={true}
+                          />
+                        );
+                      })}
                     </Form>
                   </div>
                 </Card.Body>
@@ -215,7 +242,26 @@ const CategoryPage: React.FC = () => {
                 價錢
               </Accordion.Toggle>
               <Accordion.Collapse eventKey="0">
-                <Card.Body>價錢選項</Card.Body>
+                <Card.Body>
+                  <div>
+                    <Form>
+                      {["少於HK$50", "少於HK$200", "少於HK$300"].map((e) => {
+                        return (
+                          <Form.Check
+                            className="rating-form"
+                            type="radio"
+                            id={e}
+                            key={e}
+                            label={e}
+                            onClick={handlePriceFormClick}
+                            checked={"少於HK$" + priceSelection === e}
+                            readOnly={true}
+                          />
+                        );
+                      })}
+                    </Form>
+                  </div>
+                </Card.Body>
               </Accordion.Collapse>
             </Card>
           </Accordion>

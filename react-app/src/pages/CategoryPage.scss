@@ -12,6 +12,16 @@
 
   .panel-card-container {
     display: flex;
+
+    .card-body {
+      height: 112px;
+
+      .form-check {
+        overflow: hidden;
+        height: 24px;
+        line-height: 24px;
+      }
+    }
   }
 
   .panel > div {

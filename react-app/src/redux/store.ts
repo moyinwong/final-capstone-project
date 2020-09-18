@@ -14,25 +14,33 @@ import { ILessonActions } from "./lesson/actions";
 import { lessonReducers } from "./lesson/reducers";
 import { IAuthState } from "./auth/state";
 import { IAuthAction } from "./auth/actions";
-import { authReducer } from "./auth/reducer";
-// import { IStudentActions } from "./student/actions";
+import { authReducer } from "./auth/reducers";
+import { IDarkModeState } from "./dark/state";
+import { IDarkModeActions } from "./dark/actions";
+import { darkModeReducers } from "./dark/reducers";
 
 export const history = createBrowserHistory();
 
 // step 1: IRootState
 export interface IRootState {
   lesson: ILessonState;
-  auth: IAuthState
+  auth: IAuthState;
+  dark: IDarkModeState;
   router: RouterState;
 }
 
 // step 2: IRootAction
-export type IRootAction = ILessonActions | IAuthAction | CallHistoryMethodAction;
+export type IRootAction =
+  | ILessonActions
+  | IAuthAction
+  | IDarkModeActions
+  | CallHistoryMethodAction;
 
 // step 3: rootReducer
 const rootReducer = combineReducers<IRootState>({
   lesson: lessonReducers,
   auth: authReducer,
+  dark: darkModeReducers,
   router: connectRouter(history),
 });
 
