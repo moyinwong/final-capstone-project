@@ -6,19 +6,22 @@ import { Accordion, Card } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { useLocation, useParams } from "react-router-dom";
 import "./CategoryPage.scss";
-import NotFound from "./NotFound";
 import FlattedCard from "../components/FlattedCard";
 import { Dropdown } from "react-bootstrap";
 import { DropdownButton } from "react-bootstrap";
+import { Form } from "react-bootstrap";
+import Rating from "react-rating";
+import { useDispatch } from "react-redux";
+import { push } from "connected-react-router";
 
 export interface ICourse {
   course_name: string;
   objective: string;
   prerequisites: string;
-  price: number;
+  price: string;
   id: number;
   category_id: number;
-  purchased_users_num: number;
+  purchased_users_num: string;
   rated_num: string;
   rated_score: string | null;
   tutor_name: string;
@@ -27,15 +30,25 @@ export interface ICourse {
 }
 
 const CategoryPage: React.FC = () => {
+  const [initCourses, setInitCourses] = useState<Array<ICourse>>([]);
   const [courses, setCourses] = useState<Array<ICourse>>([]);
   const [isFilterOpen, setIsFilterOpen] = useState(true);
   const [orderMethod, setOrderMethod] = useState("最受歡迎");
+  const [ratingSelection, setRatingSelection] = useState("0");
+  const [priceSelection, setPriceSelection] = useState("0");
   const param: { categoryName: string } = useParams();
 
   const { categoryName } = param;
 
+  const dispatch = useDispatch();
+
   //to check current route
   let location = useLocation();
+
+  //run once when init
+  useEffect(() => {
+    getAllCoursesByCategory();
+  }, []);
 
   const getAllCoursesByCategory = async () => {
     let queryRoute: string = "/category/";
@@ -51,19 +64,81 @@ const CategoryPage: React.FC = () => {
 
     //if no such category
     if (fetchRes.status === 500) {
-      return <NotFound />;
+      dispatch(push("/404"));
     }
 
     const result = await fetchRes.json();
+    const { courses } = result;
+    const orderedCourses = courses.slice();
+    orderedCourses.sort(
+      (a: ICourse, b: ICourse) =>
+        parseInt(b.purchased_users_num) - parseInt(a.purchased_users_num)
+    );
 
-    setCourses(result.courses);
+    setCourses(orderedCourses);
+    //for reset
+    setInitCourses(orderedCourses);
   };
 
   //handle order button click
   function handleOrderButtonClick(event: React.MouseEvent<HTMLButtonElement>) {
-    console.log(event.currentTarget.innerHTML);
+    if (orderMethod === "event.currentTarget.innerHTML") {
+      return;
+    }
     const newMethod = event.currentTarget.innerHTML;
     setOrderMethod(newMethod);
+    const newOrderedCourses = courses.slice();
+    if (newMethod === "最受歡迎") {
+      newOrderedCourses.sort(
+        (a, b) =>
+          parseInt(b.purchased_users_num) - parseInt(a.purchased_users_num)
+      );
+    } else if (newMethod === "最低價錢") {
+      newOrderedCourses.sort((a, b) => parseInt(a.price) - parseInt(b.price));
+    } else if (newMethod === "最受好評") {
+      newOrderedCourses.sort(
+        (a, b) =>
+          (b.rated_score ? parseFloat(b.rated_score) : 0) -
+          (a.rated_score ? parseFloat(a.rated_score) : 0)
+      );
+    }
+    setCourses(newOrderedCourses);
+  }
+
+  //handle rating selection, set to element's id to selection, otherwise reset
+  function handleRatingFormClick(event: React.MouseEvent<HTMLInputElement>) {
+    if (ratingSelection === event.currentTarget.id) {
+      setRatingSelection("0");
+      return;
+    }
+    setRatingSelection(event.currentTarget.id);
+  }
+
+  //if rating selection change, courses list will reset / change filter
+  useEffect(() => {
+    const newOrderedCourses = initCourses
+      .filter((e) => {
+        return (
+          parseFloat(e.rated_score ? e.rated_score : "0") >=
+          parseFloat(ratingSelection)
+        );
+      })
+      .filter((e) => {
+        return (
+          parseFloat(e.price) <= parseFloat(priceSelection) ||
+          priceSelection === "0"
+        );
+      });
+    setCourses(newOrderedCourses);
+  }, [ratingSelection, priceSelection]);
+
+  //handle rating selection, set to element's id to selection, otherwise reset
+  function handlePriceFormClick(event: React.MouseEvent<HTMLInputElement>) {
+    if (priceSelection === event.currentTarget.id.slice(5, 8)) {
+      setPriceSelection("0");
+      return;
+    }
+    setPriceSelection(event.currentTarget.id.slice(5, 8));
   }
 
   //control panel
@@ -74,37 +149,38 @@ const CategoryPage: React.FC = () => {
 
   const cardStyle = {
     border: isFilterOpen ? "1px solid rgba(0,0,0,.125)" : "none",
-    transition: "all 0.3s ease-in",
+    transition: "all 0.2s",
   };
 
-  //run once when init
-  useEffect(() => {
-    getAllCoursesByCategory();
-  }, []);
-
   return (
-    <div className={"main-container"}>
+    <div className={"category-main-container"}>
       <div>
         <h1>所有{categoryName}課程</h1>
       </div>
+      <div className="button-container">
+        <Button
+          variant="outline-secondary"
+          onClick={() => setIsFilterOpen(!isFilterOpen)}
+        >
+          篩選
+        </Button>
 
-      <Button
-        variant="outline-secondary"
-        onClick={() => setIsFilterOpen(!isFilterOpen)}
-      >
-        篩選
-      </Button>
-
-      <DropdownButton
-        variant="outline-secondary"
-        id="dropdown-basic-button"
-        title={orderMethod}
-      >
-        <Dropdown.Item onClick={handleOrderButtonClick}>最受歡迎</Dropdown.Item>
-        <Dropdown.Item onClick={handleOrderButtonClick}>最低價錢</Dropdown.Item>
-        <Dropdown.Item onClick={handleOrderButtonClick}>最受好評</Dropdown.Item>
-        <Dropdown.Item onClick={handleOrderButtonClick}>最受好評</Dropdown.Item>
-      </DropdownButton>
+        <DropdownButton
+          variant="outline-secondary"
+          id="dropdown-basic-button"
+          title={orderMethod}
+        >
+          <Dropdown.Item onClick={handleOrderButtonClick}>
+            最受歡迎
+          </Dropdown.Item>
+          <Dropdown.Item onClick={handleOrderButtonClick}>
+            最低價錢
+          </Dropdown.Item>
+          <Dropdown.Item onClick={handleOrderButtonClick}>
+            最受好評
+          </Dropdown.Item>
+        </DropdownButton>
+      </div>
 
       <div className={"panel-card-container"}>
         <div className={"panel"} style={panelStyle}>
@@ -114,7 +190,49 @@ const CategoryPage: React.FC = () => {
                 評分
               </Accordion.Toggle>
               <Accordion.Collapse eventKey="0">
-                <Card.Body>評分選項</Card.Body>
+                <Card.Body>
+                  <div>
+                    <Form>
+                      {["4.5", "4.0", "3.5"].map((e) => {
+                        return (
+                          <Form.Check
+                            className="rating-form"
+                            type="radio"
+                            id={e}
+                            key={e}
+                            label={
+                              <>
+                                {e}
+                                <Rating
+                                  stop={5}
+                                  emptySymbol={[
+                                    "far fa-star fa-2x",
+                                    "far fa-star fa-2x",
+                                    "far fa-star fa-2x",
+                                    "far fa-star fa-2x",
+                                    "far fa-star fa-2x",
+                                  ]}
+                                  fullSymbol={[
+                                    "fas fa-star fa-2x",
+                                    "fas fa-star fa-2x",
+                                    "fas fa-star fa-2x",
+                                    "fas fa-star fa-2x",
+                                    "fas fa-star fa-2x",
+                                  ]}
+                                  readonly={true}
+                                  initialRating={parseFloat(e)}
+                                />
+                              </>
+                            }
+                            onClick={handleRatingFormClick}
+                            checked={ratingSelection === e}
+                            readOnly={true}
+                          />
+                        );
+                      })}
+                    </Form>
+                  </div>
+                </Card.Body>
               </Accordion.Collapse>
             </Card>
           </Accordion>
@@ -124,7 +242,26 @@ const CategoryPage: React.FC = () => {
                 價錢
               </Accordion.Toggle>
               <Accordion.Collapse eventKey="0">
-                <Card.Body>價錢選項</Card.Body>
+                <Card.Body>
+                  <div>
+                    <Form>
+                      {["少於HK$50", "少於HK$200", "少於HK$300"].map((e) => {
+                        return (
+                          <Form.Check
+                            className="rating-form"
+                            type="radio"
+                            id={e}
+                            key={e}
+                            label={e}
+                            onClick={handlePriceFormClick}
+                            checked={"少於HK$" + priceSelection === e}
+                            readOnly={true}
+                          />
+                        );
+                      })}
+                    </Form>
+                  </div>
+                </Card.Body>
               </Accordion.Collapse>
             </Card>
           </Accordion>

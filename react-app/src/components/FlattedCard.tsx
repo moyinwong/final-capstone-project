@@ -1,12 +1,20 @@
+import { push } from "connected-react-router";
 import React from "react";
 import Rating from "react-rating";
+import { useDispatch, useSelector } from "react-redux";
 import { ICourse } from "../pages/CategoryPage";
 import "./FlattedCard.scss";
 
 const FlattedCard = (props: ICourse) => {
+  const dispatch = useDispatch();
+  function handleContentClick(event: React.MouseEvent) {
+    console.log(event.currentTarget.firstElementChild?.innerHTML);
+    const courseName = event.currentTarget.firstElementChild?.innerHTML;
+    if (courseName) dispatch(push("/course/" + courseName));
+  }
   return (
     <div className="course-container">
-      {console.log(props)}
+      {/* {console.log(props)} */}
       {props.image.match(/http/) ? (
         <div>
           <img src={props.image} />
@@ -17,7 +25,7 @@ const FlattedCard = (props: ICourse) => {
         </div>
       )}
       <div className="course-content-price-container">
-        <div className="course-content">
+        <div className="course-content" onClick={handleContentClick}>
           {<div className="course-name">{props.course_name}</div>}
           {<div className="course-objective">{props.objective}</div>}
           {<div className="tutor-name">{props.tutor_name}</div>}
