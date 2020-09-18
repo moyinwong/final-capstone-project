@@ -1,15 +1,14 @@
-import { push } from "connected-react-router";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Accordion, Card, Dropdown } from "react-bootstrap";
-import { DropdownButton } from "react-bootstrap";
+import { Accordion, Card } from "react-bootstrap";
+
 import { Button } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { Redirect, useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import "./CategoryPage.scss";
 import NotFound from "./NotFound";
 import FlattedCard from "../components/FlattedCard";
+import { Dropdown } from "react-bootstrap";
 
 export interface ICourse {
   course_name: string;
@@ -17,10 +16,13 @@ export interface ICourse {
   prerequisites: string;
   price: number;
   id: number;
+  category_id: number;
+  purchased_users_num: number;
+  rated_num: string;
+  rated_score: string | null;
   tutor_name: string;
-  lessons_number: number;
-  avg: number;
   image: string;
+  lessons_number: number;
 }
 
 const CategoryPage: React.FC = () => {
@@ -86,19 +88,22 @@ const CategoryPage: React.FC = () => {
       >
         篩選
       </Button>
-      <DropdownButton
-        variant="outline-secondary"
-        id="dropdown-basic-button"
-        title={orderMethod}
-      >
-        <Dropdown.Item onClick={handleOrderButtonClick}>最受歡迎</Dropdown.Item>
-        <Dropdown.Item onClick={handleOrderButtonClick}>最低價錢</Dropdown.Item>
-        <Dropdown.Item onClick={handleOrderButtonClick}>最受好評</Dropdown.Item>
-        <Dropdown.Item onClick={handleOrderButtonClick}>最受好評</Dropdown.Item>
-      </DropdownButton>
+
+      <Dropdown>
+        <Dropdown.Toggle variant="success" id="dropdown-basic">
+          Dropdown Button
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+          <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+          <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+          <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+
       <div className={"panel-card-container"}>
         <div className={"panel"} style={panelStyle}>
-          <Accordion defaultActiveKey="0">
+          {/* <Accordion defaultActiveKey="0">
             <Card>
               <Accordion.Toggle as={Card.Header} eventKey="0">
                 評分
@@ -117,12 +122,14 @@ const CategoryPage: React.FC = () => {
                 <Card.Body>價錢選項</Card.Body>
               </Accordion.Collapse>
             </Card>
-          </Accordion>
+          </Accordion> */}
         </div>
 
-        {courses.map((course, i) => (
-          <FlattedCard key={i} {...course}></FlattedCard>
-        ))}
+        <div className="all-course-container">
+          {courses.slice(0, 10).map((course, i) => (
+            <FlattedCard key={i} {...course}></FlattedCard>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -15,7 +15,7 @@ export async function seed(knex: Knex): Promise<void> {
       category_id: "1",
       tutor_id: 3,
       image:
-        "https://i.ytimg.com/an_webp/6A_HQhYwlrI/mqdefault_6s.webp?du=3000&sqp=CKKdh_sF&rs=AOn4CLCL1ZAyh-uTjhJ8fjmUj0dvpHxRvg",
+        "https://i.ytimg.com/an_webp/6A_HQhYwlrI/mqdefault_6s.webp?du=3000&sqp=CP6qkPsF&rs=AOn4CLD5ZX24vY2WEU91QpbDfWotG0FOzg",
       description: "DSE中文卷一由2升到5*",
       objective: "幫助提升中文",
       prerequisites: "DSE 準考生",
