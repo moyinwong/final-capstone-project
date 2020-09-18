@@ -6,7 +6,7 @@ import "./FlattedCard.scss";
 const FlattedCard = (props: ICourse) => {
   return (
     <div className="course-container">
-      {console.log(props)}
+      {/* {console.log(props)} */}
       {props.image.match(/http/) ? (
         <div>
           <img src={props.image} />

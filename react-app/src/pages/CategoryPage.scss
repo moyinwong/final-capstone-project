@@ -1,18 +1,27 @@
-.main-container {
+.category-main-container {
   padding: 30px;
-}
 
-.panel-card-container {
-  display: flex;
-}
+  .button-container {
+    display: flex;
+    padding: 20px 0px;
 
-.panel {
-  // background-color: black;
-}
+    .btn {
+      margin-right: 5px;
+    }
+  }
 
-.all-course-container {
-  width: 100%;
-}
+  .panel-card-container {
+    display: flex;
+  }
 
-.dropdown-menu {
+  .panel > div {
+    margin-bottom: 10px;
+  }
+
+  .all-course-container {
+    width: 100%;
+  }
+
+  .dropdown-menu {
+  }
 }
