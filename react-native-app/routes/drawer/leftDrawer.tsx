@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert } from 'react-native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer'
 
 // Icons
@@ -13,6 +14,22 @@ import Feedback from '../../screens/leftDrawer/feedback';
 export default function LeftDrawer() {
     const Drawer = createDrawerNavigator();
 
+    function logoutAlert() {
+        Alert.alert(
+            "登出",
+            "確認要登出嗎？",
+            [
+                {
+                    text: "取消",
+                    onPress: () => console.log("取消"),
+                    style: "cancel"
+                },
+                { text: "登出", onPress: () => console.log("登出") }
+            ],
+            { cancelable: true }
+        )
+    }
+
     return (
         <Drawer.Navigator
             drawerType={'front'}
@@ -22,7 +39,7 @@ export default function LeftDrawer() {
                         <DrawerItemList {...props} />
                         <DrawerItem label="登出"
                             icon={({ color }) => <MaterialCommunityIcons name="logout" color={color} size={24} />}
-                            onPress={() => props.navigation.navigate("Home")}
+                            onPress={() => logoutAlert()}
                         />
                     </DrawerContentScrollView>
                 )

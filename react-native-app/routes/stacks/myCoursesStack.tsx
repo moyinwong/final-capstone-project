@@ -6,9 +6,9 @@ import { FontAwesome } from '@expo/vector-icons';
 
 // Screens
 import MyCourses from '../../screens/bottomTap/myCoursesStack/myCourses';
-import Course from '../../screens/bottomTap/subjectStack/course';
-import Lesson from '../../screens/bottomTap/subjectStack/lesson';
-import Quiz from '../../screens/bottomTap/subjectStack/quiz';
+import Course from '../../screens/bottomTap/commonScreens/course';
+import Lesson from '../../screens/bottomTap/commonScreens/lesson';
+import Quiz from '../../screens/bottomTap/commonScreens/quiz';
 
 // Functions
 import stackTransition from '../../functions/stackTransition';
