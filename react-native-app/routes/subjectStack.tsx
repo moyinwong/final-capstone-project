@@ -5,15 +5,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { FontAwesome } from '@expo/vector-icons';
 
 // Screens
-import Category from '../screens/bottomTap/categoryStack/category';
-import Course from '../screens/bottomTap/categoryStack/course';
-import Lesson from '../screens/bottomTap/categoryStack/lesson';
-import Quiz from '../screens/bottomTap/categoryStack/quiz';
+import Subject from '../screens/bottomTap/subjectStack/subject';
+import Course from '../screens/bottomTap/subjectStack/course';
+import Lesson from '../screens/bottomTap/subjectStack/lesson';
+import Quiz from '../screens/bottomTap/subjectStack/quiz';
 
 // Functions
 import stackTransition from '../functions/stackTransition';
 
-export default function CategoryStack(props: { navigation: { toggleDrawer: () => void; }; }) {
+export default function SubjectStack(props: { navigation: { toggleDrawer: () => void; }; }) {
     const Stack = createStackNavigator();
 
     function toggleDrawerClick(): void {
@@ -45,8 +45,8 @@ export default function CategoryStack(props: { navigation: { toggleDrawer: () =>
             }}
         >
             <Stack.Screen
-                name="Category"
-                component={Category}
+                name="Subject"
+                component={Subject}
                 options={{
                     title: '科目',
                     ...stackTransition

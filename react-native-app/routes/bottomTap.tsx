@@ -6,7 +6,7 @@ import { FontAwesome, AntDesign } from '@expo/vector-icons';
 
 // Routes
 import HomeStack from './homeStack';
-import CategoryStack from './categoryStack';
+import SubjectStack from './subjectStack';
 
 // Screens
 import Tab1 from '../screens/bottomTap/tab1';
@@ -34,10 +34,10 @@ export default function BottomTap() {
                 }}
             />
             <Tab.Screen
-                name="Category"
-                children={CategoryStack}
+                name="Subject"
+                children={SubjectStack}
                 options={{
-                    tabBarLabel: '課程類別',
+                    tabBarLabel: '科目',
                     tabBarIcon: ({ color }) => (
                         <FontAwesome name="list" color={color} size={24} />
                     ),
