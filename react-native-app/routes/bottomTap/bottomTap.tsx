@@ -2,21 +2,20 @@ import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 // Icons
-import { FontAwesome, AntDesign } from '@expo/vector-icons';
+import { FontAwesome, MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons';
 
 // Routes
-import HomeStack from './homeStack';
-import CategoryStack from './categoryStack';
-
-// Screens
-import Tab1 from '../screens/bottomTap/tab1';
-import Tab2 from '../screens/bottomTap/tab2';
+import HomeStack from '../stacks/homeStack';
+import SubjectStack from '../stacks/subjectStack';
+import TutorStack from '../stacks/tutorStack';
+import MyCoursesStack from '../stacks/myCoursesStack';
 
 export default function BottomTap() {
     const Tab = createMaterialBottomTabNavigator();
 
     return (
         <Tab.Navigator
+            initialRouteName="Home"
             activeColor="#5b96f7"
             inactiveColor="#9da0a8"
             barStyle={{
@@ -30,37 +29,37 @@ export default function BottomTap() {
                     tabBarLabel: '首頁',
                     tabBarIcon: ({ color }) => (
                         <FontAwesome name="home" color={color} size={24} />
-                    ),
+                    )
                 }}
             />
             <Tab.Screen
-                name="Category"
-                children={CategoryStack}
+                name="Subject"
+                children={SubjectStack}
                 options={{
-                    tabBarLabel: '課程類別',
+                    tabBarLabel: '科目',
                     tabBarIcon: ({ color }) => (
-                        <FontAwesome name="list" color={color} size={24} />
-                    ),
+                        <MaterialIcons name="subject" color={color} size={24} />
+                    )
                 }}
             />
             <Tab.Screen
-                name="Tab1"
-                component={Tab1}
+                name="Tutor"
+                children={TutorStack}
                 options={{
-                    tabBarLabel: 'Tab 1',
-                    tabBarIcon: ({ color }) => (
-                        <AntDesign name="areachart" color={color} size={24} />
-                    ),
-                }}
-            />
-            <Tab.Screen
-                name="Tab2"
-                component={Tab2}
-                options={{
-                    tabBarLabel: 'Tab 2',
+                    tabBarLabel: '導師',
                     tabBarIcon: ({ color }) => (
                         <AntDesign name="team" color={color} size={24} />
-                    ),
+                    )
+                }}
+            />
+            <Tab.Screen
+                name="MyCourse"
+                children={MyCoursesStack}
+                options={{
+                    tabBarLabel: '我的課程',
+                    tabBarIcon: ({ color }) => (
+                        <Ionicons name="ios-school" color={color} size={24} />
+                    )
                 }}
             />
         </Tab.Navigator >
