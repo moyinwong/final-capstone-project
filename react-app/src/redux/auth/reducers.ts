@@ -24,6 +24,7 @@ export const authReducer = (
       return {
         ...state,
         token: null,
+        email: null,
         user: null,
         isAuthenticated: false,
         message: "",
