@@ -16,8 +16,9 @@ export function login(email: string, password: string) {
       }),
     });
 
+    //json object which contain token & user email
     const json = await res.json();
-    console.log(json)
+
     if (json.token != null) {
       localStorage.setItem("token", json.token);
       dispatch(loginSuccess(json.token));
@@ -42,12 +43,13 @@ export function restoreLogin() {
           },
         }
       );
+
+      //json object which contain an user object with an email property
       const json = await res.json();
 
       if (res.status === 200) {
         dispatch(loginSuccess(token));
         dispatch(getUser(json.user.email));
-        // dispatch(push("/"));
         dispatch(push(getState().router.location.pathname));
       } else {
         dispatch(loginFail(""));
@@ -72,6 +74,8 @@ export const loginGoogleThunk = (accessToken: string) => {
         body: JSON.stringify({ accessToken }),
       }
     );
+
+    //json object which contain token and user email
     const data = await res.json();
 
     if (res.status === 200) {
@@ -94,15 +98,17 @@ export function loginFacebook(accessToken: string) {
       },
       body: JSON.stringify({ accessToken })
     });
-    const result = await res.json();
+    
+    //json object which contain token & user email
+    const json = await res.json();
     
     if (res.status === 200) {
-      localStorage.setItem('token', result.token);
-      dispatch(loginSuccess(result.token))
-      dispatch(getUser(result.email))
+      localStorage.setItem('token', json.token);
+      dispatch(loginSuccess(json.token))
+      dispatch(getUser(json.email))
       dispatch(push('/'))
     } else {
-      dispatch(loginFail(result.message))
+      dispatch(loginFail(json.message))
     }
   }
 }
