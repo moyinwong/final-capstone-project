@@ -8,8 +8,11 @@ import "./FlattedCard.scss";
 const FlattedCard = (props: ICourse) => {
   const dispatch = useDispatch();
   function handleContentClick(event: React.MouseEvent) {
-    console.log(event.currentTarget.firstElementChild?.innerHTML);
     const courseName = event.currentTarget.firstElementChild?.innerHTML;
+    if (courseName) dispatch(push("/course/" + courseName));
+  }
+  function handleImgClick(event: React.MouseEvent) {
+    const courseName = event.currentTarget.getAttribute("alt");
     if (courseName) dispatch(push("/course/" + courseName));
   }
   return (
@@ -17,11 +20,19 @@ const FlattedCard = (props: ICourse) => {
       {/* {console.log(props)} */}
       {props.image.match(/http/) ? (
         <div>
-          <img src={props.image} />
+          <img
+            src={props.image}
+            alt={props.course_name}
+            onClick={handleImgClick}
+          />
         </div>
       ) : (
         <div>
-          <img src={"http://localhost:8080/img/" + props.image} />
+          <img
+            src={"http://localhost:8080/img/" + props.image}
+            alt={props.course_name}
+            onClick={handleImgClick}
+          />
         </div>
       )}
       <div className="course-content-price-container">
