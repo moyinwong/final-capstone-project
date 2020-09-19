@@ -1,5 +1,76 @@
 .course-top-background {
   background-color: #7cd6d6;
   width: 100vw;
-  height: 400px;
+  height: 300px;
+  padding: 25px;
+  display: flex;
+  justify-content: center;
+
+  > div {
+    width: 76vw;
+    height: 250px;
+    display: flex;
+
+    .course-info-container {
+      background-color: beige;
+      text-align: left;
+      width: 40vw;
+      height: 250px;
+
+      > div {
+        margin: 5px;
+      }
+      .course-name {
+        font-size: 50px;
+        font-weight: bold;
+      }
+
+      .course-objective {
+        font-size: 30px;
+      }
+
+      .course-rating {
+        font-size: 15px;
+      }
+    }
+
+    .card {
+      position: fixed;
+      top: 25px;
+      right: 12vw;
+      // right: 0;
+      width: 350px;
+      height: 400px;
+
+      .card-body > div {
+        display: flex;
+        flex-direction: column;
+
+        .btn {
+          margin-bottom: 20px;
+        }
+      }
+    }
+  }
+}
+
+.course-bottom-background {
+  background-color: gold;
+  width: 100vw;
+  padding: 25px;
+  display: flex;
+  justify-content: center;
+
+  > div {
+    width: 76vw;
+    height: 250px;
+    display: flex;
+
+    .bottom-info-container {
+      background-color: beige;
+      text-align: left;
+      width: 40vw;
+      height: 250px;
+    }
+  }
 }

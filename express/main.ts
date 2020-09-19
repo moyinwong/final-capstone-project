@@ -40,6 +40,8 @@ import { CourseService } from "./services/CourseService";
 import { CourseController } from "./controllers/CourseController";
 import { CategoryService } from "./services/CategoryService";
 import { CategoryController } from "./controllers/CategoryController";
+import { LessonService } from "./services/LessonService";
+import { LessonController } from "./controllers/LessonController";
 
 const userService = new UserService(knex);
 export const userController = new UserController(userService);
@@ -49,6 +51,9 @@ export const courseController = new CourseController(courseService);
 
 const categoryService = new CategoryService(knex);
 export const categoryController = new CategoryController(categoryService);
+
+const lessonService = new LessonService(knex);
+export const lessonController = new LessonController(lessonService);
 
 //create guards
 export const isLoggedIn = createIsLoggedIn(userService);
