@@ -65,6 +65,7 @@ const CategoryPage: React.FC = () => {
     //if no such category
     if (fetchRes.status === 500) {
       dispatch(push("/404"));
+      return;
     }
 
     const result = await fetchRes.json();

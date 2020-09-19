@@ -15,8 +15,6 @@ const BurgerMenu: React.FC = () => {
   //   event.preventDefault();
   // };
 
-  console.log(isDarkMode);
-
   const dispatch = useDispatch();
 
   const categories: string[] = [
@@ -58,14 +56,22 @@ const BurgerMenu: React.FC = () => {
           </div>
         );
       })}
-      <div className="bm-item dropdown">
+      <div className="bm-item dropdown" key="s">
         <button className="dropbtn">其他</button>
         <span className="dropdown-caret"></span>
         <div className="dropdown-content">
-          <Link to="/category/others/編程">編程</Link>
-          <Link to="/category/others/廚藝">廚藝</Link>
-          <Link to="/category/others/DIY">DIY</Link>
-          <Link to="/category/others/美容">美容</Link>
+          <Link to="/category/others/編程" key="s1">
+            編程
+          </Link>
+          <Link to="/category/others/廚藝" key="s2">
+            廚藝
+          </Link>
+          <Link to="/category/others/DIY" key="s3">
+            DIY
+          </Link>
+          <Link to="/category/others/美容" key="s4">
+            美容
+          </Link>
         </div>
       </div>
     </Menu>

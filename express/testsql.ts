@@ -5,69 +5,16 @@ const knex = Knex(knexConfig["development"]);
 import { tables } from "./tables";
 
 const testKnex = knex
-  .with(
-    "T1",
-    knex
-      .select(
-        "courses.name as course_name",
-        "courses.objective",
-        "courses.prerequisites",
-        "courses.price",
-        "courses.id",
-        "category_id",
-        "users.name as tutor_name",
-        "courses.image"
-      )
-      .count("purchased_courses.user_id", { as: "purchased_users_num" })
-      .avg("rated_score")
-      .from(tables.PURCHASED_COURSES)
-      .rightJoin(
-        "courses",
-        "courses.id",
-        `${tables.PURCHASED_COURSES}.course_id`
-      )
-      .leftJoin("users", "users.id", `${tables.COURSES}.tutor_id`)
-      .groupBy(
-        "courses.name",
-        "courses.objective",
-        "courses.prerequisites",
-        "courses.price",
-        "courses.id",
-        "category_id",
-        "users.name",
-        "courses.image"
-      )
+  .select("users.email as user_email", "courses.name as course_name")
+  .from(tables.USERS)
+  .leftJoin(
+    tables.PURCHASED_COURSES,
+    "users.id",
+    `${tables.PURCHASED_COURSES}.user_id`
   )
-  .select(
-    "course_name",
-    "objective",
-    "prerequisites",
-    "price",
-    "T1.id",
-    "category_id",
-    "purchased_users_num",
-    "avg",
-    "tutor_name",
-    "image"
-  )
-  .count("lessons.id", { as: "lessons_number" })
-  .from("T1")
-  .innerJoin("lessons", "T1.id", "lessons.course_id")
-  .groupBy(
-    "course_name",
-    "objective",
-    "prerequisites",
-    "price",
-    "T1.id",
-    "category_id",
-    "purchased_users_num",
-    "avg",
-    "tutor_name",
-    "image"
-  );
-//.where("category_id", 1);
-//.innerJoin("lessons", "courses.id", "lessons.course_id");
-//.where("courses.category_id", 1);
+  .leftJoin(tables.COURSES, "course_id", `${tables.COURSES}.id`)
+  .where("users.email", "apple@abc.com")
+  .andWhere("courses.name", "DSE 中文 5* 攻略");
 
 const test = async () => {
   return testKnex.toSQL();

@@ -115,49 +115,68 @@ export class UserController {
   loginFacebook = async (req: Request, res: Response) => {
     try {
       if (!req.body.accessToken) {
-        res.status(401).json({message: "Wrong Access Token!" });
+        res.status(401).json({ message: "Wrong Access Token!" });
         return;
       }
 
       const { accessToken } = req.body;
-      const fetchResponse = await fetch(`https://graph.facebook.com/me?access_token=${accessToken}&fields=id,name,email,picture`);
+      const fetchResponse = await fetch(
+        `https://graph.facebook.com/me?access_token=${accessToken}&fields=id,name,email,picture`
+      );
       const result = await fetchResponse.json();
       if (result.error) {
-        res.status(401).json({message: "Wrong Access Token!" });
+        res.status(401).json({ message: "Wrong Access Token!" });
         return;
       }
 
       //debug
       logger.debug(result);
 
-      let user = await this.userService.getUserByFacebookId(result.id)
+      let user = await this.userService.getUserByFacebookId(result.id);
 
       //debug
       logger.debug(user);
 
       if (!user) {
         const password = await hashPassword("noPasswordProvided");
-        user = (await this.userService.createUserWithFacebook(
-          result.email,
-          password,
-          result.id,
-          result.name,
-          result.picture
-        ))[0];
+        user = (
+          await this.userService.createUserWithFacebook(
+            result.email,
+            password,
+            result.id,
+            result.name,
+            result.picture
+          )
+        )[0];
       }
 
       const payload = {
         id: user?.id,
-        email: user?.email
-      }
+        email: user?.email,
+      };
 
       const token = jwtSimple.encode(payload, jwt.jwtSecret);
       res.json({
-        token: token
-      })
-    } catch(e) {
-      logger.error(e.message)
-      res.status(500).json({ message: "Internal server error"})
+        token: token,
+      });
+    } catch (e) {
+      logger.error(e.message);
+      res.status(500).json({ message: "Internal server error" });
     }
-  }
+  };
+
+  allowUserAccessCourse = async (req: Request, res: Response) => {
+    try {
+      const { user, course } = req.params;
+      const isAllow = await this.userService.getUserIsAllowAccessCourse(
+        user,
+        course
+      );
+      logger.debug(isAllow);
+      res.json({ is_allow: isAllow });
+    } catch (err) {
+      logger.error(err);
+      res.status(500).json({ message: "internal server error" });
+    }
+  };
 }

@@ -1,6 +1,7 @@
 import Knex from "knex";
 import { IUser } from "./models";
 import { tables } from "../tables";
+import { logger } from "../logger";
 
 export class UserService {
   constructor(private knex: Knex) {}
@@ -59,24 +60,48 @@ export class UserService {
   ) => {
     try {
       return await this.knex(tables.USERS)
-      .insert({
-        email,
-        password,
-        facebook_id,
-        name,
-        image
-      })
-      .returning(['id', 'email'])
-    } catch(err) {
+        .insert({
+          email,
+          password,
+          facebook_id,
+          name,
+          image,
+        })
+        .returning(["id", "email"]);
+    } catch (err) {
       throw err;
     }
   };
 
   getUserByFacebookId = async (facebookId: string) => {
     const user: IUser = await this.knex(tables.USERS)
-    .select("*")
-    .where(`facebook_id`, facebookId)
-    .first();
+      .select("*")
+      .where(`facebook_id`, facebookId)
+      .first();
     return user;
-  }
+  };
+
+  getUserIsAllowAccessCourse = async (
+    userEmail: string,
+    courseName: string
+  ) => {
+    const userAllowAccessCourses: Array<{
+      user_name: string;
+      course_name: string | null;
+    }> = await this.knex
+      .select("users.email as user_email", "courses.name as course_name")
+      .from(tables.USERS)
+      .leftJoin(
+        tables.PURCHASED_COURSES,
+        "users.id",
+        `${tables.PURCHASED_COURSES}.user_id`
+      )
+      .leftJoin(tables.COURSES, "course_id", `${tables.COURSES}.id`)
+      .where("users.email", userEmail)
+      .andWhere("courses.name", courseName);
+
+    logger.debug(userAllowAccessCourses);
+
+    return userAllowAccessCourses.length !== 0 ? true : false;
+  };
 }

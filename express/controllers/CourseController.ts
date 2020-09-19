@@ -14,4 +14,20 @@ export class CourseController {
       res.status(500).json({ message: "internal server error" });
     }
   };
+
+  courseDetailInfoByName = async (req: Request, res: Response) => {
+    try {
+      const { courseName } = req.params;
+      const [courseInfo] = await this.courseService.getCourseInfoByName(
+        courseName
+      );
+      if (!courseInfo) {
+        return res.status(401).json({ message: "no such course" });
+      }
+      return res.json({ course: courseInfo });
+    } catch (e) {
+      console.log(e.message);
+      return res.status(500).json({ message: "internal server error" });
+    }
+  };
 }
