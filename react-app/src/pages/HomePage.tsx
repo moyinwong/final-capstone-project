@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Responsive from "../components/Responsive";
 import BurgerMenu from "../components/BurgerMenu";
 import { IRootState } from "../redux/store";
+import { logout } from "../redux/auth/actions";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,13 @@ const HomePage = () => {
       {/* <NavBar></NavBar> */}
       <BurgerMenu />
       {isAuthenticated ? (
-        <div> Welcome back {userEmail}</div>
+        <div>
+          <div> Welcome back {userEmail}</div>
+          <button onClick={() => {
+            localStorage.removeItem('token')
+            dispatch(logout())
+            }}>Logout</button>
+        </div>
       ) : (
         <button onClick={() => dispatch(push("/login"))}>Login</button>
       )}

@@ -17,10 +17,11 @@ export function login(email: string, password: string) {
     });
 
     const json = await res.json();
-
+    console.log(json)
     if (json.token != null) {
       localStorage.setItem("token", json.token);
       dispatch(loginSuccess(json.token));
+      dispatch(getUser(json.email))
       dispatch(push("/"));
     } else if (res.status === 401) {
       dispatch(loginFail("Wrong email/password"));
@@ -76,6 +77,7 @@ export const loginGoogleThunk = (accessToken: string) => {
     if (res.status === 200) {
       localStorage.setItem("token", data.token);
       dispatch(loginSuccess(data.token));
+      dispatch(getUser(data.email))
       dispatch(push("/"));
     } else {
       dispatch(loginFail(data.message));
@@ -97,6 +99,7 @@ export function loginFacebook(accessToken: string) {
     if (res.status === 200) {
       localStorage.setItem('token', result.token);
       dispatch(loginSuccess(result.token))
+      dispatch(getUser(result.email))
       dispatch(push('/'))
     } else {
       dispatch(loginFail(result.message))
