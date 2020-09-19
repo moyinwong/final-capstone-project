@@ -31,6 +31,7 @@ export class UserController {
       const token = jwtSimple.encode(payload, jwt.jwtSecret);
       res.json({
         token: token,
+        email: user.email
       });
     } catch (e) {
       logger.error(e.message);
@@ -78,8 +79,8 @@ export class UserController {
       //debug
       logger.debug(result);
       let payload: { id: number };
-
-      const user = await this.userService.getUserByGoogleId(result.id);
+      
+      let user = await this.userService.getUserByGoogleId(result.id);
 
       //debug
       logger.debug(user);
@@ -94,6 +95,7 @@ export class UserController {
           result.picture
         );
         payload = { id: userID };
+        user = await this.userService.getUserByGoogleId(result.id)
       } else {
         // user found
         payload = { id: user.id };
@@ -101,10 +103,11 @@ export class UserController {
 
       //debug
       logger.debug(payload);
-
+      
       const token = jwtSimple.encode(payload, jwt.jwtSecret);
       res.json({
         token: token,
+        email: user.email
       });
     } catch (e) {
       logger.error(e.message);
@@ -153,7 +156,8 @@ export class UserController {
 
       const token = jwtSimple.encode(payload, jwt.jwtSecret);
       res.json({
-        token: token
+        token: token,
+        email: user.email
       })
     } catch(e) {
       logger.error(e.message)
