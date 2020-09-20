@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Header.scss'
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../redux/store';
@@ -14,26 +14,9 @@ const Header = () => {
       (state: IRootState) => state.auth.isAuthenticated
     );
     const userEmail = useSelector((state: IRootState) => state.auth.email);
-    
+  
     return (
-        // <Container fluid>
-        //     <Row>
-        //         <Col><img className="website-logo" src={require('../logo.png')} /></Col>
-        //         {isAuthenticated ? (
-        //             <div className="header">
-        //                 <Col><div>Welcome back {userEmail}</div></Col>
-        //                 <Col>
-        //                     <button onClick={() => {
-        //                         localStorage.removeItem('token')
-        //                         dispatch(logout())
-        //                     }}>Logout</button>
-        //                 </Col>
-        //             </div>
-        //         ) : (
-        //                 <button onClick={() => dispatch(push("/login"))}>Login</button>
-        //         )}
-        //     </Row>
-        // </Container>
+
         <div>
             <div className="burger-menu">
                 <BurgerMenu />  
@@ -53,11 +36,20 @@ const Header = () => {
                         </Nav>
                     </div>
 
-                    <div className="user-info">
-                        <Navbar.Text>Welcome back {userEmail}</Navbar.Text>
-                        {" "}
-                        <Button variant="success">Logout</Button>
-                    </div>
+                    {isAuthenticated ? (
+                        <div className="user-info">
+                            <Navbar.Text>Welcome back {userEmail}</Navbar.Text>
+                            {" "}
+                            <Button variant="success" onClick={() => {
+                                localStorage.removeItem('token')
+                                dispatch(logout())
+                            }}>Logout</Button>
+                        </div>
+                    ) : (
+                        <Button variant="success" onClick={() => {
+                            dispatch(push("/login"))
+                        }}>Login</Button> 
+                    ) }
                 </Navbar>
             </div>
             <div className="linkbar">
