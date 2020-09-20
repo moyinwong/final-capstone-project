@@ -20,6 +20,7 @@ export class CategoryService {
           .select(
             "courses.name as course_name",
             "courses.objective",
+            "courses.description as course_description",
             "courses.prerequisites",
             "courses.price",
             "courses.id",
@@ -40,6 +41,7 @@ export class CategoryService {
           .groupBy(
             "courses.name",
             "courses.objective",
+            "courses.description",
             "courses.prerequisites",
             "courses.price",
             "courses.id",
@@ -51,6 +53,7 @@ export class CategoryService {
       .select(
         "course_name",
         "objective",
+        "course_description",
         "prerequisites",
         "price",
         "T1.id",
@@ -68,6 +71,7 @@ export class CategoryService {
       .groupBy(
         "course_name",
         "objective",
+        "course_description",
         "prerequisites",
         "price",
         "T1.id",

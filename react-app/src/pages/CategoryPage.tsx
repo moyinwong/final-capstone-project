@@ -16,6 +16,7 @@ import { push } from "connected-react-router";
 
 export interface ICourse {
   course_name: string;
+  course_description: string;
   objective: string;
   prerequisites: string;
   price: string;
