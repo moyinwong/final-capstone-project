@@ -6,29 +6,15 @@ import Responsive from "../components/Responsive";
 import BurgerMenu from "../components/BurgerMenu";
 import { IRootState } from "../redux/store";
 import { logout } from "../redux/auth/actions";
+import Header from "../components/Header";
 
 const HomePage = () => {
-  const dispatch = useDispatch();
-  const isAuthenticated = useSelector(
-    (state: IRootState) => state.auth.isAuthenticated
-  );
-  const userEmail = useSelector((state: IRootState) => state.auth.email);
 
   return (
     <div>
       {/* <NavBar></NavBar> */}
       <BurgerMenu />
-      {isAuthenticated ? (
-        <div>
-          <div> Welcome back {userEmail}</div>
-          <button onClick={() => {
-            localStorage.removeItem('token')
-            dispatch(logout())
-            }}>Logout</button>
-        </div>
-      ) : (
-        <button onClick={() => dispatch(push("/login"))}>Login</button>
-      )}
+      <Header />
       <h1>This is HomePage</h1>
 
       <Responsive />
