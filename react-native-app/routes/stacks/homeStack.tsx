@@ -24,8 +24,10 @@ export default function HomeStack(props: { navigation: { toggleDrawer: () => voi
         <Stack.Navigator
             headerMode="float"
             screenOptions={{
-                headerShown: true,
-                headerTintColor: '#000000',
+                headerStyle: {
+                    backgroundColor: "#5b96f7"
+                },
+                headerTintColor: '#fff',
                 headerTitleAlign: 'center',
                 headerTitleStyle: {
                     fontWeight: 'bold'

@@ -16,8 +16,8 @@ export default function BottomTap() {
     return (
         <Tab.Navigator
             initialRouteName="Home"
-            activeColor="#f1964a"
-            inactiveColor="#606060"
+            activeColor="#5b96f7"
+            inactiveColor="#a5aebf"
             barStyle={{
                 backgroundColor: '#ffffff'
             }}

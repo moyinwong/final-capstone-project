@@ -4,8 +4,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 // Icons
 import { FontAwesome } from '@expo/vector-icons';
 
+// Routes
+import SubjectTopTap from '../topTap/subjectTopTap';
+
 // Screens
-import Subject from '../../screens/bottomTap/subjectStack/subject';
 import Course from '../../screens/bottomTap/commonScreens/course';
 import Lesson from '../../screens/bottomTap/commonScreens/lesson';
 import Quiz from '../../screens/bottomTap/commonScreens/quiz';
@@ -46,7 +48,7 @@ export default function SubjectStack(props: { navigation: { toggleDrawer: () => 
         >
             <Stack.Screen
                 name="Subject"
-                component={Subject}
+                children={SubjectTopTap}
                 options={{
                     title: '科目',
                     ...stackTransition
