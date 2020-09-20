@@ -1,0 +1,46 @@
+
+.header {
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.website-logo {
+    width: 100px;
+    height: 100px;
+}
+
+.web-navbar {
+    background-color: #f8f9fa;
+}
+
+.burger-menu {
+    display: none;
+}
+
+.blank-space {
+    display: none;
+    height: 100px;
+}
+
+@media screen and (max-width:725px) {
+    .web-navbar {
+        display: flex;
+        justify-content: center;
+    }
+
+    .user-info {
+        display: none;
+    }
+
+    .burger-menu {
+        display: block;
+    }
+
+    .search-bar {
+        display: none;
+    }
+
+
+}

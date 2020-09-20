@@ -13,7 +13,7 @@ const HomePage = () => {
   return (
     <div>
       {/* <NavBar></NavBar> */}
-      <BurgerMenu />
+      {/* <BurgerMenu /> */}
       <Header />
       <h1>This is HomePage</h1>
 
