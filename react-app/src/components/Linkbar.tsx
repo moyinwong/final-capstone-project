@@ -33,7 +33,10 @@ const Linkbar = () => {
                         )
                     })}
                     <NavDropdown title="其他" id="basic-nav-dropdown">
-                        <NavDropdown.Item href="/category/others/編程" key="s1">編程</NavDropdown.Item>
+                        <NavDropdown.Item href="/category/others/編程" key="o1">編程</NavDropdown.Item>
+                        <NavDropdown.Item href="/category/others/廚藝" key="o2">廚藝</NavDropdown.Item>
+                        <NavDropdown.Item href="/category/others/DIY" key="o3">DIY</NavDropdown.Item>
+                        <NavDropdown.Item href="/category/others/美容" key="o4">美容</NavDropdown.Item>
                         
                     </NavDropdown>
                 </Nav>
