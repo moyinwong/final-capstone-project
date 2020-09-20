@@ -24,10 +24,8 @@ export default function HomeStack(props: { navigation: { toggleDrawer: () => voi
         <Stack.Navigator
             headerMode="float"
             screenOptions={{
-                headerStyle: {
-                    backgroundColor: "#5b96f7"
-                },
-                headerTintColor: '#fff',
+                headerShown: true,
+                headerTintColor: '#000000',
                 headerTitleAlign: 'center',
                 headerTitleStyle: {
                     fontWeight: 'bold'
@@ -41,7 +39,7 @@ export default function HomeStack(props: { navigation: { toggleDrawer: () => voi
                 ),
                 headerLeftContainerStyle: {
                     marginLeft: 18
-                },
+                }
             }}
         >
             <Stack.Screen
