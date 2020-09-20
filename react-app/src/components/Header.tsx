@@ -6,6 +6,7 @@ import { logout } from '../redux/auth/actions';
 import { push } from 'connected-react-router';
 import { Container, Row, Col, Button, Navbar, Nav, Form, FormControl } from 'react-bootstrap';
 import BurgerMenu from './BurgerMenu';
+import Linkbar from './Linkbar';
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -38,7 +39,6 @@ const Header = () => {
                 <BurgerMenu />  
             </div>
             <div className="web-navbar">
-                {/* <div className="burger-menu"><BurgerMenu /></div> */}
                 <Navbar bg="light" variant="light">
                     <Navbar.Brand href="/">
                         <img className="website-logo" src={require('../logo.png')}/>
@@ -59,6 +59,9 @@ const Header = () => {
                         <Button variant="success">Logout</Button>
                     </div>
                 </Navbar>
+            </div>
+            <div className="linkbar">
+                <Linkbar />
             </div>
         </div>
         // <div className="header">

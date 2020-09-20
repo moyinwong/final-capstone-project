@@ -1,6 +1,5 @@
 
 .header {
-
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -39,6 +38,10 @@
     }
 
     .search-bar {
+        display: none;
+    }
+
+    .linkbar {
         display: none;
     }
 
