@@ -12,9 +12,7 @@ const HomePage = () => {
 
   return (
     <div>
-      {/* <NavBar></NavBar> */}
-      <BurgerMenu />
-      <Header />
+      
       <h1>This is HomePage</h1>
 
       <Responsive />

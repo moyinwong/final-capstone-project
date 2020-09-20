@@ -13,6 +13,7 @@ import { IRootState } from "./redux/store";
 import { restoreLogin } from "./redux/auth/thunk";
 import CategoryPage from "./pages/CategoryPage";
 import CoursePage from "./pages/CoursePage";
+import Header from "./components/Header";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ function App() {
 
   return (
     <div className="App">
+      <Header />
       {/* routes */}
       <Switch>
         <Route path="/" exact={true} component={HomePage} />
