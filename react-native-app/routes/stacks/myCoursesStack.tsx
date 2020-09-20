@@ -4,8 +4,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 // Icons
 import { FontAwesome } from '@expo/vector-icons';
 
+// Routes
+import MyCoursesTopTap from '../topTap/myCoursesTopTap';
+
 // Screens
-import MyCourses from '../../screens/bottomTap/myCoursesStack/myCourses';
 import Course from '../../screens/bottomTap/commonScreens/course';
 import Lesson from '../../screens/bottomTap/commonScreens/lesson';
 import Quiz from '../../screens/bottomTap/commonScreens/quiz';
@@ -46,7 +48,7 @@ export default function TutorStack(props: { navigation: { toggleDrawer: () => vo
         >
             <Stack.Screen
                 name="MyCourses"
-                component={MyCourses}
+                component={MyCoursesTopTap}
                 options={{
                     title: '我的課程',
                     ...stackTransition
