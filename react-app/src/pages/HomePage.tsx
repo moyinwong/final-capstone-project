@@ -11,6 +11,12 @@ import { Container, Row, Col } from "react-bootstrap";
 import './Homepage.scss'
 
 const HomePage = () => {
+  const test = async () => {
+    let res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/category/test`);
+    let result = await res.json();
+    console.log(result)
+  }
+
 
   return (
     <div>
@@ -85,6 +91,7 @@ const HomePage = () => {
       <section className="courses-carousel">
         <CarouselReact />
       </section>
+      <button onClick={test}>TEST</button>
       {/* <img src={`http://localhost:8080${"/img/test-1.png"}`} /> */}
     </div>
   );
