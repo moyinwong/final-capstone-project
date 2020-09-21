@@ -1,48 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './CarouselReact.scss'
+import { ICourse } from "../pages/CategoryPage";
+import FlattedCard from "./FlattedCard";
+import CarouselCard from "./CarouselCard";
+import { Container, Col, Card, Button, Row } from "react-bootstrap";
 
 
 const CarouselReact: React.FC = () => {
-  // var settings = {
-  //   dots: true,
-  //   infinite: false,
-  //   speed: 500,
-  //   slidesToShow: 4,
-  //   slidesToScroll: 4,
-  //   initialSlide: 0,
-  //   responsive: [
-  //     {
-  //       breakpoint: 1024,
-  //       settings: {
-  //         slidesToShow: 3,
-  //         slidesToScroll: 3,
-  //         infinite: true,
-  //         dots: true,
-  //       },
-  //     },
-  //     {
-  //       breakpoint: 600,
-  //       settings: {
-  //         slidesToShow: 2,
-  //         slidesToScroll: 2,
-  //         initialSlide: 2,
-  //       },
-  //     },
-  //     {
-  //       breakpoint: 480,
-  //       settings: {
-  //         slidesToShow: 1,
-  //         slidesToScroll: 1,
-  //       },
-  //     },
-  //   ],
-  // };
-
+  const [courses, setCourses] = useState<Array<ICourse>>([]);
   const [slides, setSlides] = useState<number[]>([1, 2, 3, 4, 5, 6]);
   
+  const getCourses = async () => {
+    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/category/中文`)
+
+    let result = await res.json();
+    const { courses } = result;
+    const orderedCourses = courses.slice();
+    orderedCourses.sort(
+      (a: ICourse, b: ICourse) =>
+        parseInt(b.purchased_users_num) - parseInt(a.purchased_users_num)
+    )
+
+    setCourses(orderedCourses)
+  }
+
+  useEffect(() => {
+    getCourses();
+  }, [])
+
   const settings = {
     dots: true,
     infinite: true,
@@ -52,21 +40,42 @@ const CarouselReact: React.FC = () => {
   };
 
   return (
-      <div>
+      <Container>
         <h2>Dynamic slides</h2>
         {/* <button className="button" onClick={this.click}>
           Click to change slide count
         </button> */}
         <Slider {...settings}>
-          {slides.map((slide) => {
-            return (
-              <div key={slide}>
-                <h3>{slide}</h3>
-              </div>
-            );
-          })}
+          <Row>
+            <Col>
+                <Card>
+                    <Card.Img variant="top" src="holder.js/100px180" />
+                    <Card.Body>
+                        <Card.Title>Card Title</Card.Title>
+                        <Card.Text>
+                        Some quick example text to build on the card title and make up the bulk of
+                        the card's content.
+                        </Card.Text>
+                        <Button variant="primary">Go somewhere</Button>
+                    </Card.Body>
+                </Card>
+
+                <Card>
+                    <Card.Img variant="top" src="holder.js/100px180" />
+                    <Card.Body>
+                        <Card.Title>Card Title</Card.Title>
+                        <Card.Text>
+                        Some quick example text to build on the card title and make up the bulk of
+                        the card's content.
+                        </Card.Text>
+                        <Button variant="primary">Go somewhere</Button>
+                    </Card.Body>
+                </Card>
+            </Col>
+          </Row>
+          {/* {courses.map((course, i) => <div><FlattedCard key={i} {...course} /></div>)} */}
         </Slider>
-      </div>
+      </Container>
   );
 };
 
