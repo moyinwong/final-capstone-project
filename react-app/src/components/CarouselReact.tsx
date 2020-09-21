@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import './CarouselReact.scss'
 import { ICourse } from "../pages/CategoryPage";
 import FlattedCard from "./FlattedCard";
 import CarouselCard from "./CarouselCard";
 import { Container, Col, Card, Button, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import './CarouselReact.scss'
+
 
 
 const CarouselReact: React.FC = () => {
   const [courses, setCourses] = useState<Array<ICourse>>([]);
-  const [slides, setSlides] = useState<number[]>([1, 2, 3, 4, 5, 6]);
+  const [slides, setSlides] = useState<number[]>([1, 2, 3, 4]);
   
   const getCourses = async () => {
     const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/category/中文`)
@@ -23,8 +25,9 @@ const CarouselReact: React.FC = () => {
       (a: ICourse, b: ICourse) =>
         parseInt(b.purchased_users_num) - parseInt(a.purchased_users_num)
     )
-
-    setCourses(orderedCourses)
+    
+    setCourses(orderedCourses);
+    console.log(result);
   }
 
   useEffect(() => {
@@ -46,34 +49,22 @@ const CarouselReact: React.FC = () => {
           Click to change slide count
         </button> */}
         <Slider {...settings}>
-          <Row>
-            <Col>
-                <Card>
-                    <Card.Img variant="top" src="holder.js/100px180" />
+          {courses.map((course, i) => 
+            <React.Fragment>
+              <Link to={`/course/${course.course_name}`}>
+                <Col>
+                  <Card>
+                    <Card.Img variant="top" src={`${course.image}`}></Card.Img>
                     <Card.Body>
-                        <Card.Title>Card Title</Card.Title>
-                        <Card.Text>
-                        Some quick example text to build on the card title and make up the bulk of
-                        the card's content.
-                        </Card.Text>
-                        <Button variant="primary">Go somewhere</Button>
+                      <span>{course.course_name}</span>
                     </Card.Body>
-                </Card>
-
-                <Card>
-                    <Card.Img variant="top" src="holder.js/100px180" />
-                    <Card.Body>
-                        <Card.Title>Card Title</Card.Title>
-                        <Card.Text>
-                        Some quick example text to build on the card title and make up the bulk of
-                        the card's content.
-                        </Card.Text>
-                        <Button variant="primary">Go somewhere</Button>
-                    </Card.Body>
-                </Card>
-            </Col>
-          </Row>
-          {/* {courses.map((course, i) => <div><FlattedCard key={i} {...course} /></div>)} */}
+                  </Card>
+                </Col>
+              </Link>
+            </React.Fragment>
+          )}
+          
+        {/* {slides.map((slide) => <div key={slide}><h3>{slide}</h3></div>)} */}
         </Slider>
       </Container>
   );

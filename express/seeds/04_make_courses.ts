@@ -41,5 +41,16 @@ export async function seed(knex: Knex): Promise<void> {
       objective: "幫助提升中文",
       prerequisites: "DSE 準考生",
     },
+    {
+      name: "DSE中文說話天書",
+      price: 100,
+      category_id: "1",
+      tutor_id: 4,
+      image:
+        "https://i.ytimg.com/an_webp/_-jG5s_ZmG8/mqdefault_6s.webp?du=3000&sqp=CJGUofsF&rs=AOn4CLD9lHoD3NZU1tR9nw-UUPyx51kNjA",
+      description: "DSE中文說話",
+      objective: "提升學生說話技巧",
+      prerequisites: "DSE 準考生",
+    },
   ]);
 }

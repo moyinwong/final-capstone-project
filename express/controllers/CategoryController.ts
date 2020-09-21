@@ -12,6 +12,7 @@ export class CategoryController {
       const courses = await this.categoryService.getCoursesByCategory(
         categoryName
       );
+      console.log(courses)
       res.json({ courses: courses });
     } catch (e) {
       console.log(e.message);

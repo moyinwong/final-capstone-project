@@ -24,6 +24,7 @@ export class CourseController {
       if (!courseInfo) {
         return res.status(401).json({ message: "no such course" });
       }
+      console.log(courseInfo)
       return res.json({ course: courseInfo });
     } catch (e) {
       console.log(e.message);
