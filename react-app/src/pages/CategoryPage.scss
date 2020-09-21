@@ -12,6 +12,7 @@
 
   .panel-card-container {
     display: flex;
+    min-width: 170px;
 
     .card-body {
       height: 112px;
