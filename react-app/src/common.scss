@@ -6,3 +6,8 @@ $primary-color: rgb(5, 187, 66);
     font-weight: bolder;
     padding-bottom: 10px;
 }
+
+@mixin section-padding {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}

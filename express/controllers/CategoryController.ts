@@ -5,6 +5,16 @@ import { Request, Response } from "express";
 
 export class CategoryController {
   constructor(private categoryService: CategoryService) {}
+  allCourses = async (req: Request, res: Response) => {
+    try {
+      const courses = await this.categoryService.getAllCourses();
+      console.log(courses);
+      res.json({message: 'success'});
+    } catch(e) {
+      console.log(e.message);
+      res.status(500).json({message: "internal server error"})
+    }
+  }
 
   categoryCourses = async (req: Request, res: Response) => {
     try {

@@ -1,8 +1,7 @@
 @import '../common.scss';
 
 .body-section-intro {
-    padding-top: 50px;
-    padding-bottom: 50px;
+    @include section-padding;
     background-color: rgba(72, 250, 132, 0.3);
     color: #494f62!important;
 }
@@ -26,6 +25,5 @@
 }
 
 .courses-carousel {
-    padding-top: 50px;
-    padding-bottom: 50px;
+    @include section-padding;
 }

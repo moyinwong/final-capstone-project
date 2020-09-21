@@ -110,19 +110,7 @@ const CarouselReact: React.FC = () => {
                 </Col>
             </React.Fragment>
           )}
-            <React.Fragment>
-              {/* <Link to={`/course/${course.course_name}`}> */}
-                <Col>
-                  <Card>
-                    <Card.Img variant="top" src={`https://i.ytimg.com/an_webp/_-jG5s_ZmG8/mqdefault_6s.webp?du=3000&sqp=CJGUofsF&rs=AOn4CLD9lHoD3NZU1tR9nw-UUPyx51kNjA`}></Card.Img>
-                    <Card.Body>
-                      <span>DSE中文說話天書</span>
-                    </Card.Body>
-                  </Card>
-                </Col>
-            </React.Fragment>
-
-          
+   
         {/* {slides.map((slide) => <div key={slide}><h3>{slide}</h3></div>)} */}
         </Slider>
       </Container>
