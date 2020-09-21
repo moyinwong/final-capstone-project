@@ -11,6 +11,10 @@ interface IPopularCourses {
 export class CourseService {
   constructor(private knex: Knex) {}
 
+  test = async () => {
+    console.log('hello')
+  }
+
   getMostPurchasedCourses = async () => {
     const courses: Array<IPopularCourses> = await this.knex
       .table(tables.PURCHASED_COURSES)

@@ -27,7 +27,7 @@ const storage = multer.diskStorage({
 
 export const upload = multer({ storage });
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //set up guards
