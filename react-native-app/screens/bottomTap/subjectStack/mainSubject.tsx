@@ -1,5 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+// import LinearGradient from 'react-native-linear-gradient';
 
 // Styles
 import globalStyles from '../../../styles/globalStyles';
@@ -42,6 +44,13 @@ export default function MainSubject(props: { navigation: { navigate: (arg0: stri
                         style={subjectStyles.subjectBox}
                         onPress={() => props.navigation.navigate('Course')}
                     >
+                        <LinearGradient
+                            start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                            // colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0)', 'rgba(255, 255, 255, 0.4)']}
+                            colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.4)']}
+                            style={subjectStyles.linearGradient}
+                        >
+                        </LinearGradient>
                         <Image
                             style={subjectStyles.subjectPic}
                             resizeMode='cover'
