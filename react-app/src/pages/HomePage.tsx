@@ -2,7 +2,7 @@ import React from "react";
 import { push } from "connected-react-router";
 import { useDispatch, useSelector } from "react-redux";
 
-import Responsive from "../components/Responsive";
+import CarouselReact from "../components/CarouselReact";
 import BurgerMenu from "../components/BurgerMenu";
 import { IRootState } from "../redux/store";
 import { logout } from "../redux/auth/actions";
@@ -36,7 +36,7 @@ const HomePage = () => {
                   <img className="section-icon" src={require("./icons/clock.png")} />
                 </div>
                 <div>
-                  <div>靈活學習</div>
+                  <h6>靈活學習</h6>
                   <div>按自己的節奏隨時隨地學習，靈活運用時間</div>
                 </div>
               </div>
@@ -48,7 +48,7 @@ const HomePage = () => {
                   <img className="section-icon" src={require("./icons/goal.png")} />
                 </div>
                 <div>
-                  <div>多種課程</div>
+                  <h6>多種課程</h6>
                   <div>多種不同課程助你擴闊知識，達到目標</div>
                 </div>
               </div>
@@ -62,7 +62,7 @@ const HomePage = () => {
                   <img className="section-icon" src={require("./icons/lectern.png")} />
                 </div>
                 <div>
-                  <div>專業導師團隊</div>
+                  <h6>專業導師團隊</h6>
                   <div>嚴選導師，教學經驗豐富，教學生動易明</div>
                 </div>
               </div>
@@ -73,7 +73,7 @@ const HomePage = () => {
                   <img className="section-icon" src={require("./icons/pencil-holder.png")} />
                 </div>
                 <div>
-                  <div>學習效率</div>
+                  <h6>學習效率</h6>
                   <div>隨時重溫課堂錄影及筆記，提高學習效率</div>
                 </div>
               </div>
@@ -85,7 +85,7 @@ const HomePage = () => {
 
       <h1>This is HomePage</h1>
 
-      <Responsive />
+      <CarouselReact />
       {/* <img src={`http://localhost:8080${"/img/test-1.png"}`} /> */}
     </div>
   );
