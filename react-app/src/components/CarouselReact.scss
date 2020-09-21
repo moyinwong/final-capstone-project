@@ -4,16 +4,19 @@
 
 .slick-prev {
     z-index: 9999;
+    left: -10px;
 }
 
 .slick-next {
     z-index: 9999;
+    right: -10px;
 }
 
 .carousel-card-body {
     text-align: left;
 
     .carousel-card-title {
+        font-size: 15px;
         font-weight: bolder;
         color: #3c3b37;
     }
