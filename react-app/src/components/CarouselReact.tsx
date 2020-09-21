@@ -16,7 +16,7 @@ const CarouselReact: React.FC = () => {
   
   const getCourses = async () => {
     const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/category/all`)
-    
+
     let result = await res.json();
     const { courses } = result;
     const orderedCourses = courses.slice();
@@ -47,6 +47,13 @@ const CarouselReact: React.FC = () => {
           slidesToShow: 2,
           slidesToScroll: 2,
           initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 580,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
         }
       }
     ]

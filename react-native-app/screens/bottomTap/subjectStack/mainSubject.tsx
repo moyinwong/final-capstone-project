@@ -1,24 +1,29 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 
 // Styles
 import globalStyles from '../../../styles/globalStyles';
+import subjectStyles from '../../../styles/subjectStyles';
 
 const mainSubjectsData = [
     {
         title: '中文',
+        pic: require('../../../assets/subjectsPic/chn.jpg'),
         id: '1'
     },
     {
         title: '英文',
+        pic: require('../../../assets/subjectsPic/eng.jpg'),
         id: '2'
     },
     {
         title: '數學',
+        pic: require('../../../assets/subjectsPic/maths.jpg'),
         id: '3'
     },
     {
         title: '通識',
+        pic: require('../../../assets/subjectsPic/ls.jpg'),
         id: '4'
     }
 ]
@@ -29,15 +34,20 @@ export default function MainSubject(props: { navigation: { navigate: (arg0: stri
         <View style={globalStyles.container}>
 
             <FlatList
-                style={styles.flatList}
+                style={subjectStyles.flatList}
                 keyExtractor={(item) => item.id}
                 data={mainSubjectsData}
                 renderItem={({ item }) => (
                     <TouchableOpacity
-                        style={styles.subjectBox}
+                        style={subjectStyles.subjectBox}
                         onPress={() => props.navigation.navigate('Course')}
                     >
-                        <Text style={styles.subjectTitle}>{item.title}</Text>
+                        <Image
+                            style={subjectStyles.subjectPic}
+                            resizeMode='cover'
+                            source={item.pic}
+                        />
+                        <Text style={subjectStyles.subjectTitle}>{item.title}</Text>
                     </TouchableOpacity>
                 )}
             />
@@ -45,23 +55,3 @@ export default function MainSubject(props: { navigation: { navigate: (arg0: stri
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    flatList: {
-        flex: 1
-    },
-    subjectBox: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        height: 100,
-        marginVertical: 10,
-        paddingRight: 20,
-        borderRadius: 20,
-        backgroundColor: "#ff0000"
-    },
-    subjectTitle: {
-        fontSize: 30
-    }
-})

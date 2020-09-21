@@ -47,7 +47,7 @@ export async function seed(knex: Knex): Promise<void> {
       category_id: "1",
       tutor_id: 4,
       image:
-        "https://i.ytimg.com/an_webp/_-jG5s_ZmG8/mqdefault_6s.webp?du=3000&sqp=CJGUofsF&rs=AOn4CLD9lHoD3NZU1tR9nw-UUPyx51kNjA",
+        "https://i.ytimg.com/vi/iS4ghKXFkaU/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLBXHkGCb48AHod-g0D_3KXnv5x9xQ",
       description: "DSE中文說話",
       objective: "提升學生說話技巧",
       prerequisites: "DSE 準考生",
