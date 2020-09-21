@@ -5,75 +5,35 @@ const knex = Knex(knexConfig["development"]);
 import { tables } from "./tables";
 
 const testKnex = knex
-  .with(
-    "T1",
-    knex
-      .select(
-        "courses.name as course_name",
-        "courses.objective",
-        "courses.description as course_description",
-        "courses.prerequisites",
-        "courses.price",
-        "courses.id",
-        "category_id",
-        "users.name as tutor_name",
-        "courses.image"
-      )
-      .count("purchased_courses.user_id", { as: "purchased_users_num" })
-      .count("rated_score", { as: "rated_num" })
-      .avg("rated_score", { as: "rated_score" })
-      .from(tables.PURCHASED_COURSES)
-      .rightJoin(
-        "courses",
-        "courses.id",
-        `${tables.PURCHASED_COURSES}.course_id`
-      )
-      .leftJoin("users", "users.id", `${tables.COURSES}.tutor_id`)
-      .groupBy(
-        "courses.name",
-        "courses.objective",
-        "courses.description",
-        "courses.prerequisites",
-        "courses.price",
-        "courses.id",
-        "category_id",
-        "users.name",
-        "courses.image"
-      )
-  )
   .select(
-    "course_name",
-    "objective",
-    "course_description",
-    "prerequisites",
-    "price",
-    "T1.id",
-    "category_id",
-    "purchased_users_num",
-    "rated_num",
-    "rated_score",
-
-    "tutor_name",
-    "image"
+    "courses.id as course_id",
+    "courses.name as course_name",
+    "courses.tutor_id",
+    "lessons.id as lesson_id",
+    "lessons.name as lesson_name",
+    "lessons.description as lesson_description",
+    "is_trial",
+    "video_url",
+    "users.email as user_email"
   )
-  .count("lessons.id", { as: "lessons_number" })
-  .from("T1")
-  .innerJoin("lessons", "T1.id", "lessons.course_id")
-  .groupBy(
-    "course_name",
-    "objective",
-    "course_description",
-    "prerequisites",
-    "price",
-    "T1.id",
-    "category_id",
-    "purchased_users_num",
-    "rated_num",
-    "rated_score",
-    "tutor_name",
-    "image"
+  .from(tables.COURSES)
+  .leftJoin(
+    tables.PURCHASED_COURSES,
+    `${tables.COURSES}.id`,
+    `${tables.PURCHASED_COURSES}.course_id`
   )
-  .where("category_id", "1", "2");
+  .leftJoin(
+    tables.USERS,
+    `${tables.PURCHASED_COURSES}.user_id`,
+    `${tables.USERS}.id`
+  )
+  .innerJoin(
+    tables.LESSONS,
+    `${tables.COURSES}.id`,
+    `${tables.LESSONS}.course_id`
+  )
+  .where("users.email", "apple@abc.com")
+  .andWhere("courses.name", "DSE 中文 5* 攻略");
 
 const test = async () => {
   return testKnex.toSQL();
