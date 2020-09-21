@@ -2,21 +2,9 @@ import { slide as Menu } from "react-burger-menu";
 import React from "react";
 import "./BurgerMenu.scss";
 import { Link } from "react-router-dom";
-import { Form } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { IRootState } from "../redux/store";
-import { switchDarkMode } from "../redux/dark/actions";
+import DarkModeSwitch from "./DarkModeSwitch";
 
 const BurgerMenu: React.FC = () => {
-  const isDarkMode: Boolean | undefined = useSelector(
-    (state: IRootState) => state.dark.mode
-  );
-  // const showSettings = (event: any) => {
-  //   event.preventDefault();
-  // };
-
-  const dispatch = useDispatch();
-
   const categories: string[] = [
     "中文",
     "英文",
@@ -36,17 +24,7 @@ const BurgerMenu: React.FC = () => {
 
   return (
     <Menu>
-      <Form>
-        <Form.Check
-          type="switch"
-          id="dark-mode-switch"
-          label="黑夜模式"
-          onClick={() => {
-            dispatch(switchDarkMode(!isDarkMode));
-          }}
-          checked={isDarkMode as any}
-        />
-      </Form>
+      <DarkModeSwitch />
       {categories.map((category, i) => {
         return (
           <div className="">
