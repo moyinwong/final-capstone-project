@@ -145,13 +145,14 @@ const CategoryPage: React.FC = () => {
 
   //control panel
   const panelStyle = {
-    width: isFilterOpen ? 300 : 0,
+    width: isFilterOpen ? 200 : 0,
     transition: "all 0.3s ease-in",
   };
 
   const cardStyle = {
     border: isFilterOpen ? "1px solid rgba(0,0,0,.125)" : "none",
-    transition: "all 0.2s",
+    width: isFilterOpen ? 170 : 0,
+    transition: "all 0.3s",
   };
 
   return (
