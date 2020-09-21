@@ -8,7 +8,8 @@ const subjectStyles = StyleSheet.create({
         position: 'relative',
         height: 100,
         marginVertical: 10,
-        borderRadius: 20
+        marginHorizontal: 10,
+        borderRadius: 1
     },
     linearGradient: {
         position: 'absolute',
@@ -17,13 +18,13 @@ const subjectStyles = StyleSheet.create({
         left: 0,
         right: 0,
         zIndex: 1,
-        borderRadius: 20
+        borderRadius: 12
     },
     subjectPic: {
         flex: 1,
         width: '100%',
         height: '100%',
-        borderRadius: 20,
+        borderRadius: 12,
         resizeMode: 'cover'
     },
     subjectTitle: {
