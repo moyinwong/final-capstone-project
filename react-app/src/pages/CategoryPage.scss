@@ -32,7 +32,10 @@
   .all-course-container {
     width: 100%;
   }
+}
 
-  .dropdown-menu {
+@media (max-width: 480px) {
+  .panel {
+    width: 0px;
   }
 }

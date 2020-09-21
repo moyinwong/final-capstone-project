@@ -33,7 +33,7 @@ export interface ICourse {
 const CategoryPage: React.FC = () => {
   const [initCourses, setInitCourses] = useState<Array<ICourse>>([]);
   const [courses, setCourses] = useState<Array<ICourse>>([]);
-  const [isFilterOpen, setIsFilterOpen] = useState(true);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [orderMethod, setOrderMethod] = useState("最受歡迎");
   const [ratingSelection, setRatingSelection] = useState("0");
   const [priceSelection, setPriceSelection] = useState("0");
@@ -146,13 +146,16 @@ const CategoryPage: React.FC = () => {
   //control panel
   const panelStyle = {
     width: isFilterOpen ? 200 : 0,
-    transition: "all 0.3s ease-in",
+    opacity: isFilterOpen ? 1 : 0,
+    //overflow: "hidden",
+    transition: "all 0.3s ease-out",
   };
 
   const cardStyle = {
     border: isFilterOpen ? "1px solid rgba(0,0,0,.125)" : "none",
     width: isFilterOpen ? 170 : 0,
-    transition: "all 0.3s",
+    opacity: isFilterOpen ? 1 : 0,
+    transition: "all 0.3s ease-out",
   };
 
   return (
