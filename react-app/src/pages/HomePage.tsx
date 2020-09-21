@@ -82,10 +82,9 @@ const HomePage = () => {
               
         </Container>
       </section>
-
-      <h1>This is HomePage</h1>
-
-      <CarouselReact />
+      <section className="courses-carousel">
+        <CarouselReact />
+      </section>
       {/* <img src={`http://localhost:8080${"/img/test-1.png"}`} /> */}
     </div>
   );

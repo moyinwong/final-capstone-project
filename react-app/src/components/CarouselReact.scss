@@ -11,3 +11,27 @@
     z-index: 9999;
     right: 25px;
 }
+
+.carousel-card-body {
+    text-align: left;
+
+    .carousel-card-title {
+        font-weight: bolder;
+        color: #3c3b37;
+    }
+
+    .carousel-card-teacher {
+        font-size: small;
+        color: #73726c;
+    }
+
+    .rating {
+        display: flex;
+        font-size: 10px;
+  
+        .decimal {
+          font-size: 13px;
+          font-weight: bold;
+        }
+    }
+}

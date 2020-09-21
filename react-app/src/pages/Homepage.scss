@@ -1,3 +1,5 @@
+@import '../common.scss';
+
 .body-section-intro {
     padding-top: 50px;
     padding-bottom: 50px;
@@ -6,9 +8,7 @@
 }
 
 .section-title {
-    font-size: x-large;
-    color: rgb(5, 187, 66);
-    font-weight: bolder;
+    @include section-title;
 }
 
 .section-icon {
@@ -23,4 +23,9 @@
 
 .section-cards {
     margin-top: 20px;
+}
+
+.courses-carousel {
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
