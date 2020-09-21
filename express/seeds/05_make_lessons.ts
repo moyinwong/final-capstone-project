@@ -111,5 +111,16 @@ export async function seed(knex: Knex): Promise<void> {
       video_url: "https://youtu.be/6-DvzmgM-Vc",
       course_id: 3,
     },
+    {
+      name: "孟子《魚我所欲也》2",
+      description: `細路，記得，只吃罐頭會營養不良的。
+
+      這些影片只是一張粗略的地圖，讓你在溫習時容易找到所在的方位，容易把所學分類整理。所以拿着地圖，就拜託你們真的抬抬腿，踏踏實實走進書本筆記和試題庫。
+      
+      加油吧。`,
+      is_trial: false,
+      video_url: "https://youtu.be/6-DvzmgM-Vc",
+      course_id: 4,
+    },
   ]);
 }
