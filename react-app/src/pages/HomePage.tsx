@@ -16,15 +16,20 @@ const HomePage = () => {
     <div>
       <section className="body-section-intro">
         <Container>
-          <Row className="justify-content-center">
+          <Row className="justify-content-centers">
+
             <Col md={12} className="section-title">中學生線上學習平台</Col>
+            <Col md={2}><div></div></Col>
             <Col md={8}>
-            Educate是一個針對DSE而設的網上補習平台，
-            透過融合科技和教育元素，讓同學足不出戶就能以十倍效率、一半時間、
-            針對自己的學習需要極速進步，輕鬆應付DSE！(copy from afterschool remember to change!!!!!)
+              Educate是一個針對DSE而設的網上補習平台，
+              透過融合科技和教育元素，讓同學足不出戶就能以十倍效率、一半時間、
+              針對自己的學習需要極速進步，輕鬆應付DSE！(copy from afterschool remember to change!!!!!)
             </Col>
+            <Col md={2}><div></div></Col>
+
           </Row>
-          <Row>
+
+          <Row className="section-cards">
             <Col>
               <div className="section-card">
                 <div>
