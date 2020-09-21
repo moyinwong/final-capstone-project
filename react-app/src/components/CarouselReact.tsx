@@ -15,8 +15,8 @@ const CarouselReact: React.FC = () => {
   const [slides, setSlides] = useState<number[]>([1, 2, 3, 4]);
   
   const getCourses = async () => {
-    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/category/中文`)
-
+    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/category/all`)
+    
     let result = await res.json();
     const { courses } = result;
     const orderedCourses = courses.slice();

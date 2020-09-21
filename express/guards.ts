@@ -19,14 +19,14 @@ export function createIsLoggedIn(userService: UserService) {
       //no token, return
       const token = permit.check(req);
       if (!token) {
-        return res.status(401).json({ msg: "Permission Denied" });
+        return res.status(401).json({ msg: "Permission Denied - No token" });
       }
 
       //has token
       const payload: { id: number } = jwtSimple.decode(token, jwt.jwtSecret);
       const user = await userService.getUserByID(payload.id);
       if (!user) {
-        return res.status(401).json({ msg: "Permission Denied" });
+        return res.status(401).json({ msg: "Permission Denied - No user" });
       }
       // just want info other than password
       const { password, ...others } = user;
@@ -35,7 +35,7 @@ export function createIsLoggedIn(userService: UserService) {
 
       return next();
     } catch (err) {
-      return res.status(401).json({ msg: "Permission Denied" });
+      return res.status(401).json({ msg: "Permission Denied - something's wrong" });
     }
   };
 }
