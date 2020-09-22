@@ -11,7 +11,6 @@ import Rating from "react-rating";
 import { Card } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { Accordion } from "react-bootstrap";
-import { useRef } from "react";
 
 interface ILesson {
   course_id: number;
@@ -50,7 +49,11 @@ const CoursePage: React.FC = () => {
     (async () => {
       const newCourse = await getAllCoursesByCategory(courseName);
       setCourse(newCourse);
+      document.title = ` ${newCourse.course_name}`;
     })();
+    return () => {
+      document.title = "e-ducate";
+    };
   }, []);
 
   //run once when init
@@ -286,9 +289,31 @@ const CoursePage: React.FC = () => {
                             <Card.Body>
                               <div>{e.lesson_description}</div>
                               {e.user_email ? (
-                                <Button variant="success">前往該課堂</Button>
+                                <Button
+                                  variant="success"
+                                  onClick={() => {
+                                    dispatch(
+                                      push(
+                                        `/course/${courseName}/lesson/${e.lesson_name}`
+                                      )
+                                    );
+                                  }}
+                                >
+                                  前往該課堂
+                                </Button>
                               ) : e.is_trial ? (
-                                <Button variant="success">可免費試堂</Button>
+                                <Button
+                                  variant="success"
+                                  onClick={() => {
+                                    dispatch(
+                                      push(
+                                        `/course/${courseName}/lesson/${e.lesson_name}`
+                                      )
+                                    );
+                                  }}
+                                >
+                                  可免費試堂
+                                </Button>
                               ) : (
                                 ""
                               )}

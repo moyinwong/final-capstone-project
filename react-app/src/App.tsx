@@ -56,6 +56,11 @@ function App() {
           component={CategoryPage}
         />
         <Route path="/course/:courseName" exact={true} component={CoursePage} />
+        <Route
+          path="/course/:courseName/lesson/:lessonName"
+          exact={true}
+          component={LessonPage}
+        />
         {/* ... */}
         <Route path="/404" exact={true} component={NotFound} />
         <Route component={NotFound} />

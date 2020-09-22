@@ -49,6 +49,10 @@ const CategoryPage: React.FC = () => {
   //run once when init
   useEffect(() => {
     getAllCoursesByCategory();
+    document.title = ` ${categoryName}課程`;
+    return () => {
+      document.title = "e-ducate";
+    };
   }, []);
 
   const getAllCoursesByCategory = async () => {
