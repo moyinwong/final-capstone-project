@@ -10,6 +10,7 @@ import globalStyles from '../../../styles/globalStyles';
 
 export default function Lesson(props: { navigation: { goBack: () => void; navigate: (arg0: string) => void; }; }) {
 
+    // Hooks
     const navigation = useNavigation();
 
     return (

@@ -40,6 +40,7 @@ const mainSubjectsData = [
 
 export default function LinguisticSubject() {
 
+    // Hooks
     const navigation = useNavigation();
 
     return (

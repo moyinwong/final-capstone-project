@@ -25,6 +25,7 @@ const mainSubjectsData = [
 
 export default function BusinessSubject() {
 
+    // Hooks
     const navigation = useNavigation();
 
     return (

@@ -45,6 +45,7 @@ const mainSubjectsData = [
 
 export default function ScienceSubject() {
 
+    // Hooks
     const navigation = useNavigation();
 
     return (

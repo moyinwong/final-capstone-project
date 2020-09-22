@@ -35,6 +35,7 @@ const mainSubjectsData = [
 
 export default function MainSubject() {
 
+    // Hooks
     const navigation = useNavigation();
 
     return (

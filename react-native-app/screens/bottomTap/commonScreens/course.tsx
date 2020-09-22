@@ -13,21 +13,21 @@ export default function Courses(props: { navigation: { navigate: (arg0: string) 
     const navigation = useNavigation();
     const route = useRoute();
 
-    interface ICourseData {
+    interface ICourseParam {
         title?: string | null
     }
 
-    let courseData: ICourseData = {
+    let courseParam: ICourseParam = {
         title: null
     }
 
     if (route.params) {
-        courseData = route.params;
+        courseParam = route.params;
     }
 
     return (
         <View style={globalStyles.container}>
-            <Text>{courseData.title}</Text>
+            <Text>{courseParam.title}</Text>
             <Button
                 title="Go to Lesson"
                 onPress={() => navigation.navigate('Lesson')}

@@ -10,6 +10,7 @@ import globalStyles from '../../../styles/globalStyles';
 
 export default function Quiz(props: { navigation: { goBack: () => void; }; }) {
 
+    // Hooks
     const navigation = useNavigation();
 
     return (

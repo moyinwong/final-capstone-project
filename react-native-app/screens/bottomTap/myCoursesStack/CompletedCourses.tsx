@@ -10,6 +10,7 @@ import globalStyles from '../../../styles/globalStyles';
 
 export default function CompletedCourses(props: { navigation: { navigate: (arg0: string) => void; }; }) {
 
+    // Hooks
     const navigation = useNavigation();
 
     return (

@@ -50,6 +50,7 @@ const mainSubjectsData = [
 
 export default function OtherSubject() {
 
+    // Hooks
     const navigation = useNavigation();
 
     return (
