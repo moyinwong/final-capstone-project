@@ -1,9 +1,12 @@
-// Components
+// React, React Native
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 
 // Navigation
 import { useNavigation, useRoute } from '@react-navigation/native';
+
+// Icons
+import { Entypo, FontAwesome } from '@expo/vector-icons';
 
 // Styles
 import globalStyles from '../../../styles/globalStyles';
@@ -42,8 +45,10 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 description: '教你寫Server',
                 tutor: 'Gordon Lau',
                 numOfLessons: 8,
+                price: 100,
                 aveScore: 4.6,
-                pic: require('../../../assets/coursesPic/express.jpg'),
+                coursePic: require('../../../assets/coursesPic/express.jpg'),
+                tutorPic: require('../../../assets/tutorsPic/gordon.jpg'),
                 id: '1'
             },
             {
@@ -51,8 +56,10 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 description: '教你寫Server',
                 tutor: 'Gordon Lau',
                 numOfLessons: 6,
+                price: 150,
                 aveScore: 4.5,
-                pic: require('../../../assets/coursesPic/firebase.png'),
+                coursePic: require('../../../assets/coursesPic/firebase.png'),
+                tutorPic: require('../../../assets/tutorsPic/gordon.jpg'),
                 id: '2'
             },
             {
@@ -60,8 +67,10 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 description: '教你寫App',
                 tutor: 'Jason Lee',
                 numOfLessons: 12,
+                price: 120,
                 aveScore: 4.4,
-                pic: require('../../../assets/coursesPic/flutter.png'),
+                coursePic: require('../../../assets/coursesPic/flutter.png'),
+                tutorPic: require('../../../assets/tutorsPic/jason.jpg'),
                 id: '3'
             },
             {
@@ -69,17 +78,21 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 description: '教你JS',
                 tutor: 'Jason Lee',
                 numOfLessons: 9,
+                price: 110,
                 aveScore: 4.5,
-                pic: require('../../../assets/coursesPic/javaScript.png'),
+                coursePic: require('../../../assets/coursesPic/javaScript.png'),
+                tutorPic: require('../../../assets/tutorsPic/jason.jpg'),
                 id: '4'
             },
             {
                 title: 'Jest',
                 description: '教你寫Test',
-                tutor: 'Jason Lee',
+                tutor: 'Beeno Tung',
                 numOfLessons: 3,
+                price: 180,
                 aveScore: 4.0,
-                pic: require('../../../assets/coursesPic/jest.png'),
+                coursePic: require('../../../assets/coursesPic/jest.png'),
+                tutorPic: require('../../../assets/tutorsPic/beeno.jpg'),
                 id: '5'
             },
             {
@@ -87,17 +100,21 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 description: '教你寫migration',
                 tutor: 'Andrew Shek',
                 numOfLessons: 2,
+                price: 130,
                 aveScore: 4.2,
-                pic: require('../../../assets/coursesPic/knex.png'),
+                coursePic: require('../../../assets/coursesPic/knex.png'),
+                tutorPic: require('../../../assets/tutorsPic/andrew.jpg'),
                 id: '6'
             },
             {
                 title: 'Flutter',
                 description: '教你寫App',
-                tutor: 'Jason Lee',
+                tutor: 'Andrew Shek',
                 numOfLessons: 12,
+                price: 160,
                 aveScore: 4.4,
-                pic: require('../../../assets/coursesPic/flutter.png'),
+                coursePic: require('../../../assets/coursesPic/flutter.png'),
+                tutorPic: require('../../../assets/tutorsPic/andrew.jpg'),
                 id: '7'
             },
             {
@@ -105,8 +122,10 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 description: '教你寫Python',
                 tutor: 'Dragon Lung',
                 numOfLessons: 12,
+                price: 190,
                 aveScore: 4.1,
-                pic: require('../../../assets/coursesPic/python.png'),
+                coursePic: require('../../../assets/coursesPic/python.png'),
+                tutorPic: require('../../../assets/tutorsPic/dragon.jpg'),
                 id: '8'
             },
             {
@@ -114,8 +133,10 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 description: '兩日學識React',
                 tutor: 'Alex Lau',
                 numOfLessons: 3,
+                price: 200,
                 aveScore: 4.2,
-                pic: require('../../../assets/coursesPic/react.png'),
+                coursePic: require('../../../assets/coursesPic/react.png'),
+                tutorPic: require('../../../assets/tutorsPic/alex.jpeg'),
                 id: '9'
             },
             {
@@ -123,8 +144,10 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 description: '三日學識React Native',
                 tutor: 'Alex Lau',
                 numOfLessons: 5,
+                price: 250,
                 aveScore: 4.5,
-                pic: require('../../../assets/coursesPic/reactNative.png'),
+                coursePic: require('../../../assets/coursesPic/reactNative.png'),
+                tutorPic: require('../../../assets/tutorsPic/alex.jpeg'),
                 id: '10'
             },
             {
@@ -132,17 +155,21 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 description: '三日學識AI',
                 tutor: 'Beeno Tung',
                 numOfLessons: 12,
+                price: 170,
                 aveScore: 4.8,
-                pic: require('../../../assets/coursesPic/tensorFlow.png'),
+                coursePic: require('../../../assets/coursesPic/tensorFlow.png'),
+                tutorPic: require('../../../assets/tutorsPic/beeno.jpg'),
                 id: '11'
             },
             {
                 title: 'TypeScript',
                 description: '三日學識Type Script',
-                tutor: 'Gordon Lau',
+                tutor: 'Dragon Lung',
                 numOfLessons: 3,
+                price: 140,
                 aveScore: 4.6,
-                pic: require('../../../assets/coursesPic/typeScript.jpg'),
+                coursePic: require('../../../assets/coursesPic/typeScript.jpg'),
+                tutorPic: require('../../../assets/tutorsPic/dragon.jpg'),
                 id: '12'
             }
         ]
@@ -151,13 +178,17 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
     return (
         <View style={globalStyles.container}>
 
-            <View>
+            <View style={coursesListStyles.titleContainer}>
                 {coursesListParam.subject ?
                     (
-                        <Text>所有<Text style={coursesListStyles.paramTitle}>{coursesListParam.subject}</Text>課程</Text>
+                        <Text style={coursesListStyles.screenTitle}>所有
+                            <Text style={coursesListStyles.paramTitle}>{coursesListParam.subject}</Text>
+                        課程</Text>
                     )
                     : (
-                        <Text><Text style={coursesListStyles.paramTitle}>{coursesListParam.tutor}</Text>的課程</Text>
+                        <Text style={coursesListStyles.screenTitle}>
+                            <Text style={coursesListStyles.paramTitle}>{coursesListParam.tutor}</Text>
+                        的課程</Text>
                     )}
             </View>
 
@@ -167,22 +198,53 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 data={coursesListData}
                 renderItem={({ item }) => (
                     <TouchableOpacity
-                        style={coursesListStyles.tutorBox}
+                        style={coursesListStyles.courseBox}
                         onPress={() => navigation.navigate('Course', { title: item.title })}
                     >
-                        <View style={coursesListStyles.tutorPicContainer}>
+                        <View style={coursesListStyles.coursePicContainer}>
                             <Image
-                                style={coursesListStyles.tutorPic}
+                                style={coursesListStyles.coursePic}
                                 resizeMode='cover'
-                                source={item.pic}
+                                source={item.coursePic}
                             />
                         </View>
-                        <View style={coursesListStyles.tutorInfoContainer}>
-                            <Text style={coursesListStyles.tutorName}>{item.title}</Text>
-                            <Text style={coursesListStyles.tutorName}>{item.description}</Text>
-                            <Text style={coursesListStyles.tutorName}>{item.tutor}</Text>
-                            <Text style={coursesListStyles.tutorName}>{"總共堂數: " + item.numOfLessons}</Text>
-                            <Text style={coursesListStyles.tutorName}>{item.aveScore}</Text>
+                        <View style={coursesListStyles.courseInfoContainer}>
+
+                            <View style={coursesListStyles.courseInfoLeftContainer}>
+                                <View style={coursesListStyles.tutorPicContainer}>
+                                    <Image
+                                        style={coursesListStyles.tutorPic}
+                                        resizeMode='cover'
+                                        source={item.tutorPic}
+                                    />
+                                </View>
+                            </View>
+
+                            <View style={coursesListStyles.courseInfoRightContainer}>
+                                <Text style={coursesListStyles.courseTitle}>{item.title}</Text>
+                                <View style={coursesListStyles.courseSubInfoContainer}>
+                                    <View style={coursesListStyles.courseSubInfoTextContainer}>
+                                        <Text style={coursesListStyles.courseInfoText}>{item.tutor}</Text>
+                                        <Entypo style={coursesListStyles.courseInfoDot} name="dot-single" size={16} color="#555555" />
+                                        <Text style={coursesListStyles.courseInfoText}>{item.description}</Text>
+                                        <Entypo style={coursesListStyles.courseInfoDot} name="dot-single" size={16} color="#555555" />
+                                        <Text style={coursesListStyles.courseInfoText}>{"總共堂數: " + item.numOfLessons}</Text>
+                                    </View>
+                                    <View style={coursesListStyles.courseSubInfoLowerContainer}>
+                                        <Text style={coursesListStyles.coursePrice}>{"價錢: $" + item.price}</Text>
+                                        <View style={coursesListStyles.courseScoreContainer}>
+                                            <Text style={coursesListStyles.courseInfoText}>{"評分: " + item.aveScore}</Text>
+                                            <FontAwesome name="star" size={20} color="#fadd4d" />
+                                            <FontAwesome name="star" size={20} color="#fadd4d" />
+                                            <FontAwesome name="star" size={20} color="#fadd4d" />
+                                            <FontAwesome name="star" size={20} color="#fadd4d" />
+                                            <FontAwesome name="star-o" size={20} color="#fadd4d" />
+                                        </View>
+                                    </View>
+                                </View>
+                            </View>
+
+
                         </View>
                     </TouchableOpacity>
                 )}

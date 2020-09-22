@@ -1,4 +1,4 @@
-// Components
+// React, React Native
 import React from 'react';
 import { View, Text, Button } from 'react-native';
 

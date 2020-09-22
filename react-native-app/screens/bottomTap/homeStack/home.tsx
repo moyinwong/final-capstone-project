@@ -1,5 +1,8 @@
+// React, React Native
 import React from 'react';
 import { View, Text, Button } from 'react-native';
+
+// Navigation
 import { useNavigation } from '@react-navigation/native';
 
 // Styles

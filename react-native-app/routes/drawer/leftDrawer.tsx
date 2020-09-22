@@ -1,5 +1,8 @@
+// React, React Native
 import React from 'react';
 import { Alert } from 'react-native';
+
+// Navigation
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer'
 
 // Icons

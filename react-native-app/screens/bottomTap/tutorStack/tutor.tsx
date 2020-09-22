@@ -1,4 +1,4 @@
-// Components
+// React, React Native
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 
