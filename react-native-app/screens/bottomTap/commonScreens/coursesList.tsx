@@ -8,17 +8,23 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 // Styles
 import globalStyles from '../../../styles/globalStyles';
 
-export default function Courses(props: { navigation: { navigate: (arg0: string) => void; }; }) {
+export default function CoursesList(props: { navigation: { navigate: (arg0: string) => void; }; }) {
 
     const navigation = useNavigation();
     const route = useRoute();
 
     interface ICourseData {
-        title?: string | null
+        subject?: string | null
+        tutor?: string | null
+        user?: string | null
+        completedCourse?: boolean | null
     }
 
     let courseData: ICourseData = {
-        title: null
+        subject: null,
+        tutor: null,
+        user: null,
+        completedCourse: null
     }
 
     if (route.params) {
@@ -27,10 +33,10 @@ export default function Courses(props: { navigation: { navigate: (arg0: string) 
 
     return (
         <View style={globalStyles.container}>
-            <Text>{courseData.title}</Text>
+            <Text>{courseData.subject ? courseData.subject : courseData.tutor}</Text>
             <Button
-                title="Go to Lesson"
-                onPress={() => navigation.navigate('Lesson')}
+                title="Go to Course"
+                onPress={() => navigation.navigate('Course', { title: "Tecky" })}
             />
         </View>
     )

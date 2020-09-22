@@ -8,6 +8,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import SubjectTopTap from '../topTap/subjectTopTap';
 
 // Screens
+import CoursesList from '../../screens/bottomTap/commonScreens/coursesList';
 import Course from '../../screens/bottomTap/commonScreens/course';
 import Lesson from '../../screens/bottomTap/commonScreens/lesson';
 import Quiz from '../../screens/bottomTap/commonScreens/quiz';
@@ -51,6 +52,14 @@ export default function SubjectStack(props: { navigation: { toggleDrawer: () => 
                 children={SubjectTopTap}
                 options={{
                     title: '科目',
+                    ...stackTransition
+                }}
+            />
+            <Stack.Screen
+                name="CoursesList"
+                component={CoursesList}
+                options={{
+                    title: '課程例表',
                     ...stackTransition
                 }}
             />

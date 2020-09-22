@@ -57,7 +57,7 @@ export default function ScienceSubject() {
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={subjectStyles.subjectBox}
-                        onPress={() => navigation.navigate('Course', { subject: item.title })}
+                        onPress={() => navigation.navigate('CoursesList', { subject: item.title })}
                     >
                         <LinearGradient
                             start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}

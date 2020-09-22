@@ -17,7 +17,7 @@ export default function CompletedCourses(props: { navigation: { navigate: (arg0:
             <Text>已完成課程</Text>
             <Button
                 title="Go to Course"
-                onPress={() => navigation.navigate('Course')}
+                onPress={() => navigation.navigate('Course', { title: "已完成"} )}
             />
         </View>
     )

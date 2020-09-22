@@ -9,7 +9,19 @@ const Tab = createMaterialTopTabNavigator();
 
 export default function MyCoursesTopTab() {
     return (
-        <Tab.Navigator>
+        <Tab.Navigator
+            tabBarOptions={{
+                activeTintColor: '#5b96f7',
+                inactiveTintColor: '#a5aebf',
+                indicatorStyle: {
+                    height: 2,
+                    color: '#5b96f7'
+                },
+                labelStyle: {
+                    fontSize: 16
+                }
+            }}
+        >
             <Tab.Screen
                 name="InProgressCourses"
                 component={InProgressCourses}

@@ -17,7 +17,7 @@ export default function InProgressCourses(props: { navigation: { navigate: (arg0
             <Text>修讀中課程</Text>
             <Button
                 title="Go to Course"
-                onPress={() => navigation.navigate('Course')}
+                onPress={() => navigation.navigate('Course', { title: "修讀中"})}
             />
         </View>
     )

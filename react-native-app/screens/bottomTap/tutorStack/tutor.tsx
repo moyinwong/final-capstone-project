@@ -1,5 +1,5 @@
 // Components
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 
 // Navigation
@@ -9,42 +9,44 @@ import { useNavigation } from '@react-navigation/native';
 import globalStyles from '../../../styles/globalStyles';
 import tutorStyles from '../../../styles/tutorStyles';
 
-const tutorsData = [
-    {
-        name: 'Alex Lau',
-        pic: require('../../../assets/tutorsPic/alex.jpeg'),
-        id: '1'
-    },
-    {
-        name: 'Gordon Lau',
-        pic: require('../../../assets/tutorsPic/gordon.jpg'),
-        id: '2'
-    },
-    {
-        name: 'Jason Lee',
-        pic: require('../../../assets/tutorsPic/jason.jpg'),
-        id: '3'
-    },
-    {
-        name: 'Andrew Shek',
-        pic: require('../../../assets/tutorsPic/andrew.jpg'),
-        id: '4'
-    },
-    {
-        name: 'Dragon Lung',
-        pic: require('../../../assets/tutorsPic/dragon.jpg'),
-        id: '5'
-    },
-    {
-        name: 'Beeno Tung',
-        pic: require('../../../assets/tutorsPic/beeno.jpg'),
-        id: '6'
-    }
-]
-
 export default function Tutor(props: { navigation: { navigate: (arg0: string) => void; }; }) {
 
     const navigation = useNavigation();
+
+    const [tutorsData, setTutorsData] = useState(
+        [
+            {
+                name: 'Alex Lau',
+                pic: require('../../../assets/tutorsPic/alex.jpeg'),
+                id: '1'
+            },
+            {
+                name: 'Gordon Lau',
+                pic: require('../../../assets/tutorsPic/gordon.jpg'),
+                id: '2'
+            },
+            {
+                name: 'Jason Lee',
+                pic: require('../../../assets/tutorsPic/jason.jpg'),
+                id: '3'
+            },
+            {
+                name: 'Andrew Shek',
+                pic: require('../../../assets/tutorsPic/andrew.jpg'),
+                id: '4'
+            },
+            {
+                name: 'Dragon Lung',
+                pic: require('../../../assets/tutorsPic/dragon.jpg'),
+                id: '5'
+            },
+            {
+                name: 'Beeno Tung',
+                pic: require('../../../assets/tutorsPic/beeno.jpg'),
+                id: '6'
+            }
+        ]
+    );
 
     return (
         <View style={globalStyles.container}>
@@ -57,7 +59,7 @@ export default function Tutor(props: { navigation: { navigate: (arg0: string) =>
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={tutorStyles.tutorBox}
-                        onPress={() => navigation.navigate('Course', { tutor: item.name })}
+                        onPress={() => navigation.navigate('CoursesList', { tutor: item.name })}
                     >
                         <View style={tutorStyles.tutorPicContainer}>
                             <Image

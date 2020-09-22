@@ -12,7 +12,19 @@ const Tab = createMaterialTopTabNavigator();
 
 export default function SubjectTopTab() {
     return (
-        <Tab.Navigator>
+        <Tab.Navigator
+            tabBarOptions={{
+                activeTintColor: '#5b96f7',
+                inactiveTintColor: '#a5aebf',
+                indicatorStyle: {
+                    height: 2,
+                    color: '#5b96f7'
+                },
+                labelStyle: {
+                    fontSize: 16
+                }
+            }}
+        >
             <Tab.Screen
                 name="MainSubject"
                 component={MainSubject}
@@ -48,6 +60,6 @@ export default function SubjectTopTab() {
                     title: "其他"
                 }}
             />
-        </Tab.Navigator>
+        </Tab.Navigator >
     );
 }

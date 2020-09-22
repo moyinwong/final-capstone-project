@@ -13,7 +13,7 @@ export default function Home() {
             <Text>Home Screen</Text>
             <Button
                 title="Go to Course"
-                onPress={() => navigation.navigate('Course')}
+                onPress={() => navigation.navigate('Course', { title: "Tecky Home" })}
             />
         </View>
     )

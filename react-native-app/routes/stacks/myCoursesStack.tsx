@@ -48,7 +48,7 @@ export default function TutorStack(props: { navigation: { toggleDrawer: () => vo
         >
             <Stack.Screen
                 name="MyCourses"
-                component={MyCoursesTopTap}
+                children={MyCoursesTopTap}
                 options={{
                     title: '我的課程',
                     ...stackTransition
