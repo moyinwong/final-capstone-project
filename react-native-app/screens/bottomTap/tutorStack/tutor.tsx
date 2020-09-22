@@ -1,5 +1,9 @@
+// Components
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
+
+// Navigation
+import { useNavigation } from '@react-navigation/native';
 
 // Styles
 import globalStyles from '../../../styles/globalStyles';
@@ -40,6 +44,8 @@ const tutorsData = [
 
 export default function Tutor(props: { navigation: { navigate: (arg0: string) => void; }; }) {
 
+    const navigation = useNavigation();
+
     return (
         <View style={globalStyles.container}>
 
@@ -51,7 +57,7 @@ export default function Tutor(props: { navigation: { navigate: (arg0: string) =>
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={tutorStyles.tutorBox}
-                        onPress={() => props.navigation.navigate('Course')}
+                        onPress={() => navigation.navigate('Course', { subject: null, tutor: item.name })}
                     >
                         <View style={tutorStyles.tutorPicContainer}>
                             <Image

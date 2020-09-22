@@ -1,7 +1,10 @@
+// Components
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-// import LinearGradient from 'react-native-linear-gradient';
+
+// Navigation
+import { useNavigation } from '@react-navigation/native';
 
 // Styles
 import globalStyles from '../../../styles/globalStyles';
@@ -35,7 +38,9 @@ const mainSubjectsData = [
     }
 ]
 
-export default function LinguisticSubject(props: { navigation: { navigate: (arg0: string) => void; }; }) {
+export default function LinguisticSubject() {
+
+    const navigation = useNavigation();
 
     return (
         <View style={globalStyles.container}>
@@ -47,7 +52,7 @@ export default function LinguisticSubject(props: { navigation: { navigate: (arg0
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={subjectStyles.subjectBox}
-                        onPress={() => props.navigation.navigate('Course')}
+                        onPress={() => navigation.navigate('Course', {subject: item.title, tutor: null})}
                     >
                         <LinearGradient
                             start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
