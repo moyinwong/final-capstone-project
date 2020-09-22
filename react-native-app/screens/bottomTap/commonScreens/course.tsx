@@ -13,12 +13,23 @@ export default function Course(props: { navigation: { navigate: (arg0: string) =
     const navigation = useNavigation();
     const route = useRoute();
 
-    let courseData = {
-        subject: null,
-        tutor: null
+    interface ICourseData {
+        subject?: string | null
+        tutor?: string | null
+        user?: string | null
+        completedCourse?: boolean | null
     }
 
-    courseData = route.params;
+    let courseData: ICourseData = {
+        subject: null,
+        tutor: null,
+        user: null,
+        completedCourse: null
+    }
+
+    if (route.params) {
+        courseData = route.params;
+    }
 
     return (
         <View style={globalStyles.container}>

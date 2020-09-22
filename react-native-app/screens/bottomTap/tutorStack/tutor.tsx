@@ -57,7 +57,7 @@ export default function Tutor(props: { navigation: { navigate: (arg0: string) =>
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={tutorStyles.tutorBox}
-                        onPress={() => navigation.navigate('Course', { subject: null, tutor: item.name })}
+                        onPress={() => navigation.navigate('Course', { tutor: item.name })}
                     >
                         <View style={tutorStyles.tutorPicContainer}>
                             <Image
