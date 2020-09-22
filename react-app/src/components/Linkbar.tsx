@@ -8,8 +8,12 @@ import {
   Button,
   NavDropdown,
 } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { IRootState } from "../redux/store";
 
 const Linkbar = () => {
+  const isDarkMode = useSelector((state: IRootState) => state.dark.mode);
+
   const categories: string[] = [
     "中文",
     "英文",
@@ -27,10 +31,14 @@ const Linkbar = () => {
     "M2",
   ];
 
+  const darkMode = {
+    color: 'dark'
+  }
+
   return (
     <div>
-      <Navbar bg="dark" variant="dark">
-        <Nav className="mx-auto">
+      <Navbar bg='dark' variant="dark">
+        <Nav className="mx-auto" >
           {categories.map((category, i) => {
             return (
               <Nav.Link href={`/category/${category}`} key={i} id={category}>

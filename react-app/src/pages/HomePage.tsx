@@ -91,7 +91,7 @@ const HomePage = () => {
       <section className="courses-carousel">
         <CarouselReact />
       </section>
-      <button onClick={test}>TEST</button>
+
       {/* <img src={`http://localhost:8080${"/img/test-1.png"}`} /> */}
     </div>
   );

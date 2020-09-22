@@ -31,7 +31,7 @@ const Header = () => {
         <BurgerMenu />
       </div>
       <div className="web-navbar">
-        <Navbar bg="light" variant="light">
+        <Navbar bg='light' variant="light">
           <Navbar.Brand href="/">
             <img className="website-logo" src={require("../logo.png")} />
           </Navbar.Brand>
@@ -79,21 +79,6 @@ const Header = () => {
         <Linkbar />
       </div>
     </div>
-    // <div className="header">
-
-    // <img className="website-logo" src={require('../logo.png')}/>
-    //     {isAuthenticated ? (
-    //         <>
-    //             <div>Welcome back {userEmail}</div>
-    //             <button onClick={() => {
-    //                 localStorage.removeItem('token')
-    //                 dispatch(logout())
-    //             }}>Logout</button>
-    //         </>
-    //     ) : (
-    //         <button onClick={() => dispatch(push('/login'))}></button>
-    //     )}
-    // </div>
   );
 };
 

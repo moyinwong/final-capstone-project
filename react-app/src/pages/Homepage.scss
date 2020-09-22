@@ -17,7 +17,7 @@
 }
 
 .section-card {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .section-cards {
@@ -25,5 +25,12 @@
 }
 
 .courses-carousel {
-    @include section-padding;
+    padding-top: 40px;
+    padding-bottom: 20px;
+
+    div.col {
+        height: 300px;
+        display: flex;
+        align-items: center;
+    }
 }
