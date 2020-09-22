@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./Header.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
 import { logout } from "../redux/auth/actions";
@@ -17,6 +16,10 @@ import {
 import BurgerMenu from "./BurgerMenu";
 import Linkbar from "./Linkbar";
 import DarkModeSwitch from "./DarkModeSwitch";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
+import "./Header.scss";
+
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -52,6 +55,9 @@ const Header = () => {
 
           {isAuthenticated ? (
             <div className="user-info">
+              <div className="user-icon-container">
+                <button className="user-icon"><FontAwesomeIcon icon={faUser} size="1x"/></button>
+              </div>
               <Navbar.Text>Welcome back {userEmail}</Navbar.Text>{" "}
               <Button
                 variant="success"
