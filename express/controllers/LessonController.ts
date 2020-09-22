@@ -32,4 +32,17 @@ export class LessonController {
       return res.status(500).json({ message: "internal server error" });
     }
   };
+
+  lesson = async (req: Request, res: Response) => {
+    try {
+      const { lesson } = req.params;
+      const lessonInfo = await this.lessonService.getLessonAccessibility(
+        lesson
+      );
+      return res.json({ lessonInfo });
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).json({ message: "internal server error" });
+    }
+  };
 }

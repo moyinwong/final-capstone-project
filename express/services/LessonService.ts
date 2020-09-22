@@ -79,4 +79,51 @@ export class LessonService {
 
     return lessons;
   };
+
+  getLessonAccessibility = async (lessonName: string) => {
+    const [lesson] = await this.knex
+      .select("*")
+      .from(`${tables.LESSONS}`)
+      .where(`${tables.LESSONS}.name`, lessonName)
+      .limit(1);
+    return lesson;
+  };
+  // getLessonSummaryByCourseAndUser = async (
+  //   course: string,
+  //   userEmail: string
+  // ) => {
+  //   const lessons: Array<ILesson> = await this.knex
+  //     .select(
+  //       "courses.id as course_id",
+  //       "courses.name as course_name",
+  //       "courses.tutor_id",
+  //       "lessons.id as lesson_id",
+  //       "lessons.name as lesson_name",
+  //       "lessons.description as lesson_description",
+  //       "is_trial",
+  //       "video_url",
+  //       "users.email as user_email",
+  //       "purchased_courses.comment"
+  //     )
+  //     .from(tables.COURSES)
+  //     .leftJoin(
+  //       tables.PURCHASED_COURSES,
+  //       `${tables.COURSES}.id`,
+  //       `${tables.PURCHASED_COURSES}.course_id`
+  //     )
+  //     .leftJoin(
+  //       tables.USERS,
+  //       `${tables.PURCHASED_COURSES}.user_id`,
+  //       `${tables.USERS}.id`
+  //     )
+  //     .innerJoin(
+  //       tables.LESSONS,
+  //       `${tables.COURSES}.id`,
+  //       `${tables.LESSONS}.course_id`
+  //     )
+  //     .where("users.email", userEmail)
+  //     .andWhere("courses.name", course);
+
+  //   return lessons;
+  // };
 }

@@ -5,33 +5,14 @@ const knex = Knex(knexConfig["development"]);
 import { tables } from "./tables";
 
 const testKnex = knex
-  .select(
-    "courses.id as course_id",
-    "courses.name as course_name",
-    "courses.tutor_id",
-    "lessons.id as lesson_id",
-    "lessons.name as lesson_name",
-    "lessons.description as lesson_description",
-    "is_trial",
-    "video_url",
-    "users.email as user_email"
-  )
-  .from(tables.COURSES)
+  .select("users.email as user_email", "courses.name as course_name")
+  .from(tables.USERS)
   .leftJoin(
     tables.PURCHASED_COURSES,
-    `${tables.COURSES}.id`,
-    `${tables.PURCHASED_COURSES}.course_id`
+    "users.id",
+    `${tables.PURCHASED_COURSES}.user_id`
   )
-  .leftJoin(
-    tables.USERS,
-    `${tables.PURCHASED_COURSES}.user_id`,
-    `${tables.USERS}.id`
-  )
-  .innerJoin(
-    tables.LESSONS,
-    `${tables.COURSES}.id`,
-    `${tables.LESSONS}.course_id`
-  )
+  .leftJoin(tables.COURSES, "course_id", `${tables.COURSES}.id`)
   .where("users.email", "apple@abc.com")
   .andWhere("courses.name", "DSE 中文 5* 攻略");
 

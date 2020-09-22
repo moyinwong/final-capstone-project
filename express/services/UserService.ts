@@ -86,7 +86,7 @@ export class UserService {
     courseName: string
   ) => {
     const userAllowAccessCourses: Array<{
-      user_name: string;
+      user_email: string;
       course_name: string | null;
     }> = await this.knex
       .select("users.email as user_email", "courses.name as course_name")
