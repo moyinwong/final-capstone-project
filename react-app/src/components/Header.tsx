@@ -70,6 +70,7 @@ const Header = (props: any) => {
             <Button
               variant="success"
               onClick={() => {
+                setOpen(false);
                 dispatch(push("/login"));
               }}
             >
