@@ -7,7 +7,7 @@ export class CategoryService {
 
   getCoursesByCategory = async (categoryName: string) => {
     if (categoryName === "all") {
-      const courses = this.knex
+      const courses = await this.knex
         .with(
           "T1",
           this.knex

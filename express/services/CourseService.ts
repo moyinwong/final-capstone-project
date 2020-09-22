@@ -12,8 +12,8 @@ export class CourseService {
   constructor(private knex: Knex) {}
 
   test = async () => {
-    console.log('hello')
-  }
+    console.log("hello");
+  };
 
   getMostPurchasedCourses = async () => {
     const courses: Array<IPopularCourses> = await this.knex
@@ -32,7 +32,7 @@ export class CourseService {
   };
 
   getCourseInfoByName = async (courseName: string) => {
-    const courseInfo = this.knex
+    const courseInfo = await this.knex
       .with(
         "T1",
         this.knex
@@ -105,5 +105,28 @@ export class CourseService {
       .limit(1);
 
     return courseInfo;
+  };
+
+  getCourseComments = async (courseName: string) => {
+    const comments = await this.knex
+      .select(
+        `${tables.USERS}.name as user_name`,
+        `${tables.PURCHASED_COURSES}.comment`,
+        `${tables.PURCHASED_COURSES}.rated_score`
+      )
+      .from(`${tables.COURSES}`)
+      .leftJoin(
+        tables.PURCHASED_COURSES,
+        `${tables.COURSES}.id`,
+        `${tables.PURCHASED_COURSES}.course_id`
+      )
+      .leftJoin(
+        tables.USERS,
+        `${tables.PURCHASED_COURSES}.user_id`,
+        `${tables.USERS}.id`
+      )
+      .where(`${tables.COURSES}.name`, courseName);
+
+    return comments;
   };
 }

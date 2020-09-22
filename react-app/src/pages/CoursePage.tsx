@@ -11,6 +11,7 @@ import Rating from "react-rating";
 import { Card } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { Accordion } from "react-bootstrap";
+import { useRef } from "react";
 
 interface ILesson {
   course_id: number;
@@ -25,6 +26,12 @@ interface ILesson {
   comment?: string | null;
 }
 
+interface IComment {
+  user_name: string;
+  comment: string;
+  rated_score: string;
+}
+
 const CoursePage: React.FC = () => {
   const param: { courseName: string } = useParams();
   const { courseName } = param;
@@ -34,6 +41,9 @@ const CoursePage: React.FC = () => {
   const userEmail = useSelector((state: IRootState) => state.auth.email);
   const [isAllowAccess, setIsAllowAccess] = useState<boolean | null>(null);
   const [lessons, setLessons] = useState<ILesson[]>([]);
+  const [comments, setComments] = useState<IComment[]>([]);
+  const [commentsNum, setCommentsNum] = useState(3);
+  const [isReady, setIsReady] = useState(false);
 
   //run once when init
   useEffect(() => {
@@ -46,6 +56,7 @@ const CoursePage: React.FC = () => {
   //run once when init
   useEffect(() => {
     if (course) getLessonInfoByCourse(course.course_name);
+    if (course) getCommentsByCourse(course.course_name);
   }, [course, userEmail]);
 
   const getAllCoursesByCategory = async (courseName: string) => {
@@ -86,6 +97,26 @@ const CoursePage: React.FC = () => {
     if (is_allow) setIsAllowAccess(is_allow);
   };
 
+  function shuffle(array: Array<any>) {
+    var currentIndex = array.length,
+      temporaryValue,
+      randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+  }
+
   const getLessonInfoByCourse = async (courseName: string) => {
     console.log("user: ", userEmail);
     let queryRoute: string = "/lesson/summary/";
@@ -105,135 +136,209 @@ const CoursePage: React.FC = () => {
     setLessons(result.lessons);
   };
 
+  const getCommentsByCourse = async (courseName: string) => {
+    let queryRoute: string = "/course/";
+    const fetchRes = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}${queryRoute}${courseName}/comment`
+    );
+    const result = await fetchRes.json();
+    const resultArr = result.comments;
+    const shuffleArr = shuffle(resultArr);
+    setComments(result.comments);
+    setIsReady(true);
+  };
   //handle order button click
   //function handleOrderButtonClick(event: React.MouseEvent<HTMLButtonElement>) {}
   return (
     <>
-      {(isAllowAccess === true || isAllowAccess === false) &&
-        course &&
-        lessons.length > 0 && (
-          <>
-            <div className="course-top-background">
-              <div>
-                <div className="course-info-container">
-                  <div className="course-name">{course.course_name}</div>
-                  <div className="course-objective">{course.objective}</div>
-                  <div className="course-rating">
-                    <span>
-                      {course.rated_score ? parseFloat(course.rated_score) : 0}
-                    </span>
-                    {
-                      <Rating
-                        stop={5}
-                        emptySymbol={[
-                          "far fa-star fa-2x",
-                          "far fa-star fa-2x",
-                          "far fa-star fa-2x",
-                          "far fa-star fa-2x",
-                          "far fa-star fa-2x",
-                        ]}
-                        fullSymbol={[
-                          "fas fa-star fa-2x",
-                          "fas fa-star fa-2x",
-                          "fas fa-star fa-2x",
-                          "fas fa-star fa-2x",
-                          "fas fa-star fa-2x",
-                        ]}
-                        readonly={true}
-                        initialRating={
-                          course.rated_score
-                            ? parseFloat(course.rated_score)
-                            : 0
-                        }
-                      />
-                    }
-                    ({course.rated_num})
-                  </div>
-                  <div className="course-student-num">
-                    學生人數： {course?.purchased_users_num}
-                  </div>
-                  <div className="tutor-name">導師： {course.tutor_name}</div>
-                </div>
-                <Card className="sticky">
-                  <Card.Img
-                    variant="top"
-                    src={
-                      course.image.match(/http/)
-                        ? course.image
-                        : `localhost:8080/${course.image}`
-                    }
-                  />
-                  <Card.Body>
-                    <Card.Title>{"HK$ " + course.price}</Card.Title>
+      {isReady && course && lessons.length > 0 && (
+        <>
+          <div className="course-top-background">
+            <div>
+              <div className="responsive-container" style={{ display: "none" }}>
+                <img
+                  src={
+                    course.image.match(/http/)
+                      ? course.image
+                      : `localhost:8080/${course.image}`
+                  }
+                />
+                <div>HK$ {course.price}</div>
+                <div>
+                  {isAllowAccess ? (
                     <div>
-                      {isAllowAccess ? (
-                        <>
-                          <Button variant="success" disabled>
-                            已購買
-                          </Button>
-                          {lessons[0].comment ? (
-                            <Button variant="success" disabled>
-                              已評價
-                            </Button>
-                          ) : (
-                            <Button variant="success">評價</Button>
-                          )}
-                        </>
+                      <Button variant="success" disabled>
+                        已購買
+                      </Button>
+                      {lessons[0].comment ? (
+                        <Button variant="success" disabled>
+                          已評價
+                        </Button>
                       ) : (
-                        <>
-                          <Button variant="success">加到購物車</Button>
-                          <Button variant="outline-danger">立即購買</Button>
-                        </>
+                        <Button variant="success">評價</Button>
                       )}
                     </div>
-                  </Card.Body>
-                </Card>
+                  ) : (
+                    <>
+                      <Button variant="success">加到購物車</Button>
+                      <Button variant="outline-danger">立即購買</Button>
+                    </>
+                  )}
+                </div>
               </div>
+              <div className="course-info-container">
+                <div className="course-name">{course.course_name}</div>
+                <div className="course-objective">{course.objective}</div>
+                <div className="course-rating">
+                  <span>
+                    {course.rated_score ? parseFloat(course.rated_score) : 0}
+                  </span>
+                  {
+                    <Rating
+                      stop={5}
+                      emptySymbol={[
+                        "far fa-star fa-2x",
+                        "far fa-star fa-2x",
+                        "far fa-star fa-2x",
+                        "far fa-star fa-2x",
+                        "far fa-star fa-2x",
+                      ]}
+                      fullSymbol={[
+                        "fas fa-star fa-2x",
+                        "fas fa-star fa-2x",
+                        "fas fa-star fa-2x",
+                        "fas fa-star fa-2x",
+                        "fas fa-star fa-2x",
+                      ]}
+                      readonly={true}
+                      initialRating={
+                        course.rated_score ? parseFloat(course.rated_score) : 0
+                      }
+                    />
+                  }
+                  ({course.rated_num})
+                </div>
+                <div className="course-student-num">
+                  學生人數： {course?.purchased_users_num}
+                </div>
+                <div className="tutor-name">導師： {course.tutor_name}</div>
+              </div>
+              <Card className="sticky">
+                <Card.Img
+                  variant="top"
+                  src={
+                    course.image.match(/http/)
+                      ? course.image
+                      : `localhost:8080/${course.image}`
+                  }
+                />
+                <Card.Body>
+                  <Card.Title>{"HK$ " + course.price}</Card.Title>
+                  <div>
+                    {isAllowAccess ? (
+                      <>
+                        <Button variant="success" disabled>
+                          已購買
+                        </Button>
+                        {lessons[0].comment ? (
+                          <Button variant="success" disabled>
+                            已評價
+                          </Button>
+                        ) : (
+                          <Button variant="success">評價</Button>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <Button variant="success">加到購物車</Button>
+                        <Button variant="outline-danger">立即購買</Button>
+                      </>
+                    )}
+                  </div>
+                </Card.Body>
+              </Card>
             </div>
-            <div className="course-bottom-background">
-              <div>
-                <div className="bottom-info-container">
-                  <div className="course-description">
-                    <p>課程簡介：</p>
-                    {course.course_description}
+          </div>
+          <div className="course-bottom-background">
+            <div>
+              <div className="bottom-info-container">
+                <div className="course-description">
+                  <p className="sub-title">課程簡介：</p>
+                  {course.course_description}
+                </div>
+                <div className="lesson-container">
+                  <p className="sub-title">課程內容：</p>
+                  {console.log("lessons: ", lessons)}
+                  {lessons.map((e, i) => {
+                    return (
+                      <Accordion key={i}>
+                        <Card>
+                          <Card.Header>
+                            <Accordion.Toggle
+                              as={Button}
+                              variant="link"
+                              eventKey="0"
+                            >
+                              {e.lesson_name}
+                            </Accordion.Toggle>
+                          </Card.Header>
+                          <Accordion.Collapse eventKey="0">
+                            <Card.Body>
+                              <div>{e.lesson_description}</div>
+                              {e.user_email ? (
+                                <Button variant="success">前往該課堂</Button>
+                              ) : e.is_trial ? (
+                                <Button variant="success">可免費試堂</Button>
+                              ) : (
+                                ""
+                              )}
+                            </Card.Body>
+                          </Accordion.Collapse>
+                        </Card>
+                      </Accordion>
+                    );
+                  })}
+                </div>
+                <div className="comment-container">
+                  <div className="comment-title-container">
+                    <div>
+                      <p className="sub-title">學生反映</p>
+                    </div>
+                    <div
+                      className="expand"
+                      onClick={() => {
+                        setCommentsNum(20);
+                      }}
+                    >
+                      <p>更多反映...</p>
+                    </div>
                   </div>
-                  <div className="lesson-container">
-                    <p>課程內容：</p>
-                    {lessons.map((e, i) => {
+
+                  {comments
+                    .map((e, i) => {
                       return (
-                        <Accordion key={i}>
+                        <div key={i}>
                           <Card>
-                            <Card.Header>
-                              <Accordion.Toggle
-                                as={Button}
-                                variant="link"
-                                eventKey="0"
-                              >
-                                {e.lesson_name}
-                              </Accordion.Toggle>
-                            </Card.Header>
-                            <Accordion.Collapse eventKey="0">
-                              <Card.Body>
-                                <div>{e.lesson_description}</div>
-                                {e.user_email ? (
-                                  <Button variant="success">前往該課堂</Button>
-                                ) : e.is_trial ? (
-                                  <Button variant="success">可免費試堂</Button>
-                                ) : (
-                                  ""
-                                )}
-                              </Card.Body>
-                            </Accordion.Collapse>
+                            <Card.Header>{e.rated_score}</Card.Header>
+                            <Card.Body>
+                              <blockquote className="blockquote mb-0">
+                                <p>{e.comment}</p>
+                                <footer className="blockquote-footer">
+                                  {e.user_name}
+                                </footer>
+                              </blockquote>
+                            </Card.Body>
                           </Card>
-                        </Accordion>
+                        </div>
                       );
-                    })}
-                  </div>
+                    })
+                    .slice(0, commentsNum)}
                 </div>
               </div>
             </div>
-          </>
-        )}
+          </div>
+        </>
+      )}
     </>
   );
 };

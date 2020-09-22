@@ -1,3 +1,8 @@
+.sub-title {
+  font-size: 30px;
+  font-weight: bold;
+}
+
 .course-top-background {
   background-color: #7cd6d6;
   width: 100vw;
@@ -11,8 +16,17 @@
     height: 250px;
     display: flex;
 
+    .responsive-container {
+      img {
+        width: 76vw;
+      }
+
+      .btn {
+        margin: 15px;
+      }
+    }
+
     .course-info-container {
-      background-color: beige;
       text-align: left;
       width: 40vw;
       height: 250px;
@@ -55,7 +69,6 @@
 }
 
 .course-bottom-background {
-  background-color: gold;
   width: 100vw;
   padding: 25px;
   display: flex;
@@ -67,15 +80,61 @@
     display: flex;
 
     .bottom-info-container {
-      background-color: beige;
       text-align: left;
       width: 40vw;
       height: 250px;
+
+      > div {
+        margin-bottom: 30px;
+      }
+    }
+
+    .comment-container {
+      .comment-title-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .expand:hover {
+          cursor: pointer;
+        }
+      }
     }
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 1080px) {
+  .sticky.card {
+    display: none;
+  }
+
+  .course-top-background {
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+
+    > div {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      height: auto;
+    }
+
+    > div .course-info-container {
+      width: 80vw;
+      height: auto;
+    }
+  }
+  .course-bottom-background > div .bottom-info-container {
+    text-align: left;
+    width: 80vw;
+  }
+
+  .responsive-container {
+    display: block !important;
+  }
+
   .button-container {
     justify-content: center;
   }

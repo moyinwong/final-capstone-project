@@ -17,10 +17,8 @@ export class CourseController {
 
   courseDetailInfoByName = async (req: Request, res: Response) => {
     try {
-      const { courseName } = req.params;
-      const [courseInfo] = await this.courseService.getCourseInfoByName(
-        courseName
-      );
+      const { course } = req.params;
+      const [courseInfo] = await this.courseService.getCourseInfoByName(course);
       if (!courseInfo) {
         return res.status(401).json({ message: "no such course" });
       }
@@ -29,6 +27,17 @@ export class CourseController {
     } catch (e) {
       console.log(e.message);
       return res.status(500).json({ message: "internal server error" });
+    }
+  };
+
+  courseComments = async (req: Request, res: Response) => {
+    try {
+      const { course } = req.params;
+      const comments = await this.courseService.getCourseComments(course);
+      res.json({ comments });
+    } catch (e) {
+      console.log(e.message);
+      res.status(500).json({ message: "internal server error" });
     }
   };
 }
