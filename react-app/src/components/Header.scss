@@ -22,6 +22,32 @@
   height: 100px;
 }
 
+// .user-icon-container {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 40px;
+//   width: 40px;
+//   background-color: grey;
+//   border-radius: 20px;
+
+  .user-icon {
+    border: 0;
+    padding: 0;
+    background: grey;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+  }
+// }
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 @media screen and (max-width: 725px) {
   .web-navbar {
     display: flex;
@@ -52,3 +78,5 @@
     display: none;
   }
 }
+
+

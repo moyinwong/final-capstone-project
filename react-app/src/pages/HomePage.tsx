@@ -10,6 +10,7 @@ import Header from "../components/Header";
 import { Container, Row, Col } from "react-bootstrap";
 import "./Homepage.scss";
 import { useEffect } from "react";
+import DropdownMenu from "../components/DropdownMenu";
 
 const HomePage = () => {
   const test = async () => {

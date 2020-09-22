@@ -29,8 +29,15 @@
     padding-bottom: 20px;
 
     div.col {
+        padding: 10px;
         height: 300px;
         display: flex;
+        justify-content: center;
         align-items: center;
+    }
+
+    div.card {
+        height: 280px;
+        width: 250px;
     }
 }
