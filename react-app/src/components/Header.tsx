@@ -19,14 +19,17 @@ import DarkModeSwitch from "./DarkModeSwitch";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import "./Header.scss";
+import DropdownMenu from "./DropdownMenu";
 
 
-const Header = () => {
+const Header = (props: any) => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(
     (state: IRootState) => state.auth.isAuthenticated
   );
   const userEmail = useSelector((state: IRootState) => state.auth.email);
+  const [open, setOpen] = useState(false);
+
 
   return (
     <div>
@@ -56,18 +59,12 @@ const Header = () => {
           {isAuthenticated ? (
             <div className="user-info">
               <div className="user-icon-container">
-                <button className="user-icon"><FontAwesomeIcon icon={faUser} size="1x"/></button>
+                <button className="user-icon" onClick={() => setOpen(!open)}>
+                  <FontAwesomeIcon icon={faUser} size="1x"/>
+                </button>
+                {open && <DropdownMenu />}
               </div>
               <Navbar.Text>Welcome back {userEmail}</Navbar.Text>{" "}
-              <Button
-                variant="success"
-                onClick={() => {
-                  localStorage.removeItem("token");
-                  dispatch(logout());
-                }}
-              >
-                Logout
-              </Button>
             </div>
           ) : (
             <Button

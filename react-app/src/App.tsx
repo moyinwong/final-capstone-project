@@ -14,6 +14,7 @@ import { restoreLogin } from "./redux/auth/thunk";
 import CategoryPage from "./pages/CategoryPage";
 import CoursePage from "./pages/CoursePage";
 import Header from "./components/Header";
+import DropdownMenu from "./components/DropdownMenu";
 
 function App() {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ function App() {
   return (
     <div className="App">
       <Header />
+      
       {/* routes */}
       <Switch>
         <Route path="/" exact={true} component={HomePage} />
