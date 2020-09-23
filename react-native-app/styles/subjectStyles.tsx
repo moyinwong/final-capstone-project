@@ -10,7 +10,15 @@ const subjectStyles = StyleSheet.create({
         height: 100,
         marginVertical: 10,
         marginHorizontal: 10,
-        borderRadius: 1
+        borderRadius: 12,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
     },
     linearGradient: {
         position: 'absolute',

@@ -28,7 +28,15 @@ const coursesListStyles = StyleSheet.create({
         marginHorizontal: 2,
         borderRadius: 12,
         paddingBottom: 10,
-        backgroundColor: '#ffffff'
+        backgroundColor: '#ffffff',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
     },
     coursePicContainer: {
         height: 180,
