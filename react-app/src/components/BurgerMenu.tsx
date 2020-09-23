@@ -45,7 +45,7 @@ const BurgerMenu: React.FC = () => {
             <div className="user-info">
               <div className="user-icon-container">
                 <button className="user-icon" onClick={() => setOpen(!open)}>
-                  <FontAwesomeIcon icon={faUser} size="1x"/>
+                  <i className="far fa-user"></i>
                 </button>
                 {open && <DropdownMenu />}
                 {/* {open && <div>hello</div>} */}

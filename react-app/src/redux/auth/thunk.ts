@@ -1,5 +1,5 @@
 import { ThunkDispatch, IRootState } from "../store";
-import { loginSuccess, loginFail, getUser, loginProcessing } from "./actions";
+import { loginSuccess, loginFail, getUser, loginProcessing, checkTutor } from "./actions";
 import { push } from "connected-react-router";
 import { Dispatch } from "redux";
 
@@ -22,7 +22,8 @@ export function login(email: string, password: string) {
     if (json.token != null) {
       localStorage.setItem("token", json.token);
       dispatch(loginSuccess(json.token));
-      dispatch(getUser(json.email))
+      dispatch(getUser(json.email));
+      dispatch(checkTutor(json.isTutor));
       dispatch(push("/"));
     } else if (res.status === 401) {
       dispatch(loginFail("Wrong email/password"));
@@ -50,6 +51,7 @@ export function restoreLogin() {
       if (res.status === 200) {
         dispatch(loginSuccess(token));
         dispatch(getUser(json.user.email));
+        dispatch(checkTutor(json.user.isTutor));
         dispatch(push(getState().router.location.pathname));
       } else {
         dispatch(loginFail(""));
@@ -82,6 +84,7 @@ export const loginGoogleThunk = (accessToken: string) => {
       localStorage.setItem("token", data.token);
       dispatch(loginSuccess(data.token));
       dispatch(getUser(data.email))
+      dispatch(checkTutor(data.isTutor))
       dispatch(push("/"));
     } else {
       dispatch(loginFail(data.message));
@@ -106,6 +109,7 @@ export function loginFacebook(accessToken: string) {
       localStorage.setItem('token', json.token);
       dispatch(loginSuccess(json.token))
       dispatch(getUser(json.email))
+      dispatch(checkTutor(json.isTutor))
       dispatch(push('/'))
     } else {
       dispatch(loginFail(json.message))

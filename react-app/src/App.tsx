@@ -15,6 +15,7 @@ import CategoryPage from "./pages/CategoryPage";
 import CoursePage from "./pages/CoursePage";
 import Header from "./components/Header";
 import DropdownMenu from "./components/DropdownMenu";
+import InstructorPage from "./pages/InstructorPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -64,6 +65,7 @@ function App() {
           component={LessonPage}
         />
         {/* ... */}
+        <Route path='/instructor' exact={true} component={InstructorPage}/>
         <Route path="/404" exact={true} component={NotFound} />
         <Route component={NotFound} />
       </Switch>

@@ -34,7 +34,7 @@
   .user-icon {
     border: 0;
     padding: 0;
-    background: grey;
+    background: rgb(23, 240, 204);
     height: 40px;
     width: 40px;
     border-radius: 20px;
@@ -48,6 +48,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
+
+  .fa-user:before {
+    color: black;
+  }
 }
 
 @media screen and (max-width: 725px) {

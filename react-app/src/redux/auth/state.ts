@@ -7,12 +7,14 @@ export interface IAuthState {
     token: string | null;
     email: string | null;
     isAuthenticated: boolean | null;
-    message: string | null
+    message: string | null;
+    isTutor: boolean;
 }
 
 export const initialState: IAuthState = {
     token: localStorage.getItem('token'),
     email: null,
     isAuthenticated: null,
-    message: ''
+    message: '',
+    isTutor: false
 }
