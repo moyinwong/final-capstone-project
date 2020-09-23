@@ -6,7 +6,10 @@ import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 // Icons
-import { Entypo, FontAwesome } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
+
+// Components
+import Stars from '../../../sharedComponents/stars';
 
 // Styles
 import globalStyles from '../../../styles/globalStyles';
@@ -57,7 +60,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 tutor: 'Gordon Lau',
                 numOfLessons: 6,
                 price: 150,
-                aveScore: 4.5,
+                aveScore: 3.5,
                 coursePic: require('../../../assets/coursesPic/firebase.png'),
                 tutorPic: require('../../../assets/tutorsPic/gordon.jpg'),
                 id: '2'
@@ -79,7 +82,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 tutor: 'Jason Lee',
                 numOfLessons: 9,
                 price: 110,
-                aveScore: 4.5,
+                aveScore: 3.7,
                 coursePic: require('../../../assets/coursesPic/javaScript.png'),
                 tutorPic: require('../../../assets/tutorsPic/jason.jpg'),
                 id: '4'
@@ -90,7 +93,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 tutor: 'Beeno Tung',
                 numOfLessons: 3,
                 price: 180,
-                aveScore: 4.0,
+                aveScore: 2.6,
                 coursePic: require('../../../assets/coursesPic/jest.png'),
                 tutorPic: require('../../../assets/tutorsPic/beeno.jpg'),
                 id: '5'
@@ -101,7 +104,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 tutor: 'Andrew Shek',
                 numOfLessons: 2,
                 price: 130,
-                aveScore: 4.2,
+                aveScore: 3.2,
                 coursePic: require('../../../assets/coursesPic/knex.png'),
                 tutorPic: require('../../../assets/tutorsPic/andrew.jpg'),
                 id: '6'
@@ -112,7 +115,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 tutor: 'Andrew Shek',
                 numOfLessons: 12,
                 price: 160,
-                aveScore: 4.4,
+                aveScore: 5.0,
                 coursePic: require('../../../assets/coursesPic/flutter.png'),
                 tutorPic: require('../../../assets/tutorsPic/andrew.jpg'),
                 id: '7'
@@ -123,7 +126,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 tutor: 'Dragon Lung',
                 numOfLessons: 12,
                 price: 190,
-                aveScore: 4.1,
+                aveScore: 1.2,
                 coursePic: require('../../../assets/coursesPic/python.png'),
                 tutorPic: require('../../../assets/tutorsPic/dragon.jpg'),
                 id: '8'
@@ -134,7 +137,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 tutor: 'Alex Lau',
                 numOfLessons: 3,
                 price: 200,
-                aveScore: 4.2,
+                aveScore: 3.2,
                 coursePic: require('../../../assets/coursesPic/react.png'),
                 tutorPic: require('../../../assets/tutorsPic/alex.jpeg'),
                 id: '9'
@@ -156,7 +159,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 tutor: 'Beeno Tung',
                 numOfLessons: 12,
                 price: 170,
-                aveScore: 4.8,
+                aveScore: 2.8,
                 coursePic: require('../../../assets/coursesPic/tensorFlow.png'),
                 tutorPic: require('../../../assets/tutorsPic/beeno.jpg'),
                 id: '11'
@@ -167,7 +170,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 tutor: 'Dragon Lung',
                 numOfLessons: 3,
                 price: 140,
-                aveScore: 4.6,
+                aveScore: 3.6,
                 coursePic: require('../../../assets/coursesPic/typeScript.jpg'),
                 tutorPic: require('../../../assets/tutorsPic/dragon.jpg'),
                 id: '12'
@@ -176,7 +179,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
     );
 
     return (
-        <View style={{...globalStyles.container, paddingVertical: 0}}>
+        <View style={{ ...globalStyles.container, paddingVertical: 0 }}>
 
             <View style={coursesListStyles.titleContainer}>
                 {coursesListParam.subject ?
@@ -233,12 +236,10 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                                     <View style={coursesListStyles.courseSubInfoLowerContainer}>
                                         <Text style={coursesListStyles.coursePrice}>{"價錢: $" + item.price}</Text>
                                         <View style={coursesListStyles.courseScoreContainer}>
-                                            <Text style={coursesListStyles.courseInfoText}>{"評分: " + item.aveScore}</Text>
-                                            <FontAwesome name="star" size={20} color="#fadd4d" />
-                                            <FontAwesome name="star" size={20} color="#fadd4d" />
-                                            <FontAwesome name="star" size={20} color="#fadd4d" />
-                                            <FontAwesome name="star" size={20} color="#fadd4d" />
-                                            <FontAwesome name="star-o" size={20} color="#fadd4d" />
+                                            <Text style={coursesListStyles.courseInfoText}>{"評分: "}</Text>
+
+                                            <Stars score={item.aveScore} />
+
                                         </View>
                                     </View>
                                 </View>
