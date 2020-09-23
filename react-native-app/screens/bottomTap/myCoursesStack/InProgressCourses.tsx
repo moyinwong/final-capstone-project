@@ -3,39 +3,16 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 
 // Navigation
-import { useNavigation, useRoute } from '@react-navigation/native';
-
-// Icons
-import { Entypo } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 // Styles
 import globalStyles from '../../../styles/globalStyles';
 import myCoursesStyles from '../../../styles/myCoursesStyles';
 
-export default function InProgressCourses(props: { navigation: { navigate: (arg0: string) => void; }; }) {
+export default function InProgressCourses() {
 
     // Hooks
     const navigation = useNavigation();
-    const route = useRoute();
-
-    // Param
-    interface ICoursesListParam {
-        subject?: string | null
-        tutor?: string | null
-        user?: string | null
-        completedCourse?: boolean | null
-    }
-
-    let coursesListParam: ICoursesListParam = {
-        subject: null,
-        tutor: null,
-        user: null,
-        completedCourse: null
-    }
-
-    if (route.params) {
-        coursesListParam = route.params;
-    }
 
     // State
     const [coursesListData, setCoursesListData] = useState(
@@ -112,10 +89,6 @@ export default function InProgressCourses(props: { navigation: { navigate: (arg0
     return (
         <View style={{ ...globalStyles.container, paddingVertical: 0 }}>
 
-            <View style={myCoursesStyles.titleContainer}>
-                <Text>修讀中課程</Text>
-            </View>
-
             <FlatList
                 style={myCoursesStyles.flatList}
                 keyExtractor={(item) => item.id}
@@ -132,39 +105,19 @@ export default function InProgressCourses(props: { navigation: { navigate: (arg0
                                 source={item.coursePic}
                             />
                         </View>
+
                         <View style={myCoursesStyles.courseInfoContainer}>
-
-                            <View style={myCoursesStyles.courseInfoLeftContainer}>
-                                <View style={myCoursesStyles.tutorPicContainer}>
-                                    <Image
-                                        style={myCoursesStyles.tutorPic}
-                                        resizeMode='cover'
-                                        source={item.tutorPic}
-                                    />
+                            <Text style={myCoursesStyles.courseTitle}>{item.title}</Text>
+                            <View style={myCoursesStyles.courseSubInfoContainer}>
+                                <View style={myCoursesStyles.courseSubInfoTextContainer}>
+                                    <Text style={myCoursesStyles.courseInfoText}>{item.tutor}</Text>
+                                    <Text style={myCoursesStyles.courseInfoText}>{item.description}</Text>
+                                    <Text style={myCoursesStyles.courseInfoText}>{"總共堂數: " + item.numOfLessons}</Text>
+                                </View>
+                                <View style={myCoursesStyles.courseSubInfoLowerContainer}>
+                                    <Text style={myCoursesStyles.coursePrice}>{"價錢: $" + item.price}</Text>
                                 </View>
                             </View>
-
-                            <View style={myCoursesStyles.courseInfoRightContainer}>
-                                <Text style={myCoursesStyles.courseTitle}>{item.title}</Text>
-                                <View style={myCoursesStyles.courseSubInfoContainer}>
-                                    <View style={myCoursesStyles.courseSubInfoTextContainer}>
-                                        <Text style={myCoursesStyles.courseInfoText}>{item.tutor}</Text>
-                                        <Entypo style={myCoursesStyles.courseInfoDot} name="dot-single" size={16} color="#555555" />
-                                        <Text style={myCoursesStyles.courseInfoText}>{item.description}</Text>
-                                        <Entypo style={myCoursesStyles.courseInfoDot} name="dot-single" size={16} color="#555555" />
-                                        <Text style={myCoursesStyles.courseInfoText}>{"總共堂數: " + item.numOfLessons}</Text>
-                                    </View>
-                                    <View style={myCoursesStyles.courseSubInfoLowerContainer}>
-                                        <Text style={myCoursesStyles.coursePrice}>{"價錢: $" + item.price}</Text>
-                                        <View style={myCoursesStyles.courseScoreContainer}>
-                                            <Text style={myCoursesStyles.courseInfoText}>{"評分: "}</Text>
-
-                                        </View>
-                                    </View>
-                                </View>
-                            </View>
-
-
                         </View>
                     </TouchableOpacity>
                 )}

@@ -24,7 +24,8 @@ const tutorStyles = StyleSheet.create({
     tutorPicContainer: {
         height: 180,
         borderTopLeftRadius: 12,
-        borderTopRightRadius: 12
+        borderTopRightRadius: 12,
+        borderBottomRightRadius: 16
     },
     tutorPic: {
         flex: 1,
@@ -32,6 +33,7 @@ const tutorStyles = StyleSheet.create({
         height: '100%',
         borderTopLeftRadius: 12,
         borderTopRightRadius: 12,
+        borderBottomRightRadius: 16,
         resizeMode: 'cover'
     },
     tutorInfoContainer: {
@@ -44,6 +46,6 @@ const tutorStyles = StyleSheet.create({
         fontSize: 25,
         color: '#000000'
     }
-})
+});
 
 export default tutorStyles;

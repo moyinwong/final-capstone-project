@@ -10,7 +10,10 @@ const subjectStyles = StyleSheet.create({
         height: 100,
         marginVertical: 10,
         marginHorizontal: 10,
-        borderRadius: 12,
+        borderTopLeftRadius: 24,
+        borderBottomLeftRadius: 12,
+        borderTopRightRadius: 12,
+        borderBottomRightRadius: 24,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -27,13 +30,19 @@ const subjectStyles = StyleSheet.create({
         left: 0,
         right: 0,
         zIndex: 1,
-        borderRadius: 12
+        borderTopLeftRadius: 24,
+        borderBottomLeftRadius: 12,
+        borderTopRightRadius: 12,
+        borderBottomRightRadius: 24
     },
     subjectPic: {
         flex: 1,
         width: '100%',
         height: '100%',
-        borderRadius: 12,
+        borderTopLeftRadius: 24,
+        borderBottomLeftRadius: 12,
+        borderTopRightRadius: 12,
+        borderBottomRightRadius: 24,
         resizeMode: 'cover'
     },
     subjectTitle: {
@@ -46,6 +55,6 @@ const subjectStyles = StyleSheet.create({
         zIndex: 2,
         color: '#ffffff'
     }
-})
+});
 
 export default subjectStyles;

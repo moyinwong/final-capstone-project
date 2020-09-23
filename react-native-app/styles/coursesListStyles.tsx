@@ -41,7 +41,8 @@ const coursesListStyles = StyleSheet.create({
     coursePicContainer: {
         height: 180,
         borderTopLeftRadius: 12,
-        borderTopRightRadius: 12
+        borderTopRightRadius: 12,
+        borderBottomLeftRadius: 17
     },
     coursePic: {
         flex: 1,
@@ -49,6 +50,7 @@ const coursesListStyles = StyleSheet.create({
         height: '100%',
         borderTopLeftRadius: 12,
         borderTopRightRadius: 12,
+        borderBottomLeftRadius: 17,
         resizeMode: 'cover'
     },
     courseInfoContainer: {
@@ -121,7 +123,7 @@ const coursesListStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-    },
+    }
 });
 
 export default coursesListStyles;
