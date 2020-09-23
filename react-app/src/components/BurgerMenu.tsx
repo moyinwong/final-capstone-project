@@ -1,10 +1,27 @@
 import { slide as Menu } from "react-burger-menu";
-import React from "react";
+import React, { useState } from "react";
+import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import "./BurgerMenu.scss";
 import { Link } from "react-router-dom";
 import DarkModeSwitch from "./DarkModeSwitch";
+import { useDispatch, useSelector } from "react-redux";
+
+import { Navbar, Button } from "react-bootstrap";
+import { IRootState } from "../redux/store";
+import { push } from "connected-react-router";
+import DropdownMenu from "./DropdownMenu";
 
 const BurgerMenu: React.FC = () => {
+  const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
+  const isAuthenticated = useSelector(
+    (state: IRootState) => state.auth.isAuthenticated
+  );
+  const userEmail = useSelector((state: IRootState) => state.auth.email);
+
+
   const categories: string[] = [
     "中文",
     "英文",
@@ -24,6 +41,29 @@ const BurgerMenu: React.FC = () => {
 
   return (
     <Menu>
+      {isAuthenticated ? (
+            <div className="user-info">
+              <div className="user-icon-container">
+                <button className="user-icon" onClick={() => setOpen(!open)}>
+                  <i className="far fa-user"></i>
+                </button>
+                {open && <DropdownMenu />}
+                {/* {open && <div>hello</div>} */}
+              </div>
+              <Navbar.Text>Welcome back {userEmail}</Navbar.Text>{" "}
+            </div>
+          ) : (
+            <Button
+              variant="success"
+              onClick={() => {
+                setOpen(false);
+                dispatch(push("/login"));
+              }}
+            >
+              Login
+            </Button>
+      )}
+
       <DarkModeSwitch />
       {categories.map((category, i) => {
         return (

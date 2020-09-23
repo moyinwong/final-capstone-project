@@ -17,6 +17,11 @@ interface IGetUser {
   userEmail: string;
 }
 
+interface ICheckTutor {
+  type: "@@AUTH/CHECK_TUTOR";
+  isTutor: boolean;
+}
+
 interface ILogout {
   type: "@@AUTH/LOGOUT";
 }
@@ -33,6 +38,13 @@ export function getUser(userEmail: string): IGetUser {
     type: "@@AUTH/GET_USER" as "@@AUTH/GET_USER",
     userEmail,
   };
+}
+
+export function checkTutor(isTutor: boolean): ICheckTutor {
+  return {
+    type: "@@AUTH/CHECK_TUTOR" as "@@AUTH/CHECK_TUTOR",
+    isTutor,
+  }
 }
 
 export function logout(): ILogout {
@@ -57,6 +69,7 @@ export const loginProcessing = (): ILoginProcessing => {
 type AuthAction =
   | typeof loginSuccess
   | typeof getUser
+  | typeof checkTutor
   | typeof logout
   | typeof loginFail
   | typeof loginProcessing;

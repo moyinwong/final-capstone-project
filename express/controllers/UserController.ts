@@ -29,9 +29,11 @@ export class UserController {
         id: user.id,
       };
       const token = jwtSimple.encode(payload, jwt.jwtSecret);
+
       res.json({
         token: token,
         email: user.email,
+        isTutor: user.is_tutor
       });
     } catch (e) {
       logger.error(e.message);
@@ -42,9 +44,11 @@ export class UserController {
   getInfo = async (req: Request, res: Response) => {
     try {
       const user = req.user;
+
       res.status(200).json({
         user: {
           email: user?.email,
+          isTutor: user?.is_tutor
         },
       });
     } catch (e) {
@@ -108,6 +112,7 @@ export class UserController {
       res.json({
         token: token,
         email: user.email,
+        isTutor: user.is_tutor
       });
     } catch (e) {
       logger.error(e.message);
@@ -162,6 +167,7 @@ export class UserController {
       res.json({
         token: token,
         email: user.email,
+        isTutor: user.is_tutor
       });
     } catch (e) {
       logger.error(e.message);

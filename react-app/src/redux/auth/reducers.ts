@@ -20,6 +20,12 @@ export const authReducer = (
         email: action.userEmail,
       };
 
+    case '@@AUTH/CHECK_TUTOR':
+      return {
+        ...state,
+        isTutor: action.isTutor,
+      }
+
     case "@@AUTH/LOGOUT":
       return {
         ...state,
