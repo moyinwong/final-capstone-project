@@ -7,8 +7,10 @@ const coursesListStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
+        paddingTop: 10,
         paddingLeft: 10,
-        paddingBottom: 4
+        paddingBottom: 3,
+        backgroundColor: '#ffffff'
     },
     screenTitle: {
         fontWeight: 'bold',
@@ -19,6 +21,7 @@ const coursesListStyles = StyleSheet.create({
     },
     flatList: {
         flex: 1,
+        paddingTop: 2
     },
     courseBox: {
         flex: 1,
