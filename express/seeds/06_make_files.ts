@@ -10,16 +10,12 @@ export async function seed(knex: Knex): Promise<void> {
   // Inserts seed entries
   await knex(filesTable).insert([
     {
-      name: "test1.pdf",
+      name: "2017-DSE-CH-LANG-1-AB.pdf",
       lesson_id: 1,
     },
     {
-      name: "test2.pdf",
-      lesson_id: 2,
-    },
-    {
-      name: "test3.pdf",
-      lesson_id: 3,
+      name: "2017-DSE-CH-LANG-1-RP.pdf",
+      lesson_id: 1,
     },
   ]);
 }

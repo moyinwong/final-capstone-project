@@ -14,5 +14,15 @@ export async function seed(knex: Knex): Promise<void> {
       lesson_id: 1,
       is_MC: true,
     },
+    {
+      question: "用紅外線定收音機比較好？",
+      lesson_id: 1,
+      is_MC: true,
+    },
+    {
+      question: "聆聽難唔難？",
+      lesson_id: 1,
+      is_MC: true,
+    },
   ]);
 }

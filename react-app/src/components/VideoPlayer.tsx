@@ -4,9 +4,10 @@ import "./VideoPlayer.scss";
 
 interface IVideoProps {
   url: string;
+  onEnded: () => void;
 }
 
-const VideoPlayer: React.FC<IVideoProps> = ({ url }) => {
+const VideoPlayer: React.FC<IVideoProps> = ({ url, onEnded }) => {
   return (
     // <div className="player-container">
     <div className="player-wrapper">
@@ -16,6 +17,7 @@ const VideoPlayer: React.FC<IVideoProps> = ({ url }) => {
         width="80%"
         height="80%"
         controls={true}
+        onEnded={onEnded}
       />
     </div>
     // </div>

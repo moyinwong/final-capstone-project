@@ -136,6 +136,7 @@ const CoursePage: React.FC = () => {
     } else {
       setIsAllowAccess(false);
     }
+    result.lessons.sort((a: ILesson, b: ILesson) => a.lesson_id - b.lesson_id);
     setLessons(result.lessons);
   };
 
@@ -282,7 +283,7 @@ const CoursePage: React.FC = () => {
                               variant="link"
                               eventKey="0"
                             >
-                              {e.lesson_name}
+                              {i + 1 + ". " + e.lesson_name}
                             </Accordion.Toggle>
                           </Card.Header>
                           <Accordion.Collapse eventKey="0">

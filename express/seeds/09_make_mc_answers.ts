@@ -24,5 +24,25 @@ export async function seed(knex: Knex): Promise<void> {
       answer_body: "中文水平",
       is_correct_answer: true,
     },
+    {
+      question_id: 2,
+      answer_body: "紅外線",
+      is_correct_answer: true,
+    },
+    {
+      question_id: 2,
+      answer_body: "收音機",
+      is_correct_answer: false,
+    },
+    {
+      question_id: 3,
+      answer_body: "難",
+      is_correct_answer: false,
+    },
+    {
+      question_id: 3,
+      answer_body: "唔難",
+      is_correct_answer: true,
+    },
   ]);
 }

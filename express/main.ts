@@ -27,6 +27,24 @@ const storage = multer.diskStorage({
 
 export const upload = multer({ storage });
 
+//storage file
+const fileStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, `${__dirname}/public/file`);
+  },
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      `${file.originalname.substring(
+        0,
+        file.originalname.lastIndexOf(".")
+      )}-${Date.now()}.${file.mimetype.split("/")[1]}`
+    );
+  },
+});
+
+export const file = multer({ storage: fileStorage });
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
