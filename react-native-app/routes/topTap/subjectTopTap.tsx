@@ -1,4 +1,7 @@
+// React, React Native
 import React from 'react';
+
+// Navigation
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 // Screens

@@ -1,4 +1,7 @@
+// React, React Native
 import React from 'react';
+
+// Navigation
 import { createStackNavigator } from '@react-navigation/stack';
 
 // Icons

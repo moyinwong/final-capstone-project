@@ -1,3 +1,4 @@
+// React, React Native
 import { StyleSheet } from 'react-native';
 
 const tutorStyles = StyleSheet.create({

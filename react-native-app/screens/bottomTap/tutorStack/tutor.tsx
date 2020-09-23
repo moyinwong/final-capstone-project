@@ -1,4 +1,4 @@
-// Components
+// React, React Native
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 
@@ -11,8 +11,10 @@ import tutorStyles from '../../../styles/tutorStyles';
 
 export default function Tutor(props: { navigation: { navigate: (arg0: string) => void; }; }) {
 
+    // Hooks
     const navigation = useNavigation();
 
+    // State
     const [tutorsData, setTutorsData] = useState(
         [
             {

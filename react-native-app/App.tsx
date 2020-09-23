@@ -1,6 +1,8 @@
+// React, React Native
 import React from 'react';
 import { enableScreens } from 'react-native-screens';
 
+// Navigation
 import { NavigationContainer } from '@react-navigation/native'
 
 // Routes

@@ -1,4 +1,7 @@
+// React, React Native
 import React from 'react';
+
+// Navigation
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 // Icons

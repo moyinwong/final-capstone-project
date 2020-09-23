@@ -1,4 +1,4 @@
-// Components
+// React, React Native
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -50,6 +50,7 @@ const mainSubjectsData = [
 
 export default function OtherSubject() {
 
+    // Hooks
     const navigation = useNavigation();
 
     return (
