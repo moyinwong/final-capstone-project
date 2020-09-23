@@ -32,7 +32,7 @@ const Header = (props: any) => {
 
 
   return (
-    <div>
+    <div id="website-header">
       <div className="burger-menu">
         <BurgerMenu />
       </div>

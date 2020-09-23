@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormState } from "react-use-form-state";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,6 +33,10 @@ function LoginPage() {
       dispatch(loginGoogleThunk(response.accessToken));
     }
   };
+
+  useEffect(() => {
+    document.getElementById('website-header')!.style.display="none"
+  }, [])
 
   return (
     <div>

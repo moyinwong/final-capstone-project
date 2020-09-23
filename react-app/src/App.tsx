@@ -14,8 +14,8 @@ import { restoreLogin } from "./redux/auth/thunk";
 import CategoryPage from "./pages/CategoryPage";
 import CoursePage from "./pages/CoursePage";
 import Header from "./components/Header";
-import DropdownMenu from "./components/DropdownMenu";
 import InstructorPage from "./pages/InstructorPage";
+import CourseCreatePage from "./pages/CourseCreatePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -42,7 +42,7 @@ function App() {
   return (
     <div className="App">
       <Header />
-      
+
       {/* routes */}
       <Switch>
         <Route path="/" exact={true} component={HomePage} />
@@ -66,6 +66,7 @@ function App() {
         />
         {/* ... */}
         <Route path='/instructor' exact={true} component={InstructorPage}/>
+        <Route path='/instructor/create' exact={true} component={CourseCreatePage}/>
         <Route path="/404" exact={true} component={NotFound} />
         <Route component={NotFound} />
       </Switch>
@@ -74,3 +75,4 @@ function App() {
 }
 
 export default App;
+

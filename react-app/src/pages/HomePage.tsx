@@ -21,6 +21,7 @@ const HomePage = () => {
 
   useEffect(() => {
     document.title = "e-ducate";
+    document.getElementById('website-header')!.style.display="block"
   }, []);
 
   return (
