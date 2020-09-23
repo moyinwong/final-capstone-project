@@ -176,7 +176,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
     );
 
     return (
-        <View style={globalStyles.container}>
+        <View style={{...globalStyles.container, paddingVertical: 0}}>
 
             <View style={coursesListStyles.titleContainer}>
                 {coursesListParam.subject ?

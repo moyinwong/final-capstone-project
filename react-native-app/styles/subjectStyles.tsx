@@ -3,8 +3,7 @@ import { StyleSheet } from 'react-native';
 
 const subjectStyles = StyleSheet.create({
     flatList: {
-        flex: 1,
-        paddingTop: 10
+        flex: 1
     },
     subjectBox: {
         position: 'relative',

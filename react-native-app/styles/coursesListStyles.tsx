@@ -9,8 +9,7 @@ const coursesListStyles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 10,
         paddingLeft: 10,
-        paddingBottom: 3,
-        backgroundColor: '#ffffff'
+        paddingBottom: 3
     },
     screenTitle: {
         fontWeight: 'bold',
