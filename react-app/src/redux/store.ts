@@ -18,6 +18,9 @@ import { authReducer } from "./auth/reducers";
 import { IDarkModeState } from "./dark/state";
 import { IDarkModeActions } from "./dark/actions";
 import { darkModeReducers } from "./dark/reducers";
+import { ICartState } from "./cart/state";
+import { ICartAction } from "./cart/actions";
+import { cartReducer } from "./cart/reducers";
 
 export const history = createBrowserHistory();
 
@@ -26,6 +29,7 @@ export interface IRootState {
   lesson: ILessonState;
   auth: IAuthState;
   dark: IDarkModeState;
+  cart: ICartState;
   router: RouterState;
 }
 
@@ -34,6 +38,7 @@ export type IRootAction =
   | ILessonActions
   | IAuthAction
   | IDarkModeActions
+  | ICartAction
   | CallHistoryMethodAction;
 
 // step 3: rootReducer
@@ -41,6 +46,7 @@ const rootReducer = combineReducers<IRootState>({
   lesson: lessonReducers,
   auth: authReducer,
   dark: darkModeReducers,
+  cart: cartReducer,
   router: connectRouter(history),
 });
 

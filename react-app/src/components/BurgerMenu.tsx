@@ -48,7 +48,7 @@ const BurgerMenu: React.FC = () => {
                   <i className="far fa-user"></i>
                 </button>
                 {open && <DropdownMenu />}
-                {/* {open && <div>hello</div>} */}
+                {open && <div>hello</div>}
               </div>
               <Navbar.Text>Welcome back {userEmail}</Navbar.Text>{" "}
             </div>

@@ -53,7 +53,7 @@ const CategoryPage: React.FC = () => {
     return () => {
       document.title = "e-ducate";
     };
-  }, []);
+  }, [window.location.href]);
 
   const getAllCoursesByCategory = async () => {
     let queryRoute: string = "/category/";

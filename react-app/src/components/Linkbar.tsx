@@ -10,6 +10,8 @@ import {
 } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
+import { Link } from "react-router-dom";
+
 
 const Linkbar = () => {
   const isDarkMode = useSelector((state: IRootState) => state.dark.mode);
@@ -36,28 +38,33 @@ const Linkbar = () => {
   }
 
   return (
-    <div>
+    <div className="navigation-bar">
       <Navbar bg='dark' variant="dark">
         <Nav className="mx-auto" >
           {categories.map((category, i) => {
             return (
-              <Nav.Link href={`/category/${category}`} key={i} id={category}>
-                {category}
-              </Nav.Link>
+              // <Nav.Link href={`/category/${category}`} key={i} id={category}>
+                <Link to={`/category/${category}`} key={i} id={category}>{category}</Link>
+              // </Nav.Link>
             );
           })}
           <NavDropdown title="其他" id="basic-nav-dropdown">
             <NavDropdown.Item href="/category/others/編程" key="o1">
-              編程
+              <Link className="dropdown-item-link" to="/category/others/編程">編程</Link>
+
             </NavDropdown.Item>
+        
             <NavDropdown.Item href="/category/others/廚藝" key="o2">
-              廚藝
+              <Link className="dropdown-item-link" to="/category/others/廚藝">廚藝</Link>
+              
             </NavDropdown.Item>
             <NavDropdown.Item href="/category/others/DIY" key="o3">
-              DIY
+              <Link className="dropdown-item-link" to="/category/others/DIY">DIY</Link>
+              
             </NavDropdown.Item>
             <NavDropdown.Item href="/category/others/美容" key="o4">
-              美容
+              <Link className="dropdown-item-link" to="/category/others/美容">美容</Link>
+              
             </NavDropdown.Item>
           </NavDropdown>
         </Nav>
