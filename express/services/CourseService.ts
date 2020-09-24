@@ -8,17 +8,14 @@ interface IPopularCourses {
   count: string;
 }
 
-interface ICourseInfo {
-  values: {
-    courseTitle: string;
-    courseCategory: number;
-    coursePrice: number;
-    courseDescription: string;
-    coursePrerequisite: string;
-    file: File;
-  }
+export interface ICourseInfo {
+  courseTitle: string;
+  courseCategory: number;
+  coursePrice: number;
+  courseObjective: string;
+  courseDescription: string;
+  coursePrerequisite: string;
 }
-
 
 export class CourseService {
   constructor(private knex: Knex) {}
@@ -142,7 +139,27 @@ export class CourseService {
     return comments;
   };
 
-  createCourse = async (courseInfo: ICourseInfo) => {
-    console.log('courseService')
+  createCourse = async (userEmail: string, courseInfo: ICourseInfo, courseCover: string) => {
+    const userIdArray = await (this.knex
+    .select('id')
+    .from(tables.USERS)
+    .where('email', userEmail))
+    const userId = userIdArray[0]
+    console.log(userId)
+    const course = await this.knex
+    .insert({
+      name: courseInfo.courseTitle,
+      price: courseInfo.coursePrice,
+      category_id: courseInfo.courseCategory,
+      tutor_id: userId.id,
+      image: courseCover,
+      description: courseInfo.courseDescription,
+      objective: courseInfo.courseObjective,
+      prerequisites: courseInfo.coursePrerequisite
+    })
+    .returning('id')
+    .into(tables.COURSES);
+
+    return course
   }
 }

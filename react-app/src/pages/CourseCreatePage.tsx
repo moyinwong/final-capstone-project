@@ -7,7 +7,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardContent, MenuItem, FormControl, 
     InputLabel, Button, Box, Stepper, Step, StepLabel, CircularProgress} from '@material-ui/core'
 import * as Yup from 'yup'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { IRootState } from '../redux/store';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -25,9 +26,10 @@ const sleep = (time: number) => new Promise((acc) => setTimeout(acc, time))
 const CourseCreatePage = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
+    const userEmail = useSelector((state: IRootState) => state.auth.email)
 
     const submitHandler = async (formData: FormData) => {
-        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/course/create`, {
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/course/create/${userEmail}`, {
             method: 'POST',
             body: formData
         })
@@ -36,7 +38,7 @@ const CourseCreatePage = () => {
     const firstValidationSchema = Yup.object().shape({
         courseTitle: Yup.string()
         .min(3, 'Too Short!')
-        .max(20, 'Too Long!')
+        .max(15, 'Too Long!')
         .required('Required'),
         courseCategory: Yup.string()
         .required('Required')
@@ -45,6 +47,11 @@ const CourseCreatePage = () => {
     const secondValidationSchema = Yup.object().shape({
         coursePrice: Yup.number()
         .min(0, 'Min price is 0')
+        .max(100000, 'Too expensive')
+        .required('Required'),
+        courseObjective: Yup.string()
+        .min(5, 'Too Short')
+        .max(50, 'Too Long!')
         .required('Required'),
         courseDescription: Yup.string()
         .min(5, 'Too Short!')
@@ -76,6 +83,7 @@ const CourseCreatePage = () => {
                             courseTitle: '',
                             courseCategory: '',
                             coursePrice: '',
+                            courseObjective: '',
                             courseDescription: '',
                             coursePrerequisite: '',
                             file: null,
@@ -88,6 +96,7 @@ const CourseCreatePage = () => {
                             formData.append('courseTitle', values.courseTitle)
                             formData.append('courseCategory', values.courseCategory)
                             formData.append('coursePrice', values.coursePrice)
+                            formData.append('courseObjective', values.courseObjective)
                             formData.append('courseDescription', values.courseDescription)
                             formData.append('coursePrerequisite', values.coursePrerequisite)
                             formData.append('file', values.file)
@@ -151,10 +160,19 @@ const CourseCreatePage = () => {
                                 <Box paddingBottom={2}>
                                     <Field 
                                         className={classes.formControl}
+                                        name="courseObjective" 
+                                        component={TextField} 
+                                        placeholder="助學生提高中文水平" 
+                                        label="課程目標" 
+                                    />
+                                </Box>
+                                <Box paddingBottom={2}>
+                                    <Field 
+                                        className={classes.formControl}
                                         name="courseDescription" 
                                         component={TextField} 
-                                        placeholder="e.g. 帶你中文拎5**！" 
-                                        label="課程大綱" 
+                                        placeholder="e.g. 透過閱讀練習提升中文閱讀水平！" 
+                                        label="課程內容" 
                                     />
                                 </Box>
                                 <Box paddingBottom={2}>

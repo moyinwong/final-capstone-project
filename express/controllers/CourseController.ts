@@ -1,4 +1,4 @@
-import { CourseService } from "../services/CourseService";
+import { CourseService, ICourseInfo } from "../services/CourseService";
 
 import { Request, Response } from "express";
 
@@ -43,11 +43,27 @@ export class CourseController {
 
   courseCreation = async (req: Request, res:Response) => {
     try {
-      const courseInfo = req.body;
-      console.log(req.file)
-      console.log(courseInfo)
-      const createdCourse = await this.courseService.createCourse(courseInfo)
+      const userEmail = req.params.userEmail;
+      const { courseTitle, 
+              courseCategory, 
+              coursePrice, 
+              courseDescription,
+              courseObjective, 
+              coursePrerequisite} = req.body;
+
+      const newCourseInfo: ICourseInfo = {
+        courseTitle: courseTitle,
+        courseCategory: parseInt(courseCategory),
+        coursePrice: parseInt(coursePrice),
+        courseDescription: courseDescription,
+        courseObjective: courseObjective,
+        coursePrerequisite: coursePrerequisite
+      }
+      const courseCover = req.file.filename;
+
+      const createdCourse = await this.courseService.createCourse(userEmail, newCourseInfo, courseCover)
       console.log(createdCourse)
+
       res.status(200).json({ message: 'successfully created course'})
     } catch(e) {
       console.log(e.message)
