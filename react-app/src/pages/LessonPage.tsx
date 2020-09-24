@@ -1,6 +1,5 @@
 import React from "react";
-// import ReactPlayer from "react-player";
-import VideoPlayer from "../components/VideoPlayer";
+import ReactPlayer from "react-player";
 import { useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
 import { useEffect } from "react";
@@ -100,7 +99,7 @@ const LessonPage: React.FC = () => {
 
     const result = await fetchRes.json();
 
-    console.log("result: ", result);
+    //console.log("result: ", result);
     if (result) {
       setIsAllowAccess(true);
       setUserRight(true);
@@ -117,7 +116,7 @@ const LessonPage: React.FC = () => {
 
     const result = await fetchRes.json();
     const { lessonInfo } = result;
-    console.log(lessonInfo);
+    //console.log(lessonInfo);
     if (lessonInfo.is_trial) {
       setIsAllowAccess(true);
     }
@@ -149,7 +148,10 @@ const LessonPage: React.FC = () => {
   //handle answer on submit
   const onSubmit = async (data: any) => {
     setIsLoading(true);
-    console.log(data);
+    let queryRoute: string = "/lesson/file/";
+    const fetchRes = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}${queryRoute}${lessonName}`
+    );
   };
 
   return (
@@ -167,12 +169,19 @@ const LessonPage: React.FC = () => {
                     </>
                   }
                 >
-                  <VideoPlayer
-                    url={lessonInfo.video_url}
-                    onEnded={() => {
-                      console.log("ended");
-                    }}
-                  />
+                  <div className="player-wrapper">
+                    <ReactPlayer
+                      className="react-player"
+                      url={lessonInfo.video_url}
+                      width="80%"
+                      height="80%"
+                      controls={true}
+                      onEnded={() => {
+                        //testing
+                        console.log(userEmail);
+                      }}
+                    />
+                  </div>
                 </Tab>
                 <Tab
                   eventKey="material"
@@ -205,15 +214,13 @@ const LessonPage: React.FC = () => {
                     </>
                   }
                 >
-                  {console.log(userRight)}
-
                   {!userRight && <div>請先購買此課堂</div>}
                   {userRight && (
                     <Form onSubmit={handleSubmit(onSubmit)}>
                       {questionAndAnswer.map((e, i, a) => {
                         if (i === 0 || a[i - 1].question_id !== e.question_id) {
                           {
-                            console.log("haha");
+                            //console.log("haha");
                           }
                           return (
                             <>
