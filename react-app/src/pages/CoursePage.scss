@@ -74,6 +74,12 @@
   display: flex;
   justify-content: center;
 
+  .card-header {
+    .btn {
+      text-align: left !important;
+    }
+  }
+
   > div {
     width: 76vw;
     height: 250px;
