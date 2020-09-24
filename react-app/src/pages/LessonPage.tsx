@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import ReactLoading from "react-loading";
 import "./LessonPage.scss";
+import CheckingModal from "../components/CheckingModal";
 
 interface ILessInfo {
   id: number;
@@ -54,6 +55,13 @@ const LessonPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [files, setFiles] = useState<Array<IFile>>([]);
   const { register, handleSubmit, errors } = useForm(); // initialize the hook
+  const [isDisplayModal, setIsDisplayModal] = useState<boolean>(false);
+  const [checkingResult, setCheckingResult] = useState<
+    {
+      question: string;
+      isCorrect: string;
+    }[]
+  >([]);
   const [isReadyRender, setIsReadyRender] = useState<boolean>(false);
 
   //edit title once started
@@ -148,10 +156,27 @@ const LessonPage: React.FC = () => {
   //handle answer on submit
   const onSubmit = async (data: any) => {
     setIsLoading(true);
-    let queryRoute: string = "/lesson/file/";
+    let queryRoute: string = "/lesson/check/";
     const fetchRes = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}${queryRoute}${lessonName}`
+      `${process.env.REACT_APP_BACKEND_URL}${queryRoute}${lessonName}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
     );
+    const { result } = await fetchRes.json();
+    console.log(result);
+    let transferResult: { question: string; isCorrect: string }[] = [];
+    for (let eachResult of result) {
+      let [key] = Object.keys(eachResult);
+      transferResult.push({ question: key, isCorrect: eachResult[key] });
+    }
+    setCheckingResult(transferResult);
+    setIsDisplayModal(true);
+    setIsLoading(false);
   };
 
   return (
@@ -160,12 +185,31 @@ const LessonPage: React.FC = () => {
         <>
           {isAllowAccess && lessonInfo && questionAndAnswer && files && (
             <div>
+              <div className="modal-container">
+                <CheckingModal
+                  show={isDisplayModal}
+                  onHide={() => setIsDisplayModal(false)}
+                  content={checkingResult.map((e, i) => {
+                    return (
+                      <p>
+                        {e.question}
+                        {e.isCorrect === "correct" && (
+                          <i className="fas fa-check"></i>
+                        )}
+                        {e.isCorrect === "wrong" && (
+                          <i className="fas fa-times"></i>
+                        )}
+                      </p>
+                    );
+                  })}
+                />
+              </div>
               <Tabs defaultActiveKey="video" id="uncontrolled-tab-example">
                 <Tab
                   eventKey="video"
                   title={
                     <>
-                      影片 <i className="fas fa-video" />
+                      影片 <i className="far fa-video" />
                     </>
                   }
                 >
@@ -191,7 +235,7 @@ const LessonPage: React.FC = () => {
                     </>
                   }
                 >
-                  <div>可供下載：</div>
+                  <div className="material-content">可供下載：</div>
                   {files.map((e, i) => {
                     return (
                       <div key={i}>
@@ -216,48 +260,53 @@ const LessonPage: React.FC = () => {
                 >
                   {!userRight && <div>請先購買此課堂</div>}
                   {userRight && (
-                    <Form onSubmit={handleSubmit(onSubmit)}>
-                      {questionAndAnswer.map((e, i, a) => {
-                        if (i === 0 || a[i - 1].question_id !== e.question_id) {
-                          {
-                            //console.log("haha");
+                    <div className="exe-container">
+                      <Form
+                        className="lesson-exe"
+                        onSubmit={handleSubmit(onSubmit)}
+                      >
+                        {questionAndAnswer.map((e, i, a) => {
+                          if (
+                            i === 0 ||
+                            a[i - 1].question_id !== e.question_id
+                          ) {
+                            return (
+                              <>
+                                <Form.Label>{`${e.question}`} </Form.Label>
+                                <Col>
+                                  {a.map((ea, ia) => {
+                                    if (ea.question_id === e.question_id) {
+                                      return (
+                                        <Form.Check
+                                          type="radio"
+                                          label={ea.answer_body}
+                                          value={ea.answer_body}
+                                          name={ea.question}
+                                          id={ea.answer_id.toString()}
+                                          ref={register({ required: true })}
+                                        />
+                                      );
+                                    }
+                                  })}
+                                </Col>
+                                {errors[e.question] && "請選擇答案"}
+                              </>
+                            );
                           }
-                          return (
-                            <>
-                              <Form.Label>{e.question} </Form.Label>
-                              <Col>
-                                {a.map((ea, ia) => {
-                                  if (ea.question_id === e.question_id) {
-                                    return (
-                                      <Form.Check
-                                        type="radio"
-                                        label={ea.answer_body}
-                                        value={ea.answer_body}
-                                        name={ea.question}
-                                        id={ea.answer_id.toString()}
-                                        ref={register({ required: true })}
-                                      />
-                                    );
-                                  }
-                                })}
-                              </Col>
-                              {errors[e.question] && "請選擇答案"}
-                            </>
-                          );
-                        }
-                      })}
-                      <Button variant="primary" type="submit">
-                        提交
-                      </Button>
-                      {isLoading && (
-                        <ReactLoading
-                          type={"spin"}
-                          color="black"
-                          height={667}
-                          width={375}
-                        />
-                      )}
-                    </Form>
+                        })}
+                        <Button variant="primary" type="submit">
+                          提交
+                        </Button>
+                        {isLoading && (
+                          <ReactLoading
+                            type={"spin"}
+                            color="black"
+                            height={667}
+                            width={375}
+                          />
+                        )}
+                      </Form>
+                    </div>
                   )}
                 </Tab>
               </Tabs>
