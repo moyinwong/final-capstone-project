@@ -33,8 +33,7 @@ export default function TutorStack(props: { navigation: { toggleDrawer: () => vo
             headerMode="float"
             screenOptions={{
                 headerStyle: {
-                    backgroundColor: "#5b96f7",
-                    height: 70
+                    backgroundColor: "#5b96f7"
                 },
                 headerTintColor: '#fff',
                 headerTitleAlign: 'center',

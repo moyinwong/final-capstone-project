@@ -1,6 +1,5 @@
 // React, React Native
 import React from 'react';
-import { View } from 'react-native';
 
 // Navigation
 import { createStackNavigator } from '@react-navigation/stack';
@@ -35,13 +34,12 @@ export default function SubjectStack(props: { navigation: { toggleDrawer: () => 
             headerMode="float"
             screenOptions={{
                 headerStyle: {
-                    backgroundColor: "#5b96f7",
-                    height: 70
+                    backgroundColor: "#5b96f7"
                 },
                 headerTintColor: '#fff',
                 headerTitleAlign: 'center',
                 headerTitleStyle: {
-                    fontWeight: 'bold'
+                    fontWeight: 'bold',
                 },
                 headerLeft: (props) => (
                     <FontAwesome name="navicon" color={props.tintColor} size={24}
