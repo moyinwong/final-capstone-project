@@ -40,4 +40,18 @@ export class CourseController {
       res.status(500).json({ message: "internal server error" });
     }
   };
+
+  courseCreation = async (req: Request, res:Response) => {
+    try {
+      const courseInfo = req.body;
+      console.log(req.file)
+      console.log(courseInfo)
+      const createdCourse = await this.courseService.createCourse(courseInfo)
+      console.log(createdCourse)
+      res.status(200).json({ message: 'successfully created course'})
+    } catch(e) {
+      console.log(e.message)
+      res.status(500).json({ message: 'Cannot create course'})
+    }
+  }
 }

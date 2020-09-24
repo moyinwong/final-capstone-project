@@ -16,6 +16,7 @@ import CoursePage from "./pages/CoursePage";
 import Header from "./components/Header";
 import InstructorPage from "./pages/InstructorPage";
 import CourseCreatePage from "./pages/CourseCreatePage";
+import CartPage from "./pages/CartPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ function App() {
         <Route path="/" exact={true} component={HomePage} />
         <Route path="/lesson" exact={true} component={LessonPage} />
         <Route path="/login" exact={true} component={LoginPage} />
+        <Route path="/cart" exact={true} component={CartPage} />
         <Route
           path="/category/:categoryName"
           exact={true}
@@ -65,8 +67,12 @@ function App() {
           component={LessonPage}
         />
         {/* ... */}
-        <Route path='/instructor' exact={true} component={InstructorPage}/>
-        <Route path='/instructor/create' exact={true} component={CourseCreatePage}/>
+        <Route path="/instructor" exact={true} component={InstructorPage} />
+        <Route
+          path="/instructor/create"
+          exact={true}
+          component={CourseCreatePage}
+        />
         <Route path="/404" exact={true} component={NotFound} />
         <Route component={NotFound} />
       </Switch>
@@ -75,4 +81,3 @@ function App() {
 }
 
 export default App;
-

@@ -3,7 +3,17 @@ import './InstructorPage.scss'
 import { Button, Jumbotron, Container, Row, Col } from 'react-bootstrap'
 
 const InstructorPage = () => {
-
+    const submitHandler = async (event: any) => {
+        console.log(event.target)
+        // const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/course/create`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({ form })
+        // })
+        
+    }
 
 
     return (

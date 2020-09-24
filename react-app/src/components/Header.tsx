@@ -16,11 +16,11 @@ import {
 import BurgerMenu from "./BurgerMenu";
 import Linkbar from "./Linkbar";
 import DarkModeSwitch from "./DarkModeSwitch";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 import "./Header.scss";
 import DropdownMenu from "./DropdownMenu";
-
+import { Link } from "react-router-dom";
 
 const Header = (props: any) => {
   const dispatch = useDispatch();
@@ -30,14 +30,13 @@ const Header = (props: any) => {
   const userEmail = useSelector((state: IRootState) => state.auth.email);
   const [open, setOpen] = useState(false);
 
-
   return (
     <div id="website-header">
       <div className="burger-menu">
         <BurgerMenu />
       </div>
       <div className="web-navbar">
-        <Navbar bg='light' variant="light">
+        <Navbar bg="light" variant="light">
           <Navbar.Brand href="/">
             <img className="website-logo" src={require("../logo.png")} />
           </Navbar.Brand>
@@ -55,7 +54,11 @@ const Header = (props: any) => {
               <DarkModeSwitch />
             </Nav>
           </div>
-
+          <div>
+            <Link to="/cart">
+              <i className="fas fa-shopping-cart"></i>
+            </Link>
+          </div>
           {isAuthenticated ? (
             <div className="user-info">
               <div className="user-icon-container">

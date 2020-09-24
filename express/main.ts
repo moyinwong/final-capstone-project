@@ -18,14 +18,14 @@ app.use(cors());
 //storage file
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, `${__dirname}/img`);
+    cb(null, `${__dirname}/public/img`);
   },
   filename: function (req, file, cb) {
     cb(null, `${file.fieldname}-${Date.now()}.${file.mimetype.split("/")[1]}`);
   },
 });
 
-export const upload = multer({ storage });
+export const upload = multer({ storage })
 
 //storage file
 const fileStorage = multer.diskStorage({
@@ -43,7 +43,7 @@ const fileStorage = multer.diskStorage({
   },
 });
 
-export const file = multer({ storage: fileStorage });
+export const fileUpload = multer({ storage: fileStorage });
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
