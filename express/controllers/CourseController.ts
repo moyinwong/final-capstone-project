@@ -44,6 +44,7 @@ export class CourseController {
   courseCreation = async (req: Request, res:Response) => {
     try {
       const courseInfo = req.body;
+      console.log(req.file)
       console.log(courseInfo)
       const createdCourse = await this.courseService.createCourse(courseInfo)
       console.log(createdCourse)

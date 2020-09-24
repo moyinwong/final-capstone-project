@@ -34,7 +34,6 @@ const CourseCreatePage = () => {
             },
             body: JSON.stringify({ values })
         })
-        
     }
 
     const firstValidationSchema = Yup.object().shape({
