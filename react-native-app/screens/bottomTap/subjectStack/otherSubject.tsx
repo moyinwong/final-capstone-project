@@ -60,6 +60,7 @@ export default function OtherSubject() {
                 style={subjectStyles.flatList}
                 keyExtractor={(item) => item.id}
                 data={mainSubjectsData}
+                showsVerticalScrollIndicator={false}
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={subjectStyles.subjectBox}
