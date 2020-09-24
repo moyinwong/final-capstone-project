@@ -8,14 +8,14 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 // Styles
 import globalStyles from '../../../styles/globalStyles';
 
-export default function Quiz(props: { navigation: { goBack: () => void; }; }) {
+export default function Exercise(props: { navigation: { goBack: () => void; }; }) {
 
     // Hooks
     const navigation = useNavigation();
 
     return (
         <View style={globalStyles.container}>
-            <Text>Quiz Screen</Text>
+            <Text>Exercise Screen</Text>
             <Button
                 title="Go Back to Lesson"
                 onPress={() => navigation.goBack()}

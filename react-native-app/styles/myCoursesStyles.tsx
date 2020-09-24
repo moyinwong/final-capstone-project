@@ -75,7 +75,7 @@ const myCoursesStyles = StyleSheet.create({
     courseSubInfoLowerContainer: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
         alignItems: 'flex-start',
         paddingRight: 16
     },

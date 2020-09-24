@@ -86,6 +86,19 @@ export default function CompletedCourses() {
         ]
     );
 
+    // methods
+    function showModal() {
+        console.log('modal');
+    }
+
+    function showCommentBox() {
+        console.log('comment');
+    }
+
+    function showRateBox() {
+        console.log('rate');
+    }
+
     return (
         <View style={{ ...globalStyles.container, paddingVertical: 0 }}>
 
@@ -96,10 +109,10 @@ export default function CompletedCourses() {
                 showsVerticalScrollIndicator={false}
 
                 ListFooterComponent={
-                    <View style={{height:18}}>
+                    <View style={{ height: 18 }}>
                     </View>
                 }
-                
+
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={myCoursesStyles.courseBox}
@@ -116,14 +129,17 @@ export default function CompletedCourses() {
                         <View style={myCoursesStyles.courseInfoContainer}>
                             <Text style={myCoursesStyles.courseTitle}>{item.title}</Text>
                             <View style={myCoursesStyles.courseSubInfoContainer}>
+
                                 <View style={myCoursesStyles.courseSubInfoTextContainer}>
                                     <Text style={myCoursesStyles.courseInfoText}>{item.tutor}</Text>
                                     <Text style={myCoursesStyles.courseInfoText}>{item.description}</Text>
                                     <Text style={myCoursesStyles.courseInfoText}>{"總共堂數: " + item.numOfLessons}</Text>
                                 </View>
+
                                 <View style={myCoursesStyles.courseSubInfoLowerContainer}>
                                     <Text style={myCoursesStyles.coursePrice}>{"價錢: $" + item.price}</Text>
                                 </View>
+
                             </View>
                         </View>
                     </TouchableOpacity>

@@ -178,6 +178,19 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
         ]
     );
 
+    // methods
+    function showModal() {
+        console.log('modal');
+    }
+
+    function showCommentBox() {
+        console.log('comment');
+    }
+
+    function showRateBox() {
+        console.log('rate');
+    }
+
     return (
         <View style={{ ...globalStyles.container, paddingVertical: 0 }}>
 
@@ -203,7 +216,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 }
 
                 ListFooterComponent={
-                    <View style={{height:12}}>
+                    <View style={{ height: 12 }}>
                     </View>
                 }
 
@@ -211,6 +224,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                     <TouchableOpacity
                         style={coursesListStyles.courseBox}
                         onPress={() => navigation.navigate('Course', { title: item.title })}
+                        onLongPress={() => showModal()}
                     >
                         <View style={coursesListStyles.coursePicContainer}>
                             <Image
