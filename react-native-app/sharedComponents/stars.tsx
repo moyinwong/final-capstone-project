@@ -22,23 +22,23 @@ export default function Stars(props: { score: number; }) {
         <View style={starsStyles.starsContainer}>
             <View>
                 <FontAwesome style={{ ...starsStyles.star, width: firstStar }} name="star" size={20} color="#fadd4d" />
-                <FontAwesome style={starsStyles.starEmpty} name="star-o" size={20} color="#fadd4d" />
+                <FontAwesome style={starsStyles.starEmpty} name="star" size={20} color="#cfd9ea" />
             </View>
             <View>
                 <FontAwesome style={{ ...starsStyles.star, width: secondStar }} name="star" size={20} color="#fadd4d" />
-                <FontAwesome style={starsStyles.starEmpty} name="star-o" size={20} color="#fadd4d" />
+                <FontAwesome style={starsStyles.starEmpty} name="star" size={20} color="#cfd9ea" />
             </View>
             <View>
                 <FontAwesome style={{ ...starsStyles.star, width: thirdStar }} name="star" size={20} color="#fadd4d" />
-                <FontAwesome style={starsStyles.starEmpty} name="star-o" size={20} color="#fadd4d" />
+                <FontAwesome style={starsStyles.starEmpty} name="star" size={20} color="#cfd9ea" />
             </View>
             <View>
                 <FontAwesome style={{ ...starsStyles.star, width: forthStar }} name="star" size={20} color="#fadd4d" />
-                <FontAwesome style={starsStyles.starEmpty} name="star-o" size={20} color="#fadd4d" />
+                <FontAwesome style={starsStyles.starEmpty} name="star" size={20} color="#cfd9ea" />
             </View>
             <View>
                 <FontAwesome style={{ ...starsStyles.star, width: fifthStar }} name="star" size={20} color="#fadd4d" />
-                <FontAwesome style={starsStyles.starEmpty} name="star-o" size={20} color="#fadd4d" />
+                <FontAwesome style={starsStyles.starEmpty} name="star" size={20} color="#cfd9ea" />
             </View>
         </View>
     )
