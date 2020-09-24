@@ -13,11 +13,11 @@ import { useEffect } from "react";
 import DropdownMenu from "../components/DropdownMenu";
 
 const HomePage: React.FC = () => {
-  const test = async () => {
-    let res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/category/test`);
-    let result = await res.json();
-    console.log(result);
-  };
+  // const test = async () => {
+  //   let res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/category/test`);
+  //   let result = await res.json();
+  //   console.log(result);
+  // };
 
   useEffect(() => {
     document.title = "e-ducate";

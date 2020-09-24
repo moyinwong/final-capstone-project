@@ -38,7 +38,9 @@ const Header = (props: any) => {
       <div className="web-navbar">
         <Navbar bg="light" variant="light">
           <Navbar.Brand href="/">
-            <img className="website-logo" src={require("../logo.png")} />
+            <Link to="/">
+              <img className="website-logo" src={require("../logo.png")} />
+            </Link>
           </Navbar.Brand>
           {/* <div className='blank-space'>{' '}</div> */}
           <div className="mr-auto search-bar">
@@ -78,7 +80,7 @@ const Header = (props: any) => {
                 dispatch(push("/login"));
               }}
             >
-              Login
+              登入
             </Button>
           )}
         </Navbar>

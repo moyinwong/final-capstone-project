@@ -65,9 +65,24 @@
   }
 
   .price {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
     flex: 2;
     font-weight: bold;
     width: 120px;
+
+    .fa-trash-alt {
+      padding: 20px;
+
+      font-size: 40px;
+      color: rgb(243, 73, 73);
+    }
+
+    .fa-trash-alt:hover {
+      cursor: pointer;
+    }
   }
 }
 

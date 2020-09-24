@@ -16,6 +16,13 @@
   }
 }
 
+#warning-alert {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  z-index: 1000;
+}
+
 /* .App-logo {
   height: 40vmin;
   pointer-events: none;

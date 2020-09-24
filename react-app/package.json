@@ -47,6 +47,7 @@
     "react-use-form-state": "^0.13.1",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
     "sass": "^1.26.10",
     "slick-carousel": "^1.8.1",

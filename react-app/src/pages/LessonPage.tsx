@@ -1,16 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import { useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
-import { useEffect } from "react";
+
 import { useParams } from "react-router-dom";
-import { Button, Col, Form, Tabs } from "react-bootstrap";
-import { Tab } from "react-bootstrap";
-import { useState } from "react";
+import { Button, Col, Form, Tab, Tabs } from "react-bootstrap";
+
 import { useForm } from "react-hook-form";
 import ReactLoading from "react-loading";
-import "./LessonPage.scss";
 import CheckingModal from "../components/CheckingModal";
+import "./LessonPage.scss";
 
 interface ILessInfo {
   id: number;

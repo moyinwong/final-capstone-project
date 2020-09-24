@@ -1,16 +1,15 @@
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+
 import { useParams } from "react-router-dom";
 import { push } from "connected-react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+
 import { ICourse } from "./CategoryPage";
 import { IRootState } from "../redux/store";
 import Rating from "react-rating";
-import { Card } from "react-bootstrap";
-import { Button } from "react-bootstrap";
-import { Accordion } from "react-bootstrap";
+import { Accordion, Alert, Button, Card } from "react-bootstrap";
 
+import { addCourse } from "../redux/cart/actions";
 import "./CoursePage.scss";
 
 interface ILesson {
@@ -34,23 +33,32 @@ interface IComment {
 
 const CoursePage: React.FC = () => {
   const param: { courseName: string } = useParams();
-  const { courseName } = param;
+  //const { courseName } = param;
+  const [courseName, setCourseName] = useState<string>(param.courseName);
   const [course, setCourse] = useState<ICourse>();
   const dispatch = useDispatch();
-  const token = localStorage.getItem("token");
+  //const token = localStorage.getItem("token");
   const userEmail = useSelector((state: IRootState) => state.auth.email);
   const [isAllowAccess, setIsAllowAccess] = useState<boolean | null>(null);
   const [lessons, setLessons] = useState<ILesson[]>([]);
   const [comments, setComments] = useState<IComment[]>([]);
   const [commentsNum, setCommentsNum] = useState(3);
   const [isReady, setIsReady] = useState(false);
+  const [isShowAlert, setIsShowAlert] = useState(false);
+  const [alertMsg, setAlertMsg] = useState<string>("");
 
   //run once when init
   useEffect(() => {
     (async () => {
-      const newCourse = await getAllCoursesByCategory(courseName);
-      setCourse(newCourse);
-      document.title = ` ${newCourse.course_name}`;
+      try {
+        const newCourse = await getAllCoursesByCategory(courseName);
+        setCourse(newCourse);
+        document.title = ` ${newCourse.course_name}`;
+      } catch (err) {
+        console.error(err.message);
+        setAlertMsg(err.message);
+        setIsShowAlert(true);
+      }
     })();
     return () => {
       document.title = "e-ducate";
@@ -59,8 +67,19 @@ const CoursePage: React.FC = () => {
 
   //run once when init
   useEffect(() => {
-    if (course) getLessonInfoByCourse(course.course_name);
-    if (course) getCommentsByCourse(course.course_name);
+    setCourseName(param.courseName);
+  }, [param]);
+
+  //run once when init
+  useEffect(() => {
+    try {
+      if (course) getLessonInfoByCourse(course.course_name);
+      if (course) getCommentsByCourse(course.course_name);
+    } catch (err) {
+      console.error(err.message);
+      setAlertMsg(err.message);
+      setIsShowAlert(true);
+    }
   }, [course, userEmail]);
 
   const getAllCoursesByCategory = async (courseName: string) => {
@@ -70,9 +89,11 @@ const CoursePage: React.FC = () => {
       `${process.env.REACT_APP_BACKEND_URL}${queryRoute}${courseName}`
     );
 
+    if (fetchRes.status === 500) throw new Error("伺服器發生問題");
+
     //if no such course
     if (
-      fetchRes.status === 500 ||
+      //fetchRes.status === 500 ||
       fetchRes.status === 401 ||
       fetchRes.status === 400
     ) {
@@ -86,20 +107,20 @@ const CoursePage: React.FC = () => {
     //console.log(course);
   };
 
-  const getUserRight = async (userEmail: string, courseName: string) => {
-    let queryRoute: string = "/user/";
-    const fetchRes = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}${queryRoute}${userEmail}/${courseName}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+  // const getUserRight = async (userEmail: string, courseName: string) => {
+  //   let queryRoute: string = "/user/";
+  //   const fetchRes = await fetch(
+  //     `${process.env.REACT_APP_BACKEND_URL}${queryRoute}${userEmail}/${courseName}`,
+  //     {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     }
+  //   );
 
-    const { is_allow } = await fetchRes.json();
-    if (is_allow) setIsAllowAccess(is_allow);
-  };
+  //   const { is_allow } = await fetchRes.json();
+  //   if (is_allow) setIsAllowAccess(is_allow);
+  // };
 
   function shuffle(array: Array<any>) {
     var currentIndex = array.length,
@@ -129,7 +150,8 @@ const CoursePage: React.FC = () => {
         userEmail ? userEmail : ""
       }`
     );
-    console.log(fetchRes);
+
+    if (fetchRes.status === 500) throw new Error("伺服器發生問題");
     const result = await fetchRes.json();
     console.log(result);
     if (result.lessons[0].user_email) {
@@ -146,16 +168,30 @@ const CoursePage: React.FC = () => {
     const fetchRes = await fetch(
       `${process.env.REACT_APP_BACKEND_URL}${queryRoute}${courseName}/comment`
     );
+    if (fetchRes.status === 500) throw new Error("伺服器發生問題");
     const result = await fetchRes.json();
     const resultArr = result.comments;
     const shuffleArr = shuffle(resultArr);
     setComments(result.comments);
     setIsReady(true);
   };
+
   //handle order button click
-  //function handleOrderButtonClick(event: React.MouseEvent<HTMLButtonElement>) {}
+  function handleCartButtonClick(event: React.MouseEvent<HTMLButtonElement>) {
+    if (course) dispatch(addCourse(course));
+    setAlertMsg("已加到購物車");
+    setIsShowAlert(true);
+    setTimeout(() => {
+      setIsShowAlert(false);
+    }, 3000);
+  }
   return (
     <>
+      {isShowAlert && (
+        <Alert key="info" variant="warning" id="warning-alert">
+          {alertMsg}
+        </Alert>
+      )}
       {isReady && course && lessons.length > 0 && (
         <>
           <div className="course-top-background">
@@ -168,7 +204,7 @@ const CoursePage: React.FC = () => {
                       : `localhost:8080/${course.image}`
                   }
                 />
-                <div>HK$ {course.price}</div>
+                <div className="price">HK$ {course.price}</div>
                 <div>
                   {isAllowAccess ? (
                     <div>
@@ -185,7 +221,9 @@ const CoursePage: React.FC = () => {
                     </div>
                   ) : (
                     <>
-                      <Button variant="success">加到購物車</Button>
+                      <Button variant="success" onClick={handleCartButtonClick}>
+                        加到購物車
+                      </Button>
                       <Button variant="outline-danger">立即購買</Button>
                     </>
                   )}
@@ -255,7 +293,12 @@ const CoursePage: React.FC = () => {
                       </>
                     ) : (
                       <>
-                        <Button variant="success">加到購物車</Button>
+                        <Button
+                          variant="success"
+                          onClick={handleCartButtonClick}
+                        >
+                          加到購物車
+                        </Button>
                         <Button variant="outline-danger">立即購買</Button>
                       </>
                     )}

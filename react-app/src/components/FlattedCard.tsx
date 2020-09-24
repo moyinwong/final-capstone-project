@@ -3,6 +3,7 @@ import React from "react";
 import Rating from "react-rating";
 import { useDispatch, useSelector } from "react-redux";
 import { ICourse } from "../pages/CategoryPage";
+import { removeCourse } from "../redux/cart/actions";
 import "./FlattedCard.scss";
 
 const FlattedCard = (props: ICourse) => {
@@ -75,7 +76,17 @@ const FlattedCard = (props: ICourse) => {
             <span>({props.rated_num})</span>
           </div>
         </div>
-        {<div className="price">{"HK$ " + props.price}</div>}
+        {
+          <div className="price">
+            {"HK$ " + props.price}
+            {props.trash && (
+              <i
+                className="fas fa-trash-alt"
+                onClick={() => dispatch(removeCourse(props.course_name))}
+              ></i>
+            )}
+          </div>
+        }
       </div>
     </div>
   );
