@@ -12,7 +12,7 @@ import "./Homepage.scss";
 import { useEffect } from "react";
 import DropdownMenu from "../components/DropdownMenu";
 
-const HomePage = () => {
+const HomePage: React.FC = () => {
   const test = async () => {
     let res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/category/test`);
     let result = await res.json();
@@ -21,7 +21,7 @@ const HomePage = () => {
 
   useEffect(() => {
     document.title = "e-ducate";
-    document.getElementById('website-header')!.style.display="block"
+    document.getElementById("website-header")!.style.display = "block";
   }, []);
 
   return (
