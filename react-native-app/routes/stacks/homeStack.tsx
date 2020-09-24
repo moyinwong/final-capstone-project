@@ -11,7 +11,10 @@ import { FontAwesome } from '@expo/vector-icons';
 import Home from '../../screens/bottomTap/homeStack/home';
 import Course from '../../screens/bottomTap/commonScreens/course';
 import Lesson from '../../screens/bottomTap/commonScreens/lesson';
-import Quiz from '../../screens/bottomTap/commonScreens/quiz';
+import Exercise from '../../screens/bottomTap/commonScreens/exercise';
+
+// Components
+import HeaderTitle from '../../sharedComponents/headerTitle';
 
 // Functions
 import stackTransition from '../../functions/stackTransition';
@@ -28,7 +31,8 @@ export default function HomeStack(props: { navigation: { toggleDrawer: () => voi
             headerMode="float"
             screenOptions={{
                 headerStyle: {
-                    backgroundColor: "#5b96f7"
+                    backgroundColor: "#5b96f7",
+                    height: 70
                 },
                 headerTintColor: '#fff',
                 headerTitleAlign: 'center',
@@ -51,7 +55,9 @@ export default function HomeStack(props: { navigation: { toggleDrawer: () => voi
                 name="Home"
                 component={Home}
                 options={{
-                    title: '首頁',
+                    headerTitle: (props) => (
+                        <HeaderTitle title={'首頁'} />
+                    ),
                     ...stackTransition
                 }}
             />
@@ -59,7 +65,9 @@ export default function HomeStack(props: { navigation: { toggleDrawer: () => voi
                 name="Course"
                 component={Course}
                 options={{
-                    title: '課程',
+                    headerTitle: (props) => (
+                        <HeaderTitle title={'課程'} />
+                    ),
                     ...stackTransition
                 }}
             />
@@ -67,15 +75,19 @@ export default function HomeStack(props: { navigation: { toggleDrawer: () => voi
                 name="Lesson"
                 component={Lesson}
                 options={{
-                    title: '課堂',
+                    headerTitle: (props) => (
+                        <HeaderTitle title={'課堂'} />
+                    ),
                     ...stackTransition
                 }}
             />
             <Stack.Screen
-                name="Quiz"
-                component={Quiz}
+                name="Exercise"
+                component={Exercise}
                 options={{
-                    title: '測驗',
+                    headerTitle: (props) => (
+                        <HeaderTitle title={'練習'} />
+                    ),
                     ...stackTransition
                 }}
             />
