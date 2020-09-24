@@ -4,7 +4,8 @@ import { StyleSheet } from 'react-native';
 const myCoursesStyles = StyleSheet.create({
     flatList: {
         flex: 1,
-        paddingTop: 8
+        paddingTop: 8,
+        paddingBottom: 20
     },
     courseBox: {
         flex: 1,

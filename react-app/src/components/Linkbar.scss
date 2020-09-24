@@ -1,3 +1,28 @@
 .navbar-dark .navbar-nav .nav-link {
     color: rgba(255,255,255);
 }
+
+.navigation-bar a {
+    color: white;
+    padding: 0.5rem 0.5rem;
+}
+
+.dropdown-item-link {
+    color: black!important;
+    text-align: center;
+    width: 100%;
+}
+
+.dropdown-item.active, .drop-item:active {
+    background-color: transparent
+}
+
+.dropdown-item:hover {
+    background-color: turquoise;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.dropdown-menu {
+    padding: 0;
+    min-width: 1rem;
+}
