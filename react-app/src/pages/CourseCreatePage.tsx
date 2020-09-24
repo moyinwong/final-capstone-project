@@ -26,13 +26,10 @@ const CourseCreatePage = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
 
-    const submitHandler = async (values: FormikValues) => {
+    const submitHandler = async (formData: FormData) => {
         const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/course/create`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ values })
+            body: formData
         })
     }
 
@@ -86,8 +83,16 @@ const CourseCreatePage = () => {
                         }} 
                         onSubmit={async (values) => {
                             await sleep(1000)
-                            console.log(values)
-                            submitHandler(values)
+                            // console.log(values.file)
+                            const formData = new FormData()
+                            formData.append('courseTitle', values.courseTitle)
+                            formData.append('courseCategory', values.courseCategory)
+                            formData.append('coursePrice', values.coursePrice)
+                            formData.append('courseDescription', values.courseDescription)
+                            formData.append('coursePrerequisite', values.coursePrerequisite)
+                            formData.append('file', values.file)
+
+                            submitHandler(formData)
                         }}
                     >
 
