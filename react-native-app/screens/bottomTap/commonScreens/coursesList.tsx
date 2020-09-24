@@ -202,6 +202,11 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                     </View>
                 }
 
+                ListFooterComponent={
+                    <View style={{height:12}}>
+                    </View>
+                }
+
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={coursesListStyles.courseBox}

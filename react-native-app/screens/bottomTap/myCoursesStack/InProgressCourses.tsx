@@ -94,6 +94,12 @@ export default function InProgressCourses() {
                 keyExtractor={(item) => item.id}
                 data={coursesListData}
                 showsVerticalScrollIndicator={false}
+
+                ListFooterComponent={
+                    <View style={{height:18}}>
+                    </View>
+                }
+                
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={myCoursesStyles.courseBox}
