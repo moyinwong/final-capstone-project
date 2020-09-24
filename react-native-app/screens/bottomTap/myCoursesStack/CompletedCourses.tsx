@@ -93,6 +93,7 @@ export default function CompletedCourses() {
                 style={myCoursesStyles.flatList}
                 keyExtractor={(item) => item.id}
                 data={coursesListData}
+                showsVerticalScrollIndicator={false}
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={myCoursesStyles.courseBox}

@@ -1,3 +1,13 @@
+.modal-content {
+  .fas.fa-check {
+    color: #43b838;
+  }
+
+  .fas.fa-times {
+    color: #ce2b2b;
+  }
+}
+
 .nav-tabs {
   color: black;
 
@@ -12,16 +22,37 @@
   }
 }
 
-.player-wrapper {
-  //   height: 100%;
-  //   width: 100%;
-  position: relative;
-  padding-top: 56.25%; /* Player ratio: 100 / (1280 / 720) */
-}
+.tab-content {
+  .player-wrapper {
+    //   height: 100%;
+    //   width: 100%;
+    position: relative;
+    padding-top: 56.25%; /* Player ratio: 100 / (1280 / 720) */
+  }
 
-.react-player {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  .react-player {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .material-content {
+    padding: 50px 0px;
+    font-size: 20px;
+  }
+
+  .exe-container {
+    display: flex;
+    justify-content: center;
+
+    .lesson-exe {
+      justify-content: center;
+      text-align: left;
+
+      > div {
+        margin-bottom: 20px;
+      }
+    }
+  }
 }

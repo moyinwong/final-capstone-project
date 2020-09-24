@@ -181,24 +181,27 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
     return (
         <View style={{ ...globalStyles.container, paddingVertical: 0 }}>
 
-            <View style={coursesListStyles.titleContainer}>
-                {coursesListParam.subject ?
-                    (
-                        <Text style={coursesListStyles.screenTitle}>所有
-                            <Text style={coursesListStyles.paramTitle}>{coursesListParam.subject}</Text>
-                        課程</Text>
-                    )
-                    : (
-                        <Text style={coursesListStyles.screenTitle}>
-                            <Text style={coursesListStyles.paramTitle}>{coursesListParam.tutor}</Text>
-                        的課程</Text>
-                    )}
-            </View>
-
             <FlatList
                 style={coursesListStyles.flatList}
                 keyExtractor={(item) => item.id}
                 data={coursesListData}
+                showsVerticalScrollIndicator={false}
+                ListHeaderComponent={
+                    <View style={coursesListStyles.titleContainer}>
+                        {coursesListParam.subject ?
+                            (
+                                <Text style={coursesListStyles.screenTitle}>所有
+                                    <Text style={coursesListStyles.paramTitle}>{coursesListParam.subject}</Text>
+                        課程</Text>
+                            )
+                            : (
+                                <Text style={coursesListStyles.screenTitle}>
+                                    <Text style={coursesListStyles.paramTitle}>{coursesListParam.tutor}</Text>
+                        的課程</Text>
+                            )}
+                    </View>
+                }
+
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={coursesListStyles.courseBox}
