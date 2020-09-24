@@ -1,6 +1,6 @@
 // React, React Native
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, TouchableHighlight, Image, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 
 // Navigation
 import { useNavigation } from '@react-navigation/native';
@@ -87,11 +87,15 @@ export default function InProgressCourses() {
     );
 
     // methods
-    function comment() {
+    function showModal() {
+        console.log('modal');
+    }
+
+    function showCommentBox() {
         console.log('comment');
     }
 
-    function rate() {
+    function showRateBox() {
         console.log('rate');
     }
 
@@ -113,6 +117,7 @@ export default function InProgressCourses() {
                     <TouchableOpacity
                         style={myCoursesStyles.courseBox}
                         onPress={() => navigation.navigate('Course', { title: item.title })}
+                        onLongPress={() => showModal()}
                     >
                         <View style={myCoursesStyles.coursePicContainer}>
                             <Image
@@ -133,18 +138,7 @@ export default function InProgressCourses() {
                                 </View>
 
                                 <View style={myCoursesStyles.courseSubInfoLowerContainer}>
-                                    <TouchableHighlight
-                                        style={myCoursesStyles.courseButton}
-                                        onPress={() => comment()}
-                                    >
-                                        <Text style={myCoursesStyles.courseButtonText}>評價</Text>
-                                    </TouchableHighlight>
-                                    <TouchableHighlight
-                                        style={myCoursesStyles.courseButton}
-                                        onPress={() => rate()}
-                                    >
-                                        <Text style={myCoursesStyles.courseButtonText}>評分</Text>
-                                    </TouchableHighlight>
+                                    <Text style={myCoursesStyles.coursePrice}>{"價錢: $" + item.price}</Text>
                                 </View>
 
                             </View>

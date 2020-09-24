@@ -1,6 +1,6 @@
 // React, React Native
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, TouchableHighlight, Image, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 
 // Navigation
 import { useNavigation } from '@react-navigation/native';
@@ -86,6 +86,19 @@ export default function CompletedCourses() {
         ]
     );
 
+    // methods
+    function showModal() {
+        console.log('modal');
+    }
+
+    function showCommentBox() {
+        console.log('comment');
+    }
+
+    function showRateBox() {
+        console.log('rate');
+    }
+
     return (
         <View style={{ ...globalStyles.container, paddingVertical: 0 }}>
 
@@ -124,18 +137,7 @@ export default function CompletedCourses() {
                                 </View>
 
                                 <View style={myCoursesStyles.courseSubInfoLowerContainer}>
-                                    <TouchableHighlight
-                                        style={myCoursesStyles.courseButton}
-                                        onPress={() => comment()}
-                                    >
-                                        <Text style={myCoursesStyles.courseButtonText}>評價</Text>
-                                    </TouchableHighlight>
-                                    <TouchableHighlight
-                                        style={myCoursesStyles.courseButton}
-                                        onPress={() => rate()}
-                                    >
-                                        <Text style={myCoursesStyles.courseButtonText}>評分</Text>
-                                    </TouchableHighlight>
+                                    <Text style={myCoursesStyles.coursePrice}>{"價錢: $" + item.price}</Text>
                                 </View>
 
                             </View>
