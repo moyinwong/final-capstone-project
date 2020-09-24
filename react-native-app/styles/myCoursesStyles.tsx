@@ -75,13 +75,24 @@ const myCoursesStyles = StyleSheet.create({
     courseSubInfoLowerContainer: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
         alignItems: 'flex-start',
         paddingRight: 16
     },
-    coursePrice: {
-        fontSize: 17,
-        color: '#e96a43'
+    courseButton: {
+        backgroundColor: '#ff832d',
+        paddingVertical: 6,
+        paddingHorizontal: 16,
+        marginTop: 5,
+        marginRight: 18,
+        borderTopLeftRadius: 12,
+        borderBottomLeftRadius: 6,
+        borderTopRightRadius: 6,
+        borderBottomRightRadius: 12
+    },
+    courseButtonText: {
+        fontSize: 18,
+        color: '#ffffff'
     }
 });
 

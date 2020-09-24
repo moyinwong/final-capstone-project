@@ -1,6 +1,6 @@
 // React, React Native
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, TouchableHighlight, Image, FlatList } from 'react-native';
 
 // Navigation
 import { useNavigation } from '@react-navigation/native';
@@ -96,10 +96,10 @@ export default function CompletedCourses() {
                 showsVerticalScrollIndicator={false}
 
                 ListFooterComponent={
-                    <View style={{height:18}}>
+                    <View style={{ height: 18 }}>
                     </View>
                 }
-                
+
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={myCoursesStyles.courseBox}
@@ -116,14 +116,28 @@ export default function CompletedCourses() {
                         <View style={myCoursesStyles.courseInfoContainer}>
                             <Text style={myCoursesStyles.courseTitle}>{item.title}</Text>
                             <View style={myCoursesStyles.courseSubInfoContainer}>
+
                                 <View style={myCoursesStyles.courseSubInfoTextContainer}>
                                     <Text style={myCoursesStyles.courseInfoText}>{item.tutor}</Text>
                                     <Text style={myCoursesStyles.courseInfoText}>{item.description}</Text>
                                     <Text style={myCoursesStyles.courseInfoText}>{"總共堂數: " + item.numOfLessons}</Text>
                                 </View>
+
                                 <View style={myCoursesStyles.courseSubInfoLowerContainer}>
-                                    <Text style={myCoursesStyles.coursePrice}>{"價錢: $" + item.price}</Text>
+                                    <TouchableHighlight
+                                        style={myCoursesStyles.courseButton}
+                                        onPress={() => comment()}
+                                    >
+                                        <Text style={myCoursesStyles.courseButtonText}>評價</Text>
+                                    </TouchableHighlight>
+                                    <TouchableHighlight
+                                        style={myCoursesStyles.courseButton}
+                                        onPress={() => rate()}
+                                    >
+                                        <Text style={myCoursesStyles.courseButtonText}>評分</Text>
+                                    </TouchableHighlight>
                                 </View>
+
                             </View>
                         </View>
                     </TouchableOpacity>
