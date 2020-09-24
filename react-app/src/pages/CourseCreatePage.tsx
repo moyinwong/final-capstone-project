@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardContent, MenuItem, FormControl, 
     InputLabel, Button, Box, Stepper, Step, StepLabel, CircularProgress} from '@material-ui/core'
 import * as Yup from 'yup'
+import { useDispatch } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -22,7 +23,19 @@ const sleep = (time: number) => new Promise((acc) => setTimeout(acc, time))
 
 
 const CourseCreatePage = () => {
+    const dispatch = useDispatch();
     const classes = useStyles();
+
+    const submitHandler = async (values: FormikValues) => {
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/course/create`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ values })
+        })
+        
+    }
 
     const firstValidationSchema = Yup.object().shape({
         courseTitle: Yup.string()
@@ -73,8 +86,9 @@ const CourseCreatePage = () => {
                             
                         }} 
                         onSubmit={async (values) => {
-                            await sleep(3000)
-                            console.log('values', values);
+                            await sleep(1000)
+                            console.log(values)
+                            submitHandler(values)
                         }}
                     >
 
@@ -193,10 +207,11 @@ export function FormikStep({ children }: FormikStepProps) {
 }
 
 export function FormikStepper({children, ...props}: FormikConfig<FormikValues>) {
-    const childrenArray = React.Children.toArray(children) as React.ReactElement<FormikStepProps>[]
+    const childrenArray = React.Children.toArray(children) as React.ReactElement<FormikStepProps>[];
     const [step, setStep] = useState(0);
     const currentChild = childrenArray[step] as React.ReactElement<FormikStepProps>;
-    const [completed, setCompleted] = useState(false)
+    const [completed, setCompleted] = useState(false);
+    const classes = useStyles();
 
     function isLastStep() {
         return step === childrenArray.length - 1
@@ -210,8 +225,8 @@ export function FormikStepper({children, ...props}: FormikConfig<FormikValues>) 
             if (isLastStep()){
                 await props.onSubmit(values, helpers)
                 setCompleted(true);
-                // helpers.resetForm();
-                // setStep(0);
+                helpers.resetForm();
+                setStep(0);
             } else {
                 setStep(step => step + 1)
             }}}
@@ -219,7 +234,7 @@ export function FormikStepper({children, ...props}: FormikConfig<FormikValues>) 
         
         {({ isSubmitting }) => (
             <Form autoComplete="off">
-                <Stepper alternativeLabel activeStep={step}>
+                <Stepper className={classes.formControl} alternativeLabel activeStep={step}>
                     {childrenArray.map((child, index) => (
                     <Step key={child.props.label} completed={step > index || completed}>
                         <StepLabel>{child.props.label}</StepLabel>

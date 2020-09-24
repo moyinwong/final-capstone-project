@@ -8,6 +8,18 @@ interface IPopularCourses {
   count: string;
 }
 
+interface ICourseInfo {
+  values: {
+    courseTitle: string;
+    courseCategory: number;
+    coursePrice: number;
+    courseDescription: string;
+    coursePrerequisite: string;
+    file: File;
+  }
+}
+
+
 export class CourseService {
   constructor(private knex: Knex) {}
 
@@ -129,4 +141,8 @@ export class CourseService {
 
     return comments;
   };
+
+  createCourse = async (courseInfo: ICourseInfo) => {
+    console.log('courseService')
+  }
 }
