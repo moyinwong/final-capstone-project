@@ -1,5 +1,6 @@
 // React, React Native
 import React from 'react';
+import { View } from 'react-native';
 
 // Navigation
 import { createStackNavigator } from '@react-navigation/stack';
@@ -68,7 +69,7 @@ export default function SubjectStack(props: { navigation: { toggleDrawer: () => 
                 name="CoursesList"
                 component={CoursesList}
                 options={{
-                    headerTitle: (props) => (
+                    header: (props) => (
                         <HeaderTitle title={'課程列表'} />
                     ),
                     ...stackTransition

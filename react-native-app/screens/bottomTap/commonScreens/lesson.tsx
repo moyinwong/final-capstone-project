@@ -21,8 +21,8 @@ export default function Lesson(props: { navigation: { goBack: () => void; naviga
                 onPress={() => navigation.goBack()}
             />
             <Button
-                title="Go to Quiz"
-                onPress={() => navigation.navigate('Quiz')}
+                title="Go to Exercise"
+                onPress={() => navigation.navigate('Exercise')}
             />
         </View>
     )
