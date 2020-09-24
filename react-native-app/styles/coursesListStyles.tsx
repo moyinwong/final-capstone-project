@@ -20,7 +20,7 @@ const coursesListStyles = StyleSheet.create({
     },
     flatList: {
         flex: 1,
-        paddingTop: 2
+        paddingTop: 3
     },
     courseBox: {
         flex: 1,

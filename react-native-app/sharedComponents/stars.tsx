@@ -27,7 +27,7 @@ export default function Stars(props: { score: number; }) {
 
             {starsWidth.map((item) => {
                 return (
-                    <View>
+                    <View key={item.id}>
                         <FontAwesome style={{ ...starsStyles.star, width: item.width }} name="star" size={20} color="#fadd4d" />
                         <FontAwesome style={starsStyles.starEmpty} name="star" size={20} color="#cfd9ea" />
                     </View>

@@ -58,6 +58,13 @@ export default function Tutor(props: { navigation: { navigate: (arg0: string) =>
                 style={tutorStyles.flatList}
                 keyExtractor={(item) => item.id}
                 data={tutorsData}
+                showsVerticalScrollIndicator={false}
+
+                ListFooterComponent={
+                    <View style={{ height: 12 }}>
+                    </View>
+                }
+
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={tutorStyles.tutorBox}
