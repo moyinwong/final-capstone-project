@@ -42,7 +42,7 @@ export type IRootAction =
   | CallHistoryMethodAction;
 
 // step 3: rootReducer
-const rootReducer = combineReducers<IRootState>({
+export const rootReducer = combineReducers<IRootState>({
   lesson: lessonReducers,
   auth: authReducer,
   dark: darkModeReducers,

@@ -1,18 +1,19 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import { Accordion, Card } from "react-bootstrap";
-
-import { Button } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import {
+  Accordion,
+  Alert,
+  Button,
+  Card,
+  Dropdown,
+  DropdownButton,
+  Form,
+} from "react-bootstrap";
 import { useLocation, useParams } from "react-router-dom";
-import "./CategoryPage.scss";
 import FlattedCard from "../components/FlattedCard";
-import { Dropdown } from "react-bootstrap";
-import { DropdownButton } from "react-bootstrap";
-import { Form } from "react-bootstrap";
 import Rating from "react-rating";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
+import "./CategoryPage.scss";
 
 export interface ICourse {
   course_name: string;
@@ -28,6 +29,7 @@ export interface ICourse {
   tutor_name: string;
   image: string;
   lessons_number: number;
+  trash?: boolean;
 }
 
 const CategoryPage: React.FC = () => {
@@ -38,6 +40,8 @@ const CategoryPage: React.FC = () => {
   const [ratingSelection, setRatingSelection] = useState("0");
   const [priceSelection, setPriceSelection] = useState("0");
   const param: { categoryName: string } = useParams();
+  const [isShowAlert, setIsShowAlert] = useState<boolean>(false);
+  const [alertMsg, setAlertMsg] = useState<string>("");
 
   const { categoryName } = param;
 
@@ -56,34 +60,40 @@ const CategoryPage: React.FC = () => {
   }, [window.location.href]);
 
   const getAllCoursesByCategory = async () => {
-    let queryRoute: string = "/category/";
+    try {
+      let queryRoute: string = "/category/";
 
-    //if is "others" category, change the api route
-    if (location.pathname.match(/others/)) {
-      queryRoute += "others/";
+      //if is "others" category, change the api route
+      if (location.pathname.match(/others/)) {
+        queryRoute += "others/";
+      }
+
+      const fetchRes = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}${queryRoute}${categoryName}`
+      );
+
+      //if no such category
+      if (fetchRes.status === 500) {
+        throw new Error("伺服器發生問題");
+        //dispatch(push("/404"));
+        //return;
+      }
+
+      const result = await fetchRes.json();
+      const { courses } = result;
+      const orderedCourses = courses.slice();
+      orderedCourses.sort(
+        (a: ICourse, b: ICourse) =>
+          parseInt(b.purchased_users_num) - parseInt(a.purchased_users_num)
+      );
+
+      setCourses(orderedCourses);
+      //for reset
+      setInitCourses(orderedCourses);
+    } catch (err) {
+      setAlertMsg(err.message);
+      setIsShowAlert(true);
     }
-
-    const fetchRes = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}${queryRoute}${categoryName}`
-    );
-
-    //if no such category
-    if (fetchRes.status === 500) {
-      dispatch(push("/404"));
-      return;
-    }
-
-    const result = await fetchRes.json();
-    const { courses } = result;
-    const orderedCourses = courses.slice();
-    orderedCourses.sort(
-      (a: ICourse, b: ICourse) =>
-        parseInt(b.purchased_users_num) - parseInt(a.purchased_users_num)
-    );
-
-    setCourses(orderedCourses);
-    //for reset
-    setInitCourses(orderedCourses);
   };
 
   //handle order button click
@@ -163,127 +173,134 @@ const CategoryPage: React.FC = () => {
   };
 
   return (
-    <div className={"category-main-container"}>
-      <div>
-        <h1>所有{categoryName}課程</h1>
-      </div>
-      <div className="button-container">
-        <Button
-          variant="outline-secondary"
-          onClick={() => setIsFilterOpen(!isFilterOpen)}
-        >
-          篩選
-        </Button>
+    <>
+      {isShowAlert && (
+        <Alert key="info" variant="warning" id="warning-alert">
+          {alertMsg}
+        </Alert>
+      )}
+      <div className={"category-main-container"}>
+        <div>
+          <h1>所有{categoryName}課程</h1>
+        </div>
+        <div className="button-container">
+          <Button
+            variant="outline-secondary"
+            onClick={() => setIsFilterOpen(!isFilterOpen)}
+          >
+            篩選
+          </Button>
 
-        <DropdownButton
-          variant="outline-secondary"
-          id="dropdown-basic-button"
-          title={orderMethod}
-        >
-          <Dropdown.Item onClick={handleOrderButtonClick}>
-            最受歡迎
-          </Dropdown.Item>
-          <Dropdown.Item onClick={handleOrderButtonClick}>
-            最低價錢
-          </Dropdown.Item>
-          <Dropdown.Item onClick={handleOrderButtonClick}>
-            最受好評
-          </Dropdown.Item>
-        </DropdownButton>
-      </div>
-
-      <div className={"panel-card-container"}>
-        <div className={"panel"} style={panelStyle}>
-          <Accordion defaultActiveKey="0">
-            <Card style={cardStyle}>
-              <Accordion.Toggle as={Card.Header} eventKey="0">
-                評分
-              </Accordion.Toggle>
-              <Accordion.Collapse eventKey="0">
-                <Card.Body>
-                  <div>
-                    <Form>
-                      {["4.5", "4.0", "3.5"].map((e) => {
-                        return (
-                          <Form.Check
-                            className="rating-form"
-                            type="radio"
-                            id={e}
-                            key={e}
-                            label={
-                              <>
-                                {e}
-                                <Rating
-                                  stop={5}
-                                  emptySymbol={[
-                                    "far fa-star fa-2x",
-                                    "far fa-star fa-2x",
-                                    "far fa-star fa-2x",
-                                    "far fa-star fa-2x",
-                                    "far fa-star fa-2x",
-                                  ]}
-                                  fullSymbol={[
-                                    "fas fa-star fa-2x",
-                                    "fas fa-star fa-2x",
-                                    "fas fa-star fa-2x",
-                                    "fas fa-star fa-2x",
-                                    "fas fa-star fa-2x",
-                                  ]}
-                                  readonly={true}
-                                  initialRating={parseFloat(e)}
-                                />
-                              </>
-                            }
-                            onClick={handleRatingFormClick}
-                            checked={ratingSelection === e}
-                            readOnly={true}
-                          />
-                        );
-                      })}
-                    </Form>
-                  </div>
-                </Card.Body>
-              </Accordion.Collapse>
-            </Card>
-          </Accordion>
-          <Accordion defaultActiveKey="0">
-            <Card style={cardStyle}>
-              <Accordion.Toggle as={Card.Header} eventKey="0">
-                價錢
-              </Accordion.Toggle>
-              <Accordion.Collapse eventKey="0">
-                <Card.Body>
-                  <div>
-                    <Form>
-                      {["少於HK$50", "少於HK$200", "少於HK$300"].map((e) => {
-                        return (
-                          <Form.Check
-                            className="rating-form"
-                            type="radio"
-                            id={e}
-                            key={e}
-                            label={e}
-                            onClick={handlePriceFormClick}
-                            checked={"少於HK$" + priceSelection === e}
-                            readOnly={true}
-                          />
-                        );
-                      })}
-                    </Form>
-                  </div>
-                </Card.Body>
-              </Accordion.Collapse>
-            </Card>
-          </Accordion>
+          <DropdownButton
+            variant="outline-secondary"
+            id="dropdown-basic-button"
+            title={orderMethod}
+          >
+            <Dropdown.Item onClick={handleOrderButtonClick}>
+              最受歡迎
+            </Dropdown.Item>
+            <Dropdown.Item onClick={handleOrderButtonClick}>
+              最低價錢
+            </Dropdown.Item>
+            <Dropdown.Item onClick={handleOrderButtonClick}>
+              最受好評
+            </Dropdown.Item>
+          </DropdownButton>
         </div>
 
-        <div className="all-course-container">
-          {courses.slice(0, 10).map((course, i) => (
-            <FlattedCard key={i} {...course}></FlattedCard>
-          ))}
+        <div className={"panel-card-container"}>
+          <div className={"panel"} style={panelStyle}>
+            <Accordion defaultActiveKey="0">
+              <Card style={cardStyle}>
+                <Accordion.Toggle as={Card.Header} eventKey="0">
+                  評分
+                </Accordion.Toggle>
+                <Accordion.Collapse eventKey="0">
+                  <Card.Body>
+                    <div>
+                      <Form>
+                        {["4.5", "4.0", "3.5"].map((e) => {
+                          return (
+                            <Form.Check
+                              className="rating-form"
+                              type="radio"
+                              id={e}
+                              key={e}
+                              label={
+                                <>
+                                  {e}
+                                  <Rating
+                                    stop={5}
+                                    emptySymbol={[
+                                      "far fa-star fa-2x",
+                                      "far fa-star fa-2x",
+                                      "far fa-star fa-2x",
+                                      "far fa-star fa-2x",
+                                      "far fa-star fa-2x",
+                                    ]}
+                                    fullSymbol={[
+                                      "fas fa-star fa-2x",
+                                      "fas fa-star fa-2x",
+                                      "fas fa-star fa-2x",
+                                      "fas fa-star fa-2x",
+                                      "fas fa-star fa-2x",
+                                    ]}
+                                    readonly={true}
+                                    initialRating={parseFloat(e)}
+                                  />
+                                </>
+                              }
+                              onClick={handleRatingFormClick}
+                              checked={ratingSelection === e}
+                              readOnly={true}
+                            />
+                          );
+                        })}
+                      </Form>
+                    </div>
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+            </Accordion>
+            <Accordion defaultActiveKey="0">
+              <Card style={cardStyle}>
+                <Accordion.Toggle as={Card.Header} eventKey="0">
+                  價錢
+                </Accordion.Toggle>
+                <Accordion.Collapse eventKey="0">
+                  <Card.Body>
+                    <div>
+                      <Form>
+                        {["少於HK$50", "少於HK$200", "少於HK$300"].map((e) => {
+                          return (
+                            <Form.Check
+                              className="rating-form"
+                              type="radio"
+                              id={e}
+                              key={e}
+                              label={e}
+                              onClick={handlePriceFormClick}
+                              checked={"少於HK$" + priceSelection === e}
+                              readOnly={true}
+                            />
+                          );
+                        })}
+                      </Form>
+                    </div>
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+            </Accordion>
+          </div>
+
+          <div className="all-course-container">
+            {courses.slice(0, 10).map((course, i) => (
+              <FlattedCard key={i} {...course}></FlattedCard>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

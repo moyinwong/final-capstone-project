@@ -6,13 +6,16 @@ import produce from "immer";
 export const cartReducer = produce((state: ICartState, action: ICartAction) => {
   switch (action.type) {
     case "@@CART/ADD_COURSE":
-      state.courses.push(action.course);
+      let foundInd = state.courses.findIndex((e: ICourse) => {
+        return e.course_name === action.course.course_name;
+      });
+      if (foundInd === -1) state.courses.push(action.course);
       return;
     case "@@CART/REMOVE_COURSE":
-      let i = state.courses.findIndex((e: ICourse) => {
+      let ind = state.courses.findIndex((e: ICourse) => {
         return e.course_name === action.course_name;
       });
-      state.courses.slice(i, 1);
+      if (ind !== -1) state.courses.splice(ind, 1);
       return;
 
     case "@@CART/CLEAR":

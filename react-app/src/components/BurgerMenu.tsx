@@ -1,7 +1,7 @@
 import { slide as Menu } from "react-burger-menu";
 import React, { useState } from "react";
-import { faUser } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./BurgerMenu.scss";
 import { Link } from "react-router-dom";
@@ -20,7 +20,6 @@ const BurgerMenu: React.FC = () => {
     (state: IRootState) => state.auth.isAuthenticated
   );
   const userEmail = useSelector((state: IRootState) => state.auth.email);
-
 
   const categories: string[] = [
     "中文",
@@ -42,26 +41,26 @@ const BurgerMenu: React.FC = () => {
   return (
     <Menu>
       {isAuthenticated ? (
-            <div className="user-info">
-              <div className="user-icon-container">
-                <button className="user-icon" onClick={() => setOpen(!open)}>
-                  <i className="far fa-user"></i>
-                </button>
-                {open && <DropdownMenu />}
-                {open && <div>hello</div>}
-              </div>
-              <Navbar.Text>Welcome back {userEmail}</Navbar.Text>{" "}
-            </div>
-          ) : (
-            <Button
-              variant="success"
-              onClick={() => {
-                setOpen(false);
-                dispatch(push("/login"));
-              }}
-            >
-              Login
-            </Button>
+        <div className="user-info">
+          <div className="user-icon-container">
+            <button className="user-icon" onClick={() => setOpen(!open)}>
+              <i className="far fa-user"></i>
+            </button>
+            {open && <DropdownMenu />}
+            {open && <div>hello</div>}
+          </div>
+          <Navbar.Text>Welcome back {userEmail}</Navbar.Text>{" "}
+        </div>
+      ) : (
+        <Button
+          variant="success"
+          onClick={() => {
+            setOpen(false);
+            dispatch(push("/login"));
+          }}
+        >
+          登入
+        </Button>
       )}
 
       <DarkModeSwitch />
