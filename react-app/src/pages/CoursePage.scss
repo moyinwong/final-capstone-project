@@ -129,6 +129,12 @@
   .course-bottom-background > div .bottom-info-container {
     text-align: left;
     width: 80vw;
+
+    .card-header {
+      .btn {
+        text-align: left !important;
+      }
+    }
   }
 
   .responsive-container {

@@ -1,7 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import "./CoursePage.scss";
 import { push } from "connected-react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
@@ -11,6 +10,8 @@ import Rating from "react-rating";
 import { Card } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { Accordion } from "react-bootstrap";
+
+import "./CoursePage.scss";
 
 interface ILesson {
   course_id: number;
