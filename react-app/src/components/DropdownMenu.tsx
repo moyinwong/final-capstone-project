@@ -11,15 +11,15 @@ const DropdownMenu = () => {
 
     return (
         <div className="user-dropdown-menu">
-            <a href="#" className="menu-item">My profile</a>
+            <Link to="#" className="menu-item">My profile</Link>
             {isTutor ? <Link to="/instructor" className="menu-item">Instructor Dashboard</Link> : ""}
-            <a href="#" className="menu-item">My courses</a>
-            <a href="#" className="menu-item">Account settings</a>
-            <a href="#" className="menu-item">Messages</a>
-            <a onClick={() => {
+            <Link to="#" className="menu-item">My courses</Link>
+            <Link to="#" className="menu-item">Account settings</Link>
+            <Link to="#" className="menu-item">Messages</Link>
+            <Link onClick={() => {
                   localStorage.removeItem("token");
                   dispatch(logout());
-                }} href="#" className="menu-item">Logout</a>
+                }} to="#" className="menu-item">Logout</Link>
         </div>
         // <div>hello</div>
     )
