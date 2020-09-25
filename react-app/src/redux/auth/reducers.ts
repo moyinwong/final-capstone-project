@@ -18,6 +18,7 @@ export const authReducer = (
       return {
         ...state,
         email: action.userEmail,
+        isAuthenticated: true,
       };
 
     case '@@AUTH/CHECK_TUTOR':

@@ -66,7 +66,7 @@ export function restoreLogin() {
         dispatch(loginSuccess(token));
         dispatch(getUser(json.user.email));
         dispatch(checkTutor(json.user.isTutor));
-        //dispatch(push(getState().router.location.pathname));
+        // dispatch(push(getState().router.location.pathname));
       } else {
         dispatch(loginFail(""));
       }
