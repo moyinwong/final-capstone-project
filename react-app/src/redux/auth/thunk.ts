@@ -103,6 +103,7 @@ export const loginGoogleThunk = (
       dispatch(getUser(data.email));
       dispatch(checkTutor(data.isTutor));
       if (previousLocation) {
+        console.log("1");
         dispatch(push(previousLocation));
       } else {
         dispatch(push("/"));

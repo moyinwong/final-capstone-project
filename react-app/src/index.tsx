@@ -7,16 +7,19 @@ import { Provider } from "react-redux";
 import { store, history, persistor } from "./redux/store";
 import { ConnectedRouter } from "connected-react-router";
 import { PersistGate } from "redux-persist/integration/react";
+import { StripeProvider } from "react-stripe-elements";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <ConnectedRouter history={history}>
-          <App />
-        </ConnectedRouter>
-      </PersistGate>
-    </Provider>
+    <StripeProvider apiKey={`${process.env.REACT_APP_STRIPE_TEST_KEY}`}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <ConnectedRouter history={history}>
+            <App />
+          </ConnectedRouter>
+        </PersistGate>
+      </Provider>
+    </StripeProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

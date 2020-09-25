@@ -29,7 +29,7 @@ const CartPage: React.FC = () => {
 
   useEffect(() => {
     document.getElementById("website-header")!.style.display = "block";
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (userEmail) {

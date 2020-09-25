@@ -18,6 +18,7 @@ import InstructorPage from "./pages/InstructorPage";
 import CourseCreatePage from "./pages/CourseCreatePage";
 import CartPage from "./pages/CartPage";
 import { Alert } from "react-bootstrap";
+import PaymentPage from "./pages/PaymentPage";
 import LessonCreatePage from "./pages/LessonCreatePage";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
 
   useEffect(() => {
     if (isAuthenticated === null) {
+      console.log("this");
       dispatch(restoreLogin());
     }
   }, [isAuthenticated]);
@@ -74,11 +76,12 @@ function App() {
           exact={true}
           component={CourseCreatePage}
         />
-        <Route
+          <Route
           path="/instructor/lesson/creation"
           exact={true}
           component={LessonCreatePage}
         />
+        <Route path="/payment" exact={true} component={PaymentPage} />
         <Route path="/404" exact={true} component={NotFound} />
         <Route component={NotFound} />
       </Switch>
