@@ -24,7 +24,7 @@ const LoginPage: React.FC = (state: {
   const dispatch = useDispatch();
   const errMessage = useSelector((state: IRootState) => state.auth.message);
 
-  //console.log(state);
+  console.log(state);
 
   let previousLocation: string = "/";
 

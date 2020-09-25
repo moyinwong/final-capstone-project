@@ -66,7 +66,7 @@ export function restoreLogin() {
         dispatch(loginSuccess(token));
         dispatch(getUser(json.user.email));
         dispatch(checkTutor(json.user.isTutor));
-        dispatch(push(getState().router.location.pathname));
+        //dispatch(push(getState().router.location.pathname));
       } else {
         dispatch(loginFail(""));
       }
@@ -103,6 +103,7 @@ export const loginGoogleThunk = (
       dispatch(getUser(data.email));
       dispatch(checkTutor(data.isTutor));
       if (previousLocation) {
+        console.log("1");
         dispatch(push(previousLocation));
       } else {
         dispatch(push("/"));
