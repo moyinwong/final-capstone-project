@@ -11,7 +11,16 @@ import ReactFacebookLogin, {
 } from "react-facebook-login";
 import Header from "../components/Header";
 
-const LoginPage: React.FC = (state: any) => {
+const LoginPage: React.FC = (state: {
+  children?: React.ReactNode;
+  location?: {
+    state?: {
+      url: {
+        pathname: string;
+      };
+    };
+  };
+}) => {
   const [formState, { text, password }] = useFormState();
   const dispatch = useDispatch();
   const errMessage = useSelector((state: IRootState) => state.auth.message);
@@ -20,9 +29,14 @@ const LoginPage: React.FC = (state: any) => {
 
   let previousLocation: string = "/";
 
-  if (state.location.state === undefined) {
+  if (state && state.location && state.location.state === undefined) {
     previousLocation = "/";
-  } else if (state.location.state.url.pathname) {
+  } else if (
+    state &&
+    state.location &&
+    state.location.state &&
+    state.location.state.url.pathname
+  ) {
     previousLocation = state.location.state.url.pathname;
   }
   // if (state.location.state.url.pathname)
