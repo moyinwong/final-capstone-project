@@ -9,11 +9,26 @@ import GoogleLogin from "react-google-login";
 import ReactFacebookLogin, {
   ReactFacebookLoginInfo,
 } from "react-facebook-login";
+import Header from "../components/Header";
 
-const LoginPage: React.FC = () => {
+const LoginPage: React.FC = (state: any) => {
   const [formState, { text, password }] = useFormState();
   const dispatch = useDispatch();
   const errMessage = useSelector((state: IRootState) => state.auth.message);
+
+  console.log(state);
+
+  let previousLocation: string = "/";
+
+  if (state.location.state === undefined) {
+    previousLocation = "/";
+  } else if (state.location.state.url.pathname) {
+    previousLocation = state.location.state.url.pathname;
+  }
+  // if (state.location.state.url.pathname)
+  //
+
+  console.log(previousLocation);
 
   const fBOnCLick = () => {
     return null;
@@ -23,18 +38,20 @@ const LoginPage: React.FC = () => {
     userInfo: ReactFacebookLoginInfo & { accessToken: string }
   ) => {
     if (userInfo.accessToken) {
-      dispatch(loginFacebook(userInfo.accessToken));
+      dispatch(loginFacebook(userInfo.accessToken, previousLocation));
     }
     return null;
   };
   //handle submit
   function submitHandler(event: React.MouseEvent<HTMLElement, MouseEvent>) {
-    dispatch(login(formState.values.email, formState.values.password));
+    dispatch(
+      login(formState.values.email, formState.values.password, previousLocation)
+    );
   }
 
   const responseGoogle = (response: any) => {
     if (response.accessToken) {
-      dispatch(loginGoogleThunk(response.accessToken));
+      dispatch(loginGoogleThunk(response.accessToken, previousLocation));
     }
   };
 

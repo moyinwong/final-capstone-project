@@ -12,3 +12,4 @@ userRoutes.get(
   isLoggedIn,
   userController.allowUserAccessCourse
 );
+userRoutes.get("/:user/course/all", isLoggedIn, userController.userAllCourses);

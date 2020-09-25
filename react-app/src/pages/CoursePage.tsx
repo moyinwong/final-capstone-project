@@ -39,6 +39,7 @@ const CoursePage: React.FC = () => {
   const dispatch = useDispatch();
   //const token = localStorage.getItem("token");
   const userEmail = useSelector((state: IRootState) => state.auth.email);
+  const cartCourses = useSelector((state: IRootState) => state.cart.courses);
   const [isAllowAccess, setIsAllowAccess] = useState<boolean | null>(null);
   const [lessons, setLessons] = useState<ILesson[]>([]);
   const [comments, setComments] = useState<IComment[]>([]);
@@ -83,7 +84,7 @@ const CoursePage: React.FC = () => {
   }, [course, userEmail]);
 
   const getAllCoursesByCategory = async (courseName: string) => {
-    console.log(courseName);
+    //console.log(courseName);
     let queryRoute: string = "/course/";
     const fetchRes = await fetch(
       `${process.env.REACT_APP_BACKEND_URL}${queryRoute}${courseName}`
@@ -143,7 +144,7 @@ const CoursePage: React.FC = () => {
   }
 
   const getLessonInfoByCourse = async (courseName: string) => {
-    console.log("user: ", userEmail);
+    //console.log("user: ", userEmail);
     let queryRoute: string = "/lesson/summary/";
     const fetchRes = await fetch(
       `${process.env.REACT_APP_BACKEND_URL}${queryRoute}${courseName}/${
@@ -153,7 +154,7 @@ const CoursePage: React.FC = () => {
 
     if (fetchRes.status === 500) throw new Error("伺服器發生問題");
     const result = await fetchRes.json();
-    console.log(result);
+    //console.log(result);
     if (result.lessons[0].user_email) {
       setIsAllowAccess(true);
     } else {
@@ -221,9 +222,20 @@ const CoursePage: React.FC = () => {
                     </div>
                   ) : (
                     <>
-                      <Button variant="success" onClick={handleCartButtonClick}>
-                        加到購物車
-                      </Button>
+                      {cartCourses.findIndex(
+                        (e) => e.course_name === courseName
+                      ) !== -1 ? (
+                        <Button variant="success" disabled>
+                          已加到購物車
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="success"
+                          onClick={handleCartButtonClick}
+                        >
+                          加到購物車
+                        </Button>
+                      )}
                       <Button variant="outline-danger">立即購買</Button>
                     </>
                   )}
@@ -293,12 +305,20 @@ const CoursePage: React.FC = () => {
                       </>
                     ) : (
                       <>
-                        <Button
-                          variant="success"
-                          onClick={handleCartButtonClick}
-                        >
-                          加到購物車
-                        </Button>
+                        {cartCourses.findIndex(
+                          (e) => e.course_name === courseName
+                        ) !== -1 ? (
+                          <Button variant="success" disabled>
+                            已加到購物車
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="success"
+                            onClick={handleCartButtonClick}
+                          >
+                            加到購物車
+                          </Button>
+                        )}
                         <Button variant="outline-danger">立即購買</Button>
                       </>
                     )}
@@ -316,7 +336,7 @@ const CoursePage: React.FC = () => {
                 </div>
                 <div className="lesson-container">
                   <p className="sub-title">課程內容：</p>
-                  {console.log("lessons: ", lessons)}
+
                   {lessons.map((e, i) => {
                     return (
                       <Accordion key={i}>
