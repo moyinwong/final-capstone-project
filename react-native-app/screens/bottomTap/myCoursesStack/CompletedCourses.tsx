@@ -1,6 +1,6 @@
 // React, React Native
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList, Alert } from 'react-native';
 
 // Navigation
 import { useNavigation } from '@react-navigation/native';
@@ -24,6 +24,7 @@ export default function CompletedCourses() {
                 numOfLessons: 12,
                 price: 160,
                 aveScore: 5.0,
+                isPurchased: false,
                 coursePic: require('../../../assets/coursesPic/flutter.png'),
                 tutorPic: require('../../../assets/tutorsPic/andrew.jpg'),
                 id: '7'
@@ -35,6 +36,7 @@ export default function CompletedCourses() {
                 numOfLessons: 12,
                 price: 190,
                 aveScore: 1.2,
+                isPurchased: false,
                 coursePic: require('../../../assets/coursesPic/python.png'),
                 tutorPic: require('../../../assets/tutorsPic/dragon.jpg'),
                 id: '8'
@@ -46,6 +48,7 @@ export default function CompletedCourses() {
                 numOfLessons: 3,
                 price: 200,
                 aveScore: 3.2,
+                isPurchased: true,
                 coursePic: require('../../../assets/coursesPic/react.png'),
                 tutorPic: require('../../../assets/tutorsPic/alex.jpeg'),
                 id: '9'
@@ -57,6 +60,7 @@ export default function CompletedCourses() {
                 numOfLessons: 5,
                 price: 250,
                 aveScore: 4.5,
+                isPurchased: true,
                 coursePic: require('../../../assets/coursesPic/reactNative.png'),
                 tutorPic: require('../../../assets/tutorsPic/alex.jpeg'),
                 id: '10'
@@ -68,6 +72,7 @@ export default function CompletedCourses() {
                 numOfLessons: 12,
                 price: 170,
                 aveScore: 2.8,
+                isPurchased: false,
                 coursePic: require('../../../assets/coursesPic/tensorFlow.png'),
                 tutorPic: require('../../../assets/tutorsPic/beeno.jpg'),
                 id: '11'
@@ -79,6 +84,7 @@ export default function CompletedCourses() {
                 numOfLessons: 3,
                 price: 140,
                 aveScore: 3.6,
+                isPurchased: false,
                 coursePic: require('../../../assets/coursesPic/typeScript.jpg'),
                 tutorPic: require('../../../assets/tutorsPic/dragon.jpg'),
                 id: '12'
@@ -87,8 +93,15 @@ export default function CompletedCourses() {
     );
 
     // methods
-    function showModal() {
-        console.log('modal');
+    function showCommentOrRateBox() {
+        Alert.alert(
+            "評價",
+            "請評價",
+            [
+                { text: "評價", onPress: () => console.log("評價") }
+            ],
+            { cancelable: true }
+        )
     }
 
     function showCommentBox() {
@@ -117,7 +130,7 @@ export default function CompletedCourses() {
                     <TouchableOpacity
                         style={myCoursesStyles.courseBox}
                         onPress={() => navigation.navigate('Course', { title: item.title })}
-                        onLongPress={() => showModal()}
+                        onLongPress={() => showCommentOrRateBox()}
                     >
                         <View style={myCoursesStyles.coursePicContainer}>
                             <Image
