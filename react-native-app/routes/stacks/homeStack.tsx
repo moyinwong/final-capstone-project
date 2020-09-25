@@ -9,6 +9,7 @@ import { FontAwesome } from '@expo/vector-icons';
 
 // Screens
 import Home from '../../screens/bottomTap/homeStack/home';
+import CoursesList from '../../screens/bottomTap/commonScreens/coursesList';
 import Course from '../../screens/bottomTap/commonScreens/course';
 import Lesson from '../../screens/bottomTap/commonScreens/lesson';
 import Exercise from '../../screens/bottomTap/commonScreens/exercise';
@@ -52,6 +53,14 @@ export default function HomeStack(props: { navigation: { toggleDrawer: () => voi
                 component={Home}
                 options={{
                     title: '首頁',
+                    ...stackTransition
+                }}
+            />
+            <Stack.Screen
+                name="CoursesList"
+                component={CoursesList}
+                options={{
+                    title: '課程列表',
                     ...stackTransition
                 }}
             />

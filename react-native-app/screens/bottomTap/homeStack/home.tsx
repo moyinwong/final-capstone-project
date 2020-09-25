@@ -1,12 +1,9 @@
 // React, React Native
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList, ScrollView, Alert } from 'react-native';
 
 // Navigation
 import { useNavigation } from '@react-navigation/native';
-
-// Icons
-import { Entypo } from '@expo/vector-icons';
 
 // Components
 import Stars from '../../../sharedComponents/stars';
@@ -98,6 +95,41 @@ export default function Home(props: { navigation: { navigate: (arg0: string) => 
         ]
     );
 
+    const [tutorsData, setTutorsData] = useState(
+        [
+            {
+                name: 'Alex Lau',
+                pic: require('../../../assets/tutorsPic/alex.jpeg'),
+                id: '1'
+            },
+            {
+                name: 'Gordon Lau',
+                pic: require('../../../assets/tutorsPic/gordon.jpg'),
+                id: '2'
+            },
+            {
+                name: 'Jason Lee',
+                pic: require('../../../assets/tutorsPic/jason.jpg'),
+                id: '3'
+            },
+            {
+                name: 'Andrew Shek',
+                pic: require('../../../assets/tutorsPic/andrew.jpg'),
+                id: '4'
+            },
+            {
+                name: 'Dragon Lung',
+                pic: require('../../../assets/tutorsPic/dragon.jpg'),
+                id: '5'
+            },
+            {
+                name: 'Beeno Tung',
+                pic: require('../../../assets/tutorsPic/beeno.jpg'),
+                id: '6'
+            }
+        ]
+    );
+
     // methods
     function showModal(isPurchased: boolean) {
         if (isPurchased) {
@@ -138,8 +170,9 @@ export default function Home(props: { navigation: { navigate: (arg0: string) => 
     }
 
     return (
-        <View style={{ ...globalStyles.container, paddingVertical: 0 }}>
+        <ScrollView style={{ ...globalStyles.container, paddingTop: 12, paddingHorizontal: 0 }}>
 
+            {/* 熱門課程 */}
             <View style={homeStyles.titleContainer}>
                 <Text style={homeStyles.screenTitle}>熱門課程</Text>
             </View>
@@ -152,7 +185,7 @@ export default function Home(props: { navigation: { navigate: (arg0: string) => 
                 showsHorizontalScrollIndicator={false}
 
                 ListFooterComponent={
-                    <View style={{ width: 0 }}>
+                    <View style={{ width: 18 }}>
                     </View>
                 }
 
@@ -171,49 +204,65 @@ export default function Home(props: { navigation: { navigate: (arg0: string) => 
                         </View>
                         <View style={homeStyles.courseInfoContainer}>
 
-                            <View style={homeStyles.courseInfoLeftContainer}>
-                                <View style={homeStyles.tutorPicContainer}>
-                                    <Image
-                                        style={homeStyles.tutorPic}
-                                        resizeMode='cover'
-                                        source={item.tutorPic}
-                                    />
+                            <Text style={homeStyles.courseTitle}>{item.title}</Text>
+                            <View style={homeStyles.courseSubInfoContainer}>
+                                <Text style={homeStyles.courseInfoText}>{item.tutor}</Text>
+                                <Text style={homeStyles.courseInfoText}>{"總共堂數: " + item.numOfLessons}</Text>
+                                <View style={homeStyles.courseScoreContainer}>
+                                    <Text style={homeStyles.courseInfoText}>{"評分: "}</Text>
+
+                                    <Stars score={item.aveScore} />
+
                                 </View>
+                                {item.isPurchased ?
+                                    (
+                                        <Text style={{ ...homeStyles.coursePrice, color: '#22c736' }}>{"已購買"}</Text>
+                                    ) : (
+                                        <Text style={homeStyles.coursePrice}>{"價錢: $" + item.price}</Text>
+                                    )}
                             </View>
-
-                            <View style={homeStyles.courseInfoRightContainer}>
-                                <Text style={homeStyles.courseTitle}>{item.title}</Text>
-                                <View style={homeStyles.courseSubInfoContainer}>
-                                    <View style={homeStyles.courseSubInfoTextContainer}>
-                                        <Text style={homeStyles.courseInfoText}>{item.tutor}</Text>
-                                        <Entypo style={homeStyles.courseInfoDot} name="dot-single" size={16} color="#555555" />
-                                        <Text style={homeStyles.courseInfoText}>{item.description}</Text>
-                                        <Entypo style={homeStyles.courseInfoDot} name="dot-single" size={16} color="#555555" />
-                                        <Text style={homeStyles.courseInfoText}>{"總共堂數: " + item.numOfLessons}</Text>
-                                    </View>
-                                    <View style={homeStyles.courseSubInfoLowerContainer}>
-                                        {item.isPurchased ?
-                                            (
-                                                <Text style={{ ...homeStyles.coursePrice, color: '#22c736' }}>{"已購買"}</Text>
-                                            ) : (
-                                                <Text style={homeStyles.coursePrice}>{"價錢: $" + item.price}</Text>
-                                            )}
-                                        <View style={homeStyles.courseScoreContainer}>
-                                            <Text style={homeStyles.courseInfoText}>{"評分: "}</Text>
-
-                                            <Stars score={item.aveScore} />
-
-                                        </View>
-                                    </View>
-                                </View>
-                            </View>
-
 
                         </View>
                     </TouchableOpacity>
                 )}
             />
 
-        </View>
+            {/* 最受歡迎導師 */}
+            <View style={homeStyles.titleContainer}>
+                <Text style={homeStyles.screenTitle}>最受歡迎導師</Text>
+            </View>
+
+            <FlatList
+                style={homeStyles.flatList}
+                keyExtractor={(item) => item.id}
+                data={tutorsData}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+
+                ListFooterComponent={
+                    <View style={{ width: 18 }}>
+                    </View>
+                }
+
+                renderItem={({ item }) => (
+                    <TouchableOpacity
+                        style={homeStyles.tutorBox}
+                        onPress={() => navigation.navigate('CoursesList', { tutor: item.name })}
+                    >
+                        <View style={homeStyles.tutorPicContainer}>
+                            <Image
+                                style={homeStyles.tutorPic}
+                                resizeMode='cover'
+                                source={item.pic}
+                            />
+                        </View>
+                        <View style={homeStyles.tutorInfoContainer}>
+                            <Text style={homeStyles.tutorName}>{item.name}</Text>
+                        </View>
+                    </TouchableOpacity>
+                )}
+            />
+
+        </ScrollView>
     )
 }

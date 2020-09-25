@@ -310,7 +310,6 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                                 </View>
                             </View>
 
-
                         </View>
                     </TouchableOpacity>
                 )}

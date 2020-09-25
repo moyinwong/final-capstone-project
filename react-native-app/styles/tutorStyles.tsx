@@ -11,6 +11,7 @@ const tutorStyles = StyleSheet.create({
         marginVertical: 10,
         marginHorizontal: 10,
         borderRadius: 12,
+        overflow: 'hidden',
         backgroundColor: '#ffffff',
         shadowColor: "#000",
         shadowOffset: {
@@ -23,27 +24,22 @@ const tutorStyles = StyleSheet.create({
     },
     tutorPicContainer: {
         height: 180,
-        borderTopLeftRadius: 12,
-        borderTopRightRadius: 12,
-        borderBottomRightRadius: 16
+        borderBottomRightRadius: 16,
+        overflow: 'hidden'
     },
     tutorPic: {
-        flex: 1,
         width: '100%',
-        height: '100%',
-        borderTopLeftRadius: 12,
-        borderTopRightRadius: 12,
-        borderBottomRightRadius: 16,
-        resizeMode: 'cover'
+        height: '100%'
     },
     tutorInfoContainer: {
         flex: 1,
-        paddingVertical: 2,
-        paddingHorizontal: 10
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     tutorName: {
-        textAlignVertical: 'center',
-        fontSize: 25,
+        fontSize: 23,
         color: '#000000'
     }
 });

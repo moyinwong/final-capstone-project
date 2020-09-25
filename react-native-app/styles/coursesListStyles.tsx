@@ -27,6 +27,7 @@ const coursesListStyles = StyleSheet.create({
         marginVertical: 8,
         marginHorizontal: 2,
         borderRadius: 12,
+        overflow: 'hidden',
         paddingBottom: 10,
         backgroundColor: '#ffffff',
         shadowColor: "#000",
@@ -40,18 +41,12 @@ const coursesListStyles = StyleSheet.create({
     },
     coursePicContainer: {
         height: 180,
-        borderTopLeftRadius: 12,
-        borderTopRightRadius: 12,
-        borderBottomLeftRadius: 17
+        borderBottomLeftRadius: 17,
+        overflow: 'hidden'
     },
     coursePic: {
-        flex: 1,
         width: '100%',
-        height: '100%',
-        borderTopLeftRadius: 12,
-        borderTopRightRadius: 12,
-        borderBottomLeftRadius: 17,
-        resizeMode: 'cover'
+        height: '100%'
     },
     courseInfoContainer: {
         flex: 1,
