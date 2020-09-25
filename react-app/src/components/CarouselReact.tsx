@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { ICourse } from "../pages/CategoryPage";
 import { Container, Col, Card, Button, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./CarouselReact.scss";
-import Rating from "react-rating";
 import { Alert } from "react-bootstrap";
+import SingleCard from "./SingleCard";
 
 const CarouselReact: React.FC = () => {
   const [courses, setCourses] = useState<Array<ICourse>>([]);
@@ -75,68 +74,20 @@ const CarouselReact: React.FC = () => {
           {alertMsg}
         </Alert>
       )}
+
       <Container>
         <div className="section-title">熱門課程</div>
-        {/* <button className="button" onClick={this.click}>
-          Click to change slide count
-        </button> */}
+
         <Slider {...settings}>
           {courses.map((course, i) => (
             <React.Fragment key={i}>
               <Col>
-                <Card>
-                  <div className="carousel-card">
-                    <Link to={`/course/${course.course_name}`}>
-                      <Card.Img variant="top" src={course.image} />
-                    </Link>
-                    <Card.Body className="carousel-card-body">
-                      <div className="carousel-card-title">
-                        {course.course_name}
-                      </div>
-                      <div className="carousel-card-teacher">
-                        {course.tutor_name}
-                      </div>
-                      <div className="rating">
-                        <span className="decimal">
-                          {parseFloat(
-                            course.rated_score ? course.rated_score : "0"
-                          ).toFixed(2)}
-                        </span>
-                        <Rating
-                          stop={5}
-                          emptySymbol={[
-                            "far fa-star fa-2x",
-                            "far fa-star fa-2x",
-                            "far fa-star fa-2x",
-                            "far fa-star fa-2x",
-                            "far fa-star fa-2x",
-                          ]}
-                          fullSymbol={[
-                            "fas fa-star fa-2x",
-                            "fas fa-star fa-2x",
-                            "fas fa-star fa-2x",
-                            "fas fa-star fa-2x",
-                            "fas fa-star fa-2x",
-                          ]}
-                          readonly={true}
-                          initialRating={parseFloat(
-                            course.rated_score ? course.rated_score : "0"
-                          )}
-                        />
-                        <span>({course.rated_num})</span>
-                      </div>
-                      <div className="carousel-card-price">
-                        HK${course.price}
-                      </div>
-                    </Card.Body>
-                  </div>
-                </Card>
+                <SingleCard {...course} />
               </Col>
             </React.Fragment>
           ))}
-
-          {/* {slides.map((slide) => <div key={slide}><h3>{slide}</h3></div>)} */}
         </Slider>
+
       </Container>
     </>
   );

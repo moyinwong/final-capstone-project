@@ -140,11 +140,7 @@ export class CourseService {
   };
 
   getCourseByInstructor = async (tutorEmail: string) => {
-    // const tutorArray = await (this.knex
-    //   .select('id')
-    //   .from(tables.USERS)
-    //   .where('email', tutorEmail))
-    //   const tutorId = tutorArray[0].id
+
     console.log(tutorEmail)
 
     const courses = await this.knex

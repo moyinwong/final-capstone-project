@@ -50,7 +50,7 @@ export class CourseController {
         res.status(401).json({ message: 'cannot find any course by this instructor'})
       }
       console.log(courses)
-      res.json(courses)
+      res.json({ courses })
     } catch(e) {
       console.log(e.message);
       res.status(500).json({ message: 'error on course by instructor'})

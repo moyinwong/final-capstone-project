@@ -4,7 +4,7 @@ import './LessonCreatePage.scss'
 const LessonCreatePage = () => {
     return (
         <div>
-            
+            hello
         </div>
     )
 }
