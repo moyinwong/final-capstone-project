@@ -224,7 +224,6 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                     <TouchableOpacity
                         style={coursesListStyles.courseBox}
                         onPress={() => navigation.navigate('Course', { title: item.title })}
-                        onLongPress={() => showModal()}
                     >
                         <View style={coursesListStyles.coursePicContainer}>
                             <Image

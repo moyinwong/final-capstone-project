@@ -117,6 +117,7 @@ export default function CompletedCourses() {
                     <TouchableOpacity
                         style={myCoursesStyles.courseBox}
                         onPress={() => navigation.navigate('Course', { title: item.title })}
+                        onLongPress={() => showModal()}
                     >
                         <View style={myCoursesStyles.coursePicContainer}>
                             <Image
