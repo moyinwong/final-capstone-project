@@ -9,7 +9,6 @@ import GoogleLogin from "react-google-login";
 import ReactFacebookLogin, {
   ReactFacebookLoginInfo,
 } from "react-facebook-login";
-import Header from "../components/Header";
 
 const LoginPage: React.FC = (state: {
   children?: React.ReactNode;
@@ -25,7 +24,7 @@ const LoginPage: React.FC = (state: {
   const dispatch = useDispatch();
   const errMessage = useSelector((state: IRootState) => state.auth.message);
 
-  console.log(state);
+  //console.log(state);
 
   let previousLocation: string = "/";
 
