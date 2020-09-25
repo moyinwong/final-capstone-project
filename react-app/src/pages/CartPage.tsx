@@ -28,6 +28,10 @@ const CartPage: React.FC = () => {
   const currentLocation = useLocation();
 
   useEffect(() => {
+    document.getElementById("website-header")!.style.display = "block";
+  }, [])
+
+  useEffect(() => {
     if (userEmail) {
       getUserAllCourses(userEmail);
     }

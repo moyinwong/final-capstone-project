@@ -73,15 +73,18 @@ const Header = (props: any) => {
               <Navbar.Text>Hi {userEmail}, welcome back</Navbar.Text>{" "}
             </div>
           ) : (
-            <Button
-              variant="success"
-              onClick={() => {
-                setOpen(false);
-                dispatch(push("/login"));
-              }}
-            >
-              登入
-            </Button>
+            <div className="user-info">
+              <Button
+                variant="success"
+                onClick={() => {
+                  setOpen(false);
+                  dispatch(push("/login"));
+                }}
+              >
+                登入
+              </Button>
+
+            </div>
           )}
         </Navbar>
       </div>
