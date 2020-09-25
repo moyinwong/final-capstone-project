@@ -1,6 +1,7 @@
 // React, React Native
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList, ScrollView, Alert } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 // Navigation
 import { useNavigation } from '@react-navigation/native';
@@ -18,6 +19,39 @@ export default function Home(props: { navigation: { navigate: (arg0: string) => 
     const navigation = useNavigation();
 
     // State
+    const subjectsData = [
+        {
+            title: '中文',
+            pic: require('../../../assets/subjectsPic/chn.jpg'),
+            id: '1'
+        },
+        {
+            title: '英文',
+            pic: require('../../../assets/subjectsPic/eng.jpg'),
+            id: '2'
+        },
+        {
+            title: '企會財',
+            pic: require('../../../assets/subjectsPic/bafs.jpg'),
+            id: '11'
+        },
+        {
+            title: '物理',
+            pic: require('../../../assets/subjectsPic/phy.jpg'),
+            id: '5'
+        },
+        {
+            title: '通識',
+            pic: require('../../../assets/subjectsPic/ls.jpg'),
+            id: '4'
+        },
+        {
+            title: '旅遊與款待',
+            pic: require('../../../assets/subjectsPic/tour.jpg'),
+            id: '19'
+        }
+    ]
+
     const [coursesListData, setCoursesListData] = useState(
         [
             {
@@ -130,6 +164,83 @@ export default function Home(props: { navigation: { navigate: (arg0: string) => 
         ]
     );
 
+    const [myCoursesListData, setMyCoursesListData] = useState(
+        [
+            {
+                title: 'Flutter',
+                description: '教你寫App',
+                tutor: 'Andrew Shek',
+                numOfLessons: 12,
+                price: 160,
+                aveScore: 5.0,
+                isPurchased: false,
+                coursePic: require('../../../assets/coursesPic/flutter.png'),
+                tutorPic: require('../../../assets/tutorsPic/andrew.jpg'),
+                id: '7'
+            },
+            {
+                title: 'Python',
+                description: '教你寫Python',
+                tutor: 'Dragon Lung',
+                numOfLessons: 12,
+                price: 190,
+                aveScore: 1.2,
+                isPurchased: false,
+                coursePic: require('../../../assets/coursesPic/python.png'),
+                tutorPic: require('../../../assets/tutorsPic/dragon.jpg'),
+                id: '8'
+            },
+            {
+                title: 'React',
+                description: '兩日學識React',
+                tutor: 'Alex Lau',
+                numOfLessons: 3,
+                price: 200,
+                aveScore: 3.2,
+                isPurchased: true,
+                coursePic: require('../../../assets/coursesPic/react.png'),
+                tutorPic: require('../../../assets/tutorsPic/alex.jpeg'),
+                id: '9'
+            },
+            {
+                title: 'React Native',
+                description: '三日學識React Native',
+                tutor: 'Alex Lau',
+                numOfLessons: 5,
+                price: 250,
+                aveScore: 4.5,
+                isPurchased: true,
+                coursePic: require('../../../assets/coursesPic/reactNative.png'),
+                tutorPic: require('../../../assets/tutorsPic/alex.jpeg'),
+                id: '10'
+            },
+            {
+                title: 'TensorFlow',
+                description: '三日學識AI',
+                tutor: 'Beeno Tung',
+                numOfLessons: 12,
+                price: 170,
+                aveScore: 2.8,
+                isPurchased: false,
+                coursePic: require('../../../assets/coursesPic/tensorFlow.png'),
+                tutorPic: require('../../../assets/tutorsPic/beeno.jpg'),
+                id: '11'
+            },
+            {
+                title: 'TypeScript',
+                description: '三日學識Type Script',
+                tutor: 'Dragon Lung',
+                numOfLessons: 3,
+                price: 140,
+                aveScore: 3.6,
+                isPurchased: false,
+                coursePic: require('../../../assets/coursesPic/typeScript.jpg'),
+                tutorPic: require('../../../assets/tutorsPic/dragon.jpg'),
+                id: '12'
+            }
+        ]
+    );
+
     // methods
     function showModal(isPurchased: boolean) {
         if (isPurchased) {
@@ -170,7 +281,49 @@ export default function Home(props: { navigation: { navigate: (arg0: string) => 
     }
 
     return (
-        <ScrollView style={{ ...globalStyles.container, paddingTop: 12, paddingHorizontal: 0 }}>
+        <ScrollView
+            style={{ ...globalStyles.container, paddingTop: 12, paddingHorizontal: 0 }}
+            showsVerticalScrollIndicator={false}
+        >
+
+            {/* 熱門科目 */}
+            <View style={homeStyles.titleContainer}>
+                <Text style={homeStyles.screenTitle}>熱門科目</Text>
+            </View>
+
+            <FlatList
+                style={homeStyles.flatList}
+                keyExtractor={(item) => item.id}
+                data={subjectsData}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+
+                ListFooterComponent={
+                    <View style={{ width: 18 }}>
+                    </View>
+                }
+
+                renderItem={({ item }) => (
+                    <TouchableOpacity
+                        style={homeStyles.subjectBox}
+                        onPress={() => navigation.navigate('CoursesList', { subject: item.title })}
+                    >
+                        <LinearGradient
+                            start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                            // colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0)', 'rgba(255, 255, 255, 0.4)']}
+                            colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.2)', 'rgba(0, 0, 0, 0.4)', 'rgba(0, 0, 0, 0.5)']}
+                            style={homeStyles.linearGradient}
+                        >
+                        </LinearGradient>
+                        <Image
+                            style={homeStyles.subjectPic}
+                            resizeMode='cover'
+                            source={item.pic}
+                        />
+                        <Text style={homeStyles.subjectTitle}>{item.title}</Text>
+                    </TouchableOpacity>
+                )}
+            />
 
             {/* 熱門課程 */}
             <View style={homeStyles.titleContainer}>
@@ -263,6 +416,52 @@ export default function Home(props: { navigation: { navigate: (arg0: string) => 
                 )}
             />
 
+            {/* 我的課程 */}
+            <View style={homeStyles.titleContainer}>
+                <Text style={homeStyles.screenTitle}>我的課程</Text>
+            </View>
+
+            <FlatList
+                style={homeStyles.flatList}
+                keyExtractor={(item) => item.id}
+                data={myCoursesListData}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+
+                ListFooterComponent={
+                    <View style={{ width: 18 }}>
+                    </View>
+                }
+
+                renderItem={({ item }) => (
+                    <TouchableOpacity
+                        style={{...homeStyles.courseBox, height: 240}}
+                        onPress={() => navigation.navigate('Course', { title: item.title })}
+                        onLongPress={() => showModal(true)}
+                    >
+                        <View style={homeStyles.coursePicContainer}>
+                            <Image
+                                style={homeStyles.coursePic}
+                                resizeMode='cover'
+                                source={item.coursePic}
+                            />
+                        </View>
+                        <View style={homeStyles.courseInfoContainer}>
+
+                            <Text style={homeStyles.courseTitle}>{item.title}</Text>
+                            <View style={homeStyles.courseSubInfoContainer}>
+                                <Text style={homeStyles.courseInfoText}>{item.tutor}</Text>
+                                <Text style={homeStyles.courseInfoText}>{"總共堂數: " + item.numOfLessons}</Text>
+                            </View>
+
+                        </View>
+                    </TouchableOpacity>
+                )}
+            />
+
+                        <View style={{ height: 18 }}>
+                        </View>
+
         </ScrollView>
-    )
-}
+                )
+                }

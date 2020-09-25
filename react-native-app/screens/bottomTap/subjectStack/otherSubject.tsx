@@ -14,37 +14,37 @@ const mainSubjectsData = [
     {
         title: '倫理與宗教',
         pic: require('../../../assets/subjectsPic/rsc.jpg'),
-        id: '1'
+        id: '18'
     },
     {
         title: '旅遊與款待',
         pic: require('../../../assets/subjectsPic/tour.jpg'),
-        id: '2'
+        id: '19'
     },
     {
         title: '設計與科技',
         pic: require('../../../assets/subjectsPic/dt.jpg'),
-        id: '3'
+        id: '20'
     },
     {
         title: '資訊及通訊科技',
         pic: require('../../../assets/subjectsPic/ict.jpg'),
-        id: '4'
+        id: '21'
     },
     {
         title: '音樂',
         pic: require('../../../assets/subjectsPic/music.jpg'),
-        id: '5'
+        id: '22'
     },
     {
         title: '視覺藝術',
         pic: require('../../../assets/subjectsPic/arts.jpg'),
-        id: '6'
+        id: '23'
     },
     {
         title: '體育',
         pic: require('../../../assets/subjectsPic/pe.jpg'),
-        id: '7'
+        id: '24'
     }
 ]
 

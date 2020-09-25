@@ -14,32 +14,32 @@ const mainSubjectsData = [
     {
         title: '物理',
         pic: require('../../../assets/subjectsPic/phy.jpg'),
-        id: '1'
+        id: '5'
     },
     {
         title: '化學',
         pic: require('../../../assets/subjectsPic/chem.jpg'),
-        id: '2'
+        id: '6'
     },
     {
         title: '生物',
         pic: require('../../../assets/subjectsPic/bio.jpg'),
-        id: '3'
+        id: '7'
     },
     {
         title: '綜合科學',
         pic: require('../../../assets/subjectsPic/sci.jpg'),
-        id: '4'
+        id: '8'
     },
     {
         title: 'M1',
         pic: require('../../../assets/subjectsPic/m1.jpg'),
-        id: '5'
+        id: '9'
     },
     {
         title: 'M2',
         pic: require('../../../assets/subjectsPic/m2.jpeg'),
-        id: '6'
+        id: '10'
     }
 ]
 
