@@ -1,4 +1,12 @@
-import { combineReducers, compose, createStore, applyMiddleware } from "redux";
+import {
+  combineReducers,
+  compose,
+  createStore,
+  applyMiddleware,
+  AnyAction,
+  $CombinedState,
+  Reducer,
+} from "redux";
 import {
   RouterState,
   connectRouter,
@@ -21,6 +29,9 @@ import { darkModeReducers } from "./dark/reducers";
 import { ICartState } from "./cart/state";
 import { ICartAction } from "./cart/actions";
 import { cartReducer } from "./cart/reducers";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { PersistPartial } from "redux-persist/es/persistReducer";
 
 export const history = createBrowserHistory();
 
@@ -50,6 +61,22 @@ export const rootReducer = combineReducers<IRootState>({
   router: connectRouter(history),
 });
 
+//persist
+const persistConfig = {
+  key: "root",
+  storage: storage,
+  // whitelist: ["cart"], which reducer want to store
+  blacklist: ["auth"],
+};
+
+const pReducer: Reducer<
+  {
+    readonly [$CombinedState]?: undefined;
+  } & IRootState &
+    PersistPartial,
+  AnyAction
+> = persistReducer(persistConfig, rootReducer);
+
 // step 4: middleware
 declare global {
   /* tslint:disable:interface-name */
@@ -63,10 +90,12 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export type ThunkDispatch = OldThunkDispatch<IRootState, null, IRootAction>;
 
 // step 5: createStore
-export default createStore<IRootState, IRootAction, {}, {}>(
-  rootReducer,
+export const store = createStore<IRootState, IRootAction, {}, {}>(
+  pReducer as any,
   composeEnhancers(
     applyMiddleware(thunk),
     applyMiddleware(routerMiddleware(history))
   )
 );
+
+export const persistor = persistStore(store);
