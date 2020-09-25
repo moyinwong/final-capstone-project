@@ -9,6 +9,7 @@ import { Card, CardContent, MenuItem, FormControl,
 import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../redux/store';
+import { push } from 'connected-react-router';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -26,7 +27,7 @@ const sleep = (time: number) => new Promise((acc) => setTimeout(acc, time))
 const CourseCreatePage = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
-    const userEmail = useSelector((state: IRootState) => state.auth.email)
+    const userEmail = useSelector((state: IRootState) => state.auth.email);
 
     const submitHandler = async (formData: FormData) => {
         const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/course/create/${userEmail}`, {
@@ -66,11 +67,10 @@ const CourseCreatePage = () => {
     const thirdValidationSchema = Yup.object().shape({
         file: Yup.mixed().required('A file is required')
     })
-  
+
     return (
         <div>
             <div className="course-creation-header">
-                {/* <img className="website-logo" src={require("../logo.png")} /> */}
                 <Box paddingTop={2}>
                     <Button href="/instructor" variant="contained" color="secondary" size="large">Exit</Button>
                 </Box>
@@ -90,8 +90,8 @@ const CourseCreatePage = () => {
                             
                         }} 
                         onSubmit={async (values) => {
-                            await sleep(1000)
                             // console.log(values.file)
+                            await sleep(1000)
                             const formData = new FormData()
                             formData.append('courseTitle', values.courseTitle)
                             formData.append('courseCategory', values.courseCategory)
@@ -204,6 +204,7 @@ const CourseCreatePage = () => {
                                         name="file" 
                                         label="上戴課程封面" 
                                     />
+                                    {/* <img src={image}></img> */}
                                 </Box>
                             </FormikStep>
 
@@ -229,6 +230,7 @@ export function FormikStep({ children }: FormikStepProps) {
 }
 
 export function FormikStepper({children, ...props}: FormikConfig<FormikValues>) {
+    const dispatch = useDispatch();
     const childrenArray = React.Children.toArray(children) as React.ReactElement<FormikStepProps>[];
     const [step, setStep] = useState(0);
     const currentChild = childrenArray[step] as React.ReactElement<FormikStepProps>;
@@ -249,6 +251,8 @@ export function FormikStepper({children, ...props}: FormikConfig<FormikValues>) 
                 setCompleted(true);
                 helpers.resetForm();
                 setStep(0);
+                await sleep(2000)
+                dispatch(push('/instructor'))
             } else {
                 setStep(step => step + 1)
             }}}
@@ -263,13 +267,13 @@ export function FormikStepper({children, ...props}: FormikConfig<FormikValues>) 
                     </Step>
                     ))}
                 </Stepper>
-                {currentChild}
+                {!completed && currentChild}
                 {step > 0 ? (
                     <Button disabled={isSubmitting} onClick={() => setStep(step => step - 1)}>
                         Back
                     </Button>
                 ) : null}
-                <Button 
+                {!completed && <Button 
                     startIcon={isSubmitting ? <CircularProgress size="1rem"/> : null} 
                     disabled={isSubmitting} 
                     type="submit" 
@@ -277,10 +281,20 @@ export function FormikStepper({children, ...props}: FormikConfig<FormikValues>) 
                     color="primary"
                 >
                     {isSubmitting ? 'Submitting' : isLastStep() ? 'Submit' : 'Next'}
-                </Button>
+                </Button>}
+                {/* <Button 
+                    startIcon={isSubmitting ? <CircularProgress size="1rem"/> : null} 
+                    disabled={isSubmitting} 
+                    type="submit" 
+                    variant="contained" 
+                    color="primary"
+                >
+                    {isSubmitting ? 'Submitting' : isLastStep() ? 'Submit' : 'Next'}
+                </Button> */}
+                {completed && <div>成功建立課程<i className="fas fa-check-circle"></i></div>}
             </Form>
         )}
-
+            
 
         </Formik>
     )

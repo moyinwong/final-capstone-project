@@ -49,6 +49,7 @@ const CoursePage: React.FC = () => {
 
   //run once when init
   useEffect(() => {
+    document.getElementById("website-header")!.style.display = "block";
     (async () => {
       try {
         const newCourse = await getAllCoursesByCategory(courseName);

@@ -31,6 +31,19 @@ const InstructorPage = () => {
                     {/* </div> */}
                 </Col>
             </Row>
+            <Row className="justify-content-md-center">
+                <Col xs={12} className="course-creator-container">
+                    {/* <div className="course-creator-container"> */}
+                        {/* <div className="course-creation-panel"> */}
+                            <span className="panel-title"><i className="fas fa-pencil-ruler"></i>為你的課程建立課堂</span> 
+                            <p>
+                                <Button href="/instructor/create" 
+                                className="course-creation-button" variant="success">增加課堂</Button>
+                            </p>
+                        {/* </div> */}
+                    {/* </div> */}
+                </Col>
+            </Row>
         </Container>
 
     )
