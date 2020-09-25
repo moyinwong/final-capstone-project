@@ -54,6 +54,7 @@ const CategoryPage: React.FC = () => {
   useEffect(() => {
     getAllCoursesByCategory();
     document.title = ` ${categoryName}課程`;
+    document.getElementById("website-header")!.style.display = "block";
     return () => {
       document.title = "e-ducate";
     };
