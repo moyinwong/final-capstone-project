@@ -41,6 +41,22 @@ export class CourseController {
     }
   };
 
+  courseByInstructor = async (req: Request, res: Response) => {
+    try {
+      const { tutor } = req.params;
+      const courses = await this.courseService.getCourseByInstructor(tutor)
+
+      if (!courses) {
+        res.status(401).json({ message: 'cannot find any course by this instructor'})
+      }
+      console.log(courses)
+      res.json(courses)
+    } catch(e) {
+      console.log(e.message);
+      res.status(500).json({ message: 'error on course by instructor'})
+    }
+  }
+
   courseCreation = async (req: Request, res:Response) => {
     try {
       const userEmail = req.params.userEmail;
