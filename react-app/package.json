@@ -44,6 +44,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "react-slick": "^0.27.10",
+    "react-stripe-elements": "^6.1.2",
     "react-use-form-state": "^0.13.1",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",

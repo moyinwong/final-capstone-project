@@ -33,7 +33,7 @@ export class UserController {
       res.json({
         token: token,
         email: user.email,
-        isTutor: user.is_tutor
+        isTutor: user.is_tutor,
       });
     } catch (e) {
       logger.error(e.message);
@@ -48,7 +48,7 @@ export class UserController {
       res.status(200).json({
         user: {
           email: user?.email,
-          isTutor: user?.is_tutor
+          isTutor: user?.is_tutor,
         },
       });
     } catch (e) {
@@ -112,7 +112,7 @@ export class UserController {
       res.json({
         token: token,
         email: user.email,
-        isTutor: user.is_tutor
+        isTutor: user.is_tutor,
       });
     } catch (e) {
       logger.error(e.message);
@@ -167,7 +167,7 @@ export class UserController {
       res.json({
         token: token,
         email: user.email,
-        isTutor: user.is_tutor
+        isTutor: user.is_tutor,
       });
     } catch (e) {
       logger.error(e.message);
@@ -184,6 +184,19 @@ export class UserController {
       );
       logger.debug(isAllow);
       res.json({ is_allow: isAllow });
+    } catch (err) {
+      logger.error(err);
+
+      res.status(500).json({ message: "Internal server error" });
+    }
+  };
+
+  userAllCourses = async (req: Request, res: Response) => {
+    try {
+      const { user } = req.params;
+      const courses = await this.userService.getUserAllAllowAccessCourses(user);
+
+      res.json({ courses });
     } catch (err) {
       logger.error(err);
 

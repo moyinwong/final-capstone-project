@@ -104,4 +104,24 @@ export class UserService {
 
     return userAllowAccessCourses.length !== 0 ? true : false;
   };
+
+  getUserAllAllowAccessCourses = async (userEmail: string) => {
+    const userAllowAccessCourses: Array<{
+      user_email: string;
+      course_name: string | null;
+    }> = await this.knex
+      .select("users.email as user_email", "courses.name as course_name")
+      .from(tables.USERS)
+      .leftJoin(
+        tables.PURCHASED_COURSES,
+        "users.id",
+        `${tables.PURCHASED_COURSES}.user_id`
+      )
+      .leftJoin(tables.COURSES, "course_id", `${tables.COURSES}.id`)
+      .where("users.email", userEmail);
+
+    logger.debug(userAllowAccessCourses);
+
+    return userAllowAccessCourses;
+  };
 }
