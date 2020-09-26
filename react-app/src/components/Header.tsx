@@ -20,7 +20,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import "./Header.scss";
 import DropdownMenu from "./DropdownMenu";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Header = (props: any) => {
   const dispatch = useDispatch();
@@ -29,6 +29,8 @@ const Header = (props: any) => {
   );
   const userEmail = useSelector((state: IRootState) => state.auth.email);
   const [open, setOpen] = useState(false);
+
+  const currentLocation = useLocation();
 
   return (
     <div id="website-header">
@@ -78,12 +80,11 @@ const Header = (props: any) => {
                 variant="success"
                 onClick={() => {
                   setOpen(false);
-                  dispatch(push("/login"));
+                  dispatch(push("/login", currentLocation));
                 }}
               >
                 登入
               </Button>
-
             </div>
           )}
         </Navbar>

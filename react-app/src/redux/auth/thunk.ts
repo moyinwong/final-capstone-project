@@ -14,7 +14,7 @@ export function login(
   password: string,
   previousLocation: string | undefined
 ) {
-  return async (dispatch: ThunkDispatch) => {
+  return async (dispatch: ThunkDispatch, getState: () => IRootState) => {
     const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/login`, {
       method: "POST",
       headers: {
@@ -34,6 +34,7 @@ export function login(
       dispatch(loginSuccess(json.token));
       dispatch(getUser(json.email));
       dispatch(checkTutor(json.isTutor));
+      console.log(getState().router.location);
       if (previousLocation) {
         dispatch(push(previousLocation));
       } else {

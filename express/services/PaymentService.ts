@@ -9,45 +9,6 @@ export class PaymentService {
   hihi() {
     console.log(this.knex);
   }
-  // fetchStripePayment = async (stripeToken: any, chargeAmount: number) => {
-  //   console.log(stripeToken);
-  //   try {
-  //     const paymentIntent = await stripe.paymentIntents.create(
-  //       {
-  //         payment_method_types: ["card"],
-  //         amount: 99 * 100,
-  //         currency: "hkd",
-  //         application_fee_amount: 9 * 100,
-  //       },
-  //       {
-  //         stripeAccount: "acct_1HVIZmEar5uWLoZR",
-  //       }
-  //     );
-
-  //     console.log(paymentIntent);
-
-  //     const handlePayment = await stripe.handleCardPayment(
-  //       paymentIntent.client_secret
-  //     );
-
-  //     console.log(handlePayment);
-
-  //     // const fetchStripeRes: any = await stripe.charges.create({
-  //     //   source: stripeToken,
-  //     //   amount: chargeAmount * 100,
-  //     //   currency: "hkd",
-  //     // });
-
-  //     const user = await this.knex.select("*").from("users");
-
-  //     logger.debug(user);
-
-  //     return paymentIntent;
-  //   } catch (err) {
-  //     console.log(err);
-  //     return err;
-  //   }
-  // };
 
   createStripeConnectAccount = async (email: string) => {
     try {
@@ -85,36 +46,6 @@ export class PaymentService {
       return err;
     }
   };
-
-  // createStripePaymentSession = async () => {
-  //   try {
-  //     const session = await stripe.checkout.sessions.create({
-  //       payment_method_types: ["card"],
-  //       line_items: [
-  //         {
-  //           price_data: {
-  //             currency: "hkd",
-  //             product_data: {
-  //               name: "test",
-  //             },
-  //             unit_amount: 2000,
-  //           },
-  //           quantity: 1,
-  //         },
-  //       ],
-  //       payment_intent_data: {
-  //         transfer_group: 111,
-  //       },
-  //       mode: "payment",
-  //       success_url: "https://localhost:3000/",
-  //       cancel_url: "https://localhost:3000/cart",
-  //     });
-  //     return session.id;
-  //   } catch (err) {
-  //     console.log(err);
-  //     return err;
-  //   }
-  // };
 
   createTransfer = async (
     connectedAccount: string,

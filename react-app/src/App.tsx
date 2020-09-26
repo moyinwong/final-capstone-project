@@ -30,7 +30,6 @@ function App() {
 
   useEffect(() => {
     if (isAuthenticated === null) {
-      console.log("this");
       dispatch(restoreLogin());
     }
   }, [isAuthenticated]);
@@ -76,8 +75,13 @@ function App() {
           exact={true}
           component={CourseCreatePage}
         />
+<<<<<<< HEAD
           <Route
           path="/instructor/lesson/creation/:courseName"
+=======
+        <Route
+          path="/instructor/lesson/creation"
+>>>>>>> ccb6d479440da4cd9c3a255cfaaef1b9e7912907
           exact={true}
           component={LessonCreatePage}
         />

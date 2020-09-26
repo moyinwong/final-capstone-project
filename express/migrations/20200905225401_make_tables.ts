@@ -23,6 +23,7 @@ export async function up(knex: Knex): Promise<void> {
     table.string("linkedin");
     table.string("google_id");
     table.string("facebook_id");
+    table.string("stripe_id");
     table.boolean("is_tutor");
     table.string("title");
     table.text("introduction");
