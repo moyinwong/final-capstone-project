@@ -4,7 +4,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./BurgerMenu.scss";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import DarkModeSwitch from "./DarkModeSwitch";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -20,6 +20,8 @@ const BurgerMenu: React.FC = () => {
     (state: IRootState) => state.auth.isAuthenticated
   );
   const userEmail = useSelector((state: IRootState) => state.auth.email);
+
+  const currentLocation = useLocation();
 
   const categories: string[] = [
     "中文",
@@ -56,10 +58,12 @@ const BurgerMenu: React.FC = () => {
           variant="success"
           onClick={() => {
             setOpen(false);
-            dispatch(push("/login"));
+            //dispatch(push("/login"));
           }}
         >
-          登入
+          <Link to={{ pathname: "/login", state: { url: currentLocation } }}>
+            登入
+          </Link>
         </Button>
       )}
 

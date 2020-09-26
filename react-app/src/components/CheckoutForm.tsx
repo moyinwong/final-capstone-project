@@ -271,17 +271,10 @@ const CheckoutForm = () => {
   };
 
   const handlePaymentIntent = async () => {
-    // Create a new Checkout Session using the server-side endpoint you
-    // created in step 3.
     if (!stripe || !elements || !authToken) {
-      // Stripe.js has not loaded yet. Make sure to disable
-      // form submission until Stripe.js has loaded.
       return;
     }
 
-    // Get a reference to a mounted CardElement. Elements knows how
-    // to find your CardElement because there can only ever be one of
-    // each type of element.
     const cardElement: StripeCardElement | null = elements.getElement(
       CardElement
     );

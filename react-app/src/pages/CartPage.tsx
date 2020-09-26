@@ -85,6 +85,8 @@ const CartPage: React.FC = () => {
     console.log(userCourses);
   };
 
+  const handleCheckOut = async () => {};
+
   return (
     <>
       {cartCourses && userEmail !== undefined && isReadyRender && (
@@ -113,7 +115,7 @@ const CartPage: React.FC = () => {
 
             {userEmail ? (
               <Button variant="primary" size="lg" block>
-                立即付款
+                <Link to={currentLocation}></Link>
               </Button>
             ) : (
               <Button variant="primary" size="lg" block>
