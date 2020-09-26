@@ -17,7 +17,7 @@ export class LessonController {
           user
         );
         if (lessons.length !== 0) {
-          return res.json({ lessons });
+          return res.status(200).json({ lessons });
         }
       }
 
@@ -26,7 +26,7 @@ export class LessonController {
       if (lessons.length === 0) {
         return res.status(401).json({ message: "no lesson found" });
       }
-      return res.json({ lessons });
+      return res.status(200).json({ lessons });
     } catch (err) {
       console.log(err.message);
       return res.status(500).json({ message: "internal server error" });

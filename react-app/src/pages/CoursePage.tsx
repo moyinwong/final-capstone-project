@@ -12,7 +12,7 @@ import { Accordion, Alert, Button, Card } from "react-bootstrap";
 import { addCourse } from "../redux/cart/actions";
 import "./CoursePage.scss";
 
-interface ILesson {
+export interface ILesson {
   course_id: number;
   course_name: string;
   tutor_id: number;

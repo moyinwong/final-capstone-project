@@ -62,6 +62,9 @@
             font-weight: bold;
         }
 
+        div.card-header > img {
+            width: 300px;
+        }
         div.card-body {
             display: flex;
             justify-content: center;
