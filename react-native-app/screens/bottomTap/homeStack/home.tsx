@@ -9,6 +9,10 @@ import { useNavigation } from '@react-navigation/native';
 // Components
 import Stars from '../../../sharedComponents/stars';
 
+// Functions
+import showModal from '../../../functions/showModal';
+import showSubscribeBox from '../../../functions/showSubscribeBox';
+
 // Styles
 import globalStyles from '../../../styles/globalStyles';
 import homeStyles from '../../../styles/homeStyles';
@@ -264,56 +268,6 @@ export default function Home(props: { navigation: { navigate: (arg0: string) => 
             }
         ]
     );
-
-    // methods
-    function showModal(isPurchased: boolean) {
-        if (isPurchased) {
-            showCommentOrRateBox();
-        } else {
-            showPurchaseBox();
-        }
-    }
-
-    function showCommentOrRateBox() {
-        Alert.alert(
-            "評價",
-            "請評價",
-            [
-                { text: "評價", onPress: () => console.log("評價") }
-            ],
-            { cancelable: true }
-        )
-    }
-
-    function showCommentBox() {
-        console.log('comment');
-    }
-
-    function showRateBox() {
-        console.log('rate');
-    }
-
-    function showPurchaseBox() {
-        Alert.alert(
-            "購買",
-            "請購買",
-            [
-                { text: "購買", onPress: () => console.log("購買") }
-            ],
-            { cancelable: true }
-        )
-    }
-
-    function showSubscribeBox() {
-        Alert.alert(
-            "訂閱",
-            "請訂閱",
-            [
-                { text: "訂閱", onPress: () => console.log("訂閱") }
-            ],
-            { cancelable: true }
-        )
-    }
 
     return (
         <ScrollView

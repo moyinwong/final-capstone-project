@@ -5,6 +5,9 @@ import { View, Text, TouchableOpacity, Image, FlatList, Alert } from 'react-nati
 // Navigation
 import { useNavigation } from '@react-navigation/native';
 
+// Functions
+import showSubscribeBox from '../../../functions/showSubscribeBox';
+
 // Styles
 import globalStyles from '../../../styles/globalStyles';
 import tutorsStyles from '../../../styles/tutorsStyles';
@@ -73,18 +76,6 @@ export default function AllTutors(props: { navigation: { navigate: (arg0: string
             }
         ]
     );
-
-    // Methods
-    function showSubscribeBox() {
-        Alert.alert(
-            "訂閱",
-            "請訂閱",
-            [
-                { text: "訂閱", onPress: () => console.log("訂閱") }
-            ],
-            { cancelable: true }
-        )
-    }
 
     return (
         <View style={globalStyles.container}>
