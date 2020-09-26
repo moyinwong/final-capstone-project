@@ -16,23 +16,6 @@ export class PaymentController {
     return result;
   }
 
-  // chargeAndUpdatePurchaseCourse = async (req: Request, res: Response) => {
-  //   try {
-  //     const { chargeAmount, stripeToken } = req.body;
-  //     const fetchStripeRes = await this.paymentService.fetchStripePayment(
-  //       stripeToken,
-  //       chargeAmount
-  //     );
-  //     return res.json({
-  //       message: "已收到款項",
-  //       receipt: fetchStripeRes.receipt_url,
-  //     });
-  //   } catch (err) {
-  //     console.log(err.message);
-  //     return res.status(500).json({ message: "internal server error" });
-  //   }
-  // };
-
   createStripeAccount = async (req: Request, res: Response) => {
     try {
       const account = await this.paymentService.createStripeConnectAccount(
@@ -48,25 +31,6 @@ export class PaymentController {
       return res.status(500).json({ message: "internal server error" });
     }
   };
-
-  // createCheckout = async (req: Request, res: Response) => {
-  //   try {
-  //     //const paymentIntent = await this.paymentService.createPaymentIntent();
-
-  //     const sessionId = await this.paymentService.createStripePaymentSession();
-
-  //     const tranfer = await this.paymentService.createTransfer(
-  //       "acct_1HVIZmEar5uWLoZR"
-  //     );
-
-  //     console.log(tranfer);
-
-  //     return res.json({ id: sessionId });
-  //   } catch (err) {
-  //     console.log(err.message);
-  //     return res.status(500).json({ message: "internal server error" });
-  //   }
-  // };
 
   createPaymentIntent = async (req: Request, res: Response) => {
     try {
@@ -86,6 +50,19 @@ export class PaymentController {
       console.log(paymentIntentSecret);
 
       return res.json({ paymentIntentSecret });
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).json({ message: "internal server error" });
+    }
+  };
+
+  createAccountLink = async (req: Request, res: Response) => {
+    try {
+      const accountLink = await this.paymentService.createAccountLinks(
+        "acct_1HVYOVLAxpq9vdD8"
+      );
+
+      return res.json({ url: accountLink.url });
     } catch (err) {
       console.log(err.message);
       return res.status(500).json({ message: "internal server error" });

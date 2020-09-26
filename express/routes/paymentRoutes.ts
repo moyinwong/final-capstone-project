@@ -3,11 +3,6 @@ import { paymentController, isLoggedIn } from "../main";
 
 export const paymentRoutes = express.Router();
 
-// paymentRoutes.post(
-//   "/charge",
-//   isLoggedIn,
-//   paymentController.chargeAndUpdatePurchaseCourse
-// );
 paymentRoutes.post(
   "/create-stripe-connect-account",
   isLoggedIn,
@@ -17,4 +12,9 @@ paymentRoutes.post(
   "/create-payment-intent",
   isLoggedIn,
   paymentController.createPaymentIntent
+);
+paymentRoutes.post(
+  "/create-account-link",
+  isLoggedIn,
+  paymentController.createAccountLink
 );
