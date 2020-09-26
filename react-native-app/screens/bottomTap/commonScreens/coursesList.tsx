@@ -244,7 +244,7 @@ export default function CoursesList() {
                             : coursesListParam.tutor ? (
                                 <View>
                                     <Text style={coursesListStyles.screenTitle}>
-                                        <Text style={coursesListStyles.paramTitle}>{coursesListParam.tutor.name}</Text>
+                                        <Text style={coursesListStyles.paramTitle}>{coursesListParam.tutor}</Text>
                         的課程</Text>
                                 </View>
                             ) : (

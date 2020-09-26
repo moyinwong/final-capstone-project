@@ -3,11 +3,15 @@ import { StyleSheet } from 'react-native';
 
 const tutorInfoStyles = StyleSheet.create({
     tutorBox: {
-        height: 250,
-        width: '100%',
+        marginHorizontal: 16,
+        marginBottom: 12,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',
+        alignItems: 'center',
+        paddingTop: 12,
+        paddingBottom: 20,
+        paddingHorizontal: 12,
         borderRadius: 12,
         overflow: 'hidden',
         backgroundColor: '#ffffff',
@@ -16,14 +20,14 @@ const tutorInfoStyles = StyleSheet.create({
             width: 0,
             height: 2,
         },
-        shadowOpacity: 0.23,
-        shadowRadius: 2.62,
-        elevation: 4
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
     },
     tutorPicContainer: {
-        height: 100,
-        width: 100,
-        borderBottomRightRadius: 16,
+        height: 150,
+        width: 150,
+        borderRadius: 150,
         overflow: 'hidden'
     },
     tutorPic: {
@@ -31,35 +35,95 @@ const tutorInfoStyles = StyleSheet.create({
         height: '100%'
     },
     tutorInfoContainer: {
+        marginTop: 3,
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center'
     },
     tutorName: {
         fontSize: 23,
         color: '#000000'
     },
+    tutorTitleAndTeamContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginBottom: 12
+    },
     tutorInfo: {
         fontSize: 18,
-        color: '#555555'
+        color: '#555555',
+        textAlign: 'center'
+    },
+    tutorInfoDot: {
+        alignSelf: 'center'
+    },
+    tutorSubscribeContainer: {
+        marginTop: 12,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     tutorNumSubscribed: {
-        fontSize: 18,
+        fontSize: 19,
         color: '#e96a43'
+    },
+    tutorSubscribeButton: {
+        marginLeft: 24,
+        paddingVertical: 8,
+        paddingHorizontal: 24,
+        borderRadius: 10,
+        backgroundColor: '#e96a43'
+    },
+    tutorSubscribeButtonText: {
+        fontSize: 19,
+        color: '#ffffff'
+    },
+    tutorSubscribedBox: {
+        display: 'flex',
+        flexDirection: 'row',
+        marginLeft: 48
+    },
+    tutorSubscribedText: {
+        fontSize: 19,
+        color: '#22c736'
     },
     titleContainer: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        marginLeft: 20,
-        marginBottom: 2
+        marginTop: 2,
+        marginBottom: 4,
+        marginLeft: 20
     },
     screenTitle: {
         fontWeight: 'bold',
         fontSize: 20
+    },
+    allCoursesButtonContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 13,
+        paddingHorizontal: 12
+    },
+    allCoursesButton: {
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 8,
+        borderRadius: 10,
+        backgroundColor: '#5b96f7'
+    },
+    allCoursesButtonText: {
+        fontSize: 20,
+        color: '#ffffff'
     },
     flatList: {
         paddingLeft: 10

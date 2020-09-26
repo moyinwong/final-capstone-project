@@ -1,9 +1,12 @@
 // React, React Native
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, FlatList, Alert } from 'react-native';
+import { View, Text, Image, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 
 // Navigation
 import { useNavigation, useRoute } from '@react-navigation/native';
+
+// Icons
+import { Entypo, MaterialIcons } from '@expo/vector-icons';
 
 // Styles
 import globalStyles from '../../../styles/globalStyles';
@@ -13,6 +16,7 @@ import tutorInfoStyles from '../../../styles/tutorInfoStyles';
 import Stars from '../../../sharedComponents/stars';
 
 // Functions
+import showSubscribeBox from '../../../functions/showSubscribeBox';
 import showModal from '../../../functions/showModal';
 
 // Interfaces
@@ -118,9 +122,13 @@ export default function TutorInfo() {
     }
 
     return (
-        <View style={globalStyles.container}>
+        <ScrollView
+            style={{ ...globalStyles.container, paddingTop: 12, paddingHorizontal: 0 }}
+            showsVerticalScrollIndicator={false}
+        >
 
             <View style={tutorInfoStyles.tutorBox}>
+
                 <View style={tutorInfoStyles.tutorPicContainer}>
                     <Image
                         style={tutorInfoStyles.tutorPic}
@@ -128,12 +136,39 @@ export default function TutorInfo() {
                         source={tutor.pic}
                     />
                 </View>
+
                 <View style={tutorInfoStyles.tutorInfoContainer}>
                     <Text style={tutorInfoStyles.tutorName}>{tutor.name}</Text>
-                    <Text style={tutorInfoStyles.tutorInfo}>{tutor.title}</Text>
-                    <Text style={tutorInfoStyles.tutorInfo}>{tutor.team}</Text>
+                    <View style={tutorInfoStyles.tutorTitleAndTeamContainer}>
+                        <Text style={tutorInfoStyles.tutorInfo}>{tutor.title}</Text>
+                        <Entypo style={tutorInfoStyles.tutorInfoDot} name="dot-single" size={16} color="#555555" />
+                        <Text style={tutorInfoStyles.tutorInfo}>{tutor.team}</Text>
+                    </View>
                     <Text style={tutorInfoStyles.tutorInfo}>{tutor.description}</Text>
-                    <Text style={tutorInfoStyles.tutorNumSubscribed}>{'訂閱數: ' + tutor.numSubscribed}</Text>
+
+                    <View style={tutorInfoStyles.tutorSubscribeContainer}>
+                        <Text style={tutorInfoStyles.tutorNumSubscribed}>{'訂閱數: ' + tutor.numSubscribed}</Text>
+                        <TouchableOpacity
+                            style={tutorInfoStyles.tutorSubscribeButton}
+                            onPress={() => showSubscribeBox()}
+                        >
+                            <Text style={tutorInfoStyles.tutorSubscribeButtonText}>訂閱</Text>
+                        </TouchableOpacity>
+                        {/* <View style={tutorInfoStyles.tutorSubscribedBox}>
+                            <MaterialIcons name="done" size={26} color="#22c736" />
+                            <Text style={tutorInfoStyles.tutorSubscribedText}>已訂閱</Text>
+                        </View> */}
+                    </View>
+
+                    <View style={tutorInfoStyles.allCoursesButtonContainer}>
+                        <TouchableOpacity
+                            style={tutorInfoStyles.allCoursesButton}
+                            onPress={() => navigation.navigate('CoursesList', { tutor: tutor.name })}
+                        >
+                            <Text style={tutorInfoStyles.allCoursesButtonText}>所有課程</Text>
+                        </TouchableOpacity>
+                    </View>
+
                 </View>
             </View>
 
@@ -192,6 +227,6 @@ export default function TutorInfo() {
                 )}
             />
 
-        </View>
+        </ScrollView>
     )
 }
