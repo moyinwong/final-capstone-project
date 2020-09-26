@@ -16,9 +16,6 @@ import Course from '../../screens/bottomTap/commonScreens/course';
 import Lesson from '../../screens/bottomTap/commonScreens/lesson';
 import Exercise from '../../screens/bottomTap/commonScreens/exercise';
 
-// Components
-import HeaderTitle from '../../sharedComponents/headerTitle';
-
 // Functions
 import stackTransition from '../../functions/stackTransition';
 
@@ -57,9 +54,7 @@ export default function SubjectStack(props: { navigation: { toggleDrawer: () => 
                 name="Subject"
                 children={SubjectTopTap}
                 options={{
-                    headerTitle: (props) => (
-                        <HeaderTitle title={'科目'} />
-                    ),
+                    title: '科目',
                     ...stackTransition
                 }}
             />
@@ -67,9 +62,7 @@ export default function SubjectStack(props: { navigation: { toggleDrawer: () => 
                 name="CoursesList"
                 component={CoursesList}
                 options={{
-                    header: (props) => (
-                        <HeaderTitle title={'課程列表'} />
-                    ),
+                    title: '課程列表',
                     ...stackTransition
                 }}
             />
@@ -77,9 +70,7 @@ export default function SubjectStack(props: { navigation: { toggleDrawer: () => 
                 name="Course"
                 component={Course}
                 options={{
-                    headerTitle: (props) => (
-                        <HeaderTitle title={'課程'} />
-                    ),
+                    title: '課程',
                     ...stackTransition
                 }}
             />
@@ -87,9 +78,7 @@ export default function SubjectStack(props: { navigation: { toggleDrawer: () => 
                 name="Lesson"
                 component={Lesson}
                 options={{
-                    headerTitle: (props) => (
-                        <HeaderTitle title={'課堂'} />
-                    ),
+                    title: '課堂',
                     ...stackTransition
                 }}
             />
@@ -97,9 +86,7 @@ export default function SubjectStack(props: { navigation: { toggleDrawer: () => 
                 name="Exercise"
                 component={Exercise}
                 options={{
-                    headerTitle: (props) => (
-                        <HeaderTitle title={'練習'} />
-                    ),
+                    title: '練習',
                     ...stackTransition
                 }}
             />

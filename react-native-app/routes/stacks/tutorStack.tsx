@@ -14,9 +14,6 @@ import Course from '../../screens/bottomTap/commonScreens/course';
 import Lesson from '../../screens/bottomTap/commonScreens/lesson';
 import Exercise from '../../screens/bottomTap/commonScreens/exercise';
 
-// Components
-import HeaderTitle from '../../sharedComponents/headerTitle';
-
 // Functions
 import stackTransition from '../../functions/stackTransition';
 
@@ -55,9 +52,7 @@ export default function TutorStack(props: { navigation: { toggleDrawer: () => vo
                 name="Tutor"
                 component={Tutor}
                 options={{
-                    headerTitle: (props) => (
-                        <HeaderTitle title={'導師'} />
-                    ),
+                    title: '導師',
                     ...stackTransition
                 }}
             />
@@ -65,9 +60,7 @@ export default function TutorStack(props: { navigation: { toggleDrawer: () => vo
                 name="CoursesList"
                 component={CoursesList}
                 options={{
-                    headerTitle: (props) => (
-                        <HeaderTitle title={'課程例表'} />
-                    ),
+                    title: '課程例表',
                     ...stackTransition
                 }}
             />
@@ -75,9 +68,7 @@ export default function TutorStack(props: { navigation: { toggleDrawer: () => vo
                 name="Course"
                 component={Course}
                 options={{
-                    headerTitle: (props) => (
-                        <HeaderTitle title={'課程'} />
-                    ),
+                    title: '課程',
                     ...stackTransition
                 }}
             />
@@ -85,9 +76,7 @@ export default function TutorStack(props: { navigation: { toggleDrawer: () => vo
                 name="Lesson"
                 component={Lesson}
                 options={{
-                    headerTitle: (props) => (
-                        <HeaderTitle title={'課堂'} />
-                    ),
+                    title: '課堂',
                     ...stackTransition
                 }}
             />
@@ -95,9 +84,7 @@ export default function TutorStack(props: { navigation: { toggleDrawer: () => vo
                 name="Exercise"
                 component={Exercise}
                 options={{
-                    headerTitle: (props) => (
-                        <HeaderTitle title={'練習'} />
-                    ),
+                    title: '練習',
                     ...stackTransition
                 }}
             />

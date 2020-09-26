@@ -1,6 +1,6 @@
 // React, React Native
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList, Alert } from 'react-native';
 
 // Navigation
 import { useNavigation } from '@react-navigation/native';
@@ -24,6 +24,7 @@ export default function InProgressCourses() {
                 numOfLessons: 8,
                 price: 100,
                 aveScore: 4.6,
+                isPurchased: false,
                 coursePic: require('../../../assets/coursesPic/express.jpg'),
                 tutorPic: require('../../../assets/tutorsPic/gordon.jpg'),
                 id: '1'
@@ -35,6 +36,7 @@ export default function InProgressCourses() {
                 numOfLessons: 6,
                 price: 150,
                 aveScore: 3.5,
+                isPurchased: true,
                 coursePic: require('../../../assets/coursesPic/firebase.png'),
                 tutorPic: require('../../../assets/tutorsPic/gordon.jpg'),
                 id: '2'
@@ -46,6 +48,7 @@ export default function InProgressCourses() {
                 numOfLessons: 12,
                 price: 120,
                 aveScore: 4.4,
+                isPurchased: true,
                 coursePic: require('../../../assets/coursesPic/flutter.png'),
                 tutorPic: require('../../../assets/tutorsPic/jason.jpg'),
                 id: '3'
@@ -57,6 +60,7 @@ export default function InProgressCourses() {
                 numOfLessons: 9,
                 price: 110,
                 aveScore: 3.7,
+                isPurchased: false,
                 coursePic: require('../../../assets/coursesPic/javaScript.png'),
                 tutorPic: require('../../../assets/tutorsPic/jason.jpg'),
                 id: '4'
@@ -68,6 +72,7 @@ export default function InProgressCourses() {
                 numOfLessons: 3,
                 price: 180,
                 aveScore: 2.6,
+                isPurchased: false,
                 coursePic: require('../../../assets/coursesPic/jest.png'),
                 tutorPic: require('../../../assets/tutorsPic/beeno.jpg'),
                 id: '5'
@@ -79,6 +84,7 @@ export default function InProgressCourses() {
                 numOfLessons: 2,
                 price: 130,
                 aveScore: 3.2,
+                isPurchased: true,
                 coursePic: require('../../../assets/coursesPic/knex.png'),
                 tutorPic: require('../../../assets/tutorsPic/andrew.jpg'),
                 id: '6'
@@ -87,8 +93,15 @@ export default function InProgressCourses() {
     );
 
     // methods
-    function showModal() {
-        console.log('modal');
+    function showCommentOrRateBox() {
+        Alert.alert(
+            "評價",
+            "請評價",
+            [
+                { text: "評價", onPress: () => console.log("評價") }
+            ],
+            { cancelable: true }
+        )
     }
 
     function showCommentBox() {
@@ -117,7 +130,7 @@ export default function InProgressCourses() {
                     <TouchableOpacity
                         style={myCoursesStyles.courseBox}
                         onPress={() => navigation.navigate('Course', { title: item.title })}
-                        onLongPress={() => showModal()}
+                        onLongPress={() => showCommentOrRateBox()}
                     >
                         <View style={myCoursesStyles.coursePicContainer}>
                             <Image

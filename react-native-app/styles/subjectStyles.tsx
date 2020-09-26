@@ -14,6 +14,7 @@ const subjectStyles = StyleSheet.create({
         borderBottomLeftRadius: 12,
         borderTopRightRadius: 12,
         borderBottomRightRadius: 24,
+        overflow: 'hidden',
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -29,21 +30,11 @@ const subjectStyles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
-        zIndex: 1,
-        borderTopLeftRadius: 24,
-        borderBottomLeftRadius: 12,
-        borderTopRightRadius: 12,
-        borderBottomRightRadius: 24
+        zIndex: 1
     },
     subjectPic: {
-        flex: 1,
         width: '100%',
-        height: '100%',
-        borderTopLeftRadius: 24,
-        borderBottomLeftRadius: 12,
-        borderTopRightRadius: 12,
-        borderBottomRightRadius: 24,
-        resizeMode: 'cover'
+        height: '100%'
     },
     subjectTitle: {
         position: 'absolute',

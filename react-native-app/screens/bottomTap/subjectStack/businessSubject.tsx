@@ -14,12 +14,12 @@ const mainSubjectsData = [
     {
         title: '企會財',
         pic: require('../../../assets/subjectsPic/bafs.jpg'),
-        id: '1'
+        id: '11'
     },
     {
         title: '經濟',
         pic: require('../../../assets/subjectsPic/econ.jpg'),
-        id: '2'
+        id: '12'
     }
 ]
 

@@ -37,6 +37,37 @@
             right: 20px;
         }
     }
+    
+    div.accordion {
+        width: 90%;
+        margin-top: 30px;
+
+        .course-creation-button {
+            margin-top: 0px;
+        }
+
+        div.card {
+            box-shadow: none;
+        }
+
+        .accordion-card-title {
+            background: lightseagreen;
+            color: white;
+            font-weight: bold;
+        }
+
+        div.card-header:first-child {
+            background: lightseagreen;
+            color: white;
+            font-weight: bold;
+        }
+
+        div.card-body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
 }
 
 
