@@ -5,8 +5,9 @@ import { IRootState } from '../redux/store'
 import SingleCard from '../components/SingleCard'
 import { useSelector } from 'react-redux'
 import { ILesson } from './CoursePage'
+import LessonAccordion from '../components/LessonAccordion'
 
-interface IPureCourse {
+export interface IPureCourse {
     id: number;
     name: string;
     price: string;
@@ -48,25 +49,25 @@ const InstructorPage = () => {
         setCourses(orderedCourses);
     }
 
-    const getLessonInfoByCourse = async (courseName: string) => {
-        //console.log("user: ", userEmail);
-        let queryRoute: string = "/lesson/summary/";
-        const fetchRes = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}${queryRoute}${courseName}`
-        );
+    // const getLessonInfoByCourse = async (courseName: string) => {
+    //     //console.log("user: ", userEmail);
+    //     let queryRoute: string = "/lesson/summary/";
+    //     const fetchRes = await fetch(
+    //       `${process.env.REACT_APP_BACKEND_URL}${queryRoute}${courseName}`
+    //     );
     
-        if (fetchRes.status === 401) {
-            return;
-        }
-        const result = await fetchRes.json();
+    //     if (fetchRes.status === 401) {
+    //         return;
+    //     }
+    //     const result = await fetchRes.json();
         
 
-        result.lessons.sort((a: ILesson, b: ILesson) => a.lesson_id - b.lesson_id);
-        // setLessons(result.lessons);
-    };
+    //     result.lessons.sort((a: ILesson, b: ILesson) => a.lesson_id - b.lesson_id);
+    //     // setLessons(result.lessons);
+    // };
  
-    {courses.map((course) => getLessonInfoByCourse(course.name))};
-    console.log(lessons);
+    // {courses.map((course) => getLessonInfoByCourse(course.name))};
+    // console.log(lessons);
 
     return (
         <Container >
@@ -90,10 +91,11 @@ const InstructorPage = () => {
                             <span className="panel-title"><i className="fas fa-pencil-ruler"></i>為你的課程建立課堂</span> 
         
                             <Accordion>
-                                {courses.map((course, i) => (
                                     <Card>
                                         <Card.Header className="accordion-card-title">你的課程</Card.Header>
-                                        <Accordion.Toggle as={Card.Header} eventKey={`${i}`}>
+                                {courses.map((course, i) => (
+                                    <>
+                                        {/* <Accordion.Toggle as={Card.Header} eventKey={`${i}`}>
                                             {course.image.match(/http/) ? <Image src={course.image} fluid></Image> : 
                                             <Image src={`http://localhost:8080/img/${course.image}`} fluid />
                                             }
@@ -104,9 +106,11 @@ const InstructorPage = () => {
                                                 <Button href={`/instructor/lesson/creation/${course.name}`} 
                                                 className="course-creation-button" variant="success">增加課堂</Button>
                                             </Card.Body>
-                                        </Accordion.Collapse>
-                                    </Card>
+                                        </Accordion.Collapse> */}
+                                        <LessonAccordion key={i} {...course}/>
+                                    </>
                                 ))}
+                                </Card>
                             </Accordion>
                             
                         {/* </div> */}
