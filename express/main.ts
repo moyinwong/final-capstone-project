@@ -25,7 +25,7 @@ const storage = multer.diskStorage({
   },
 });
 
-export const upload = multer({ storage })
+export const upload = multer({ storage });
 
 //storage file
 const fileStorage = multer.diskStorage({
@@ -60,6 +60,8 @@ import { CategoryService } from "./services/CategoryService";
 import { CategoryController } from "./controllers/CategoryController";
 import { LessonService } from "./services/LessonService";
 import { LessonController } from "./controllers/LessonController";
+import { PaymentService } from "./services/PaymentService";
+import { PaymentController } from "./controllers/PaymentController";
 
 const userService = new UserService(knex);
 export const userController = new UserController(userService);
@@ -72,6 +74,9 @@ export const categoryController = new CategoryController(categoryService);
 
 const lessonService = new LessonService(knex);
 export const lessonController = new LessonController(lessonService);
+
+const paymentService = new PaymentService(knex);
+export const paymentController = new PaymentController(paymentService);
 
 //create guards
 export const isLoggedIn = createIsLoggedIn(userService);

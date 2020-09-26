@@ -11,15 +11,15 @@ import { StripeProvider } from "react-stripe-elements";
 
 ReactDOM.render(
   <React.StrictMode>
-    <StripeProvider apiKey={`${process.env.REACT_APP_STRIPE_TEST_KEY}`}>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <ConnectedRouter history={history}>
-            <App />
-          </ConnectedRouter>
-        </PersistGate>
-      </Provider>
-    </StripeProvider>
+    {/* <StripeProvider apiKey={`${process.env.REACT_APP_STRIPE_TEST_KEY}`}> */}
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <ConnectedRouter history={history}>
+          <App />
+        </ConnectedRouter>
+      </PersistGate>
+    </Provider>
+    {/* </StripeProvider> */}
   </React.StrictMode>,
   document.getElementById("root")
 );
