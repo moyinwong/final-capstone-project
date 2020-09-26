@@ -1,15 +1,13 @@
 // React, React Native
 import { StyleSheet } from 'react-native';
 
-const tutorsStyles = StyleSheet.create({
-    flatList: {
-        flex: 1
-    },
+const tutorStyles = StyleSheet.create({
     tutorBox: {
-        flex: 1,
         height: 250,
-        marginVertical: 10,
-        marginHorizontal: 10,
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
         borderRadius: 12,
         overflow: 'hidden',
         backgroundColor: '#ffffff',
@@ -23,7 +21,8 @@ const tutorsStyles = StyleSheet.create({
         elevation: 4
     },
     tutorPicContainer: {
-        height: 180,
+        height: 100,
+        width: 100,
         borderBottomRightRadius: 16,
         overflow: 'hidden'
     },
@@ -44,8 +43,12 @@ const tutorsStyles = StyleSheet.create({
     },
     tutorInfo: {
         fontSize: 18,
+        color: '#555555'
+    },
+    tutorNumSubscribed: {
+        fontSize: 18,
         color: '#e96a43'
     }
 });
 
-export default tutorsStyles;
+export default tutorStyles;

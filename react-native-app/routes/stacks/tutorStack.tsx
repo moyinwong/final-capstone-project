@@ -9,6 +9,7 @@ import { FontAwesome } from '@expo/vector-icons';
 
 // Screens
 import TutorsTopTap from '../topTap/tutorsTopTap';
+import TutorInfo from '../../screens/bottomTap/commonScreens/tutorInfo';
 import CoursesList from '../../screens/bottomTap/commonScreens/coursesList';
 import Course from '../../screens/bottomTap/commonScreens/course';
 import Lesson from '../../screens/bottomTap/commonScreens/lesson';
@@ -49,8 +50,16 @@ export default function TutorStack(props: { navigation: { toggleDrawer: () => vo
             }}
         >
             <Stack.Screen
-                name="Tutor"
+                name="TutorsList"
                 children={TutorsTopTap}
+                options={{
+                    title: '導師列表',
+                    ...stackTransition
+                }}
+            />
+            <Stack.Screen
+                name="TutorInfo"
+                component={TutorInfo}
                 options={{
                     title: '導師',
                     ...stackTransition
@@ -60,7 +69,7 @@ export default function TutorStack(props: { navigation: { toggleDrawer: () => vo
                 name="CoursesList"
                 component={CoursesList}
                 options={{
-                    title: '課程例表',
+                    title: '課程列表',
                     ...stackTransition
                 }}
             />
