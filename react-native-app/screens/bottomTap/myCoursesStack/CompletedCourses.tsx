@@ -113,7 +113,7 @@ export default function CompletedCourses() {
     }
 
     return (
-        <View style={{ ...globalStyles.container, paddingVertical: 0 }}>
+        <View style={globalStyles.container}>
 
             <FlatList
                 style={myCoursesStyles.flatList}
@@ -122,7 +122,7 @@ export default function CompletedCourses() {
                 showsVerticalScrollIndicator={false}
 
                 ListFooterComponent={
-                    <View style={{ height: 18 }}>
+                    <View style={globalStyles.myCoursesFooter}>
                     </View>
                 }
 
