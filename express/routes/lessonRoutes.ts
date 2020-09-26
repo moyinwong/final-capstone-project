@@ -9,3 +9,4 @@ lessonRoutes.get("/info/:lesson", lessonController.lesson);
 lessonRoutes.get("/question/:lesson", lessonController.lessonQuestionAndAnswer);
 lessonRoutes.get("/file/:lesson", lessonController.lessonFile);
 lessonRoutes.post("/check/:lesson", lessonController.checkAnswer);
+lessonRoutes.post('/creation/:courseName', lessonController.createLesson)

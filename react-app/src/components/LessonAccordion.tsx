@@ -8,7 +8,6 @@ import { ILesson } from '../pages/CoursePage'
 const LessonAccordion = (course: IPureCourse) => {
     const [lessons, setLessons] = useState<ILesson[]>([]);
     
-
     useEffect(() => {
         getLessonInfoByCourse(course.name)
     }, [])

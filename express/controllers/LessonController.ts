@@ -104,4 +104,18 @@ export class LessonController {
       return res.status(500).json({ message: "internal server error" });
     }
   };
+
+  createLesson = async (req: Request, res: Response) => {
+    try {
+      const { courseName } = req.params;
+      const lessonInfo = req.body
+      console.log(req.body)
+      const createdLesson = await this.lessonService.createLesson(lessonInfo, courseName);
+      console.log(createdLesson)
+      return res.status(200).json({ createdLesson })
+    } catch (e) {
+      console.log(e.message)
+      return res.status(500).json({message: 'createLesson: internal server error'})
+    }
+  }
 }

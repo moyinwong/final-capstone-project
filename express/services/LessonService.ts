@@ -15,6 +15,13 @@ interface ILesson {
   user_email?: string;
 }
 
+interface ILessonWithoutCourseId {
+  name: string;
+  description: string;
+  is_trial: string;
+  video_url: string;
+}
+
 export class LessonService {
   constructor(private knex: Knex) {}
 
@@ -156,4 +163,28 @@ export class LessonService {
       .where(`${tables.LESSONS}.name`, lessonName);
     return lesson;
   };
+
+  createLesson = async (lessonInfo: ILessonWithoutCourseId, courseName: string) => {
+    const courseIdArray = await (this.knex
+      .select('id')
+      .from(tables.COURSES)
+      .where('name', courseName))
+    const courseId = courseIdArray[0].id
+    console.log(lessonInfo)
+    // let isTrial = lessonInfo.is_trial === 'true'
+
+    // const lesson = await this.knex
+    // .insert({
+    //   name: lessonInfo.name,
+    //   description: lessonInfo.description,
+    //   is_trial: isTrial,
+    //   video_url: lessonInfo.video_url,
+    //   course_id: courseId
+      
+    // })
+    // .into(tables.LESSONS)
+    // .returning('id')
+
+    return courseId
+  }
 }

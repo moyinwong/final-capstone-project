@@ -1,6 +1,5 @@
 import React, { useState, Children } from 'react'
 import './CourseCreatePage.scss'
-// import { Button } from 'react-bootstrap'
 import { Field, Form, Formik, FormikConfig, FormikValues } from 'formik'
 import { TextField, Select, SimpleFileUpload } from 'formik-material-ui'
 import { makeStyles } from '@material-ui/core/styles';

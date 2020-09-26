@@ -113,7 +113,6 @@ const HomePage: React.FC = () => {
         <CarouselReact />
       </section>
 
-      {/* <img src={`http://localhost:8080${"/img/test-1.png"}`} /> */}
     </div>
   );
 };
