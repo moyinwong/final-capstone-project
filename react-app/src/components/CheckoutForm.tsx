@@ -1,147 +1,24 @@
-// // CheckoutForm.js
-// import React from "react";
-// import { Button, Form } from "react-bootstrap";
-// import { injectStripe } from "react-stripe-elements";
-// import "./CheckoutForm.scss";
-// import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-
-// interface IProps {
-//   elements: any;
-//   stripe: any;
-// }
-
-// interface IState {}
-
-// class CheckoutForm extends React.Component<IProps> {
-//   handleSubmit = async (ev: any) => {
-//     // We don't want to let default form submission happen here, which would refresh the page.
-//     ev.preventDefault();
-//     const authToken = localStorage.getItem("token");
-//     console.log("ahahahhaha");
-
-//     // const paymentIntent = await this.props.stripe.paymentIntents.create({
-//     //   payment_method_types: ["alipay"],
-//     //   amount: 1099,
-//     //   currency: "hkd",
-//     // });
-
-//     // const alipay = await this.props.stripe
-//     //   .confirmAlipayPayment(paymentIntent, {
-//     //     // Return URL where the customer should be redirected to after payment
-//     //     return_url: `${window.location.href}`,
-//     //   })
-//     //   .then((result: any) => {
-//     //     if (result.error) {
-//     //       // Inform the customer that there was an error.
-//     //       console.log(result.error.message);
-//     //     }
-//     //   });
-
-//     // console.log(alipay);
-
-//     const token: stripe.Token = await this.props.stripe
-//       .createToken({ type: "card", name: "Jenny Rosen" })
-//       .then(function (result: stripe.TokenResponse) {
-//         if (result.error) {
-//           // Inform the user if there was an error.
-//           var errorElement: any = document.getElementById("card-errors");
-//           errorElement.textContent = result.error.message;
-//         } else {
-//           // Send the token to your server.
-//           return result.token;
-//           //payment(event, result.token.id);
-//         }
-//       });
-
-//     console.log(token);
-
-//     const formObj: {
-//       chargeAmount?: number;
-//       stripeToken?: string;
-//     } = {};
-
-//     formObj.chargeAmount = 100;
-//     formObj.stripeToken = token.id;
-
-//     console.log(formObj.stripeToken);
-
-//     let queryRoute: string = "/payment/charge";
-
-//     const fetchRes = await fetch(
-//       `${process.env.REACT_APP_BACKEND_URL}${queryRoute}`,
-//       {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//           Authorization: `Bearer ${authToken}`,
-//         },
-//         body: JSON.stringify(formObj),
-//       }
-//     );
-
-//     console.log(fetchRes);
-//     // token type can optionally be inferred if there is only one Element
-//     // with which to create tokens
-//     // this.props.stripe.createToken({name: 'Jenny Rosen'});
-
-//     // You can also use createSource to create Sources.
-//     // See our Sources documentation for more:
-//     // https://stripe.com/docs/stripe-js/reference#stripe-create-source
-//     // With createSource, you will not need to pass in the reference to
-//     // the Element. It will be inferred automatically.
-//     // this.props.stripe.createSource({
-//     //   type: "card",
-//     //   owner: {
-//     //     name: "Jenny Rosen",
-//     //   },
-//     // });
-//   };
-
-//   render() {
-//     return (
-//       <Form className="stripe-form" onSubmit={this.handleSubmit}>
-//         <div>
-//           <label>Card details</label>
-//           {/* <CardElement
-//             style={{ base: { fontSize: "18px" } }}
-//             hidePostalCode={true}
-//           /> */}
-//           <CardElement
-//             options={{
-//               style: {
-//                 base: {
-//                   fontSize: "16px",
-//                   color: "#424770",
-//                   "::placeholder": {
-//                     color: "#aab7c4",
-//                   },
-//                 },
-//                 invalid: {
-//                   color: "#9e2146",
-//                 },
-//               },
-//             }}
-//           />
-//         </div>
-//         <div id="card-errors" role="alert"></div>
-//         <Button type="submit" value="submit">
-//           確定付款
-//         </Button>
-//       </Form>
-//     );
-//   }
-// }
-
-// export default injectStripe(CheckoutForm);
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { StripeCardElement, StripeCardElementOptions } from "@stripe/stripe-js";
 import { Button } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { IRootState } from "../redux/store";
+import { ICourse } from "../pages/CategoryPage";
 
-const CheckoutForm = () => {
+const CheckoutForm: React.FC = () => {
   const stripe = useStripe();
   const elements = useElements();
   const authToken = localStorage.getItem("token");
+  const [paymentIntent, setPaymentIntent] = useState<string>("");
+
+  const cartCourses = useSelector((state: IRootState) => state.cart.courses);
+
+  useEffect(() => {
+    if (cartCourses.length > 0 && authToken) {
+      createPaymentIntent(cartCourses, authToken);
+    }
+  }, [cartCourses, authToken]);
 
   const CARD_OPTIONS: StripeCardElementOptions = {
     hidePostalCode: true,
@@ -270,22 +147,10 @@ const CheckoutForm = () => {
     console.log(CheckOutFetchRes);
   };
 
-  const handlePaymentIntent = async () => {
-    if (!stripe || !elements || !authToken) {
+  const createPaymentIntent = async (course: ICourse[], authToken: string) => {
+    if (!stripe || !authToken) {
       return;
     }
-
-    const cardElement: StripeCardElement | null = elements.getElement(
-      CardElement
-    );
-
-    // Use your card Element with other Stripe.js APIs
-    if (!cardElement) return;
-
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card: cardElement,
-    });
 
     let queryRoute: string = "/payment/create-payment-intent";
 
@@ -300,49 +165,83 @@ const CheckoutForm = () => {
       }
     );
 
-    const { paymentIntentSecret } = await fetchRes.json();
+    const paymentIntentObj: {
+      paymentIntentSecret: string;
+    } = await fetchRes.json();
+    const { paymentIntentSecret } = paymentIntentObj;
 
-    console.log(paymentIntentSecret);
-
-    if (window.confirm("確認")) {
-      const confirmRes = stripe.confirmCardPayment(paymentIntentSecret, {
-        payment_method: paymentMethod?.id,
-      });
-      console.log("yes");
-    } else {
-      console.log("no");
-    }
+    setPaymentIntent(paymentIntentSecret);
   };
 
-  const handleCreateAccount = async () => {
-    if (!stripe || !elements || !authToken) {
-      return;
-    }
+  // const handlePaymentIntent = async () => {
+  //   const cardElement: StripeCardElement | null = elements.getElement(
+  //     CardElement
+  //   );
 
-    const cardElement: StripeCardElement | null = elements.getElement(
-      CardElement
-    );
+  //   // Use your card Element with other Stripe.js APIs
+  //   if (!cardElement) return;
 
-    // Use your card Element with other Stripe.js APIs
-    if (!cardElement) return;
+  //   const { error, paymentMethod } = await stripe.createPaymentMethod({
+  //     type: "card",
+  //     card: cardElement,
+  //   });
 
-    let queryRoute: string = "/payment/create-stripe-connect-account";
+  //   let queryRoute: string = "/payment/create-payment-intent";
 
-    const fetchRes = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}${queryRoute}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`,
-        },
-      }
-    );
+  //   const fetchRes = await fetch(
+  //     `${process.env.REACT_APP_BACKEND_URL}${queryRoute}`,
+  //     {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${authToken}`,
+  //       },
+  //     }
+  //   );
 
-    const result = await fetchRes.json();
+  //   const { paymentIntentSecret } = await fetchRes.json();
 
-    console.log(result);
-  };
+  //   console.log(paymentIntentSecret);
+
+  //   if (window.confirm("確認")) {
+  //     const confirmRes = stripe.confirmCardPayment(paymentIntentSecret, {
+  //       payment_method: paymentMethod?.id,
+  //     });
+  //     console.log("yes");
+  //   } else {
+  //     console.log("no");
+  //   }
+  // };
+
+  // const handleCreateAccount = async () => {
+  //   if (!stripe || !elements || !authToken) {
+  //     return;
+  //   }
+
+  //   const cardElement: StripeCardElement | null = elements.getElement(
+  //     CardElement
+  //   );
+
+  //   // Use your card Element with other Stripe.js APIs
+  //   if (!cardElement) return;
+
+  //   let queryRoute: string = "/payment/create-stripe-connect-account";
+
+  //   const fetchRes = await fetch(
+  //     `${process.env.REACT_APP_BACKEND_URL}${queryRoute}`,
+  //     {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${authToken}`,
+  //       },
+  //     }
+  //   );
+
+  //   const result = await fetchRes.json();
+
+  //   console.log(result);
+  // };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -350,9 +249,9 @@ const CheckoutForm = () => {
       <button type="submit" disabled={!stripe}>
         Pay
       </button>
-      <Button onClick={handleCheckOut}>checkOut</Button>
+      {/* <Button onClick={handleCheckOut}>checkOut</Button>
       <Button onClick={handlePaymentIntent}>checkOut</Button>
-      <Button onClick={handleCreateAccount}>account</Button>
+      <Button onClick={handleCreateAccount}>account</Button> */}
     </form>
   );
 };

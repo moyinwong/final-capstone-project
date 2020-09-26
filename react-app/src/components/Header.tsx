@@ -80,14 +80,10 @@ const Header = (props: any) => {
                 variant="success"
                 onClick={() => {
                   setOpen(false);
-                  //dispatch(push("/login"));
+                  dispatch(push("/login", currentLocation));
                 }}
               >
-                <Link
-                  to={{ pathname: "/login", state: { url: currentLocation } }}
-                >
-                  登入
-                </Link>
+                登入
               </Button>
             </div>
           )}

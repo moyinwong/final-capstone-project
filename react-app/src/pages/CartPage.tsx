@@ -1,3 +1,4 @@
+import { push } from "connected-react-router";
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,15 +45,15 @@ const CartPage: React.FC = () => {
 
   //prevent showing course if user already buy
   const updateCartAfterFetch = async () => {
-    console.log(userEmail);
+    //console.log(userEmail);
     if (userEmail && userCourses) {
-      console.log("haha");
+      //console.log("haha");
       cartCourses.forEach((e) => {
-        console.log("here  " + e.course_name);
-        console.log("user course" + userCourses);
+        //console.log("here  " + e.course_name);
+        //console.log("user course" + userCourses);
         for (let purchasedCourse of userCourses) {
-          console.log(e.course_name);
-          console.log(purchasedCourse.course_name);
+          //console.log(e.course_name);
+          //console.log(purchasedCourse.course_name);
           if (e.course_name === purchasedCourse.course_name) {
             dispatch(removeCourse(e.course_name));
           }
@@ -78,11 +79,11 @@ const CartPage: React.FC = () => {
         },
       }
     );
-    console.log(fetchRes);
+    //console.log(fetchRes);
     const { courses } = await fetchRes.json();
-    console.log(courses);
+    //console.log(courses);
     setUserCourses(courses);
-    console.log(userCourses);
+    //console.log(userCourses);
   };
 
   const handleCheckOut = async () => {};
@@ -114,16 +115,26 @@ const CartPage: React.FC = () => {
             </div>
 
             {userEmail ? (
-              <Button variant="primary" size="lg" block>
-                <Link to={currentLocation}></Link>
+              <Button
+                variant="primary"
+                size="lg"
+                block
+                onClick={() => dispatch(push("/payment"))}
+              >
+                付款
               </Button>
             ) : (
-              <Button variant="primary" size="lg" block>
-                <Link
+              <Button
+                variant="primary"
+                size="lg"
+                block
+                onClick={() => dispatch(push("/login", currentLocation))}
+              >
+                {/* <Link
                   to={{ pathname: "/login", state: { url: currentLocation } }}
-                >
-                  請先登入
-                </Link>
+                > */}
+                請先登入
+                {/* </Link> */}
               </Button>
             )}
           </div>

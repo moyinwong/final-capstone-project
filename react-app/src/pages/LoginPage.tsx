@@ -14,9 +14,7 @@ const LoginPage: React.FC = (state: {
   children?: React.ReactNode;
   location?: {
     state?: {
-      url: {
-        pathname: string;
-      };
+      pathname: string;
     };
   };
 }) => {
@@ -24,7 +22,7 @@ const LoginPage: React.FC = (state: {
   const dispatch = useDispatch();
   const errMessage = useSelector((state: IRootState) => state.auth.message);
 
-  console.log(state);
+  //console.log(state);
 
   let previousLocation: string = "/";
 
@@ -34,14 +32,10 @@ const LoginPage: React.FC = (state: {
     state &&
     state.location &&
     state.location.state &&
-    state.location.state.url.pathname
+    state.location.state.pathname
   ) {
-    previousLocation = state.location.state.url.pathname;
+    previousLocation = state.location.state.pathname;
   }
-  // if (state.location.state.url.pathname)
-  //
-
-  console.log(previousLocation);
 
   const fBOnCLick = () => {
     return null;
