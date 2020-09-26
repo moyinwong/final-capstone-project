@@ -16,6 +16,7 @@ const myCoursesStyles = StyleSheet.create({
         marginVertical: 8,
         marginHorizontal: 2,
         borderRadius: 12,
+        overflow: 'hidden',
         paddingRight: 10,
         backgroundColor: '#ffffff',
         shadowColor: "#000",
@@ -29,18 +30,12 @@ const myCoursesStyles = StyleSheet.create({
     },
     coursePicContainer: {
         width: 180,
-        borderTopLeftRadius: 12,
-        borderBottomLeftRadius: 12,
-        borderBottomRightRadius: 16
+        borderBottomRightRadius: 16,
+        overflow: 'hidden'
     },
     coursePic: {
-        flex: 1,
         width: '100%',
-        height: '100%',
-        borderTopLeftRadius: 12,
-        borderBottomLeftRadius: 12,
-        borderBottomRightRadius: 16,
-        resizeMode: 'cover'
+        height: '100%'
     },
     courseInfoContainer: {
         flex: 1,

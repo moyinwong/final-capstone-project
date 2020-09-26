@@ -1,6 +1,6 @@
 // React, React Native
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList, Alert } from 'react-native';
 
 // Navigation
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -50,6 +50,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 numOfLessons: 8,
                 price: 100,
                 aveScore: 4.6,
+                isPurchased: false,
                 coursePic: require('../../../assets/coursesPic/express.jpg'),
                 tutorPic: require('../../../assets/tutorsPic/gordon.jpg'),
                 id: '1'
@@ -61,6 +62,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 numOfLessons: 6,
                 price: 150,
                 aveScore: 3.5,
+                isPurchased: true,
                 coursePic: require('../../../assets/coursesPic/firebase.png'),
                 tutorPic: require('../../../assets/tutorsPic/gordon.jpg'),
                 id: '2'
@@ -72,6 +74,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 numOfLessons: 12,
                 price: 120,
                 aveScore: 4.4,
+                isPurchased: true,
                 coursePic: require('../../../assets/coursesPic/flutter.png'),
                 tutorPic: require('../../../assets/tutorsPic/jason.jpg'),
                 id: '3'
@@ -83,6 +86,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 numOfLessons: 9,
                 price: 110,
                 aveScore: 3.7,
+                isPurchased: false,
                 coursePic: require('../../../assets/coursesPic/javaScript.png'),
                 tutorPic: require('../../../assets/tutorsPic/jason.jpg'),
                 id: '4'
@@ -94,6 +98,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 numOfLessons: 3,
                 price: 180,
                 aveScore: 2.6,
+                isPurchased: false,
                 coursePic: require('../../../assets/coursesPic/jest.png'),
                 tutorPic: require('../../../assets/tutorsPic/beeno.jpg'),
                 id: '5'
@@ -105,6 +110,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 numOfLessons: 2,
                 price: 130,
                 aveScore: 3.2,
+                isPurchased: true,
                 coursePic: require('../../../assets/coursesPic/knex.png'),
                 tutorPic: require('../../../assets/tutorsPic/andrew.jpg'),
                 id: '6'
@@ -116,6 +122,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 numOfLessons: 12,
                 price: 160,
                 aveScore: 5.0,
+                isPurchased: false,
                 coursePic: require('../../../assets/coursesPic/flutter.png'),
                 tutorPic: require('../../../assets/tutorsPic/andrew.jpg'),
                 id: '7'
@@ -127,6 +134,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 numOfLessons: 12,
                 price: 190,
                 aveScore: 1.2,
+                isPurchased: false,
                 coursePic: require('../../../assets/coursesPic/python.png'),
                 tutorPic: require('../../../assets/tutorsPic/dragon.jpg'),
                 id: '8'
@@ -138,6 +146,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 numOfLessons: 3,
                 price: 200,
                 aveScore: 3.2,
+                isPurchased: true,
                 coursePic: require('../../../assets/coursesPic/react.png'),
                 tutorPic: require('../../../assets/tutorsPic/alex.jpeg'),
                 id: '9'
@@ -149,6 +158,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 numOfLessons: 5,
                 price: 250,
                 aveScore: 4.5,
+                isPurchased: true,
                 coursePic: require('../../../assets/coursesPic/reactNative.png'),
                 tutorPic: require('../../../assets/tutorsPic/alex.jpeg'),
                 id: '10'
@@ -160,6 +170,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 numOfLessons: 12,
                 price: 170,
                 aveScore: 2.8,
+                isPurchased: false,
                 coursePic: require('../../../assets/coursesPic/tensorFlow.png'),
                 tutorPic: require('../../../assets/tutorsPic/beeno.jpg'),
                 id: '11'
@@ -171,6 +182,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 numOfLessons: 3,
                 price: 140,
                 aveScore: 3.6,
+                isPurchased: false,
                 coursePic: require('../../../assets/coursesPic/typeScript.jpg'),
                 tutorPic: require('../../../assets/tutorsPic/dragon.jpg'),
                 id: '12'
@@ -179,8 +191,23 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
     );
 
     // methods
-    function showModal() {
-        console.log('modal');
+    function showModal(isPurchased: boolean) {
+        if (isPurchased) {
+            showCommentOrRateBox();
+        } else {
+            showPurchaseBox();
+        }
+    }
+
+    function showCommentOrRateBox() {
+        Alert.alert(
+            "評價",
+            "請評價",
+            [
+                { text: "評價", onPress: () => console.log("評價") }
+            ],
+            { cancelable: true }
+        )
     }
 
     function showCommentBox() {
@@ -189,6 +216,17 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
 
     function showRateBox() {
         console.log('rate');
+    }
+
+    function showPurchaseBox() {
+        Alert.alert(
+            "購買",
+            "請購買",
+            [
+                { text: "購買", onPress: () => console.log("購買") }
+            ],
+            { cancelable: true }
+        )
     }
 
     return (
@@ -224,7 +262,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                     <TouchableOpacity
                         style={coursesListStyles.courseBox}
                         onPress={() => navigation.navigate('Course', { title: item.title })}
-                        onLongPress={() => showModal()}
+                        onLongPress={() => showModal(item.isPurchased)}
                     >
                         <View style={coursesListStyles.coursePicContainer}>
                             <Image
@@ -256,7 +294,12 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                                         <Text style={coursesListStyles.courseInfoText}>{"總共堂數: " + item.numOfLessons}</Text>
                                     </View>
                                     <View style={coursesListStyles.courseSubInfoLowerContainer}>
-                                        <Text style={coursesListStyles.coursePrice}>{"價錢: $" + item.price}</Text>
+                                        {item.isPurchased ?
+                                            (
+                                                <Text style={{ ...coursesListStyles.coursePrice, color: '#22c736' }}>{"已購買"}</Text>
+                                            ) : (
+                                                <Text style={coursesListStyles.coursePrice}>{"價錢: $" + item.price}</Text>
+                                            )}
                                         <View style={coursesListStyles.courseScoreContainer}>
                                             <Text style={coursesListStyles.courseInfoText}>{"評分: "}</Text>
 
@@ -266,7 +309,6 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                                     </View>
                                 </View>
                             </View>
-
 
                         </View>
                     </TouchableOpacity>

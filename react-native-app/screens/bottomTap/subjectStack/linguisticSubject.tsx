@@ -14,27 +14,27 @@ const mainSubjectsData = [
     {
         title: '中國文學',
         pic: require('../../../assets/subjectsPic/chnLi.jpg'),
-        id: '1'
+        id: '13'
     },
     {
-        title: '英語文學',
+        title: '英國文學',
         pic: require('../../../assets/subjectsPic/engLi.jpg'),
-        id: '2'
+        id: '14'
     },
     {
         title: '中國歷史',
         pic: require('../../../assets/subjectsPic/chnHis.jpg'),
-        id: '3'
+        id: '15'
     },
     {
         title: '歷史',
         pic: require('../../../assets/subjectsPic/his.jpg'),
-        id: '4'
+        id: '16'
     },
     {
         title: '地理',
         pic: require('../../../assets/subjectsPic/geo.jpg'),
-        id: '5'
+        id: '17'
     }
 ]
 

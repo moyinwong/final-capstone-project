@@ -15,9 +15,6 @@ import Course from '../../screens/bottomTap/commonScreens/course';
 import Lesson from '../../screens/bottomTap/commonScreens/lesson';
 import Exercise from '../../screens/bottomTap/commonScreens/exercise';
 
-// Components
-import HeaderTitle from '../../sharedComponents/headerTitle';
-
 // Functions
 import stackTransition from '../../functions/stackTransition';
 
@@ -56,9 +53,7 @@ export default function TutorStack(props: { navigation: { toggleDrawer: () => vo
                 name="MyCourses"
                 children={MyCoursesTopTap}
                 options={{
-                    headerTitle: (props) => (
-                        <HeaderTitle title={'我的課程'} />
-                    ),
+                    title: '我的課程',
                     ...stackTransition
                 }}
             />
@@ -66,9 +61,7 @@ export default function TutorStack(props: { navigation: { toggleDrawer: () => vo
                 name="Course"
                 component={Course}
                 options={{
-                    headerTitle: (props) => (
-                        <HeaderTitle title={'課程'} />
-                    ),
+                    title: '課程',
                     ...stackTransition
                 }}
             />
@@ -76,9 +69,7 @@ export default function TutorStack(props: { navigation: { toggleDrawer: () => vo
                 name="Lesson"
                 component={Lesson}
                 options={{
-                    headerTitle: (props) => (
-                        <HeaderTitle title={'課堂'} />
-                    ),
+                    title: '課堂',
                     ...stackTransition
                 }}
             />
@@ -86,9 +77,7 @@ export default function TutorStack(props: { navigation: { toggleDrawer: () => vo
                 name="Exercise"
                 component={Exercise}
                 options={{
-                    headerTitle: (props) => (
-                        <HeaderTitle title={'練習'} />
-                    ),
+                    title: '練習',
                     ...stackTransition
                 }}
             />
