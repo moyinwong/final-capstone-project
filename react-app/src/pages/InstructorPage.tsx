@@ -4,7 +4,6 @@ import { Button, Jumbotron, Container, Row, Col, Accordion, Card, Image } from '
 import { IRootState } from '../redux/store'
 import SingleCard from '../components/SingleCard'
 import { useSelector } from 'react-redux'
-import { ILesson } from './CoursePage'
 import LessonAccordion from '../components/LessonAccordion'
 
 export interface IPureCourse {

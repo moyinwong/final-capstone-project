@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './LessonCreatePage.scss'
 import { useParams } from 'react-router-dom'
-import { ILesson } from './CoursePage';
 
 import './CourseCreatePage.scss'
 import { Field, Form, Formik, FormikConfig, FormikValues } from 'formik'
@@ -13,7 +12,12 @@ import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../redux/store';
 import { push } from 'connected-react-router';
-import Dropzone from "react-dropzone";
+import Dropzone from 'react-dropzone'
+
+
+
+
+
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -25,14 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-  const dropzoneStyle = {
-    width: "100%",
-    height: "auto",
-    borderWidth: 2,
-    borderColor: "rgb(102, 102, 102)",
-    borderStyle: "dashed",
-    borderRadius: 5,
-  }
+
 
 const sleep = (time: number) => new Promise((acc) => setTimeout(acc, time))
 
@@ -86,10 +83,9 @@ const LessonCreatePage = () => {
     const thirdValidationSchema = Yup.object().shape({
         lessonVideoUrl: Yup.string()
         .matches(/https/, '請提供完整網址')
-        .required('必須填寫'),
-        file: Yup.mixed()
-        .required('A file is required')
+        .required('必須填寫')
     })
+
 
     return (
         <div>
@@ -107,18 +103,22 @@ const LessonCreatePage = () => {
                             lessonDescription: '',
                             lessonIsTrial: '',
                             lessonVideoUrl: '',
-                            files: [],                     
+                            files: [],                 
                         }} 
                         onSubmit={async (values) => {
 
-                            console.log(values.files)
                             await sleep(1000)
                             const formData = new FormData()
                             formData.append('lessonName', values.lessonName)
                             formData.append('lessonDescription', values.lessonDescription)
                             formData.append('lessonIsTrial', values.lessonIsTrial)
                             formData.append('lessonVideoUrl', values.lessonVideoUrl)
-                            // formData.append('files', values.file)
+
+                            if (values.files.length) {
+                                for (let i = 0; i < values.files.length; i++) {
+                                    formData.append('files', values.files[i])
+                                }
+                            }
 
                             submitHandler(formData)
                         }}
@@ -175,39 +175,15 @@ const LessonCreatePage = () => {
                                         label="課堂影片及材料" 
                                     />
                                 </Box>
-
-                                <Box paddingBottom={2}>
+                                
+                                {/* <Box paddingBottom={2}>
                                     <Field
                                         className={classes.formControl}
                                         component={SimpleFileUpload} 
                                         name="file" 
                                         label="上戴課程教材" 
                                     />
-                                </Box>
-
-                                <Dropzone style={dropzoneStyle} accept="image/*" onDrop={(acceptedFiles) => {
-                                    // do nothing if no files
-                                    if (acceptedFiles.length === 0) { return; }
-
-                                    // on drop we add to the existing files
-                                    setFieldValue("files", values.files.concat(acceptedFiles));
-                                    }}>
-                                    {({ isDragActive, isDragReject, acceptedFiles, rejectedFiles }) => {
-                                        if (isDragActive) {
-                                        return "This file is authorized";
-                                        }
-
-                                        if (isDragReject) {
-                                        return "This file is not authorized";
-                                        }
-
-                                        if (values.files.length === 0) { 
-                                        return <p>Try dragging a file here!</p>
-                                        }
-
-                                        return values.files.map((file, i) => (<Thumb key={i} file={file} />));
-                                    }}
-                                </Dropzone>
+                                </Box> */}
                             </FormikStep>
 
 
@@ -259,7 +235,7 @@ export function FormikStepper({children, ...props}: FormikConfig<FormikValues>) 
             }}}
         >
         
-        {({ isSubmitting }) => (
+        {({ isSubmitting, setFieldValue, values }) => (
             <Form autoComplete="off">
                 <Stepper className={classes.formControl} alternativeLabel activeStep={step}>
                     {childrenArray.map((child, index) => (
@@ -283,6 +259,23 @@ export function FormikStepper({children, ...props}: FormikConfig<FormikValues>) 
                 >
                     {isSubmitting ? 'Submitting' : isLastStep() ? 'Submit' : 'Next'}
                 </Button>}
+                <Button onClick={() => {
+                    setFieldValue('test', 'hello')
+                    console.log(values)
+                    }}>test</Button>
+                <Dropzone onDrop={acceptedFiles => {
+                    setFieldValue('files', acceptedFiles)
+                    console.log(values)
+                    }}>
+                {({getRootProps, getInputProps}) => (
+                    <section>
+                    <div {...getRootProps()}>
+                        <input {...getInputProps()} />
+                        <p>Drag 'n' drop some files here, or click to select files</p>
+                    </div>
+                    </section>
+                )}
+                </Dropzone>
                 {/* <Button 
                     startIcon={isSubmitting ? <CircularProgress size="1rem"/> : null} 
                     disabled={isSubmitting} 
@@ -292,7 +285,7 @@ export function FormikStepper({children, ...props}: FormikConfig<FormikValues>) 
                 >
                     {isSubmitting ? 'Submitting' : isLastStep() ? 'Submit' : 'Next'}
                 </Button> */}
-                {completed && <div>成功增加課堂<i className="fas fa-check-circle"></i></div>}
+                {completed && <div>成功建立課程<i className="fas fa-check-circle"></i></div>}
             </Form>
         )}
             
