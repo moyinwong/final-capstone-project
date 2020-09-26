@@ -1,7 +1,7 @@
 // React, React Native
 import { StyleSheet } from 'react-native';
 
-const tutorStyles = StyleSheet.create({
+const tutorsStyles = StyleSheet.create({
     flatList: {
         flex: 1
     },
@@ -44,4 +44,4 @@ const tutorStyles = StyleSheet.create({
     }
 });
 
-export default tutorStyles;
+export default tutorsStyles;

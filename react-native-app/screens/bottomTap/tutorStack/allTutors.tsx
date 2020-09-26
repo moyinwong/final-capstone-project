@@ -7,9 +7,9 @@ import { useNavigation } from '@react-navigation/native';
 
 // Styles
 import globalStyles from '../../../styles/globalStyles';
-import tutorStyles from '../../../styles/tutorStyles';
+import tutorsStyles from '../../../styles/tutorsStyles';
 
-export default function Tutor(props: { navigation: { navigate: (arg0: string) => void; }; }) {
+export default function AllTutors(props: { navigation: { navigate: (arg0: string) => void; }; }) {
 
     // Hooks
     const navigation = useNavigation();
@@ -55,30 +55,30 @@ export default function Tutor(props: { navigation: { navigate: (arg0: string) =>
 
             <FlatList
                 numColumns={2}
-                style={tutorStyles.flatList}
+                style={tutorsStyles.flatList}
                 keyExtractor={(item) => item.id}
                 data={tutorsData}
                 showsVerticalScrollIndicator={false}
 
                 ListFooterComponent={
-                    <View style={{ height: 12 }}>
+                    <View style={globalStyles.tutorsFooter}>
                     </View>
                 }
 
                 renderItem={({ item }) => (
                     <TouchableOpacity
-                        style={tutorStyles.tutorBox}
+                        style={tutorsStyles.tutorBox}
                         onPress={() => navigation.navigate('CoursesList', { tutor: item.name })}
                     >
-                        <View style={tutorStyles.tutorPicContainer}>
+                        <View style={tutorsStyles.tutorPicContainer}>
                             <Image
-                                style={tutorStyles.tutorPic}
+                                style={tutorsStyles.tutorPic}
                                 resizeMode='cover'
                                 source={item.pic}
                             />
                         </View>
-                        <View style={tutorStyles.tutorInfoContainer}>
-                            <Text style={tutorStyles.tutorName}>{item.name}</Text>
+                        <View style={tutorsStyles.tutorInfoContainer}>
+                            <Text style={tutorsStyles.tutorName}>{item.name}</Text>
                         </View>
                     </TouchableOpacity>
                 )}

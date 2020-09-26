@@ -8,7 +8,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { FontAwesome } from '@expo/vector-icons';
 
 // Screens
-import Tutor from '../../screens/bottomTap/tutorStack/tutor';
+import TutorsTopTap from '../topTap/tutorsTopTap';
 import CoursesList from '../../screens/bottomTap/commonScreens/coursesList';
 import Course from '../../screens/bottomTap/commonScreens/course';
 import Lesson from '../../screens/bottomTap/commonScreens/lesson';
@@ -50,7 +50,7 @@ export default function TutorStack(props: { navigation: { toggleDrawer: () => vo
         >
             <Stack.Screen
                 name="Tutor"
-                component={Tutor}
+                children={TutorsTopTap}
                 options={{
                     title: '導師',
                     ...stackTransition

@@ -230,7 +230,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
     }
 
     return (
-        <View style={{ ...globalStyles.container, paddingVertical: 0 }}>
+        <View style={globalStyles.container}>
 
             <FlatList
                 style={coursesListStyles.flatList}
@@ -254,7 +254,7 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                 }
 
                 ListFooterComponent={
-                    <View style={{ height: 12 }}>
+                    <View style={globalStyles.coursesList}>
                     </View>
                 }
 

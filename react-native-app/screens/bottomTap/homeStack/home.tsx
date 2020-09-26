@@ -299,7 +299,7 @@ export default function Home(props: { navigation: { navigate: (arg0: string) => 
                 showsHorizontalScrollIndicator={false}
 
                 ListFooterComponent={
-                    <View style={{ width: 18 }}>
+                    <View style={globalStyles.homeHorizontalFooter}>
                     </View>
                 }
 
@@ -338,7 +338,7 @@ export default function Home(props: { navigation: { navigate: (arg0: string) => 
                 showsHorizontalScrollIndicator={false}
 
                 ListFooterComponent={
-                    <View style={{ width: 18 }}>
+                    <View style={globalStyles.homeHorizontalFooter}>
                     </View>
                 }
 
@@ -393,7 +393,7 @@ export default function Home(props: { navigation: { navigate: (arg0: string) => 
                 showsHorizontalScrollIndicator={false}
 
                 ListFooterComponent={
-                    <View style={{ width: 18 }}>
+                    <View style={globalStyles.homeHorizontalFooter}>
                     </View>
                 }
 
@@ -429,13 +429,13 @@ export default function Home(props: { navigation: { navigate: (arg0: string) => 
                 showsHorizontalScrollIndicator={false}
 
                 ListFooterComponent={
-                    <View style={{ width: 18 }}>
+                    <View style={globalStyles.homeHorizontalFooter}>
                     </View>
                 }
 
                 renderItem={({ item }) => (
                     <TouchableOpacity
-                        style={{...homeStyles.courseBox, height: 240}}
+                        style={{ ...homeStyles.courseBox, height: 240 }}
                         onPress={() => navigation.navigate('Course', { title: item.title })}
                         onLongPress={() => showModal(true)}
                     >
@@ -459,9 +459,9 @@ export default function Home(props: { navigation: { navigate: (arg0: string) => 
                 )}
             />
 
-                        <View style={{ height: 18 }}>
-                        </View>
+            <View style={globalStyles.homeVerticalFooter}>
+            </View>
 
         </ScrollView>
-                )
-                }
+    )
+}

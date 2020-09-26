@@ -36,6 +36,12 @@ export default function BusinessSubject() {
                 keyExtractor={(item) => item.id}
                 data={mainSubjectsData}
                 showsVerticalScrollIndicator={false}
+
+                ListFooterComponent={
+                    <View style={globalStyles.subjectsFooter}>
+                    </View>
+                }
+
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={subjectStyles.subjectBox}
