@@ -1,6 +1,6 @@
 // React, React Native
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 
 // Navigation
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -17,6 +17,9 @@ import coursesListStyles from '../../../styles/coursesListStyles';
 
 // Interfaces
 import ICoursesListParam from '../../../Interfaces/ICoursesListParam';
+
+// Methods
+import showModal from '../../../functions/showModal';
 
 export default function CoursesList() {
 
@@ -185,45 +188,6 @@ export default function CoursesList() {
             }
         ]
     );
-
-    // methods
-    function showModal(isPurchased: boolean) {
-        if (isPurchased) {
-            showCommentOrRateBox();
-        } else {
-            showPurchaseBox();
-        }
-    }
-
-    function showCommentOrRateBox() {
-        Alert.alert(
-            "評價",
-            "請評價",
-            [
-                { text: "評價", onPress: () => console.log("評價") }
-            ],
-            { cancelable: true }
-        )
-    }
-
-    function showCommentBox() {
-        console.log('comment');
-    }
-
-    function showRateBox() {
-        console.log('rate');
-    }
-
-    function showPurchaseBox() {
-        Alert.alert(
-            "購買",
-            "請購買",
-            [
-                { text: "購買", onPress: () => console.log("購買") }
-            ],
-            { cancelable: true }
-        )
-    }
 
     return (
         <View style={globalStyles.container}>

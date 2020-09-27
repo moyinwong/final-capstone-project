@@ -1,6 +1,6 @@
 // React, React Native
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList, ScrollView, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 // Navigation
@@ -17,43 +17,19 @@ import showSubscribeBox from '../../../functions/showSubscribeBox';
 import globalStyles from '../../../styles/globalStyles';
 import homeStyles from '../../../styles/homeStyles';
 
+// Data
+import subjectsData from '../../../data/subjectsData';
+const mainSubjectsData = subjectsData(13, 17);
+
 export default function Home(props: { navigation: { navigate: (arg0: string) => void; }; }) {
 
     // Hooks
     const navigation = useNavigation();
 
     // State
-    const subjectsData = [
-        {
-            title: '中文',
-            pic: require('../../../assets/subjectsPic/chn.jpg'),
-            id: '1'
-        },
-        {
-            title: '英文',
-            pic: require('../../../assets/subjectsPic/eng.jpg'),
-            id: '2'
-        },
-        {
-            title: '企會財',
-            pic: require('../../../assets/subjectsPic/bafs.jpg'),
-            id: '11'
-        },
-        {
-            title: '物理',
-            pic: require('../../../assets/subjectsPic/phy.jpg'),
-            id: '5'
-        },
-        {
-            title: '通識',
-            pic: require('../../../assets/subjectsPic/ls.jpg'),
-            id: '4'
-        },
-        {
-            title: '旅遊與款待',
-            pic: require('../../../assets/subjectsPic/tour.jpg'),
-            id: '19'
-        }
+    const subjects = subjectsData('all');
+    const mainSubjectsData = [
+        subjects[0], subjects[1], subjects[10], subjects[4], subjects[3], subjects[18]
     ]
 
     const [coursesListData, setCoursesListData] = useState(
@@ -283,7 +259,7 @@ export default function Home(props: { navigation: { navigate: (arg0: string) => 
             <FlatList
                 style={homeStyles.flatList}
                 keyExtractor={(item) => item.id}
-                data={subjectsData}
+                data={mainSubjectsData}
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
 

@@ -4,49 +4,27 @@ import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 // Navigation
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 // Styles
 import globalStyles from '../../../styles/globalStyles';
 import subjectStyles from '../../../styles/subjectStyles';
 
-const mainSubjectsData = [
-    {
-        title: '物理',
-        pic: require('../../../assets/subjectsPic/phy.jpg'),
-        id: '5'
-    },
-    {
-        title: '化學',
-        pic: require('../../../assets/subjectsPic/chem.jpg'),
-        id: '6'
-    },
-    {
-        title: '生物',
-        pic: require('../../../assets/subjectsPic/bio.jpg'),
-        id: '7'
-    },
-    {
-        title: '綜合科學',
-        pic: require('../../../assets/subjectsPic/sci.jpg'),
-        id: '8'
-    },
-    {
-        title: 'M1',
-        pic: require('../../../assets/subjectsPic/m1.jpg'),
-        id: '9'
-    },
-    {
-        title: 'M2',
-        pic: require('../../../assets/subjectsPic/m2.jpeg'),
-        id: '10'
-    }
-]
+// Data
+import subjectsData from '../../../data/subjectsData';
 
-export default function ScienceSubject() {
+export default function SubjectsList() {
 
     // Hooks
     const navigation = useNavigation();
+    const route = useRoute();
+
+    let category: string;
+    if (route.params) {
+        category = route.params.category;
+    }
+
+    const mainSubjectsData = subjectsData(category);
 
     return (
         <View style={globalStyles.container}>
