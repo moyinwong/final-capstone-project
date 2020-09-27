@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { StripeCardElement, StripeCardElementOptions } from "@stripe/stripe-js";
-import { Button, Form } from "react-bootstrap";
+//import { Button, Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
 import { ICourse } from "../pages/CategoryPage";
 import "./CheckoutForm.scss";
+
+interface ICheckOutFormError {
+  message: string;
+}
 
 const CARD_OPTIONS: StripeCardElementOptions = {
   hidePostalCode: true,
   iconStyle: "solid",
   style: {
     base: {
-      iconColor: "#c4f0ff",
+      iconColor: "#67ace5",
       color: "#fff",
       fontWeight: "500",
       fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
@@ -22,7 +26,7 @@ const CARD_OPTIONS: StripeCardElementOptions = {
         color: "#fce883",
       },
       "::placeholder": {
-        color: "#87bbfd",
+        color: "#fff",
       },
     },
 
@@ -76,7 +80,7 @@ const SubmitButton = ({ processing, error, children, disabled }: any) => (
   </button>
 );
 
-const ErrorMessage = ({ children }: any) => (
+const ErrorMessage: React.FC = ({ children }: any) => (
   <div className="ErrorMessage" role="alert">
     <svg width="16" height="16" viewBox="0 0 17 17">
       <path
@@ -106,7 +110,7 @@ const ResetButton = ({ onClick }: any) => (
 const CheckoutForm: React.FC = () => {
   const stripe = useStripe();
   const elements = useElements();
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<ICheckOutFormError | null>(null);
   const [cardComplete, setCardComplete] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState(null);
@@ -247,6 +251,9 @@ const CheckoutForm: React.FC = () => {
 
   return (
     <form className="Form stripe-form" onSubmit={handleSubmit}>
+      <div className="stripe-form-title">
+        <h1>請填寫付款資料</h1>
+      </div>
       <fieldset className="FormGroup">
         <Field
           label="Name"
@@ -293,10 +300,11 @@ const CheckoutForm: React.FC = () => {
           }}
         />
       </fieldset>
-      {/* {error && error?.message? && <ErrorMessage>{error?.message }</ErrorMessage> } */}
+      {error && <ErrorMessage>{error?.message}</ErrorMessage>}
       <SubmitButton processing={processing} error={error} disabled={!stripe}>
         Pay $25
       </SubmitButton>
+      <ResetButton onClick={reset} />
     </form>
   );
 };

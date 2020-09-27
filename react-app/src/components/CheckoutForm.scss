@@ -1,4 +1,22 @@
 .stripe-form {
+  .stripe-form-title {
+    margin: 20px;
+    h1 {
+      color: white;
+    }
+  }
+
+  background-color: #67ace5;
+  font-size: 16px;
+  font-family: Roboto, Open Sans, Segoe UI, sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  text-rendering: optimizeLegibility;
+  height: 80%;
+  width: 80%;
+  border-radius: 30px;
+  min-width: 375px;
+
   input,
   button {
     -webkit-appearance: none;
@@ -6,21 +24,6 @@
     appearance: none;
     outline: none;
     border-style: none;
-  }
-
-  html {
-    background-color: #6772e5;
-    font-size: 16px;
-    font-family: Roboto, Open Sans, Segoe UI, sans-serif;
-    font-weight: 500;
-    font-style: normal;
-    text-rendering: optimizeLegibility;
-    height: 100%;
-  }
-
-  body {
-    height: 100%;
-    margin: 0;
   }
 
   #root {
@@ -55,10 +58,10 @@
     margin: 0 15px 20px;
     padding: 0;
     border-style: none;
-    background-color: #7795f8;
+    background-color: #77bef8;
     will-change: opacity, transform;
     box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
-      inset 0 1px 0 #829fff;
+      inset 0 1px 0 #82d7ff;
     border-radius: 4px;
   }
 
@@ -79,7 +82,7 @@
     width: 15%;
     min-width: 70px;
     padding: 11px 0;
-    color: #c4f0ff;
+    color: #c4fbff;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -108,7 +111,7 @@
   }
 
   .FormRowInput::placeholder {
-    color: #87bbfd;
+    color: #87e5fd;
   }
 
   .StripeElement--webkit-autofill {
@@ -126,9 +129,9 @@
     width: calc(100% - 30px);
     height: 40px;
     margin: 40px 15px 0;
-    background-color: #f6a4eb;
+    background-color: #a4e3f6;
     box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
-      inset 0 1px 0 #ffb9f6;
+      inset 0 1px 0 #b9fff6;
     border-radius: 4px;
     color: #fff;
     font-weight: 600;
@@ -142,6 +145,14 @@
     box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
       inset 0 1px 0 #e298d8;
     transform: scale(0.99);
+  }
+
+  .SubmitButton:hover {
+    background-color: #eff7f6;
+    box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 #ceeceb;
+    transform: scale(0.99);
+    color: #5e7af5;
   }
 
   .SubmitButton.SubmitButton--error {
@@ -206,5 +217,6 @@
     border: 0;
     cursor: pointer;
     background: transparent;
+    margin: 30px;
   }
 }
