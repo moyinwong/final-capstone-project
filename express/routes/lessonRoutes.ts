@@ -1,5 +1,5 @@
 import express from "express";
-import { lessonController } from "../main";
+import { lessonController, fileUpload } from "../main";
 
 export const lessonRoutes = express.Router();
 
@@ -9,4 +9,4 @@ lessonRoutes.get("/info/:lesson", lessonController.lesson);
 lessonRoutes.get("/question/:lesson", lessonController.lessonQuestionAndAnswer);
 lessonRoutes.get("/file/:lesson", lessonController.lessonFile);
 lessonRoutes.post("/check/:lesson", lessonController.checkAnswer);
-lessonRoutes.post('/creation/:courseName', lessonController.createLesson)
+lessonRoutes.post('/creation/:courseName', fileUpload.array('files', 10), lessonController.createLesson)

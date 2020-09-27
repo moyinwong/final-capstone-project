@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import './InstructorPage.scss'
 import { Button, Jumbotron, Container, Row, Col, Accordion, Card, Image } from 'react-bootstrap'
 import { IRootState } from '../redux/store'
-import SingleCard from '../components/SingleCard'
 import { useSelector } from 'react-redux'
 import LessonAccordion from '../components/LessonAccordion'
 

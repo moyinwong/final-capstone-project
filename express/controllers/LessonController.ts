@@ -109,10 +109,23 @@ export class LessonController {
     try {
       const { courseName } = req.params;
       const lessonInfo = req.body
-      console.log(req.body)
-      const createdLesson = await this.lessonService.createLesson(lessonInfo, courseName);
-      console.log(createdLesson)
-      return res.status(200).json({ createdLesson })
+      let courseMaterial = req.files
+
+      let materialArray:any[] = [];
+      if (courseMaterial.length > 0) {
+        for (let material of courseMaterial){
+          materialArray.push(material.filename)
+          console.log('materialarray', materialArray)
+        }
+        // let courseMaterial = req.files
+        const createdLesson = await this.lessonService.createLesson(lessonInfo, courseName, materialArray);
+        return res.status(200).json({ createdLesson })
+      } else {
+        const createdLesson = await this.lessonService.createLesson(lessonInfo, courseName);
+        return res.status(200).json({ createdLesson })
+      }
+
+      // console.log(createdLesson)
     } catch (e) {
       console.log(e.message)
       return res.status(500).json({message: 'createLesson: internal server error'})
