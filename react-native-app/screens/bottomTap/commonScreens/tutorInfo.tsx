@@ -22,6 +22,9 @@ import showModal from '../../../functions/showModal';
 // Interfaces
 import ITutor from '../../../Interfaces/ITutor';
 
+// Data
+import coursesTestData from '../../../data/coursesTestData';
+
 export default function TutorInfo() {
 
     // Hooks
@@ -30,80 +33,7 @@ export default function TutorInfo() {
 
     // State
     const [coursesListData, setCoursesListData] = useState(
-        [
-            {
-                title: 'Express Server',
-                description: '教你寫Server',
-                tutor: 'Gordon Lau',
-                numOfLessons: 8,
-                price: 100,
-                aveScore: 4.6,
-                isPurchased: false,
-                coursePic: require('../../../assets/coursesPic/express.jpg'),
-                tutorPic: require('../../../assets/tutorsPic/gordon.jpg'),
-                id: '1'
-            },
-            {
-                title: 'FireBase',
-                description: '教你寫Server',
-                tutor: 'Gordon Lau',
-                numOfLessons: 6,
-                price: 150,
-                aveScore: 3.5,
-                isPurchased: true,
-                coursePic: require('../../../assets/coursesPic/firebase.png'),
-                tutorPic: require('../../../assets/tutorsPic/gordon.jpg'),
-                id: '2'
-            },
-            {
-                title: 'Flutter',
-                description: '教你寫App',
-                tutor: 'Jason Lee',
-                numOfLessons: 12,
-                price: 120,
-                aveScore: 4.4,
-                isPurchased: true,
-                coursePic: require('../../../assets/coursesPic/flutter.png'),
-                tutorPic: require('../../../assets/tutorsPic/jason.jpg'),
-                id: '3'
-            },
-            {
-                title: 'JavaScript',
-                description: '教你JS',
-                tutor: 'Jason Lee',
-                numOfLessons: 9,
-                price: 110,
-                aveScore: 3.7,
-                isPurchased: false,
-                coursePic: require('../../../assets/coursesPic/javaScript.png'),
-                tutorPic: require('../../../assets/tutorsPic/jason.jpg'),
-                id: '4'
-            },
-            {
-                title: 'Jest',
-                description: '教你寫Test',
-                tutor: 'Beeno Tung',
-                numOfLessons: 3,
-                price: 180,
-                aveScore: 2.6,
-                isPurchased: false,
-                coursePic: require('../../../assets/coursesPic/jest.png'),
-                tutorPic: require('../../../assets/tutorsPic/beeno.jpg'),
-                id: '5'
-            },
-            {
-                title: 'Knex',
-                description: '教你寫migration',
-                tutor: 'Andrew Shek',
-                numOfLessons: 2,
-                price: 130,
-                aveScore: 3.2,
-                isPurchased: true,
-                coursePic: require('../../../assets/coursesPic/knex.png'),
-                tutorPic: require('../../../assets/tutorsPic/andrew.jpg'),
-                id: '6'
-            }
-        ]
+        coursesTestData('subscribed')
     );
 
     // Param
@@ -148,16 +78,21 @@ export default function TutorInfo() {
 
                     <View style={tutorInfoStyles.tutorSubscribeContainer}>
                         <Text style={tutorInfoStyles.tutorNumSubscribed}>{'訂閱數: ' + tutor.numSubscribed}</Text>
-                        <TouchableOpacity
-                            style={tutorInfoStyles.tutorSubscribeButton}
-                            onPress={() => showSubscribeBox()}
-                        >
-                            <Text style={tutorInfoStyles.tutorSubscribeButtonText}>訂閱</Text>
-                        </TouchableOpacity>
-                        {/* <View style={tutorInfoStyles.tutorSubscribedBox}>
-                            <MaterialIcons name="done" size={26} color="#22c736" />
-                            <Text style={tutorInfoStyles.tutorSubscribedText}>已訂閱</Text>
-                        </View> */}
+
+                        {tutor.isSubscribed ? (
+                            <View style={tutorInfoStyles.tutorSubscribedBox}>
+                                <MaterialIcons name="done" size={26} color="#22c736" />
+                                <Text style={tutorInfoStyles.tutorSubscribedText}>已訂閱</Text>
+                            </View>
+                        ) : (
+                                <TouchableOpacity
+                                    style={tutorInfoStyles.tutorSubscribeButton}
+                                    onPress={() => showSubscribeBox()}
+                                >
+                                    <Text style={tutorInfoStyles.tutorSubscribeButtonText}>訂閱</Text>
+                                </TouchableOpacity>
+                            )}
+
                     </View>
 
                     <View style={tutorInfoStyles.allCoursesButtonContainer}>
@@ -227,6 +162,7 @@ export default function TutorInfo() {
                 )}
             />
 
+            <View style={globalStyles.tutorInfoFooter}></View>
         </ScrollView>
     )
 }
