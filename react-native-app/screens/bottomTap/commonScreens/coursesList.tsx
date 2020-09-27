@@ -15,20 +15,16 @@ import Stars from '../../../sharedComponents/stars';
 import globalStyles from '../../../styles/globalStyles';
 import coursesListStyles from '../../../styles/coursesListStyles';
 
-export default function CoursesList(props: { navigation: { navigate: (arg0: string) => void; }; }) {
+// Interfaces
+import ICoursesListParam from '../../../Interfaces/ICoursesListParam';
+
+export default function CoursesList() {
 
     // Hooks
     const navigation = useNavigation();
     const route = useRoute();
 
     // Param
-    interface ICoursesListParam {
-        subject?: string | null
-        tutor?: string | null
-        user?: string | null
-        completedCourse?: boolean | null
-    }
-
     let coursesListParam: ICoursesListParam = {
         subject: null,
         tutor: null,
@@ -245,11 +241,16 @@ export default function CoursesList(props: { navigation: { navigate: (arg0: stri
                                     <Text style={coursesListStyles.paramTitle}>{coursesListParam.subject}</Text>
                         課程</Text>
                             )
-                            : (
-                                <Text style={coursesListStyles.screenTitle}>
-                                    <Text style={coursesListStyles.paramTitle}>{coursesListParam.tutor}</Text>
+                            : coursesListParam.tutor ? (
+                                <View>
+                                    <Text style={coursesListStyles.screenTitle}>
+                                        <Text style={coursesListStyles.paramTitle}>{coursesListParam.tutor}</Text>
                         的課程</Text>
-                            )}
+                                </View>
+                            ) : (
+                                    <View></View>
+                                )
+                        }
                     </View>
                 }
 

@@ -7,7 +7,7 @@ const tutorsStyles = StyleSheet.create({
     },
     tutorBox: {
         flex: 1,
-        height: 230,
+        height: 250,
         marginVertical: 10,
         marginHorizontal: 10,
         borderRadius: 12,
@@ -34,13 +34,17 @@ const tutorsStyles = StyleSheet.create({
     tutorInfoContainer: {
         flex: 1,
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center'
     },
     tutorName: {
         fontSize: 23,
         color: '#000000'
+    },
+    tutorInfo: {
+        fontSize: 18,
+        color: '#e96a43'
     }
 });
 

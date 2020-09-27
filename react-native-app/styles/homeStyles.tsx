@@ -122,7 +122,7 @@ const homeStyles = StyleSheet.create({
         alignItems: 'flex-start',
     },
     tutorBox: {
-        height: 230,
+        height: 250,
         width: 180,
         marginTop: 6,
         marginBottom: 12,
@@ -152,13 +152,18 @@ const homeStyles = StyleSheet.create({
     tutorInfoContainer: {
         flex: 1,
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'flex-start',
+        paddingLeft: 9
     },
     tutorName: {
         fontSize: 23,
         color: '#000000'
+    },
+    tutorInfo: {
+        fontSize: 18,
+        color: '#e96a43'
     }
 });
 

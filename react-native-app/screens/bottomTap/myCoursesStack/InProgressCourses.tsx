@@ -5,6 +5,9 @@ import { View, Text, TouchableOpacity, Image, FlatList, Alert } from 'react-nati
 // Navigation
 import { useNavigation } from '@react-navigation/native';
 
+// Functions
+import showCommentOrRateBox from '../../../functions/showCommentOrRateBox';
+
 // Styles
 import globalStyles from '../../../styles/globalStyles';
 import myCoursesStyles from '../../../styles/myCoursesStyles';
@@ -91,26 +94,6 @@ export default function InProgressCourses() {
             }
         ]
     );
-
-    // methods
-    function showCommentOrRateBox() {
-        Alert.alert(
-            "評價",
-            "請評價",
-            [
-                { text: "評價", onPress: () => console.log("評價") }
-            ],
-            { cancelable: true }
-        )
-    }
-
-    function showCommentBox() {
-        console.log('comment');
-    }
-
-    function showRateBox() {
-        console.log('rate');
-    }
 
     return (
         <View style={globalStyles.container}>

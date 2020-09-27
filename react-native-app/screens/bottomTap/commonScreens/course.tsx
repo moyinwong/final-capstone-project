@@ -8,7 +8,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 // Styles
 import globalStyles from '../../../styles/globalStyles';
 
-export default function Courses(props: { navigation: { navigate: (arg0: string) => void; }; }) {
+export default function Courses() {
 
     const navigation = useNavigation();
     const route = useRoute();
