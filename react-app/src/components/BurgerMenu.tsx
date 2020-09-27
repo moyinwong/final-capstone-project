@@ -51,7 +51,7 @@ const BurgerMenu: React.FC = () => {
             {open && <DropdownMenu />}
             {open && <div>hello</div>}
           </div>
-          <Navbar.Text>Welcome back {userEmail}</Navbar.Text>{" "}
+          <Navbar.Text>歡迎，{userEmail}</Navbar.Text>{" "}
         </div>
       ) : (
         <Button
@@ -60,7 +60,10 @@ const BurgerMenu: React.FC = () => {
             setOpen(false);
             dispatch(push("/login", currentLocation));
           }}
-        ></Button>
+          className="bm-login-button"
+        >
+          登入
+        </Button>
       )}
 
       <DarkModeSwitch />
