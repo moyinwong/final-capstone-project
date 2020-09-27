@@ -49,7 +49,7 @@ export class CourseController {
       if (!courses) {
         res.status(401).json({ message: 'cannot find any course by this instructor'})
       }
-      console.log(courses)
+      // console.log(courses)
       res.json({ courses })
     } catch(e) {
       console.log(e.message);

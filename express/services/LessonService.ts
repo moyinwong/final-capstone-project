@@ -16,10 +16,10 @@ interface ILesson {
 }
 
 interface ILessonWithoutCourseId {
-  name: string;
-  description: string;
-  is_trial: string;
-  video_url: string;
+  lessonName: string;
+  lessonDescription: string;
+  lessonIsTrial: string;
+  lessonVideoUrl: string;
 }
 
 export class LessonService {
@@ -164,27 +164,42 @@ export class LessonService {
     return lesson;
   };
 
-  createLesson = async (lessonInfo: ILessonWithoutCourseId, courseName: string) => {
+  createLesson = async (lessonInfo: ILessonWithoutCourseId, courseName: string, materialArray?:any[]) => {
     const courseIdArray = await (this.knex
       .select('id')
       .from(tables.COURSES)
       .where('name', courseName))
     const courseId = courseIdArray[0].id
-    console.log(lessonInfo)
-    // let isTrial = lessonInfo.is_trial === 'true'
+    // console.log(lessonInfo)
+    let isTrial = lessonInfo.lessonIsTrial === 'true'
 
-    // const lesson = await this.knex
-    // .insert({
-    //   name: lessonInfo.name,
-    //   description: lessonInfo.description,
-    //   is_trial: isTrial,
-    //   video_url: lessonInfo.video_url,
-    //   course_id: courseId
-      
-    // })
-    // .into(tables.LESSONS)
-    // .returning('id')
+    const lessonId = await this.knex
+    .insert({
+      name: lessonInfo.lessonName,
+      description: lessonInfo.lessonDescription,
+      is_trial: isTrial,
+      video_url: lessonInfo.lessonVideoUrl,
+      course_id: courseId
+    })
+    .into(tables.LESSONS)
+    .returning('id')
 
-    return courseId
+    let filesUploaded:any[] = [];
+
+    if(materialArray) {
+      for (let material of materialArray) {
+        let fileUploaded = this.knex
+          .insert({
+            name: material.filename,
+            lesson_id: lessonId
+          })
+          .into(tables.FILES)
+          .returning('id')
+
+        filesUploaded.push(fileUploaded)
+      }
+    }
+
+    return lessonId
   }
 }
