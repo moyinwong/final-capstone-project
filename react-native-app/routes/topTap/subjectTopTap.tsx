@@ -5,11 +5,7 @@ import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 // Screens
-import MainSubject from '../../screens/bottomTap/subjectStack/mainSubject';
-import ScienceSubject from '../../screens/bottomTap/subjectStack/scienceSubject';
-import BusinessSubject from '../../screens/bottomTap/subjectStack/businessSubject';
-import LinguisticSubject from '../../screens/bottomTap/subjectStack/linguisticSubject';
-import OtherSubject from '../../screens/bottomTap/subjectStack/otherSubject';
+import SubjectsList from '../../screens/bottomTap/subjectStack/subjectsList';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -29,36 +25,41 @@ export default function SubjectTopTab() {
             }}
         >
             <Tab.Screen
-                name="MainSubject"
-                component={MainSubject}
+                name="SubjectList"
+                component={SubjectsList}
+                initialParams={{ category: 'main' }}
                 options={{
                     title: "主科"
                 }}
             />
             <Tab.Screen
                 name="ScienceSubject"
-                component={ScienceSubject}
+                component={SubjectsList}
+                initialParams={{ category: 'science' }}
                 options={{
                     title: "理科"
                 }}
             />
             <Tab.Screen
                 name="BusinessSubject"
-                component={BusinessSubject}
+                component={SubjectsList}
+                initialParams={{ category: 'business' }}
                 options={{
                     title: "商科"
                 }}
             />
             <Tab.Screen
                 name="LinguisticSubject"
-                component={LinguisticSubject}
+                component={SubjectsList}
+                initialParams={{ category: 'linguistic' }}
                 options={{
                     title: "文科"
                 }}
             />
             <Tab.Screen
                 name="OtherSubject"
-                component={OtherSubject}
+                component={SubjectsList}
+                initialParams={{ category: 'other' }}
                 options={{
                     title: "其他"
                 }}

@@ -1,16 +1,16 @@
 import React from "react";
-import { push } from "connected-react-router";
-import { useDispatch, useSelector } from "react-redux";
+//import { push } from "connected-react-router";
+//import { useDispatch, useSelector } from "react-redux";
 
 import CarouselReact from "../components/CarouselReact";
-import BurgerMenu from "../components/BurgerMenu";
-import { IRootState } from "../redux/store";
-import { logout } from "../redux/auth/actions";
-import Header from "../components/Header";
+//import BurgerMenu from "../components/BurgerMenu";
+//import { IRootState } from "../redux/store";
+//import { logout } from "../redux/auth/actions";
+//import Header from "../components/Header";
 import { Container, Row, Col } from "react-bootstrap";
 import "./Homepage.scss";
 import { useEffect } from "react";
-import DropdownMenu from "../components/DropdownMenu";
+//import DropdownMenu from "../components/DropdownMenu";
 
 const HomePage: React.FC = () => {
   // const test = async () => {
@@ -112,7 +112,6 @@ const HomePage: React.FC = () => {
       <section className="courses-carousel">
         <CarouselReact />
       </section>
-
     </div>
   );
 };

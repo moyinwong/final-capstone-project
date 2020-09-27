@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./App.scss";
 import { Switch, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
@@ -17,7 +17,7 @@ import Header from "./components/Header";
 import InstructorPage from "./pages/InstructorPage";
 import CourseCreatePage from "./pages/CourseCreatePage";
 import CartPage from "./pages/CartPage";
-import { Alert } from "react-bootstrap";
+//import { Alert } from "react-bootstrap";
 import PaymentPage from "./pages/PaymentPage";
 import LessonCreatePage from "./pages/LessonCreatePage";
 

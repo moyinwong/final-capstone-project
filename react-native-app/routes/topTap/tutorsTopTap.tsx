@@ -5,8 +5,7 @@ import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 // Screens
-import SubscribedTutors from '../../screens/bottomTap/tutorStack/subscribedTutors';
-import AllTutors from '../../screens/bottomTap/tutorStack/allTutors';
+import TutorsList from '../../screens/bottomTap/tutorStack/tutorsList';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -27,14 +26,16 @@ export default function TutorsTopTab() {
         >
             <Tab.Screen
                 name="SubscribedTutors"
-                component={SubscribedTutors}
+                component={TutorsList}
+                initialParams={{ category: 'subscribed' }}
                 options={{
                     title: "已訂閱導師"
                 }}
             />
             <Tab.Screen
                 name="AllTutors"
-                component={AllTutors}
+                component={TutorsList}
+                initialParams={{ category: 'all' }}
                 options={{
                     title: "所有導師"
                 }}

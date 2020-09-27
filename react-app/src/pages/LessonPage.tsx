@@ -39,7 +39,7 @@ interface IFile {
 }
 
 const LessonPage: React.FC = () => {
-  const url = useSelector((state: IRootState) => state.lesson.url); //for testing
+  //const url = useSelector((state: IRootState) => state.lesson.url); //for testing
   const param: { courseName: string; lessonName: string } = useParams();
   const { courseName, lessonName } = param;
   const token = localStorage.getItem("token");

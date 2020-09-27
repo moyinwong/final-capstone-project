@@ -1,7 +1,7 @@
 import { slide as Menu } from "react-burger-menu";
 import React, { useState } from "react";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+//import { faUser } from "@fortawesome/free-solid-svg-icons";
+//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./BurgerMenu.scss";
 import { Link, useLocation } from "react-router-dom";
@@ -66,7 +66,11 @@ const BurgerMenu: React.FC = () => {
       <DarkModeSwitch />
       {categories.map((category, i) => {
         return (
+<<<<<<< HEAD
           <div className="" key={i}>
+=======
+          <div className="" key={"BM" + i}>
+>>>>>>> 58c26d5729a9a857871b167219168e3d1bf5cf8b
             <Link to={`/category/${category}`} id={category}>
               {category}
             </Link>

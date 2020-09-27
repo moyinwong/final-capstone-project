@@ -24,6 +24,9 @@ const globalStyles = StyleSheet.create({
     },
     myCoursesFooter: {
         height: 18
+    },
+    tutorInfoFooter: {
+        height: 18
     }
 });
 

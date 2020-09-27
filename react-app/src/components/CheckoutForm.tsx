@@ -1,18 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { StripeCardElement, StripeCardElementOptions } from "@stripe/stripe-js";
-import { Button, Form } from "react-bootstrap";
+import {
+  StripeCardElement,
+  StripeCardElementChangeEvent,
+  StripeCardElementOptions,
+} from "@stripe/stripe-js";
+//import { Button, Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
 import { ICourse } from "../pages/CategoryPage";
 import "./CheckoutForm.scss";
+
+interface ICheckOutFormError {
+  message: string;
+}
 
 const CARD_OPTIONS: StripeCardElementOptions = {
   hidePostalCode: true,
   iconStyle: "solid",
   style: {
     base: {
-      iconColor: "#c4f0ff",
+      iconColor: "#67ace5",
       color: "#fff",
       fontWeight: "500",
       fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
@@ -22,7 +30,7 @@ const CARD_OPTIONS: StripeCardElementOptions = {
         color: "#fce883",
       },
       "::placeholder": {
-        color: "#87bbfd",
+        color: "#87e5fd",
       },
     },
 
@@ -33,13 +41,24 @@ const CARD_OPTIONS: StripeCardElementOptions = {
   },
 };
 
-const CardField = ({ onChange }: any) => (
+const CardField: React.FC<{
+  onChange: (e: StripeCardElementChangeEvent) => void;
+}> = ({ onChange }) => (
   <div className="FormRow">
     <CardElement options={CARD_OPTIONS} onChange={onChange} />
   </div>
 );
 
-const Field = ({
+const Field: React.FC<{
+  label: string;
+  id: string;
+  type: string;
+  placeholder: string;
+  required: boolean;
+  autoComplete: string;
+  value: string;
+  onChange: (e: React.ChangeEvent) => void;
+}> = ({
   label,
   id,
   type,
@@ -48,7 +67,7 @@ const Field = ({
   autoComplete,
   value,
   onChange,
-}: any) => (
+}) => (
   <div className="FormRow">
     <label htmlFor={id} className="FormRowLabel">
       {label}
@@ -66,7 +85,12 @@ const Field = ({
   </div>
 );
 
-const SubmitButton = ({ processing, error, children, disabled }: any) => (
+const SubmitButton: React.FC<{
+  processing: boolean;
+  error: ICheckOutFormError | null;
+  children: any;
+  disabled: boolean;
+}> = ({ processing, error, children, disabled }) => (
   <button
     className={`SubmitButton ${error ? "SubmitButton--error" : ""}`}
     type="submit"
@@ -76,7 +100,7 @@ const SubmitButton = ({ processing, error, children, disabled }: any) => (
   </button>
 );
 
-const ErrorMessage = ({ children }: any) => (
+const ErrorMessage: React.FC<{ children: any }> = ({ children }) => (
   <div className="ErrorMessage" role="alert">
     <svg width="16" height="16" viewBox="0 0 17 17">
       <path
@@ -92,7 +116,10 @@ const ErrorMessage = ({ children }: any) => (
   </div>
 );
 
-const ResetButton = ({ onClick }: any) => (
+const ResetButton: React.FC<{
+  onClick: (e: React.MouseEvent) => void;
+  disabled: boolean;
+}> = ({ onClick, disabled }) => (
   <button type="button" className="ResetButton" onClick={onClick}>
     <svg width="32px" height="32px" viewBox="0 0 32 32">
       <path
@@ -106,7 +133,8 @@ const ResetButton = ({ onClick }: any) => (
 const CheckoutForm: React.FC = () => {
   const stripe = useStripe();
   const elements = useElements();
-  const [error, setError] = useState(null);
+  const userEmail = useSelector((state: IRootState) => state.auth.email);
+  const [error, setError] = useState<ICheckOutFormError | null>(null);
   const [cardComplete, setCardComplete] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState(null);
@@ -122,35 +150,11 @@ const CheckoutForm: React.FC = () => {
   const cartCourses = useSelector((state: IRootState) => state.cart.courses);
 
   useEffect(() => {
-    if (cartCourses.length > 0 && authToken && stripe) {
+    //create intent once got the information
+    if (cartCourses.length > 0 && authToken && stripe && userEmail) {
       createPaymentIntent(cartCourses, authToken);
     }
-  }, [cartCourses, authToken, stripe]);
-
-  // const CARD_OPTIONS: StripeCardElementOptions = {
-  //   hidePostalCode: true,
-  //   iconStyle: "solid",
-  //   style: {
-  //     base: {
-  //       iconColor: "#c4f0ff",
-  //       color: "black",
-  //       fontWeight: "500",
-  //       fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
-  //       fontSize: "16px",
-  //       fontSmoothing: "antialiased",
-  //       ":-webkit-autofill": {
-  //         color: "#fce883",
-  //       },
-  //       "::placeholder": {
-  //         color: "black",
-  //       },
-  //     },
-  //     invalid: {
-  //       iconColor: "#ffc7ee",
-  //       color: "#ffc7ee",
-  //     },
-  //   },
-  //   };
+  }, [cartCourses, authToken, stripe, userEmail]);
 
   const reset = () => {
     setError(null);
@@ -187,45 +191,53 @@ const CheckoutForm: React.FC = () => {
       console.log("[PaymentMethod]", paymentMethod);
     }
 
-    const formObj: {
-      chargeAmount?: number;
-      stripeToken?: string;
-    } = {};
+    const confirmRes = await stripe.confirmCardPayment(paymentIntent, {
+      payment_method: paymentMethod?.id,
+    });
 
-    formObj.chargeAmount = 100;
-    //formObj.stripeToken = result.token.id;
+    console.log(confirmRes);
 
-    console.log("token: ", formObj.stripeToken);
+    if (confirmRes.error) {
+      setError({ message: confirmRes.error.message as string });
+      return;
+    }
 
-    let queryRoute: string = "/payment/charge";
+    const confirmedPaymentIntent = confirmRes.paymentIntent;
 
-    const fetchRes = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}${queryRoute}`,
+    if (confirmedPaymentIntent?.status !== "succeeded") {
+      setError({ message: "付款不成功" });
+    }
+
+    const confirmedPaymentRes = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/payment/payment-confirmed/`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${authToken}`,
         },
-        body: JSON.stringify(formObj),
+        body: JSON.stringify({ paymentIntent, cartCourses, userEmail }),
       }
     );
 
-    //confirm payment
-    const confirmRes = stripe.confirmCardPayment(paymentIntent, {
-      payment_method: paymentMethod?.id,
-    });
+    const result = await confirmedPaymentRes.json();
+    console.log(result);
   };
 
   const createPaymentIntent = async (course: ICourse[], authToken: string) => {
-    console.log("hahaha");
-    console.log(stripe);
+    //console.log("hahaha");
+    //console.log(stripe);
     if (!stripe || !authToken) {
       return;
     }
 
     let queryRoute: string = "/payment/create-payment-intent";
 
+    const info = {
+      userEmail,
+      cartCourses,
+    };
+
     const fetchRes = await fetch(
       `${process.env.REACT_APP_BACKEND_URL}${queryRoute}`,
       {
@@ -234,6 +246,7 @@ const CheckoutForm: React.FC = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${authToken}`,
         },
+        body: JSON.stringify(info),
       }
     );
 
@@ -241,18 +254,60 @@ const CheckoutForm: React.FC = () => {
       paymentIntentSecret: string;
     } = await fetchRes.json();
     const { paymentIntentSecret } = paymentIntentObj;
+    console.log(paymentIntentSecret);
     console.log("obj" + paymentIntentObj);
     setPaymentIntent(paymentIntentSecret);
   };
 
+  const confirmedPaymentIntent = async (
+    course: ICourse[],
+    authToken: string
+  ) => {
+    console.log("hahahaHAHAHAHA");
+    //console.log(stripe);
+    // if (!stripe || !authToken) {
+    //   return;
+    // }
+
+    // let queryRoute: string = "/payment/create-payment-intent";
+
+    // const info = {
+    //   userEmail,
+    //   cartCourses,
+    // };
+
+    // const fetchRes = await fetch(
+    //   `${process.env.REACT_APP_BACKEND_URL}${queryRoute}`,
+    //   {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: `Bearer ${authToken}`,
+    //     },
+    //     body: JSON.stringify(info),
+    //   }
+    // );
+
+    // const paymentIntentObj: {
+    //   paymentIntentSecret: string;
+    // } = await fetchRes.json();
+    // const { paymentIntentSecret } = paymentIntentObj;
+    // console.log(paymentIntentSecret);
+    // console.log("obj" + paymentIntentObj);
+    // setPaymentIntent(paymentIntentSecret);
+  };
+
   return (
     <form className="Form stripe-form" onSubmit={handleSubmit}>
+      <div className="stripe-form-title">
+        <h1>請填寫付款資料</h1>
+      </div>
       <fieldset className="FormGroup">
         <Field
-          label="Name"
+          label="姓名"
           id="name"
           type="text"
-          placeholder="Jane Doe"
+          placeholder="請填上姓名"
           required
           autoComplete="name"
           value={billingDetails.name}
@@ -261,10 +316,10 @@ const CheckoutForm: React.FC = () => {
           }}
         />
         <Field
-          label="Email"
+          label="電郵"
           id="email"
           type="email"
-          placeholder="janedoe@gmail.com"
+          placeholder="請填上電郵"
           required
           autoComplete="email"
           value={billingDetails.email}
@@ -273,10 +328,10 @@ const CheckoutForm: React.FC = () => {
           }}
         />
         <Field
-          label="Phone"
+          label="電話"
           id="phone"
           type="tel"
-          placeholder="(941) 555-0123"
+          placeholder="請填上電話號碼"
           required
           autoComplete="tel"
           value={billingDetails.phone}
@@ -293,10 +348,15 @@ const CheckoutForm: React.FC = () => {
           }}
         />
       </fieldset>
-      {/* {error && error?.message? && <ErrorMessage>{error?.message }</ErrorMessage> } */}
-      <SubmitButton processing={processing} error={error} disabled={!stripe}>
-        Pay $25
+      {error && <ErrorMessage>{error?.message}</ErrorMessage>}
+      <SubmitButton
+        processing={processing}
+        error={error}
+        disabled={!stripe || !cardComplete}
+      >
+        確認付款
       </SubmitButton>
+      <ResetButton onClick={reset} disabled={false} />
     </form>
   );
 };
