@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import { store, history, persistor } from "./redux/store";
 import { ConnectedRouter } from "connected-react-router";
 import { PersistGate } from "redux-persist/integration/react";
-import { StripeProvider } from "react-stripe-elements";
+//import { StripeProvider } from "react-stripe-elements";
 
 ReactDOM.render(
   <React.StrictMode>
