@@ -1,5 +1,5 @@
 // React, React Native
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -19,12 +19,16 @@ export default function SubjectsList() {
     const navigation = useNavigation();
     const route = useRoute();
 
-    let category: string;
+    // Params
+    let category = 'all';
     if (route.params) {
         category = route.params.category;
     }
 
-    const mainSubjectsData = subjectsData(category);
+    // State
+    const [mainSubjectsData, setMainSubjectsData] = useState(
+        subjectsData(category)
+    );
 
     return (
         <View style={globalStyles.container}>

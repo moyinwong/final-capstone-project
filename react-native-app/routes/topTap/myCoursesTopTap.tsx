@@ -5,8 +5,7 @@ import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 // Screens
-import InProgressCourses from '../../screens/bottomTap/myCoursesStack/InProgressCourses';
-import CompletedCourses from '../../screens/bottomTap/myCoursesStack/CompletedCourses';
+import MyCoursesList from '../../screens/bottomTap/myCoursesStack/MyCoursesList';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -27,14 +26,16 @@ export default function MyCoursesTopTab() {
         >
             <Tab.Screen
                 name="InProgressCourses"
-                component={InProgressCourses}
+                component={MyCoursesList}
+                initialParams={{ category: 'inProgress' }}
                 options={{
                     title: "修讀中"
                 }}
             />
             <Tab.Screen
                 name="CompletedCourses"
-                component={CompletedCourses}
+                component={MyCoursesList}
+                initialParams={{ category: 'completed' }}
                 options={{
                     title: "已完成"
                 }}

@@ -5,5 +5,6 @@ export default interface ITutor {
     team?: string | null
     description?: string | null
     numSubscribed?: number | null
+    isSubscribed?: boolean | null
     id?: string | null
 }
