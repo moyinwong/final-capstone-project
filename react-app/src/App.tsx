@@ -75,7 +75,7 @@ function App() {
           exact={true}
           component={CourseCreatePage}
         />
-          <Route
+        <Route
           path="/instructor/lesson/creation/:courseName"
           exact={true}
           component={LessonCreatePage}

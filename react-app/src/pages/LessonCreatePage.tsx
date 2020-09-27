@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import './LessonCreatePage.scss'
 import { useParams } from 'react-router-dom'
-
 import './CourseCreatePage.scss'
 import { Field, Form, Formik, FormikConfig, FormikValues } from 'formik'
-import { TextField, Select, SimpleFileUpload } from 'formik-material-ui'
+import { TextField, Select } from 'formik-material-ui'
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardContent, MenuItem, FormControl, 
     InputLabel, Button, Box, Stepper, Step, StepLabel, CircularProgress} from '@material-ui/core'
@@ -12,12 +11,7 @@ import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../redux/store';
 import { push } from 'connected-react-router';
-import Dropzone from 'react-dropzone'
-
-
-
-
-
+import {useDropzone} from 'react-dropzone';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -55,7 +49,7 @@ const LessonCreatePage = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const userEmail = useSelector((state: IRootState) => state.auth.email);
-
+    
     const submitHandler = async (formData: FormData) => {
         const queryRoute = '/lesson/creation'
         const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}${queryRoute}/${courseName}`, {
@@ -176,14 +170,6 @@ const LessonCreatePage = () => {
                                     />
                                 </Box>
                                 
-                                {/* <Box paddingBottom={2}>
-                                    <Field
-                                        className={classes.formControl}
-                                        component={SimpleFileUpload} 
-                                        name="file" 
-                                        label="上戴課程教材" 
-                                    />
-                                </Box> */}
                             </FormikStep>
 
 
@@ -214,8 +200,37 @@ export function FormikStepper({children, ...props}: FormikConfig<FormikValues>) 
     const [completed, setCompleted] = useState(false);
     const classes = useStyles();
 
+    const {acceptedFiles, getRootProps, getInputProps} = useDropzone();
+  
+    const files = acceptedFiles.map(file => (
+        <li key={file.name}>
+        {file.name}
+        </li>
+    ));
+
     function isLastStep() {
         return step === childrenArray.length - 1
+    }
+
+    function showFile(files: any[]) {
+        if (!files.length) {
+            return null;
+        }
+
+        return (
+            <div>
+                <div>Dropped files:</div>
+                <ul>
+                    {
+                        files.map((file, i) => 
+                            <li key={i}>
+                                <div>{file.name}</div>
+                            </li>
+                        )
+                    }
+                </ul>
+            </div>
+        )
     }
 
     return (
@@ -237,6 +252,7 @@ export function FormikStepper({children, ...props}: FormikConfig<FormikValues>) 
         
         {({ isSubmitting, setFieldValue, values }) => (
             <Form autoComplete="off">
+                {/* Stepper for each step of the form */}
                 <Stepper className={classes.formControl} alternativeLabel activeStep={step}>
                     {childrenArray.map((child, index) => (
                     <Step key={child.props.label} completed={step > index || completed}>
@@ -244,47 +260,46 @@ export function FormikStepper({children, ...props}: FormikConfig<FormikValues>) 
                     </Step>
                     ))}
                 </Stepper>
+                
+                {/* current step and related form input */}
                 {!completed && currentChild}
+
+                {/* file upload area */}
+                {isLastStep() && 
+                    <section className="container">
+                    <div {...getRootProps({className: 'dropzone'})}>
+                        <input {...getInputProps()} />
+                        <span>拖曳或選擇檔案上傳，如需上傳多個檔案，請一次選擇多個檔案</span>
+                    </div>
+                    <aside>
+                        <h4 style={{marginTop: '10px'}}>Files</h4>
+                        <ul>{files}</ul>
+                    </aside>
+                    </section>
+                }
+
+                {/* back button */}
                 {step > 0 ? (
                     <Button disabled={isSubmitting} onClick={() => setStep(step => step - 1)}>
                         Back
                     </Button>
                 ) : null}
+
+                {/* Next if not the last step, else become submit button */}
                 {!completed && <Button 
                     startIcon={isSubmitting ? <CircularProgress size="1rem"/> : null} 
                     disabled={isSubmitting} 
                     type="submit" 
                     variant="contained" 
                     color="primary"
+                    onClick={() => {
+                        setFieldValue('files', acceptedFiles)
+                        console.log(values)
+                    }}
                 >
                     {isSubmitting ? 'Submitting' : isLastStep() ? 'Submit' : 'Next'}
                 </Button>}
-                <Button onClick={() => {
-                    setFieldValue('test', 'hello')
-                    console.log(values)
-                    }}>test</Button>
-                <Dropzone onDrop={acceptedFiles => {
-                    setFieldValue('files', acceptedFiles)
-                    console.log(values)
-                    }}>
-                {({getRootProps, getInputProps}) => (
-                    <section>
-                    <div {...getRootProps()}>
-                        <input {...getInputProps()} />
-                        <p>Drag 'n' drop some files here, or click to select files</p>
-                    </div>
-                    </section>
-                )}
-                </Dropzone>
-                {/* <Button 
-                    startIcon={isSubmitting ? <CircularProgress size="1rem"/> : null} 
-                    disabled={isSubmitting} 
-                    type="submit" 
-                    variant="contained" 
-                    color="primary"
-                >
-                    {isSubmitting ? 'Submitting' : isLastStep() ? 'Submit' : 'Next'}
-                </Button> */}
+
                 {completed && <div>成功建立課程<i className="fas fa-check-circle"></i></div>}
             </Form>
         )}

@@ -66,8 +66,8 @@ const BurgerMenu: React.FC = () => {
       <DarkModeSwitch />
       {categories.map((category, i) => {
         return (
-          <div className="">
-            <Link to={`/category/${category}`} key={i} id={category}>
+          <div className="" key={i}>
+            <Link to={`/category/${category}`} id={category}>
               {category}
             </Link>
           </div>
