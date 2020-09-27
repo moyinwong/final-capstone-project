@@ -173,8 +173,11 @@ const CoursePage: React.FC = () => {
     if (fetchRes.status === 500) throw new Error("伺服器發生問題");
     const result = await fetchRes.json();
     const resultArr = result.comments;
-    const shuffleArr = shuffle(resultArr);
-    setComments(result.comments);
+    const shuffleArr = shuffle(
+      resultArr.filter((e: any) => e.comment !== null)
+    );
+    console.log(shuffleArr);
+    setComments(shuffleArr);
     setIsReady(true);
   };
 
@@ -405,25 +408,29 @@ const CoursePage: React.FC = () => {
                     </div>
                   </div>
 
-                  {comments
-                    .map((e, i) => {
-                      return (
-                        <div key={i}>
-                          <Card>
-                            <Card.Header>{e.rated_score}</Card.Header>
-                            <Card.Body>
-                              <blockquote className="blockquote mb-0">
-                                <p>{e.comment}</p>
-                                <footer className="blockquote-footer">
-                                  {e.user_name}
-                                </footer>
-                              </blockquote>
-                            </Card.Body>
-                          </Card>
-                        </div>
-                      );
-                    })
-                    .slice(0, commentsNum)}
+                  {comments.length > 0 ? (
+                    comments
+                      .map((e, i) => {
+                        return (
+                          <div key={i}>
+                            <Card>
+                              <Card.Header>{e.rated_score}</Card.Header>
+                              <Card.Body>
+                                <blockquote className="blockquote mb-0">
+                                  <p>{e.comment}</p>
+                                  <footer className="blockquote-footer">
+                                    {e.user_name}
+                                  </footer>
+                                </blockquote>
+                              </Card.Body>
+                            </Card>
+                          </div>
+                        );
+                      })
+                      .slice(0, commentsNum)
+                  ) : (
+                    <div>暫無評分</div>
+                  )}
                 </div>
               </div>
             </div>

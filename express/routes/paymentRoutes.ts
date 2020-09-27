@@ -18,3 +18,8 @@ paymentRoutes.post(
   isLoggedIn,
   paymentController.createAccountLink
 );
+paymentRoutes.post(
+  "/payment-confirmed",
+  isLoggedIn,
+  paymentController.confirmedPayment
+);
