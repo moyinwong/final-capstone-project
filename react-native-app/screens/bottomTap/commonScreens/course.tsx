@@ -95,7 +95,7 @@ export default function Courses() {
                         <Text style={courseStyles.tutorNumOfSubscribedText}>訂閱數: 100</Text>
                     </View>
                 </View>
-                <View style={{marginLeft: 40}}>
+                <View style={{ marginLeft: 40 }}>
                     {isSubscribed ? (
                         <View style={courseStyles.tutorSubscribedBox}>
                             <MaterialIcons name="done" size={26} color="#22c736" />
@@ -110,6 +110,18 @@ export default function Courses() {
                             </TouchableOpacity>
                         )}
                 </View>
+            </View>
+
+            <View>
+                <Text>{'課程簡介: ' + course.description}</Text>
+            </View>
+
+            <View>
+                <Text>課程內容:</Text>
+            </View>
+
+            <View>
+                <Text>學生反映:</Text>
             </View>
 
         </View>
