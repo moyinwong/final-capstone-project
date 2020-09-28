@@ -76,7 +76,6 @@ export default function CoursesList() {
 
             const result = await fetchRes.json();
             setCoursesListData(result.courses);
-            console.log(result);
         } catch (err) {
             console.log(err);
         }

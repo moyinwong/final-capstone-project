@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 
 // Navigation
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
 
 // Icons
 import { Entypo, MaterialIcons } from '@expo/vector-icons';
@@ -23,18 +23,13 @@ import showModal from '../../../functions/showModal';
 import ITutor from '../../../Interfaces/ITutor';
 
 // Data
-import coursesTestData from '../../../data/coursesTestData';
+import envData from '../../../data/env';
 
 export default function TutorInfo() {
 
     // Hooks
     const navigation = useNavigation();
     const route = useRoute();
-
-    // State
-    const [coursesListData, setCoursesListData] = useState(
-        coursesTestData('subscribed')
-    );
 
     // Param
     let tutor: ITutor = {
@@ -49,6 +44,42 @@ export default function TutorInfo() {
 
     if (route.params) {
         tutor = route.params.tutor;
+    }
+
+    // Courses List
+    // State
+    const [coursesListData, setCoursesListData] = useState(
+        []
+    );
+
+    const allCategoryName = 'all'
+    useFocusEffect(
+        React.useCallback(() => {
+            getAllCoursesByCategory(allCategoryName);
+        }, [allCategoryName])
+    );
+
+    // Fetch
+    async function getAllCoursesByCategory(categoryName: string) {
+        try {
+            let queryRoute: string = "/category/";
+
+            const fetchRes = await fetch(
+                `${envData.REACT_APP_BACKEND_URL}${queryRoute}${categoryName}`
+            );
+
+            //if no such category
+            if (fetchRes.status === 500) {
+                throw new Error("伺服器發生問題");
+                //dispatch(push("/404"));
+                //return;
+            }
+
+            const result = await fetchRes.json();
+            setCoursesListData(result.courses);
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     return (
@@ -114,7 +145,7 @@ export default function TutorInfo() {
 
             <FlatList
                 style={tutorInfoStyles.flatList}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.id.toString()}
                 data={coursesListData}
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
@@ -127,29 +158,31 @@ export default function TutorInfo() {
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={tutorInfoStyles.courseBox}
-                        onPress={() => navigation.navigate('Course', { title: item.title })}
-                        onLongPress={() => showModal(item.isPurchased)}
+                        onPress={() => navigation.navigate('Course', { courseName: item.course_name })}
+                        // ssssssdddfvesfgergerger
+                        onLongPress={() => showModal(false)}
                     >
                         <View style={tutorInfoStyles.coursePicContainer}>
                             <Image
                                 style={tutorInfoStyles.coursePic}
                                 resizeMode='cover'
-                                source={item.coursePic}
+                                source={{ uri: item.image }}
                             />
                         </View>
                         <View style={tutorInfoStyles.courseInfoContainer}>
 
-                            <Text style={tutorInfoStyles.courseTitle}>{item.title}</Text>
+                            <Text style={tutorInfoStyles.courseTitle}>{item.course_name}</Text>
                             <View style={tutorInfoStyles.courseSubInfoContainer}>
-                                <Text style={tutorInfoStyles.courseInfoText}>{item.tutor}</Text>
-                                <Text style={tutorInfoStyles.courseInfoText}>{"總共堂數: " + item.numOfLessons}</Text>
+                                <Text style={tutorInfoStyles.courseInfoText}>{item.tutor_name}</Text>
+                                <Text style={tutorInfoStyles.courseInfoText}>{"總共堂數: " + item.lessons_number}</Text>
                                 <View style={tutorInfoStyles.courseScoreContainer}>
                                     <Text style={tutorInfoStyles.courseInfoText}>{"評分: "}</Text>
 
-                                    <Stars score={item.aveScore} />
+                                    <Stars score={item.rated_score} />
 
                                 </View>
-                                {item.isPurchased ?
+                                {/* sssdsfvdsvdsvdsbvsdbsdbsdbds */}
+                                {false ?
                                     (
                                         <Text style={{ ...tutorInfoStyles.coursePrice, color: '#22c736' }}>{"已購買"}</Text>
                                     ) : (

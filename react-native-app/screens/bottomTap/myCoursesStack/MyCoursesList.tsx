@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 
 // Navigation
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
 
 // Functions
 import showCommentOrRateBox from '../../../functions/showCommentOrRateBox';
@@ -13,7 +13,7 @@ import globalStyles from '../../../styles/globalStyles';
 import myCoursesStyles from '../../../styles/myCoursesStyles';
 
 // Data
-import coursesTestData from '../../../data/coursesTestData';
+import envData from '../../../data/env';
 
 export default function MyCoursesList() {
 
@@ -27,17 +27,48 @@ export default function MyCoursesList() {
         category = route.params.category;
     }
 
+    // Courses List
     // State
     const [coursesListData, setCoursesListData] = useState(
-        coursesTestData(category)
+        []
     );
+
+    const allCategoryName = 'all'
+    useFocusEffect(
+        React.useCallback(() => {
+            getAllCoursesByCategory(allCategoryName);
+        }, [allCategoryName])
+    );
+
+    // Fetch
+    async function getAllCoursesByCategory(categoryName: string) {
+        try {
+            let queryRoute: string = "/category/";
+
+            const fetchRes = await fetch(
+                `${envData.REACT_APP_BACKEND_URL}${queryRoute}${categoryName}`
+            );
+
+            //if no such category
+            if (fetchRes.status === 500) {
+                throw new Error("伺服器發生問題");
+                //dispatch(push("/404"));
+                //return;
+            }
+
+            const result = await fetchRes.json();
+            setCoursesListData(result.courses);
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     return (
         <View style={globalStyles.container}>
 
             <FlatList
                 style={myCoursesStyles.flatList}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.id.toString()}
                 data={coursesListData}
                 showsVerticalScrollIndicator={false}
 
@@ -49,25 +80,25 @@ export default function MyCoursesList() {
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={myCoursesStyles.courseBox}
-                        onPress={() => navigation.navigate('Course', { title: item.title })}
+                        onPress={() => navigation.navigate('Course', { courseName: item.course_name })}
                         onLongPress={() => showCommentOrRateBox()}
                     >
                         <View style={myCoursesStyles.coursePicContainer}>
                             <Image
                                 style={myCoursesStyles.coursePic}
                                 resizeMode='cover'
-                                source={item.coursePic}
+                                source={{ uri: item.image }}
                             />
                         </View>
 
                         <View style={myCoursesStyles.courseInfoContainer}>
-                            <Text style={myCoursesStyles.courseTitle}>{item.title}</Text>
+                            <Text style={myCoursesStyles.courseTitle}>{item.course_name}</Text>
                             <View style={myCoursesStyles.courseSubInfoContainer}>
 
                                 <View style={myCoursesStyles.courseSubInfoTextContainer}>
-                                    <Text style={myCoursesStyles.courseInfoText}>{item.tutor}</Text>
-                                    <Text style={myCoursesStyles.courseInfoText}>{item.description}</Text>
-                                    <Text style={myCoursesStyles.courseInfoText}>{"總共堂數: " + item.numOfLessons}</Text>
+                                    <Text style={myCoursesStyles.courseInfoText}>{item.tutor_name}</Text>
+                                    <Text style={myCoursesStyles.courseInfoText}>{item.course_description}</Text>
+                                    <Text style={myCoursesStyles.courseInfoText}>{"總共堂數: " + item.lessons_number}</Text>
                                 </View>
 
                                 <View style={myCoursesStyles.courseSubInfoLowerContainer}>
