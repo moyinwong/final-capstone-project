@@ -35,10 +35,10 @@ export class PaymentController {
 
   createPaymentIntent = async (req: Request, res: Response) => {
     try {
-      const { cartCourses } = req.body;
+      const { courses } = req.body;
       let description: string = "buy ";
       let totalPrice: number = 0;
-      for (let course of cartCourses) {
+      for (let course of courses) {
         description += `${course.course_name}, `;
         totalPrice += parseFloat(course.price);
       }
@@ -60,7 +60,7 @@ export class PaymentController {
   confirmedPayment = async (req: Request, res: Response) => {
     try {
       const paymentIntentSecret = req.body.paymentIntent;
-      const { cartCourses, userEmail } = req.body;
+      const { courses, userEmail } = req.body;
 
       const paymentIntent = await this.paymentService.retrievePaymentIntent(
         paymentIntentSecret
@@ -68,7 +68,7 @@ export class PaymentController {
 
       const chargeId: string = paymentIntent.charges.data[0].id;
 
-      for (let course of cartCourses) {
+      for (let course of courses) {
         const transfer = await this.paymentService.createTransfer(
           course.tutor_name,
           parseFloat(course.price) * 0.9,

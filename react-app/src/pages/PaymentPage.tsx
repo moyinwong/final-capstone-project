@@ -6,14 +6,20 @@ import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 //import { Elements } from "react-stripe-elements";
 import CheckoutForm from "../components/CheckoutForm";
+import { ICourse } from "./CategoryPage";
 import "./PaymentPage.scss";
 // const stripePromise = loadStripe(
 //   process.env.REACT_APP_STRIPE_TEST_KEY as string
 // );
 
-const PaymentPage: React.FC = () => {
+const PaymentPage: React.FC = (state: {
+  children?: React.ReactNode;
+  location?: {
+    state?: ICourse;
+  };
+}) => {
   const dispatch = useDispatch();
-
+  const immedatePurchaseCourse: ICourse | undefined = state.location?.state;
   useEffect(() => {
     document.getElementById("website-header")!.style.display = "none";
     return () => {
@@ -38,7 +44,7 @@ const PaymentPage: React.FC = () => {
       <div className="stripe-form-container">
         <Elements stripe={stripePromise}>
           {/* <InjectedCheckoutForm elements="" stripe="" /> */}
-          <CheckoutForm />
+          <CheckoutForm immediatePurchaseCourse={immedatePurchaseCourse} />
         </Elements>
       </div>
     </>
