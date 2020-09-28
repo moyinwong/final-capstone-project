@@ -130,7 +130,11 @@ const ResetButton: React.FC<{
   </button>
 );
 
-const CheckoutForm: React.FC = () => {
+const CheckoutForm: React.FC<{
+  immediatePurchaseCourse: ICourse | undefined;
+}> = (props: { immediatePurchaseCourse: ICourse | undefined }) => {
+  console.log("props: ", props.immediatePurchaseCourse);
+
   const stripe = useStripe();
   const elements = useElements();
   const userEmail = useSelector((state: IRootState) => state.auth.email);
@@ -151,10 +155,26 @@ const CheckoutForm: React.FC = () => {
 
   useEffect(() => {
     //create intent once got the information
-    if (cartCourses.length > 0 && authToken && stripe && userEmail) {
-      createPaymentIntent(cartCourses, authToken);
+    if (
+      (props.immediatePurchaseCourse || cartCourses.length > 0) &&
+      authToken &&
+      stripe &&
+      userEmail
+    ) {
+      createPaymentIntent(
+        props.immediatePurchaseCourse
+          ? [props.immediatePurchaseCourse]
+          : cartCourses,
+        authToken
+      );
     }
-  }, [cartCourses, authToken, stripe, userEmail]);
+  }, [
+    cartCourses,
+    authToken,
+    stripe,
+    userEmail,
+    props.immediatePurchaseCourse,
+  ]);
 
   const reset = () => {
     setError(null);
@@ -174,6 +194,10 @@ const CheckoutForm: React.FC = () => {
     if (!stripe || !elements) {
       return;
     }
+
+    const courses = props.immediatePurchaseCourse
+      ? [props.immediatePurchaseCourse]
+      : cartCourses;
 
     const cardElement: StripeCardElement | null = elements.getElement(
       CardElement
@@ -216,7 +240,7 @@ const CheckoutForm: React.FC = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${authToken}`,
         },
-        body: JSON.stringify({ paymentIntent, cartCourses, userEmail }),
+        body: JSON.stringify({ paymentIntent, courses, userEmail }),
       }
     );
 
@@ -224,18 +248,20 @@ const CheckoutForm: React.FC = () => {
     console.log(result);
   };
 
-  const createPaymentIntent = async (course: ICourse[], authToken: string) => {
+  const createPaymentIntent = async (courses: ICourse[], authToken: string) => {
     //console.log("hahaha");
     //console.log(stripe);
     if (!stripe || !authToken) {
       return;
     }
 
+    console.log("courses: ", courses);
+
     let queryRoute: string = "/payment/create-payment-intent";
 
     const info = {
       userEmail,
-      cartCourses,
+      courses,
     };
 
     const fetchRes = await fetch(
@@ -259,43 +285,43 @@ const CheckoutForm: React.FC = () => {
     setPaymentIntent(paymentIntentSecret);
   };
 
-  const confirmedPaymentIntent = async (
-    course: ICourse[],
-    authToken: string
-  ) => {
-    console.log("hahahaHAHAHAHA");
-    //console.log(stripe);
-    // if (!stripe || !authToken) {
-    //   return;
-    // }
+  // const confirmedPaymentIntent = async (
+  //   course: ICourse[],
+  //   authToken: string
+  // ) => {
+  //   console.log("hahahaHAHAHAHA");
+  //console.log(stripe);
+  // if (!stripe || !authToken) {
+  //   return;
+  // }
 
-    // let queryRoute: string = "/payment/create-payment-intent";
+  // let queryRoute: string = "/payment/create-payment-intent";
 
-    // const info = {
-    //   userEmail,
-    //   cartCourses,
-    // };
+  // const info = {
+  //   userEmail,
+  //   cartCourses,
+  // };
 
-    // const fetchRes = await fetch(
-    //   `${process.env.REACT_APP_BACKEND_URL}${queryRoute}`,
-    //   {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Authorization: `Bearer ${authToken}`,
-    //     },
-    //     body: JSON.stringify(info),
-    //   }
-    // );
+  // const fetchRes = await fetch(
+  //   `${process.env.REACT_APP_BACKEND_URL}${queryRoute}`,
+  //   {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${authToken}`,
+  //     },
+  //     body: JSON.stringify(info),
+  //   }
+  // );
 
-    // const paymentIntentObj: {
-    //   paymentIntentSecret: string;
-    // } = await fetchRes.json();
-    // const { paymentIntentSecret } = paymentIntentObj;
-    // console.log(paymentIntentSecret);
-    // console.log("obj" + paymentIntentObj);
-    // setPaymentIntent(paymentIntentSecret);
-  };
+  // const paymentIntentObj: {
+  //   paymentIntentSecret: string;
+  // } = await fetchRes.json();
+  // const { paymentIntentSecret } = paymentIntentObj;
+  // console.log(paymentIntentSecret);
+  // console.log("obj" + paymentIntentObj);
+  // setPaymentIntent(paymentIntentSecret);
+  //};
 
   return (
     <form className="Form stripe-form" onSubmit={handleSubmit}>

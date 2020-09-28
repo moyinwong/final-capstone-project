@@ -240,7 +240,14 @@ const CoursePage: React.FC = () => {
                           加到購物車
                         </Button>
                       )}
-                      <Button variant="outline-danger">立即購買</Button>
+                      <Button
+                        variant="outline-danger"
+                        onClick={() => {
+                          dispatch(push("/payment", course));
+                        }}
+                      >
+                        立即購買
+                      </Button>
                     </>
                   )}
                 </div>
@@ -323,7 +330,14 @@ const CoursePage: React.FC = () => {
                             加到購物車
                           </Button>
                         )}
-                        <Button variant="outline-danger">立即購買</Button>
+                        <Button
+                          variant="outline-danger"
+                          onClick={() => {
+                            dispatch(push("/payment", course));
+                          }}
+                        >
+                          立即購買
+                        </Button>
                       </>
                     )}
                   </div>
