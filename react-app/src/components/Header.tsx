@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
 import { logout } from "../redux/auth/actions";
@@ -29,8 +29,25 @@ const Header = (props: any) => {
   );
   const userEmail = useSelector((state: IRootState) => state.auth.email);
   const [open, setOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const currentLocation = useLocation();
+
+  useEffect(() => {
+    const pageClickEvent = (e:any) => {
+      setOpen(!open)
+    }
+
+    if(open) {
+      window.addEventListener('click', pageClickEvent)
+    }
+
+    return () => {
+      window.removeEventListener('click', pageClickEvent)
+    }
+  }, [open])
+
+
 
   return (
     <div id="website-header">
@@ -90,7 +107,7 @@ const Header = (props: any) => {
                     {/* <FontAwesomeIcon icon={faUser} size="1x"/> */}
                     <i className="far fa-user"></i>
                   </button>
-                  {open && <DropdownMenu />}
+                  {open && <div ref={dropdownRef}><DropdownMenu /></div>}
                 </div>
                 <Navbar.Text>歡迎，{userEmail}</Navbar.Text>{" "}
               </div>

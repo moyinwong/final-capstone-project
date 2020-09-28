@@ -1,5 +1,5 @@
 import { slide as Menu } from "react-burger-menu";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 //import { faUser } from "@fortawesome/free-solid-svg-icons";
 //import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -23,6 +23,20 @@ const BurgerMenu: React.FC = () => {
 
   const currentLocation = useLocation();
 
+  useEffect(() => {
+    const pageClickEvent = (e:any) => {
+      setOpen(!open)
+    }
+
+    if(open) {
+      window.addEventListener('click', pageClickEvent)
+    }
+
+    return () => {
+      window.removeEventListener('click', pageClickEvent)
+    }
+  }, [open])
+  
   const categories: string[] = [
     "中文",
     "英文",

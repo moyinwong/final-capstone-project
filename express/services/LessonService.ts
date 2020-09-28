@@ -202,4 +202,59 @@ export class LessonService {
 
     return lessonId
   }
+
+  createLessonQuestion = async (question: string, lessonName: string, choices: []) => {
+    const lessonIdArray = await (this.knex
+      .select('id')
+      .from(tables.LESSONS)
+      .where('name', lessonName))
+    const lessonId = lessonIdArray[0].id
+  
+    const questionIdArray = await (this.knex
+    .insert({
+      question: question,
+      lesson_id: lessonId,
+      is_MC: true
+    })
+    .into(tables.QUESTIONS)
+    .returning('id'))
+    const questionId = questionIdArray[0]
+
+    // let mcAnswerIdArray = [];
+
+    for (let choice of choices) {
+      let answerBody = Object.keys(choice)[0];
+      let isTrue = choice[answerBody] === 'true';
+
+      let mcAnswerIdArray = this.knex
+      .insert({
+        question_id: questionId,
+        answer_body: answerBody,
+        is_correct_answer: isTrue
+      })
+      .into(tables.MC_ANSWERS)
+      .returning('id')
+      
+      console.log(mcAnswerIdArray)
+    }
+      // console.log(mcAnswerIdArray)
+    // }
+    // let mcAnswerId = this.knex
+    // .insert({
+    //   question_id: 12,
+    //   answer_body: 'haha',
+    //   is_correct_answer: true
+    // })
+    // .into(tables.MC_ANSWERS)
+    // .returning('id')
+
+    // console.log(mcAnswerId)
+
+    // return [ questionId, mcAnswerIdArray ]
+    // return questionId
+    return questionId
+  }
+
+  
+
 }

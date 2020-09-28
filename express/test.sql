@@ -52,6 +52,8 @@ select
 from
     "T1"
 
+INSERT into mc_answers(question_id, answer_body, is_correct_answer) VALUES (12, 'testing', true);
+
 
 
 

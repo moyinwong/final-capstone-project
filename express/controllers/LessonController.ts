@@ -135,17 +135,18 @@ export class LessonController {
   createLessonQuestion = async (req: Request, res: Response) => {
     try {
       const { lessonName } = req.params;
-      console.log(lessonName)
       const questionInfos = req.body;
 
+      let questionAndAnswersId: any[] = [];
       for (let item of questionInfos) {
+        let question = item.value;
         let choices = item.choices
-        let question = item.value
-        let questionId = item.questionNum
-        console.log(question)
-        console.log(choices)
-        console.log(questionId)
+
+        let questionId = await this.lessonService.createLessonQuestion(question, lessonName, choices)
+        questionAndAnswersId.push(questionId)
       }
+
+      console.log(questionAndAnswersId)
 
       return res.status(200).json({ message: 'successfully created questions'})
     } catch(e) {
