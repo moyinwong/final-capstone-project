@@ -1,6 +1,6 @@
 // React, React Native
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 
 // Navigation
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -21,16 +21,14 @@ import ICourse from '../../../Interfaces/ICourse';
 // Functions
 import showSubscribeBox from '../../../functions/showSubscribeBox';
 
+// Data
+import lessonsListTestData from '../../../data/lessonsListTestData';
+
 export default function Courses() {
 
     // Hooks
     const navigation = useNavigation();
     const route = useRoute();
-
-    // State
-    const [coursesListData, setCoursesListData] = useState(
-
-    );
 
     // Param
     let course: ICourse = {
@@ -50,6 +48,11 @@ export default function Courses() {
     if (route.params) {
         course = route.params.course;
     }
+
+    // State
+    const [courseData, setCXourseData] = useState(
+        course
+    );
 
     // Dummy Data
     const isSubscribed = false;
@@ -117,7 +120,12 @@ export default function Courses() {
             </View>
 
             <View>
-                <Text>課程內容:</Text>
+                <View>
+                    <Text>課程內容:</Text>
+                </View>
+                <View>
+
+                </View>
             </View>
 
             <View>
