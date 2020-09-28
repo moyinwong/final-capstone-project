@@ -97,7 +97,8 @@ const LessonCreatePage = () => {
                             lessonDescription: '',
                             lessonIsTrial: '',
                             lessonVideoUrl: '',
-                            files: [],                 
+                            files: [],
+                            lessonQuestion: [],                 
                         }} 
                         onSubmit={async (values) => {
 
@@ -171,7 +172,6 @@ const LessonCreatePage = () => {
                                 </Box>
                                 
                             </FormikStep>
-
 
                     </FormikStepper>
                 </CardContent>
