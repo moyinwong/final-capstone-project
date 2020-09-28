@@ -131,4 +131,26 @@ export class LessonController {
       return res.status(500).json({message: 'createLesson: internal server error'})
     }
   }
+
+  createLessonQuestion = async (req: Request, res: Response) => {
+    try {
+      const { lessonName } = req.params;
+      console.log(lessonName)
+      const questionInfos = req.body;
+
+      for (let item of questionInfos) {
+        let choices = item.choices
+        let question = item.value
+        let questionId = item.questionNum
+        console.log(question)
+        console.log(choices)
+        console.log(questionId)
+      }
+
+      return res.status(200).json({ message: 'successfully created questions'})
+    } catch(e) {
+      console.log(e.message)
+      return res.status(500).json({ message: 'createQuestion: internal server error'});
+    }
+  }
 }
