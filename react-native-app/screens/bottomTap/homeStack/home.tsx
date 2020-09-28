@@ -23,7 +23,7 @@ import subjectsData from '../../../data/subjectsData';
 import tutorsTestData from '../../../data/tutorsTestData';
 import coursesTestData from '../../../data/coursesTestData';
 
-export default function Home(props: { navigation: { navigate: (arg0: string) => void; }; }) {
+export default function Home() {
 
     // Hooks
     const navigation = useNavigation();
@@ -129,7 +129,7 @@ export default function Home(props: { navigation: { navigate: (arg0: string) => 
 
             <FlatList
                 style={homeStyles.flatList}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.id.toString()}
                 data={coursesListData}
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
@@ -142,7 +142,7 @@ export default function Home(props: { navigation: { navigate: (arg0: string) => 
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={homeStyles.courseBox}
-                        onPress={() => navigation.navigate('Course', { course: item })}
+                        onPress={() => navigation.navigate('Course', { courseName: item.course_name })}
                         // ssssssssssssssssssss
                         onLongPress={() => showModal(false)}
                     >

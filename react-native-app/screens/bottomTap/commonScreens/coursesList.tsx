@@ -87,7 +87,7 @@ export default function CoursesList() {
 
             <FlatList
                 style={coursesListStyles.flatList}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.id.toString()}
                 data={coursesListData}
                 showsVerticalScrollIndicator={false}
                 ListHeaderComponent={
