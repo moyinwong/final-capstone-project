@@ -125,10 +125,12 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { login } from '../redux/auth/thunk';
+import { login, loginGoogleThunk, loginFacebook } from '../redux/auth/thunk';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../redux/store';
-import { Alert } from 'react-bootstrap';
+import { Alert, Form } from 'react-bootstrap';
+import GoogleLogin from "react-google-login";
+import ReactFacebookLogin, { ReactFacebookLoginInfo } from 'react-facebook-login';
 
 function Copyright() {
   return (
@@ -219,7 +221,24 @@ export default function LoginPage (state: {
     }
   }
 
+  const responseGoogle = (response: any) => {
+    if (response.accessToken) {
+      dispatch(loginGoogleThunk(response.accessToken, previousLocation));
+    }
+  };
   
+  const fBOnCLick = () => {
+    return null;
+  };
+
+  const fBCallback = (
+    userInfo: ReactFacebookLoginInfo & { accessToken: string }
+  ) => {
+    if (userInfo.accessToken) {
+      dispatch(loginFacebook(userInfo.accessToken, previousLocation));
+    }
+    return null;
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -272,6 +291,28 @@ export default function LoginPage (state: {
           >
             登入
           </Button>
+
+          <GoogleLogin
+            clientId={`${process.env.REACT_APP_GOOGLE_APP_ID}`}
+            buttonText="LOGIN WITH GOOGLE"
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle}
+            cookiePolicy={"single_host_origin"}
+          />
+
+          <Form.Group>
+            <div className="fb-button">
+              <ReactFacebookLogin
+                buttonStyle={{width: '230px'}}
+                appId={process.env.REACT_APP_FACEBOOK_APP_ID || ""}
+                autoLoad={false}
+                fields="name,email,picture"
+                onClick={fBOnCLick}
+                callback={fBCallback}
+              />
+            </div>
+          </Form.Group>
+          
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
@@ -285,6 +326,7 @@ export default function LoginPage (state: {
             </Grid>
           </Grid>
         </form>
+
       </div>
       {errMessage ? <Alert variant="danger">{errMessage}</Alert> : ""}
       <Box mt={8}>
