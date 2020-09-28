@@ -59,7 +59,7 @@ export class PaymentService {
     const tutorStripeAccountId = result.stripe_id;
 
     const transfer = await stripe.transfers.create({
-      amount: amount * 100,
+      amount: Math.round(amount * 100),
       currency: "hkd",
       destination: tutorStripeAccountId,
       //transfer_group: transferGroupId,
