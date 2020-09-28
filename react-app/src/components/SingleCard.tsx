@@ -10,7 +10,10 @@ const SingleCard = (course: ICourse) => {
         <Card>
                   <div className="carousel-card">
                     <Link to={`/course/${course.course_name}`}>
+                      {course.image.match(/http/) ? (
                       <Card.Img variant="top" src={course.image} />
+                      ) : <Card.Img variant="top" src={`http://localhost:8080/img/${course.image}`}/>}
+                      
                     </Link>
                     <Card.Body className="carousel-card-body">
                       <div className="carousel-card-title">

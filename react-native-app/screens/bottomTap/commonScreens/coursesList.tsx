@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 
 // Navigation
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
 
 // Icons
 import { Entypo } from '@expo/vector-icons';
@@ -22,7 +22,7 @@ import ICoursesListParam from '../../../Interfaces/ICoursesListParam';
 import showModal from '../../../functions/showModal';
 
 // Data
-import coursesTestData from '../../../data/coursesTestData';
+import envData from '../../../data/env';
 
 export default function CoursesList() {
 
@@ -42,10 +42,45 @@ export default function CoursesList() {
         coursesListParam = route.params;
     }
 
+    let categoryName = 'category';
+    if (coursesListParam.subject) {
+        categoryName = coursesListParam.subject;
+    }
+
     // State
     const [coursesListData, setCoursesListData] = useState(
-        coursesTestData('all')
+        []
     );
+
+    useFocusEffect(
+        React.useCallback(() => {
+            getAllCoursesByCategory(categoryName);
+        }, [categoryName])
+    );
+
+    // Fetch
+    async function getAllCoursesByCategory(categoryName: string) {
+        try {
+            let queryRoute: string = "/category/";
+
+            const fetchRes = await fetch(
+                `${envData.REACT_APP_BACKEND_URL}${queryRoute}${categoryName}`
+            );
+
+            //if no such category
+            if (fetchRes.status === 500) {
+                throw new Error("伺服器發生問題");
+                //dispatch(push("/404"));
+                //return;
+            }
+
+            const result = await fetchRes.json();
+            setCoursesListData(result.courses);
+            console.log(result);
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     return (
         <View style={globalStyles.container}>
@@ -84,14 +119,15 @@ export default function CoursesList() {
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={coursesListStyles.courseBox}
-                        onPress={() => navigation.navigate('Course', { course: item })}
-                        onLongPress={() => showModal(item.isPurchased)}
+                        onPress={() => navigation.navigate('Course', { courseName: item.course_name })}
+                        // sssssssssssssssssssssssss
+                        onLongPress={() => showModal(true)}
                     >
                         <View style={coursesListStyles.coursePicContainer}>
                             <Image
                                 style={coursesListStyles.coursePic}
                                 resizeMode='cover'
-                                source={item.coursePic}
+                                source={{ uri: item.image }}
                             />
                         </View>
                         <View style={coursesListStyles.courseInfoContainer}>
@@ -101,23 +137,24 @@ export default function CoursesList() {
                                     <Image
                                         style={coursesListStyles.tutorPic}
                                         resizeMode='cover'
-                                        source={item.tutorPic}
+                                        source={{ uri: item.image }}
                                     />
                                 </View>
                             </View>
 
                             <View style={coursesListStyles.courseInfoRightContainer}>
-                                <Text style={coursesListStyles.courseTitle}>{item.title}</Text>
+                                <Text style={coursesListStyles.courseTitle}>{item.course_name}</Text>
                                 <View style={coursesListStyles.courseSubInfoContainer}>
                                     <View style={coursesListStyles.courseSubInfoTextContainer}>
-                                        <Text style={coursesListStyles.courseInfoText}>{item.tutor}</Text>
+                                        <Text style={coursesListStyles.courseInfoText}>{item.tutor_name}</Text>
                                         <Entypo style={coursesListStyles.courseInfoDot} name="dot-single" size={16} color="#555555" />
-                                        <Text style={coursesListStyles.courseInfoText}>{item.description}</Text>
+                                        <Text style={coursesListStyles.courseInfoText}>{item.course_description}</Text>
                                         <Entypo style={coursesListStyles.courseInfoDot} name="dot-single" size={16} color="#555555" />
-                                        <Text style={coursesListStyles.courseInfoText}>{"總共堂數: " + item.numOfLessons}</Text>
+                                        <Text style={coursesListStyles.courseInfoText}>{"總共堂數: " + item.lessons_number}</Text>
                                     </View>
                                     <View style={coursesListStyles.courseSubInfoLowerContainer}>
-                                        {item.isPurchased ?
+                                        {/* sssssssssssssssssss */}
+                                        {false ?
                                             (
                                                 <Text style={{ ...coursesListStyles.coursePrice, color: '#22c736' }}>{"已購買"}</Text>
                                             ) : (
@@ -126,7 +163,7 @@ export default function CoursesList() {
                                         <View style={coursesListStyles.courseScoreContainer}>
                                             <Text style={coursesListStyles.courseInfoText}>{"評分: "}</Text>
 
-                                            <Stars score={item.aveScore} />
+                                            <Stars score={item.rated_score} />
 
                                         </View>
                                     </View>

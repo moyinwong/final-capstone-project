@@ -42,7 +42,11 @@ const LessonAccordion = (course: IPureCourse) => {
             <Accordion.Collapse eventKey={`${course.id}`}>
                 <Card.Body>
                     {lessons.length === 0 && <div>No classes yet</div>}
-                    {lessons.map((lesson, i) => <div key={i}>{i + 1}: {lesson.lesson_name}</div>)}
+                    {lessons.map((lesson, i) => 
+                    <div key={i}>
+                        {i + 1}: {lesson.lesson_name}
+                        <Button href={`/instructor/lesson/question/${lesson.lesson_name}`}>Add questions</Button>
+                    </div>)}
                     <Button href={`/instructor/lesson/creation/${course.name}`} 
                     className="course-creation-button" variant="success">增加課堂</Button>
                 </Card.Body>

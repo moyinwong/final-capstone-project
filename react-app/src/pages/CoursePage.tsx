@@ -206,7 +206,7 @@ const CoursePage: React.FC = () => {
                   src={
                     course.image.match(/http/)
                       ? course.image
-                      : `localhost:8080/${course.image}`
+                      : `http://localhost:8080/img/${course.image}`
                   }
                 />
                 <div className="price">HK$ {course.price}</div>
@@ -240,7 +240,14 @@ const CoursePage: React.FC = () => {
                           加到購物車
                         </Button>
                       )}
-                      <Button variant="outline-danger">立即購買</Button>
+                      <Button
+                        variant="outline-danger"
+                        onClick={() => {
+                          dispatch(push("/payment", course));
+                        }}
+                      >
+                        立即購買
+                      </Button>
                     </>
                   )}
                 </div>
@@ -323,7 +330,14 @@ const CoursePage: React.FC = () => {
                             加到購物車
                           </Button>
                         )}
-                        <Button variant="outline-danger">立即購買</Button>
+                        <Button
+                          variant="outline-danger"
+                          onClick={() => {
+                            dispatch(push("/payment", course));
+                          }}
+                        >
+                          立即購買
+                        </Button>
                       </>
                     )}
                   </div>

@@ -97,7 +97,8 @@ const LessonCreatePage = () => {
                             lessonDescription: '',
                             lessonIsTrial: '',
                             lessonVideoUrl: '',
-                            files: [],                 
+                            files: [],
+                            lessonQuestion: [],                 
                         }} 
                         onSubmit={async (values) => {
 
@@ -171,7 +172,6 @@ const LessonCreatePage = () => {
                                 </Box>
                                 
                             </FormikStep>
-
 
                     </FormikStepper>
                 </CardContent>
@@ -265,7 +265,7 @@ export function FormikStepper({children, ...props}: FormikConfig<FormikValues>) 
                 {!completed && currentChild}
 
                 {/* file upload area */}
-                {isLastStep() && 
+                {step === 2 && 
                     <section className="container">
                     <div {...getRootProps({className: 'dropzone'})}>
                         <input {...getInputProps()} />

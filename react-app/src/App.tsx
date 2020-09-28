@@ -20,6 +20,7 @@ import CartPage from "./pages/CartPage";
 //import { Alert } from "react-bootstrap";
 import PaymentPage from "./pages/PaymentPage";
 import LessonCreatePage from "./pages/LessonCreatePage";
+import QuestionCreatePage from "./pages/QuestionCreatePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -79,6 +80,11 @@ function App() {
           path="/instructor/lesson/creation/:courseName"
           exact={true}
           component={LessonCreatePage}
+        />
+        <Route 
+          path="/instructor/lesson/question/:lessonName"
+          exact={true}
+          component={QuestionCreatePage}
         />
         <Route path="/payment" exact={true} component={PaymentPage} />
         <Route path="/404" exact={true} component={NotFound} />
