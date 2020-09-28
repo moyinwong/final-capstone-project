@@ -226,7 +226,7 @@ export class LessonService {
       let answerBody = Object.keys(choice)[0];
       let isTrue = choice[answerBody] === 'true';
 
-      let mcAnswerIdArray = this.knex
+      let mcIdArray = await this.knex
       .insert({
         question_id: questionId,
         answer_body: answerBody,
@@ -234,21 +234,11 @@ export class LessonService {
       })
       .into(tables.MC_ANSWERS)
       .returning('id')
+      let mcAnswerId = mcIdArray[0]
       
-      console.log(mcAnswerIdArray)
+      console.log(mcAnswerId)
     }
-      // console.log(mcAnswerIdArray)
-    // }
-    // let mcAnswerId = this.knex
-    // .insert({
-    //   question_id: 12,
-    //   answer_body: 'haha',
-    //   is_correct_answer: true
-    // })
-    // .into(tables.MC_ANSWERS)
-    // .returning('id')
 
-    // console.log(mcAnswerId)
 
     // return [ questionId, mcAnswerIdArray ]
     // return questionId

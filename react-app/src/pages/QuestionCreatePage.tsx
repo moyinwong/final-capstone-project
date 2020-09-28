@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { clear } from "console";
 import { useParams } from "react-router-dom";
+import './QuestionCreatePage.scss'
+import { Button, CircularProgress } from "@material-ui/core";
+import { Badge } from "react-bootstrap";
 
 interface IQuestion {
     questionNum: number; 
     value: string; 
     choices: Array<Object>;
 }
+
 const QuestionCreatePage = () => {
   const param: { lessonName: string } = useParams();
   const courseName = param.lessonName;
@@ -47,6 +50,7 @@ const QuestionCreatePage = () => {
     setInputList([...inputList, obj]);
   };
 
+  // handle add choice button
   const handleAddChoice = (index:number) => {
       const questionAnswer = (document.getElementById(`multiple-choice${index}`) as HTMLInputElement).value
       let radio = document.getElementsByName(`answer${index}`) as NodeListOf<HTMLInputElement>;
@@ -62,6 +66,7 @@ const QuestionCreatePage = () => {
       setInputList(list)
   }
 
+  // clear question and uncheck radio field
   const clearInputField = (index:number) => {
     const questionAnswer = (document.getElementById(`multiple-choice${index}`) as HTMLInputElement)
     questionAnswer.value = ''
@@ -71,70 +76,109 @@ const QuestionCreatePage = () => {
     }
   }
 
+  // handle submit
   const handleSubmit = async () => {
-
-
-
-      const queryRoute = '/lesson/creation/question'
+      const queryRoute = '/lesson/creation/question';
       const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}${queryRoute}/${courseName}`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
           },
           body: JSON.stringify(inputList)
-      })
+      });
+
   }
 
   return (
-    <div className="App">
+    <div className="question-create-container">
       <h3>
         建立練習問題
       </h3>
+
       {inputList.map((input, i) => {
         return (
-          <div className="box" style={{marginTop: '20px'}}>
-            <input
-              name={`question${i}`}
-              placeholder="Enter question"
-              value={input.value}
-              onChange={(e) => handleInputChange(e, i)}
-            />
-
-
-            <input id={`multiple-choice${i}`} placeholder='Enter choice'/>
-
-            <label htmlFor="true">True</label>
-            <input id={`true${i}`} type="radio" name={`answer${i}`} value="true" />
-            <label htmlFor="false">False</label>
-            <input id={`false${i}`} type="radio" name={`answer${i}`} value="false" />
-
-            <button onClick={() => {
-                handleAddChoice(i)
-                clearInputField(i)
-                }}>Add Choice</button>
-
-            {input.choices.map((choice, index) => 
+          <div className="box" >
             <div>
-                <span>{index}: </span>
-                <span>{Object.keys(choice)[0]} </span>
-                <span>{(choice as any)[Object.keys(choice)[0]]}</span>
-            </div>)}
-            <div className="btn-box">
-              {inputList.length !== 1 && (
-                <button className="mr10" onClick={() => handleRemoveClick(i)}>
-                  Remove
-                </button>
-              )}
+                <input
+                    className="text-input-question"
+                    name={`question${i}`}
+                    placeholder="輸入問題題目"
+                    value={input.value}
+                    onChange={(e) => handleInputChange(e, i)}
+                />
+            </div>
 
-              {inputList.length - 1 === i && (
-                <button onClick={() => handleAddClick(i)}>Add</button>
-              )}
+
+            <div>
+                <input 
+                    className="text-input-choice" 
+                    id={`multiple-choice${i}`} 
+                    placeholder='輸入問題選項'
+                />
+
+                <div className="radio-truefalse">
+                    <label htmlFor="true">啱</label>
+                    <input id={`true${i}`} type="radio" name={`answer${i}`} value="true" />
+                    <label htmlFor="false">錯</label>
+                    <input id={`false${i}`} type="radio" name={`answer${i}`} value="false" />
+                </div>
+            </div>
+
+
+            <div>
+                <Button 
+                    variant="outlined" 
+                    color="primary"
+                    onClick={() => {
+                        handleAddChoice(i)
+                        clearInputField(i)
+                    }}>
+                        增加答案選項
+                </Button>
+
+                {input.choices.map((choice, index) => 
+                <Badge className="badge-answer">
+                    <span>{index + 1}: </span>
+                    <span>{Object.keys(choice)[0]} </span>
+                    <span>{(choice as any)[Object.keys(choice)[0]] === 'true' ? '啱': '錯'}</span>
+                </Badge>)}
+                <div className="btn-box">
+                    {inputList.length !== 1 && (
+                        <Button
+                            className="button-remove"            
+                            variant="contained"
+                            color="secondary" 
+                            onClick={() => handleRemoveClick(i)}
+                        >
+                            移除
+                        </Button>
+                    )}
+
+                    {inputList.length - 1 === i && (
+                        <Button           
+                            variant="contained"
+                            color="primary" 
+                            onClick={() => handleAddClick(i)}
+                        >
+                            增加問題
+                        </Button>
+                    )}
+                </div>
+
             </div>
           </div>
         );
       })}
-      <div style={{ marginTop: 20 }}>{JSON.stringify(inputList, null, '\t')}</div>
-      <button type='submit' onClick={() => handleSubmit()}>Submit</button>
+
+      <Button
+        href="/instructor"
+        id="submit-button"
+        size="large" 
+        type='submit' 
+        onClick={() => handleSubmit()}
+      >
+        提交
+      </Button>
     </div>
   );
 };

@@ -300,7 +300,7 @@ export function FormikStepper({children, ...props}: FormikConfig<FormikValues>) 
                     {isSubmitting ? 'Submitting' : isLastStep() ? 'Submit' : 'Next'}
                 </Button>}
 
-                {completed && <div>成功建立課程<i className="fas fa-check-circle"></i></div>}
+                {completed && <div>成功建立課堂<i className="fas fa-check-circle"></i></div>}
             </Form>
         )}
             
