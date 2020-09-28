@@ -10,6 +10,7 @@ const QuestionCreatePage = () => {
       const { name, value } = e.target;
       const list: any[] = [...inputList];
       list[index][name] = value;
+      console.log(list[index])
       setInputList(list);
     };
    
