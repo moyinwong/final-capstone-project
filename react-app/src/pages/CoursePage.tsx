@@ -11,6 +11,7 @@ import { Accordion, Alert, Button, Card } from "react-bootstrap";
 
 import { addCourse } from "../redux/cart/actions";
 import "./CoursePage.scss";
+import CommentModal from "../components/CommentModal";
 
 export interface ILesson {
   course_id: number;
@@ -222,7 +223,7 @@ const CoursePage: React.FC = () => {
                           已評價
                         </Button>
                       ) : (
-                        <Button variant="success">評價</Button>
+                        <CommentModal />
                       )}
                     </div>
                   ) : (
@@ -317,7 +318,7 @@ const CoursePage: React.FC = () => {
                             已評價
                           </Button>
                         ) : (
-                          <Button variant="success">評價</Button>
+                          <CommentModal />
                         )}
                       </>
                     ) : (
