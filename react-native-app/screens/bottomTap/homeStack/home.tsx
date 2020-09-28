@@ -28,12 +28,15 @@ export default function Home() {
     // Hooks
     const navigation = useNavigation();
 
+    // Subjects
     // State
     const subjects = subjectsData('all');
     const [mainSubjectsData, setMainSubjectsData] = useState([
         subjects[0], subjects[1], subjects[10], subjects[4], subjects[3], subjects[18]
     ]);
 
+    // Courses List
+    // State
     const [coursesListData, setCoursesListData] = useState(
         []
     );
@@ -63,7 +66,6 @@ export default function Home() {
 
             const result = await fetchRes.json();
             setCoursesListData(result.courses);
-            console.log(result);
         } catch (err) {
             console.log(err);
         }
