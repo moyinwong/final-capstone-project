@@ -265,7 +265,7 @@ export function FormikStepper({children, ...props}: FormikConfig<FormikValues>) 
                 {!completed && currentChild}
 
                 {/* file upload area */}
-                {isLastStep() && 
+                {step === 2 && 
                     <section className="container">
                     <div {...getRootProps({className: 'dropzone'})}>
                         <input {...getInputProps()} />

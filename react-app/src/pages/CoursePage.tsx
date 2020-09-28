@@ -206,7 +206,7 @@ const CoursePage: React.FC = () => {
                   src={
                     course.image.match(/http/)
                       ? course.image
-                      : `localhost:8080/${course.image}`
+                      : `http://localhost:8080/img/${course.image}`
                   }
                 />
                 <div className="price">HK$ {course.price}</div>
