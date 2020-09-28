@@ -28,6 +28,7 @@ export function login(
 
     //json object which contain token & user email
     const json = await res.json();
+    console.log(json)
 
     if (json.token != null) {
       localStorage.setItem("token", json.token);
@@ -41,6 +42,7 @@ export function login(
         dispatch(push("/"));
       }
     } else if (res.status === 401) {
+      console.log(res.status)
       dispatch(loginFail("Wrong email/password"));
     }
   };

@@ -11,15 +11,14 @@ const DropdownMenu = () => {
 
     return (
         <div className="user-dropdown-menu">
-            <Link to="#" className="menu-item">My profile</Link>
-            {isTutor ? <Link to="/instructor" className="menu-item">Instructor Dashboard</Link> : ""}
-            <Link to="#" className="menu-item">My courses</Link>
-            <Link to="#" className="menu-item">Account settings</Link>
-            <Link to="#" className="menu-item">Messages</Link>
+            <Link to="#" className="menu-item">我的帳戶</Link>
+            {isTutor ? <Link to="/instructor" className="menu-item">老師介面</Link> : ""}
+            <Link to="#" className="menu-item">我的課程</Link>
+            <Link to="#" className="menu-item">收件箱</Link>
             <Link onClick={() => {
                   localStorage.removeItem("token");
                   dispatch(logout());
-                }} to="#" className="menu-item">Logout</Link>
+                }} to="#" className="menu-item">登出</Link>
         </div>
         // <div>hello</div>
     )

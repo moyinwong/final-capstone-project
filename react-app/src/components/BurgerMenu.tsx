@@ -29,6 +29,7 @@ const BurgerMenu: React.FC = () => {
     }
 
     if(open) {
+      (document.querySelector(".user-dropdown-menu") as HTMLElement).style.right = '20px';
       window.addEventListener('click', pageClickEvent)
     }
 

@@ -19,6 +19,7 @@ export class UserController {
       }
       const { email, password } = req.body;
       const user = await this.userService.getUserByEmail(email);
+
       if (!user || !(await checkPassword(password, user.password))) {
         res.status(401).json({ msg: "Wrong Email/Password" });
         return;
