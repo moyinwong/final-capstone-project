@@ -45,6 +45,14 @@ const Header = (props: any) => {
             </Link>
           </Navbar.Brand>
           {/* <div className='blank-space'>{' '}</div> */}
+          <div
+            className="icon-button responsive"
+            onClick={() => {
+              dispatch(push("/cart"));
+            }}
+          >
+            <i className="fas fa-shopping-cart"></i>
+          </div>
           <div className="mr-auto search-bar">
             <Nav>
               <Form inline>
@@ -58,24 +66,45 @@ const Header = (props: any) => {
               <DarkModeSwitch />
             </Nav>
           </div>
-          <div>
+          {/* <div>
             <Link to="/cart">
               <i className="fas fa-shopping-cart"></i>
             </Link>
-          </div>
+          </div> */}
           {isAuthenticated ? (
-            <div className="user-info">
-              <div className="user-icon-container">
-                <button className="user-icon" onClick={() => setOpen(!open)}>
-                  {/* <FontAwesomeIcon icon={faUser} size="1x"/> */}
-                  <i className="far fa-user"></i>
-                </button>
-                {open && <DropdownMenu />}
+            <div className="user-info-container">
+              <div className="user-info" style={{ flexDirection: "column" }}>
+                <div
+                  className="user-icon-container"
+                  style={{ display: "flex", flexDirection: "row" }}
+                >
+                  <div
+                    className="icon-button"
+                    onClick={() => {
+                      dispatch(push("/cart"));
+                    }}
+                  >
+                    <i className="fas fa-shopping-cart"></i>
+                  </div>
+                  <button className="user-icon" onClick={() => setOpen(!open)}>
+                    {/* <FontAwesomeIcon icon={faUser} size="1x"/> */}
+                    <i className="far fa-user"></i>
+                  </button>
+                  {open && <DropdownMenu />}
+                </div>
+                <Navbar.Text>歡迎，{userEmail}</Navbar.Text>{" "}
               </div>
-              <Navbar.Text>Hi {userEmail}, welcome back</Navbar.Text>{" "}
             </div>
           ) : (
             <div className="user-info">
+              <div
+                className="icon-button"
+                onClick={() => {
+                  dispatch(push("/cart"));
+                }}
+              >
+                <i className="fas fa-shopping-cart"></i>
+              </div>
               <Button
                 variant="success"
                 onClick={() => {

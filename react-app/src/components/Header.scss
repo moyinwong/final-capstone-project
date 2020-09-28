@@ -4,6 +4,33 @@
   align-items: center;
 }
 
+.icon-button {
+  border: 0;
+  padding: 0;
+  background: rgb(23, 240, 204);
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+  position: relative;
+  right: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+
+  .fas {
+    color: black;
+  }
+}
+
+.icon-button:hover {
+  cursor: pointer;
+}
+
+.icon-button.responsive {
+  display: none;
+}
+
 .website-logo {
   width: 100px;
   height: 100px;
@@ -31,23 +58,27 @@
 //   background-color: grey;
 //   border-radius: 20px;
 
-  .user-icon {
-    border: 0;
-    padding: 0;
-    background: rgb(23, 240, 204);
-    height: 40px;
-    width: 40px;
-    border-radius: 20px;
-    position: relative;
-    right: 30px;
-  }
+.user-icon {
+  border: 0;
+  padding: 0;
+  background: rgb(23, 240, 204);
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+  position: relative;
+  right: 30px;
+}
 // }
 
 .user-info {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: flex-end;
+
+  > div {
+    margin-right: 10px;
+  }
 
   .fa-user:before {
     color: black;
@@ -68,11 +99,18 @@
     display: none;
     align-items: center;
   }
-  
+
   .user-icon {
     right: 0;
   }
 
+  .icon-button.responsive {
+    display: block;
+    position: fixed;
+    line-height: 40px;
+    top: 40px;
+    right: 25px;
+  }
 
   .burger-menu {
     display: block;
@@ -90,5 +128,3 @@
     display: none;
   }
 }
-
-

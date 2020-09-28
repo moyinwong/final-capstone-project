@@ -49,6 +49,14 @@
   .dropdown {
     overflow: hidden;
   }
+
+  .bm-login-button {
+    margin: 0 auto;
+  }
+
+  .user-icon-container {
+    width: 100%;
+  }
 }
 
 /* Morph shape necessary with bubble or elastic */
@@ -60,7 +68,6 @@
 .bm-item-list {
   color: #b8b7ad;
   padding: 0.8em;
-  
 }
 
 /* Individual item */
