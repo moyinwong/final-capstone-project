@@ -147,6 +147,7 @@ const CheckoutForm: React.FC<{
     phone: "",
     name: "",
   });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const authToken = localStorage.getItem("token");
   const [paymentIntent, setPaymentIntent] = useState<string>("");
@@ -214,7 +215,7 @@ const CheckoutForm: React.FC<{
     } else {
       console.log("[PaymentMethod]", paymentMethod);
     }
-
+    setIsLoading(true);
     const confirmRes = await stripe.confirmCardPayment(paymentIntent, {
       payment_method: paymentMethod?.id,
     });
@@ -229,6 +230,7 @@ const CheckoutForm: React.FC<{
     const confirmedPaymentIntent = confirmRes.paymentIntent;
 
     if (confirmedPaymentIntent?.status !== "succeeded") {
+      setIsLoading(false);
       setError({ message: "付款不成功" });
     }
 
@@ -246,6 +248,7 @@ const CheckoutForm: React.FC<{
 
     const result = await confirmedPaymentRes.json();
     console.log(result);
+    setIsLoading(false);
   };
 
   const createPaymentIntent = async (courses: ICourse[], authToken: string) => {
@@ -324,66 +327,73 @@ const CheckoutForm: React.FC<{
   //};
 
   return (
-    <form className="Form stripe-form" onSubmit={handleSubmit}>
-      <div className="stripe-form-title">
-        <h1>請填寫付款資料</h1>
-      </div>
-      <fieldset className="FormGroup">
-        <Field
-          label="姓名"
-          id="name"
-          type="text"
-          placeholder="請填上姓名"
-          required
-          autoComplete="name"
-          value={billingDetails.name}
-          onChange={(e: any) => {
-            setBillingDetails({ ...billingDetails, name: e.target.value });
-          }}
-        />
-        <Field
-          label="電郵"
-          id="email"
-          type="email"
-          placeholder="請填上電郵"
-          required
-          autoComplete="email"
-          value={billingDetails.email}
-          onChange={(e: any) => {
-            setBillingDetails({ ...billingDetails, email: e.target.value });
-          }}
-        />
-        <Field
-          label="電話"
-          id="phone"
-          type="tel"
-          placeholder="請填上電話號碼"
-          required
-          autoComplete="tel"
-          value={billingDetails.phone}
-          onChange={(e: any) => {
-            setBillingDetails({ ...billingDetails, phone: e.target.value });
-          }}
-        />
-      </fieldset>
-      <fieldset className="FormGroup">
-        <CardField
-          onChange={(e: any) => {
-            setError(e.error);
-            setCardComplete(e.complete);
-          }}
-        />
-      </fieldset>
-      {error && <ErrorMessage>{error?.message}</ErrorMessage>}
-      <SubmitButton
-        processing={processing}
-        error={error}
-        disabled={!stripe || !cardComplete}
-      >
-        確認付款
-      </SubmitButton>
-      <ResetButton onClick={reset} disabled={false} />
-    </form>
+    <>
+      {isLoading && (
+        <div id="stripe-loading-div">
+          <div className="lds-dual-ring"></div>
+        </div>
+      )}
+      <form className="Form stripe-form" onSubmit={handleSubmit}>
+        <div className="stripe-form-title">
+          <h1>請填寫付款資料</h1>
+        </div>
+        <fieldset className="FormGroup">
+          <Field
+            label="姓名"
+            id="name"
+            type="text"
+            placeholder="請填上姓名"
+            required
+            autoComplete="name"
+            value={billingDetails.name}
+            onChange={(e: any) => {
+              setBillingDetails({ ...billingDetails, name: e.target.value });
+            }}
+          />
+          <Field
+            label="電郵"
+            id="email"
+            type="email"
+            placeholder="請填上電郵"
+            required
+            autoComplete="email"
+            value={billingDetails.email}
+            onChange={(e: any) => {
+              setBillingDetails({ ...billingDetails, email: e.target.value });
+            }}
+          />
+          <Field
+            label="電話"
+            id="phone"
+            type="tel"
+            placeholder="請填上電話號碼"
+            required
+            autoComplete="tel"
+            value={billingDetails.phone}
+            onChange={(e: any) => {
+              setBillingDetails({ ...billingDetails, phone: e.target.value });
+            }}
+          />
+        </fieldset>
+        <fieldset className="FormGroup">
+          <CardField
+            onChange={(e: any) => {
+              setError(e.error);
+              setCardComplete(e.complete);
+            }}
+          />
+        </fieldset>
+        {error && <ErrorMessage>{error?.message}</ErrorMessage>}
+        <SubmitButton
+          processing={processing}
+          error={error}
+          disabled={!stripe || !cardComplete}
+        >
+          確認付款
+        </SubmitButton>
+        <ResetButton onClick={reset} disabled={false} />
+      </form>
+    </>
   );
 };
 

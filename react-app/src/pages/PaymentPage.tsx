@@ -15,11 +15,15 @@ import "./PaymentPage.scss";
 const PaymentPage: React.FC = (state: {
   children?: React.ReactNode;
   location?: {
-    state?: ICourse;
+    state?: { course?: ICourse; pastLocation: string };
   };
 }) => {
   const dispatch = useDispatch();
-  const immedatePurchaseCourse: ICourse | undefined = state.location?.state;
+  console.log(state);
+  const immedatePurchaseCourse: ICourse | undefined =
+    state.location?.state?.course;
+
+  const pastLocation: string | undefined = state.location?.state?.pastLocation;
   useEffect(() => {
     document.getElementById("website-header")!.style.display = "none";
     return () => {
@@ -35,7 +39,7 @@ const PaymentPage: React.FC = (state: {
       <Button
         variant="link"
         onClick={() => {
-          dispatch(push("/cart"));
+          dispatch(push(pastLocation ? pastLocation : "/cart"));
         }}
         className="stripe-form-back-button"
       >

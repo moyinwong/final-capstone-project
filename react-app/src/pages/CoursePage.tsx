@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { push } from "connected-react-router";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -47,6 +47,7 @@ const CoursePage: React.FC = () => {
   const [isReady, setIsReady] = useState(false);
   const [isShowAlert, setIsShowAlert] = useState(false);
   const [alertMsg, setAlertMsg] = useState<string>("");
+  const currentLocation = useLocation();
 
   //run once when init
   useEffect(() => {
@@ -243,7 +244,12 @@ const CoursePage: React.FC = () => {
                       <Button
                         variant="outline-danger"
                         onClick={() => {
-                          dispatch(push("/payment", course));
+                          dispatch(
+                            push("/payment", {
+                              pastLocation: currentLocation,
+                              course,
+                            })
+                          );
                         }}
                       >
                         立即購買
@@ -333,7 +339,12 @@ const CoursePage: React.FC = () => {
                         <Button
                           variant="outline-danger"
                           onClick={() => {
-                            dispatch(push("/payment", course));
+                            dispatch(
+                              push("/payment", {
+                                pastLocation: currentLocation,
+                                course,
+                              })
+                            );
                           }}
                         >
                           立即購買
