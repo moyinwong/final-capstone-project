@@ -1,9 +1,9 @@
 // React, React Native
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 
 // Navigation
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
 
 // Icons
 import { MaterialIcons } from '@expo/vector-icons';
@@ -15,11 +15,12 @@ import Stars from '../../../sharedComponents/stars';
 import globalStyles from '../../../styles/globalStyles';
 import courseStyles from '../../../styles/courseStyles';
 
-// Interfaces
-import ICourse from '../../../Interfaces/ICourse';
-
 // Functions
 import showSubscribeBox from '../../../functions/showSubscribeBox';
+
+// Data
+import envData from '../../../data/env';
+import lessonsListTestData from '../../../data/lessonsListTestData';
 
 export default function Courses() {
 
@@ -27,28 +28,47 @@ export default function Courses() {
     const navigation = useNavigation();
     const route = useRoute();
 
-    // State
-    const [coursesListData, setCoursesListData] = useState(
-
-    );
-
     // Param
-    let course: ICourse = {
-        title: null,
-        description: null,
-        tutor: null,
-        numOfLessons: null,
-        price: null,
-        aveScore: null,
-        numOfStudents: null,
-        isPurchased: null,
-        coursePic: null,
-        tutorPic: null,
-        id: null
-    }
+    let courseName = "course"
 
     if (route.params) {
-        course = route.params.course;
+        courseName = route.params.courseName;
+    }
+
+    // State
+    const [courseInfo, setCourseInfo] = useState(
+        courseName
+    );
+
+    useFocusEffect(
+        React.useCallback(() => {
+            getCourseInfo(courseName);
+        }, [courseName])
+    );
+
+    // Fetch
+    async function getCourseInfo(courseName: string) {
+        try {
+            let queryRoute: string = "/course/";
+
+            console.log(courseName);
+            const fetchRes = await fetch(
+                `${envData.REACT_APP_BACKEND_URL}${queryRoute}${courseName}`
+            );
+
+            //if no such category
+            if (fetchRes.status === 500) {
+                throw new Error("伺服器發生問題");
+                //dispatch(push("/404"));
+                //return;
+            }
+
+            const result = await fetchRes.json();
+            setCourseInfo(result.course);
+            console.log(result);
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     // Dummy Data
@@ -64,18 +84,18 @@ export default function Courses() {
                     <Image
                         style={courseStyles.coursePic}
                         resizeMode='cover'
-                        source={course.coursePic}
+                        source={{ uri: courseInfo.image }}
                     />
                 </View>
                 <View style={courseStyles.courseInfoContainer}>
-                    <Text style={courseStyles.courseTitle}>{course.title}</Text>
-                    <Text style={courseStyles.courseInfoText}>{course.description}</Text>
-                    <Text style={courseStyles.courseInfoText}>{'學生人數: ' + course.numOfStudents}</Text>
+                    <Text style={courseStyles.courseTitle}>{courseInfo.course_name}</Text>
+                    <Text style={courseStyles.courseInfoText}>{courseInfo.objective}</Text>
+                    <Text style={courseStyles.courseInfoText}>{'學生人數: ' + courseInfo.purchased_users_num}</Text>
 
                     <View style={courseStyles.courseScoreContainer}>
                         <Text style={courseStyles.courseInfoText}>{"評分: "}</Text>
 
-                        <Stars score={course.aveScore} />
+                        <Stars score={courseInfo.rated_score} />
 
                     </View>
                 </View>
@@ -86,11 +106,11 @@ export default function Courses() {
                     <Image
                         style={courseStyles.tutorPic}
                         resizeMode='cover'
-                        source={course.tutorPic}
+                        source={{ uri: courseInfo.image }}
                     />
                 </View>
                 <View>
-                    <Text style={courseStyles.tutorName}>{course.tutor}</Text>
+                    <Text style={courseStyles.tutorName}>{courseInfo.tutor_name}</Text>
                     <View style={courseStyles.tutorSubscribedBox}>
                         <Text style={courseStyles.tutorNumOfSubscribedText}>訂閱數: 100</Text>
                     </View>
@@ -113,11 +133,16 @@ export default function Courses() {
             </View>
 
             <View>
-                <Text>{'課程簡介: ' + course.description}</Text>
+                <Text>{'課程簡介: ' + courseInfo.course_description}</Text>
             </View>
 
             <View>
-                <Text>課程內容:</Text>
+                <View>
+                    <Text>課程內容:</Text>
+                </View>
+                <View>
+
+                </View>
             </View>
 
             <View>

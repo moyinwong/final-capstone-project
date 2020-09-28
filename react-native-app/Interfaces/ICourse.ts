@@ -9,5 +9,5 @@ export default interface ICourse {
     isPurchased?: boolean | null
     coursePic?: any | null
     tutorPic?: any | null
-    id?: string | null
+    id?: string | number | null
 }

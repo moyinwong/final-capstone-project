@@ -120,6 +120,7 @@ const CartPage: React.FC = () => {
                 size="lg"
                 block
                 onClick={() => dispatch(push("/payment"))}
+                disabled={cartCourses.length === 0}
               >
                 付款
               </Button>
