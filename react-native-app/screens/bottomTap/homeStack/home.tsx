@@ -110,7 +110,7 @@ export default function Home(props: { navigation: { navigate: (arg0: string) => 
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={homeStyles.courseBox}
-                        onPress={() => navigation.navigate('Course', { title: item.title })}
+                        onPress={() => navigation.navigate('Course', { course: item })}
                         onLongPress={() => showModal(item.isPurchased)}
                     >
                         <View style={homeStyles.coursePicContainer}>
@@ -203,7 +203,7 @@ export default function Home(props: { navigation: { navigate: (arg0: string) => 
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={{ ...homeStyles.courseBox, height: 240 }}
-                        onPress={() => navigation.navigate('Course', { title: item.title })}
+                        onPress={() => navigation.navigate('Course', { course: item })}
                         onLongPress={() => showModal(true)}
                     >
                         <View style={homeStyles.coursePicContainer}>

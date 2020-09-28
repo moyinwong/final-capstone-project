@@ -84,7 +84,7 @@ export default function CoursesList() {
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={coursesListStyles.courseBox}
-                        onPress={() => navigation.navigate('Course', { title: item.title })}
+                        onPress={() => navigation.navigate('Course', { course: item })}
                         onLongPress={() => showModal(item.isPurchased)}
                     >
                         <View style={coursesListStyles.coursePicContainer}>
