@@ -13,6 +13,7 @@
     color: black;
     text-align: center;
     width: 100%;
+    padding: 0.3rem 1rem;
   }
 
   .dropdown-item.active,
@@ -26,6 +27,7 @@
   }
 
   .dropdown-menu {
+    transform: translateX(-20%);
     background-color: #353a3f;
     padding: 0;
     min-width: 1rem;

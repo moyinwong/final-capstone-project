@@ -3,6 +3,11 @@ div.card {
     border-style: none;
 }
 
+img#carousel-card-img.card-img-top {
+    width: 100%;
+    height: 140px!important;
+}
+
 .carousel-card-body {
     text-align: left;
     height: 144px;

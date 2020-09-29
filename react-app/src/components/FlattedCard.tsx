@@ -28,7 +28,7 @@ const FlattedCard = (props: ICourse) => {
           />
         </div>
       ) : (
-        <div>
+        <div className='img-container'>
           <img
             src={"http://localhost:8080/img/" + props.image}
             alt={props.course_name}
