@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState } from "react";
 import { Form, Modal } from "react-bootstrap";
 import { Button } from "react-bootstrap";
+import Rating from "react-rating";
 
 const CommentModal: React.FC = () => {
   const [show, setShow] = useState(false);
@@ -9,10 +10,18 @@ const CommentModal: React.FC = () => {
   const handleShow = () => setShow(true);
 
   const [comment, setComment] = useState<string>("");
+  const [rating, setRating] = useState<number>(0);
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: React.FormEvent<HTMLInputElement>) => {
     event.preventDefault();
     console.log(comment);
+    console.log(rating);
+
+    //fetch
+  };
+
+  const handleRatingOnchange = (value: any) => {
+    setRating(value);
   };
 
   function handleCommentOnChange(event: ChangeEvent<HTMLInputElement>) {
@@ -36,13 +45,45 @@ const CommentModal: React.FC = () => {
         </Modal.Header>
         <Form onSubmit={handleSubmit}>
           <Modal.Body>
-            <Form.Control as="textarea" onChange={handleCommentOnChange} />
+            <Form.Control
+              as="textarea"
+              onChange={handleCommentOnChange}
+              style={{ height: 150 }}
+            />
+            <div style={{ margin: 10 }}>
+              評分：
+              <Rating
+                onChange={handleRatingOnchange}
+                stop={5}
+                emptySymbol={[
+                  "far fa-star fa-2x",
+                  "far fa-star fa-2x",
+                  "far fa-star fa-2x",
+                  "far fa-star fa-2x",
+                  "far fa-star fa-2x",
+                ]}
+                fullSymbol={[
+                  "fas fa-star fa-2x",
+                  "fas fa-star fa-2x",
+                  "fas fa-star fa-2x",
+                  "fas fa-star fa-2x",
+                  "fas fa-star fa-2x",
+                ]}
+                initialRating={rating}
+                quiet={true}
+              />
+            </div>
           </Modal.Body>
+
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
               關閉
             </Button>
-            <Button variant="primary" type="submit">
+            <Button
+              variant="primary"
+              type="submit"
+              disabled={!rating || !comment}
+            >
               提交
             </Button>
           </Modal.Footer>
