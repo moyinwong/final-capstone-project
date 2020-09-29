@@ -21,6 +21,7 @@ import CartPage from "./pages/CartPage";
 import PaymentPage from "./pages/PaymentPage";
 import LessonCreatePage from "./pages/LessonCreatePage";
 import QuestionCreatePage from "./pages/QuestionCreatePage";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   const dispatch = useDispatch();
@@ -70,23 +71,23 @@ function App() {
           component={LessonPage}
         />
         {/* ... */}
-        <Route path="/instructor" exact={true} component={InstructorPage} />
-        <Route
+        <PrivateRoute path="/instructor" exact={true} component={InstructorPage} />
+        <PrivateRoute
           path="/instructor/course/creation"
           exact={true}
           component={CourseCreatePage}
         />
-        <Route
+        <PrivateRoute
           path="/instructor/lesson/creation/:courseName"
           exact={true}
           component={LessonCreatePage}
         />
-        <Route 
+        <PrivateRoute 
           path="/instructor/lesson/question/:lessonName"
           exact={true}
           component={QuestionCreatePage}
         />
-        <Route path="/payment" exact={true} component={PaymentPage} />
+        <PrivateRoute path="/payment" exact={true} component={PaymentPage} />
         <Route path="/404" exact={true} component={NotFound} />
         <Route component={NotFound} />
       </Switch>
