@@ -19,6 +19,18 @@ export interface ICategory {
   updated_at: string;
 }
 
+export interface ICourse {
+  name: string;
+  price: number;
+  category_id: number;
+  subcategory_id?: number;
+  tutor_id: number;
+  image: string;
+  description: string;
+  objective: string;
+  prerequisites: string;
+}
+
 //in order to add "user" in Request
 declare global {
   namespace Express {

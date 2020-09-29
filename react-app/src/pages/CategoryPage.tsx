@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Accordion,
   Alert,
@@ -44,10 +44,35 @@ const CategoryPage: React.FC = () => {
   const [isShowAlert, setIsShowAlert] = useState<boolean>(false);
   const [alertMsg, setAlertMsg] = useState<string>("");
   const [isSubCategory, setIsSubCategory] = useState<boolean>(false);
+  const [displayCourseNum, setDisplayCourseNum] = useState(10);
+  const [totalCourseNum, setTotalCourseNum] = useState(0);
+  const [Yposition, setYPosition] = useState<{ Y: number }>({
+    Y: window.pageYOffset,
+  });
 
+  //const [totalYHeight, setTotalYHeight] = useState(0);
   const { categoryName } = param;
 
-  console.log();
+  function handleScroll(event: any) {
+    //setTotalYHeight((prevHeight) => document.body.clientHeight);
+    setYPosition({
+      Y: event.target.scrollingElement.scrollTop + window.innerHeight,
+    });
+  }
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (Yposition.Y > document.body.clientHeight) {
+      ////console.log("hahahha");
+      setDisplayCourseNum((prevNum) => prevNum + 10);
+    }
+  }, [Yposition]);
 
   useEffect(() => {
     if (
@@ -80,7 +105,7 @@ const CategoryPage: React.FC = () => {
 
       //if is "others" category, change the api route
       if (location.pathname.match(/others\/./)) {
-        console.log("ahah");
+        //console.log("ahah");
         queryRoute += "others/";
       }
 
@@ -103,9 +128,11 @@ const CategoryPage: React.FC = () => {
           parseInt(b.purchased_users_num) - parseInt(a.purchased_users_num)
       );
 
-      console.log(orderedCourses);
+      ////console.log(orderedCourses);
 
       setCourses(orderedCourses);
+      setTotalCourseNum(orderedCourses.length);
+      ////console.log(totalCourseNum);
       //for reset
       setInitCourses(orderedCourses);
     } catch (err) {
@@ -197,6 +224,10 @@ const CategoryPage: React.FC = () => {
           {alertMsg}
         </Alert>
       )}
+      <div style={{ position: "fixed" }}>{Yposition.Y}</div>
+      <div style={{ position: "fixed", top: 70 }}>
+        {document.body.clientHeight}
+      </div>
       <Breadcrumb>
         <Breadcrumb.Item href="/">主頁</Breadcrumb.Item>
         {isSubCategory && (
@@ -319,7 +350,7 @@ const CategoryPage: React.FC = () => {
           </div>
 
           <div className="all-course-container">
-            {courses.slice(0, 10).map((course, i) => (
+            {courses.slice(0, displayCourseNum).map((course, i) => (
               <FlattedCard key={i} {...course}></FlattedCard>
             ))}
           </div>

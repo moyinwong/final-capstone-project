@@ -1,8 +1,9 @@
 import express from "express";
-import { userController, isLoggedIn } from "../main";
+import { userController, isLoggedIn, upload } from "../main";
 
 export const userRoutes = express.Router();
 
+userRoutes.post("/signup", upload.single('image'), userController.signup);
 userRoutes.post("/login", userController.login);
 userRoutes.get("/info", isLoggedIn, userController.getInfo);
 userRoutes.post("/login/google", userController.loginGoogle);
