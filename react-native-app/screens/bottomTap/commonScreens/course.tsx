@@ -9,7 +9,7 @@ import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/nativ
 import Stars from '../../../sharedComponents/stars';
 
 // Icons
-import { Octicons } from '@expo/vector-icons';
+import { Octicons, MaterialIcons } from '@expo/vector-icons';
 
 // Styles
 import globalStyles from '../../../styles/globalStyles';
@@ -157,20 +157,31 @@ export default function Courses() {
                         <Stars score={courseInfo.rated_score} />
 
                     </View>
-                    <View style={courseStyles.courseButtonContainer}>
-                        <TouchableOpacity
-                            style={courseStyles.courseButton}
-                            onPress={() => console.log('add to cart')}
-                        >
-                            <Text style={courseStyles.courseButtonText}>加到購物車</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={{ ...courseStyles.courseButton, ...courseStyles.courseBuyButton }}
-                            onPress={() => console.log('buy')}
-                        >
-                            <Text style={courseStyles.courseButtonText}>立即購買</Text>
-                        </TouchableOpacity>
-                    </View>
+                    {/* sdsdgdsgsdgvsgbsdgbsrbhsbhsrbhsrrs */}
+                    {true ? (
+                        <View style={courseStyles.courseButtonContainer}>
+                            <TouchableOpacity
+                                style={courseStyles.courseButton}
+                                onPress={() => console.log('add to cart')}
+                            >
+                                <Text style={courseStyles.courseButtonText}>加到購物車</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={{ ...courseStyles.courseButton, ...courseStyles.courseBuyButton }}
+                                onPress={() => console.log('buy')}
+                            >
+                                <Text style={courseStyles.courseButtonText}>立即購買</Text>
+                            </TouchableOpacity>
+                        </View>
+                    ) : (
+                            <View style={courseStyles.courseButtonContainer}>
+                                <View style={courseStyles.purchasedBox}>
+                                    <MaterialIcons name="done" size={26} color="#22c736" />
+                                    <Text style={courseStyles.purchasedBoxText}>已購買</Text>
+                                </View>
+                            </View>
+                        )}
+
                 </View>
             </View>
 
