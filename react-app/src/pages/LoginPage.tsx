@@ -244,9 +244,11 @@ export default function LoginPage (state: {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
+
         <Typography component="h1" variant="h5">
           登入帳戶
         </Typography>
+
         <form className={classes.form} noValidate>
           <TextField
             error={isError}
@@ -263,6 +265,7 @@ export default function LoginPage (state: {
             value={email}
             onChange={handleEmailChange}
           />
+
           <TextField
             error={isEmpty}
             helperText={isEmpty ? "請輸入密碼" : ''}
@@ -277,10 +280,7 @@ export default function LoginPage (state: {
             autoComplete="current-password"
             onChange={handlePassWordChange}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
+
           <Button
             type="submit"
             fullWidth
@@ -328,10 +328,13 @@ export default function LoginPage (state: {
         </form>
 
       </div>
+
       {errMessage ? <Alert variant="danger">{errMessage}</Alert> : ""}
+
       <Box mt={8}>
         <Copyright />
       </Box>
+      
     </Container>
   );
 }
