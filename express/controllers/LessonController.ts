@@ -1,4 +1,4 @@
-import { LessonService } from "../services/LessonService";
+import { LessonService, IChoice, ILessonWithoutCourseId } from "../services/LessonService";
 import { Request, Response } from "express";
 import { logger } from "../logger";
 
@@ -108,16 +108,16 @@ export class LessonController {
   createLesson = async (req: Request, res: Response) => {
     try {
       const { courseName } = req.params;
-      const lessonInfo = req.body
+      const lessonInfo: ILessonWithoutCourseId = req.body
       let courseMaterial = req.files
 
-      let materialArray:any[] = [];
+      //store files names in an array
+      let materialArray: string[] = [];
+
       if (courseMaterial.length > 0) {
         for (let material of courseMaterial){
           materialArray.push(material.filename)
-          console.log('materialarray', materialArray)
         }
-        // let courseMaterial = req.files
         const createdLesson = await this.lessonService.createLesson(lessonInfo, courseName, materialArray);
         return res.status(200).json({ createdLesson })
       } else {
@@ -125,7 +125,6 @@ export class LessonController {
         return res.status(200).json({ createdLesson })
       }
 
-      // console.log(createdLesson)
     } catch (e) {
       console.log(e.message)
       return res.status(500).json({message: 'createLesson: internal server error'})
@@ -139,14 +138,12 @@ export class LessonController {
 
       let questionAndAnswersId: any[] = [];
       for (let item of questionInfos) {
-        let question = item.value;
-        let choices = item.choices
+        let question: string = item.value;
+        let choices: IChoice[] = item.choices
 
-        let questionId = await this.lessonService.createLessonQuestion(question, lessonName, choices)
-        questionAndAnswersId.push(questionId)
+        let questionAndAnswer = await this.lessonService.createLessonQuestion(question, lessonName, choices)
+        questionAndAnswersId.push(questionAndAnswer)
       }
-
-      console.log(questionAndAnswersId)
 
       return res.status(200).json({ message: 'successfully created questions'})
     } catch(e) {
