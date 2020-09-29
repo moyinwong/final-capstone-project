@@ -233,21 +233,6 @@ export default function LoginPage(state: {
     }
   };
 
-  const fBOnCLick = () => {
-    return null;
-  };
-
-  const fBCallback = (
-    userInfo: ReactFacebookLoginInfo & { accessToken: string }
-  ) => {
-    console.log(userInfo.accessToken);
-    if (userInfo.accessToken) {
-      console.log(userInfo.accessToken);
-      dispatch(loginFacebook(userInfo.accessToken, previousLocation));
-    }
-    return null;
-  };
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -323,7 +308,7 @@ export default function LoginPage(state: {
               onFailure={responseGoogle}
               cookiePolicy={"single_host_origin"}
             />
-            <CustomFacebookLogin previousLocation />
+            <CustomFacebookLogin previousLocation={previousLocation} />
           </div>
 
           <Grid container>
@@ -338,7 +323,6 @@ export default function LoginPage(state: {
               </Link>
             </Grid>
           </Grid>
-          </div>
         </form>
       </div>
 

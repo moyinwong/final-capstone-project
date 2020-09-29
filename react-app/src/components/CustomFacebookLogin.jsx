@@ -5,9 +5,10 @@ import { loginFacebook } from "../redux/auth/thunk";
 import React from "react";
 import "./CustomFacebookLogin.scss";
 
-function CustomFacebookLogin({ previousLocation }) {
+function CustomFacebookLogin(props) {
   const dispatch = useDispatch();
 
+  const previousLocation = props.previousLocation;
   const fBOnCLick = () => {
     return null;
   };
@@ -18,7 +19,7 @@ function CustomFacebookLogin({ previousLocation }) {
 
   const fBCallback = (userInfo) => {
     if (userInfo.accessToken) {
-      console.log("userInfo", userInfo);
+      console.log(previousLocation)
       dispatch(loginFacebook(userInfo.accessToken, previousLocation));
     }
     return null;

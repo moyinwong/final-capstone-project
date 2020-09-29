@@ -119,7 +119,7 @@ export const loginGoogleThunk = (
 
 export function loginFacebook(
   accessToken: string,
-  previousLocation: string | undefined
+  previousLocation: string
 ) {
   return async (dispatch: ThunkDispatch) => {
     const res = await fetch(
@@ -135,7 +135,6 @@ export function loginFacebook(
 
     //json object which contain token & user email
     const json = await res.json();
-    console.log('hello')
     
     if (res.status === 200) {
       localStorage.setItem("token", json.token);
