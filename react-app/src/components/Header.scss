@@ -89,6 +89,11 @@
   .web-navbar {
     display: flex;
     justify-content: center;
+    position: relative;
+  }
+
+  .navbar {
+    position: static;
   }
 
   a.navbar-brand {
@@ -106,10 +111,10 @@
 
   .icon-button.responsive {
     display: block;
-    position: fixed;
+    position: absolute;
     line-height: 40px;
     top: 40px;
-    right: 25px;
+    right: 30px;
   }
 
   .burger-menu {
@@ -124,7 +129,7 @@
     display: none;
   }
 
-  DarkModeSwitch {
-    display: none;
-  }
+  // DarkModeSwitch {
+  //   display: none;
+  // }
 }
