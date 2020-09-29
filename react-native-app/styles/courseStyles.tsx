@@ -76,7 +76,8 @@ const coursesListStyles = StyleSheet.create({
         color: '#e96a43'
     },
     tutorBox: {
-        marginVertical: 8,
+        marginTop: 8,
+        marginBottom: 12,
         marginHorizontal: 2,
         borderRadius: 12,
         display: 'flex',
@@ -124,13 +125,12 @@ const coursesListStyles = StyleSheet.create({
         color: '#ffffff'
     },
     infoBox: {
-        marginVertical: 8,
+        marginTop: 3,
+        marginBottom: 12,
         marginHorizontal: 2,
         borderRadius: 12,
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
         overflow: 'hidden',
         paddingVertical: 10,
         paddingHorizontal: 10,
@@ -149,10 +149,18 @@ const coursesListStyles = StyleSheet.create({
         fontSize: 20
     },
     infoText: {
+        marginVertical: 3,
         fontSize: 18
     },
+    lessonBox: {
+        marginVertical: 3
+    },
+    lessonText: {
+        fontSize: 18,
+        color: '#5b96f7'
+    },
     commentBox: {
-
+        marginVertical: 3
     },
     infoComment: {
         display: 'flex',
@@ -162,6 +170,12 @@ const coursesListStyles = StyleSheet.create({
     infoCommentUser: {
         fontSize: 16,
         color: '#666666'
+    },
+    separator: {
+        marginVertical: 10,
+        width: '100%',
+        borderBottomColor: '#cccccc',
+        borderBottomWidth: 1
     }
 });
 

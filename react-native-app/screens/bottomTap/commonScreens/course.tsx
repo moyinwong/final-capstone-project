@@ -17,6 +17,7 @@ import courseStyles from '../../../styles/courseStyles';
 
 // Data
 import envData from '../../../data/env';
+import { Item } from 'react-native-paper/lib/typescript/src/components/List/List';
 
 export default function Courses() {
 
@@ -210,20 +211,27 @@ export default function Courses() {
                 <View>
                     <Text style={courseStyles.infoTitle}>課程內容:</Text>
                 </View>
-                <View style={courseStyles.infoBox}>
-                    {
-                        lessonsInfo.map((item) => {
-                            return (
-                                <TouchableOpacity
-                                    key={item.lesson_id.toString()}
-                                    onPress={() => navigation.navigate('Lesson', { lesson: item.lesson_id })}
-                                >
-                                    <Text style={courseStyles.infoText}>{item.lesson_name}</Text>
-                                </TouchableOpacity>
-                            )
-                        })
-                    }
-                </View>
+
+                <FlatList
+                    style={courseStyles.infoBox}
+                    keyExtractor={(item) => item.lesson_id.toString()}
+                    data={lessonsInfo}
+                    scrollEnabled={false}
+
+                    ItemSeparatorComponent={() => (
+                        <View style={courseStyles.separator}></View>
+                    )}
+
+                    renderItem={({ item }) => (
+                        <TouchableOpacity
+                            style={courseStyles.lessonBox}
+                            onPress={() => navigation.navigate('Lesson', { lesson: item.lesson_id })}
+                        >
+                            <Text style={courseStyles.lessonText}>{item.lesson_name}</Text>
+                        </TouchableOpacity>
+                    )}
+                />
+
                 <View>
 
                 </View>
@@ -233,27 +241,33 @@ export default function Courses() {
                 <View>
                     <Text style={courseStyles.infoTitle}>學生反映:</Text>
                 </View>
-                <View style={courseStyles.infoBox}>
-                    {
-                        comments.map((item) => {
-                            return (
-                                <View
-                                    style={courseStyles.commentBox}
-                                    key={item.comment}
-                                >
-                                    <Text style={courseStyles.infoText}>{item.comment}</Text>
-                                    <View style={courseStyles.infoComment}>
-                                        <View style={{ marginRight: 16 }}>
-                                            <Stars score={item.rated_score} />
-                                        </View>
-                                        <Octicons name="dash" size={16} color="#666666" />
-                                        <Text style={{ ...courseStyles.infoText, ...courseStyles.infoCommentUser }}>{item.user_name}</Text>
-                                    </View>
+
+                <FlatList
+                    style={courseStyles.infoBox}
+                    keyExtractor={(item) => item.comment}
+                    data={comments}
+                    scrollEnabled={false}
+
+                    ItemSeparatorComponent={() => (
+                        <View style={courseStyles.separator}></View>
+                    )}
+
+                    renderItem={({ item }) => (
+                        <View
+                            style={courseStyles.commentBox}
+                        >
+                            <Text style={courseStyles.infoText}>{item.comment}</Text>
+                            <View style={courseStyles.infoComment}>
+                                <View style={{ marginRight: 16 }}>
+                                    <Stars score={item.rated_score} />
                                 </View>
-                            )
-                        })
-                    }
-                </View>
+                                <Octicons name="dash" size={16} color="#666666" />
+                                <Text style={{ ...courseStyles.infoText, ...courseStyles.infoCommentUser }}>{item.user_name}</Text>
+                            </View>
+                        </View>
+                    )}
+                />
+
             </View>
 
         </ScrollView >
