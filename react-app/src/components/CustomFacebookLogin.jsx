@@ -13,15 +13,17 @@ function CustomFacebookLogin({ previousLocation }) {
 
   const fBCallback = (userInfo) => {
     if (userInfo.accessToken) {
+      console.log(userInfo.accessToken)
       dispatch(loginFacebook(userInfo.accessToken, previousLocation));
     }
     return null;
   };
+
   return (
     <FacebookLogin
       style={{}}
       appId={process.env.REACT_APP_FACEBOOK_APP_ID || ""}
-      autoLoad={false}
+      autoLoad={true}
       fields="name,email,picture"
       onClick={fBOnCLick}
       callback={fBCallback}

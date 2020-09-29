@@ -130,9 +130,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
 import { Alert, Form } from "react-bootstrap";
 import GoogleLogin from "react-google-login";
-import { ReactFacebookLoginInfo } from "react-facebook-login";
+import ReactFacebookLogin, { ReactFacebookLoginInfo } from "react-facebook-login";
+import FacebookLogin from '../components/CustomFacebookLogin'
 import "./LoginPage.scss";
-import FacebookLogin from "../components/CustomFacebookLogin";
+
 
 function Copyright() {
   return (
@@ -238,7 +239,9 @@ export default function LoginPage(state: {
   const fBCallback = (
     userInfo: ReactFacebookLoginInfo & { accessToken: string }
   ) => {
+    console.log(previousLocation)
     if (userInfo.accessToken) {
+      console.log(userInfo.accessToken)
       dispatch(loginFacebook(userInfo.accessToken, previousLocation));
     }
     return null;
@@ -284,14 +287,10 @@ export default function LoginPage(state: {
             autoComplete="current-password"
             onChange={handlePassWordChange}
           />
-<<<<<<< HEAD
-
-=======
           {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           /> */}
->>>>>>> c2b4d6e479183d5dbc25e267d6e82a96737d0bab
           <Button
             type="submit"
             fullWidth
@@ -313,6 +312,7 @@ export default function LoginPage(state: {
                 <button
                   onClick={renderProps.onClick}
                   disabled={renderProps.disabled}
+                  
                 >
                   <img
                     src={require("../pages/icons/1004px-Google__G__Logo.svg.png")}
@@ -325,21 +325,22 @@ export default function LoginPage(state: {
               cookiePolicy={"single_host_origin"}
             />
 
-            {/* <Form.Group>
-            <div className="fb-button"> */}
-            {/* <ReactFacebookLogin
+            {/* <FacebookLogin previousLocation /> */}
+          </div>
+          {/* <Form.Group>
+            <div className="fb-button">
+            <ReactFacebookLogin
                 buttonStyle={{ width: "230px" }}
                 appId={process.env.REACT_APP_FACEBOOK_APP_ID || ""}
                 autoLoad={false}
                 fields="name,email,picture"
                 onClick={fBOnCLick}
                 callback={fBCallback}
-              /> */}
-            {/* </div>
+                
+              />
+            </div>
           </Form.Group> */}
 
-            <FacebookLogin previousLocation />
-          </div>
 
           <Grid container>
             <Grid item xs>

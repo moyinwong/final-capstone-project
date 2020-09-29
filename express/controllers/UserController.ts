@@ -146,6 +146,7 @@ export class UserController {
       //debug
       logger.debug(user);
 
+      console.log(result)
       if (!user) {
         const password = await hashPassword("noPasswordProvided");
         user = (
@@ -154,7 +155,7 @@ export class UserController {
             password,
             result.id,
             result.name,
-            result.picture
+            result.picture.data.url
           )
         )[0];
       }
