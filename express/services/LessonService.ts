@@ -192,17 +192,10 @@ export class LessonService {
     const courseIdArray = await this.knex
       .select("id")
       .from(tables.COURSES)
-<<<<<<< HEAD
-      .where('name', courseName))
-    const courseId = courseIdArray[0].id
-
-    let isTrial = lessonInfo.lessonIsTrial === 'true'
-=======
       .where("name", courseName);
     const courseId = courseIdArray[0].id;
     // console.log(lessonInfo)
     let isTrial = lessonInfo.lessonIsTrial === "true";
->>>>>>> 7237a36c579723a726ca24f13ea751542325bc78
 
     const lessonId = await this.knex
       .insert({
@@ -210,16 +203,6 @@ export class LessonService {
         description: lessonInfo.lessonDescription,
         is_trial: isTrial,
         video_url: lessonInfo.lessonVideoUrl,
-<<<<<<< HEAD
-        course_id: courseId
-      })
-      .into(tables.LESSONS)
-      .returning('id')
-
-    let filesUploaded:any[] = [];
-
-    if(materialArray) {
-=======
         course_id: courseId,
       })
       .into(tables.LESSONS)
@@ -228,7 +211,6 @@ export class LessonService {
     let filesUploaded: any[] = [];
 
     if (materialArray) {
->>>>>>> 7237a36c579723a726ca24f13ea751542325bc78
       for (let material of materialArray) {
         let fileUploaded = this.knex
           .insert({
@@ -245,24 +227,6 @@ export class LessonService {
     return lessonId;
   };
 
-<<<<<<< HEAD
-  createLessonQuestion = async (question: string, lessonName: string, choices: IChoice[]) => {
-    const lessonIdArray = await (this.knex
-      .select('id')
-      .from(tables.LESSONS)
-      .where('name', lessonName))
-    const lessonId = lessonIdArray[0].id
-  
-    const questionIdArray = await (this.knex
-      .insert({
-        question: question,
-        lesson_id: lessonId,
-        is_MC: true
-      })
-      .into(tables.QUESTIONS)
-      .returning('id'))
-    const questionId = questionIdArray[0]
-=======
   createLessonQuestion = async (
     question: string,
     lessonName: string,
@@ -283,7 +247,6 @@ export class LessonService {
       .into(tables.QUESTIONS)
       .returning("id");
     const questionId = questionIdArray[0];
->>>>>>> 7237a36c579723a726ca24f13ea751542325bc78
 
     let mcAnswerIdArray = [];
 
@@ -295,22 +258,6 @@ export class LessonService {
         .insert({
           question_id: questionId,
           answer_body: answerBody,
-<<<<<<< HEAD
-          is_correct_answer: isTrue
-        })
-        .into(tables.MC_ANSWERS)
-        .returning('id')
-      let mcAnswerId = mcIdArray[0]
-      
-      mcAnswerIdArray.push(mcAnswerId)
-    }
-
-    return [ questionId, mcAnswerIdArray ]
-  }
-
-  
-
-=======
           is_correct_answer: isTrue,
         })
         .into(tables.MC_ANSWERS)
@@ -324,5 +271,4 @@ export class LessonService {
     // return questionId
     return questionId;
   };
->>>>>>> 7237a36c579723a726ca24f13ea751542325bc78
 }
