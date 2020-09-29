@@ -46,6 +46,35 @@ const coursesListStyles = StyleSheet.create({
         fontSize: 17,
         color: '#555555'
     },
+    courseButtonContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'flex-start',
+        marginTop: 8
+    },
+    courseButton: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 8,
+        width: 135,
+        borderRadius: 10,
+        backgroundColor: '#53a451',
+    },
+    courseBuyButton: {
+        backgroundColor: '#ffffff',
+        borderColor: '#e96a43',
+        borderWidth: 1
+    },
+    courseButtonText: {
+        fontSize: 19,
+        color: '#ffffff'
+    },
+    courseBuyButtonText: {
+        color: '#e96a43'
+    },
     tutorBox: {
         marginVertical: 8,
         marginHorizontal: 2,
@@ -83,28 +112,56 @@ const coursesListStyles = StyleSheet.create({
         fontSize: 18,
         color: '#000000'
     },
-    tutorSubscribedBox: {
-        display: 'flex',
-        flexDirection: 'row'
-    },
-    tutorNumOfSubscribedText: {
-        fontSize: 18,
-        color: '#e96a43'
-    },
-    tutorSubscribedText: {
-        fontSize: 18,
-        color: '#22c736'
-    },
-    tutorSubscribeButton: {
+    tutorCheckButton: {
         marginLeft: 24,
         paddingVertical: 8,
         paddingHorizontal: 24,
         borderRadius: 10,
         backgroundColor: '#e96a43'
     },
-    tutorSubscribeButtonText: {
+    tutorCheckButtonText: {
         fontSize: 19,
         color: '#ffffff'
+    },
+    infoBox: {
+        marginVertical: 8,
+        marginHorizontal: 2,
+        borderRadius: 12,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        overflow: 'hidden',
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        backgroundColor: '#ffffff',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
+    infoTitle: {
+        marginLeft: 6,
+        fontSize: 20
+    },
+    infoText: {
+        fontSize: 18
+    },
+    commentBox: {
+
+    },
+    infoComment: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    infoCommentUser: {
+        fontSize: 16,
+        color: '#666666'
     }
 });
 

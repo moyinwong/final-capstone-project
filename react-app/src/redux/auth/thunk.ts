@@ -12,7 +12,7 @@ import { Dispatch } from "redux";
 export function login(
   email: string,
   password: string,
-  previousLocation: string | undefined
+  previousLocation?: string | undefined
 ) {
   return async (dispatch: ThunkDispatch, getState: () => IRootState) => {
     const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/login`, {
@@ -25,6 +25,7 @@ export function login(
         password,
       }),
     });
+    console.log(password)
 
     //json object which contain token & user email
     const json = await res.json();

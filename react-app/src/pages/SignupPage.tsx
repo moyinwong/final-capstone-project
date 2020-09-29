@@ -3,8 +3,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -15,6 +13,7 @@ import "./SignupPage.scss";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
 import { Alert } from "react-bootstrap";
+import { login } from "../redux/auth/thunk";
 
 function Copyright() {
   return (
@@ -133,7 +132,7 @@ const SignupPage = () => {
         const result = await res.json()
 
         if (res.status === 200) {
-            dispatch(push('/'));
+            dispatch(login(email, password));
         } else {
             setErrMessage(result.message);
         }

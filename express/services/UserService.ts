@@ -24,6 +24,7 @@ export class UserService {
       })
       .into(tables.USERS)
       .returning('id'))[0]
+
     } else {
       userId = (await this.knex
         .insert({
@@ -35,7 +36,6 @@ export class UserService {
         .into(tables.USERS)
         .returning('id'))[0]
     }
-
     return userId
   }
 
