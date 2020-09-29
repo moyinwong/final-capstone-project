@@ -112,6 +112,9 @@ const HomePage: React.FC = () => {
       <section className="courses-carousel">
         <CarouselReact type="popular" />
       </section>
+      <div>
+        <img src={require("./icons/tecky.png")} />
+      </div>
       <section className="courses-carousel">
         <CarouselReact type="goodComment" />
       </section>
