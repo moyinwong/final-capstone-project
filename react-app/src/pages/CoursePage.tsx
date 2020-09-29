@@ -302,7 +302,7 @@ const CoursePage: React.FC = () => {
                   src={
                     course.image.match(/http/)
                       ? course.image
-                      : `localhost:8080/${course.image}`
+                      : `localhost:8080/img/${course.image}`
                   }
                 />
                 <Card.Body>
