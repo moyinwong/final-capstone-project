@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 import { ICourse } from "../pages/CategoryPage";
 import { Container, Col, Card, Button, Row } from "react-bootstrap";
 import Slider from "react-slick";
@@ -8,16 +8,31 @@ import "./CarouselReact.scss";
 import { Alert } from "react-bootstrap";
 import SingleCard from "./SingleCard";
 
-const CarouselReact: React.FC = () => {
+const CarouselReact: React.FC<{
+  children?: ReactNode;
+  type: string;
+}> = (props: { type: string }) => {
+  const [type] = useState(props.type);
+  const [typeTopic, setTypeTopic] = useState<string>("");
   const [courses, setCourses] = useState<Array<ICourse>>([]);
   //const [slides, setSlides] = useState<number[]>([1, 2, 3, 4]);
   const [isShowAlert, setIsShowAlert] = useState<boolean>(false);
   const [alertMsg, setAlertMsg] = useState<string>("");
 
-  const getCourses = async () => {
-    const res = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}/category/all`
-    );
+  const getCourses = async (type: string) => {
+    let res;
+    console.log("type", type);
+    if (type === "popular") {
+      setTypeTopic("最熱門課程");
+      res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/course/popular`);
+    } else if (type === "goodComment") {
+      setTypeTopic("最受好評課程");
+      res = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/course/good-comment`
+      );
+    } else {
+      res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/category/all`);
+    }
 
     if (res.status === 500) {
       setAlertMsg("伺服器發生問題");
@@ -28,27 +43,38 @@ const CarouselReact: React.FC = () => {
     let result = await res.json();
     const { courses } = result;
     const orderedCourses = courses.slice();
-    orderedCourses.sort(
-      (a: ICourse, b: ICourse) =>
-        parseInt(b.purchased_users_num) - parseInt(a.purchased_users_num)
-    );
+    // orderedCourses.sort(
+    //   (a: ICourse, b: ICourse) =>
+    //     parseInt(b.purchased_users_num) - parseInt(a.purchased_users_num)
+    // );
 
     setCourses(orderedCourses);
-    console.log(result);
+    //console.log(result);
   };
 
   useEffect(() => {
-    getCourses();
-  }, []);
+    getCourses(type);
+  }, [type]);
 
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
-    slidesToShow: 3,
+    speed: 800,
+    slidesToShow: 4,
     slidesToScroll: 3,
     initialSlide: 0,
+    autoplaySpeed: 3000,
+    autoplay: true,
+
     responsive: [
+      {
+        breakpoint: 1180,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
       {
         breakpoint: 725,
         settings: {
@@ -76,7 +102,7 @@ const CarouselReact: React.FC = () => {
       )}
 
       <Container>
-        <div className="section-title">熱門課程</div>
+        <div className="section-title">{typeTopic}</div>
 
         <Slider {...settings}>
           {courses.map((course, i) => (
@@ -87,7 +113,6 @@ const CarouselReact: React.FC = () => {
             </React.Fragment>
           ))}
         </Slider>
-
       </Container>
     </>
   );
