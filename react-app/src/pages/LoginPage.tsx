@@ -134,7 +134,7 @@ import ReactFacebookLogin, {
   ReactFacebookLoginInfo,
 } from "react-facebook-login";
 import "./LoginPage.scss";
-
+import CustomFacebookLogin from "../components/CustomFacebookLogin";
 
 function Copyright() {
   return (
@@ -242,7 +242,7 @@ export default function LoginPage(state: {
   ) => {
     console.log(userInfo.accessToken);
     if (userInfo.accessToken) {
-      console.log(userInfo.accessToken)
+      console.log(userInfo.accessToken);
       dispatch(loginFacebook(userInfo.accessToken, previousLocation));
     }
     return null;
@@ -252,7 +252,6 @@ export default function LoginPage(state: {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-
         <Typography component="h1" variant="h5">
           登入帳戶
         </Typography>
@@ -313,7 +312,6 @@ export default function LoginPage(state: {
                 <button
                   onClick={renderProps.onClick}
                   disabled={renderProps.disabled}
-                  
                 >
                   <img
                     src={require("../pages/icons/1004px-Google__G__Logo.svg.png")}
@@ -325,22 +323,8 @@ export default function LoginPage(state: {
               onFailure={responseGoogle}
               cookiePolicy={"single_host_origin"}
             />
-
-            {/* <Form.Group>
-              <div className="fb-button">
-                {
-                  <ReactFacebookLogin
-                    buttonStyle={{ width: "230px" }}
-                    appId={process.env.REACT_APP_FACEBOOK_APP_ID || ""}
-                    autoLoad={false}
-                    fields="name,email,picture"
-                    onClick={fBOnCLick}
-                    callback={fBCallback}
-                  />
-                }
-              </div>
-            </Form.Group> */}
-
+            <CustomFacebookLogin previousLocation />
+          </div>
 
           <Grid container>
             <Grid item xs>
@@ -363,7 +347,6 @@ export default function LoginPage(state: {
       <Box mt={8}>
         <Copyright />
       </Box>
-      
     </Container>
   );
 }

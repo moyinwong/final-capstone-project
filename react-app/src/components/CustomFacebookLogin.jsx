@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { loginFacebook } from "../redux/auth/thunk";
 
 import React from "react";
+import "./CustomFacebookLogin.scss";
 
 function CustomFacebookLogin({ previousLocation }) {
   const dispatch = useDispatch();
