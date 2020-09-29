@@ -1,22 +1,19 @@
 // React, React Native
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, Image, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 
 // Navigation
 import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
 
-// Icons
-import { MaterialIcons } from '@expo/vector-icons';
-
 // Components
 import Stars from '../../../sharedComponents/stars';
+
+// Icons
+import { Octicons } from '@expo/vector-icons';
 
 // Styles
 import globalStyles from '../../../styles/globalStyles';
 import courseStyles from '../../../styles/courseStyles';
-
-// Functions
-import showSubscribeBox from '../../../functions/showSubscribeBox';
 
 // Data
 import envData from '../../../data/env';
@@ -74,7 +71,6 @@ export default function Courses() {
         try {
             let queryRoute: string = "/lesson/summary/";
 
-            console.log(courseName);
             const fetchRes = await fetch(
                 `${envData.REACT_APP_BACKEND_URL}${queryRoute}${courseName}`
             );
@@ -104,7 +100,6 @@ export default function Courses() {
         try {
             let queryRoute: string = "/course/";
 
-            console.log(courseName);
             const fetchRes = await fetch(
                 `${envData.REACT_APP_BACKEND_URL}${queryRoute}${courseName}/comment`
             );
@@ -135,7 +130,10 @@ export default function Courses() {
     const isSubscribed = false;
 
     return (
-        <View style={globalStyles.container}>
+        <ScrollView
+            style={globalStyles.container}
+            showsVerticalScrollIndicator={false}
+        >
 
             <View
                 style={courseStyles.courseBox}
@@ -158,6 +156,20 @@ export default function Courses() {
                         <Stars score={courseInfo.rated_score} />
 
                     </View>
+                    <View style={courseStyles.courseButtonContainer}>
+                        <TouchableOpacity
+                            style={courseStyles.courseButton}
+                            onPress={() => console.log('add to cart')}
+                        >
+                            <Text style={courseStyles.courseButtonText}>加到購物車</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{ ...courseStyles.courseButton, ...courseStyles.courseBuyButton }}
+                            onPress={() => console.log('buy')}
+                        >
+                            <Text style={{ ...courseStyles.courseButtonText, ...courseStyles.courseBuyButtonText }}>立即購買</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
 
@@ -171,53 +183,47 @@ export default function Courses() {
                 </View>
                 <View>
                     <Text style={courseStyles.tutorName}>{courseInfo.tutor_name}</Text>
-                    <View style={courseStyles.tutorSubscribedBox}>
-                        <Text style={courseStyles.tutorNumOfSubscribedText}>訂閱數: 100</Text>
-                    </View>
                 </View>
                 <View style={{ marginLeft: 40 }}>
-                    {isSubscribed ? (
-                        <View style={courseStyles.tutorSubscribedBox}>
-                            <MaterialIcons name="done" size={26} color="#22c736" />
-                            <Text style={courseStyles.tutorSubscribedText}>已訂閱</Text>
-                        </View>
-                    ) : (
-                            <TouchableOpacity
-                                style={courseStyles.tutorSubscribeButton}
-                                onPress={() => showSubscribeBox()}
-                            >
-                                <Text style={courseStyles.tutorSubscribeButtonText}>訂閱</Text>
-                            </TouchableOpacity>
-                        )}
+                    <TouchableOpacity
+                        style={courseStyles.tutorCheckButton}
+                        onPress={() => console.log(courseInfo.tutor_name)}
+                    // onPress={() => navigation.navigate('TutorInfo', {
+                    //     tutor: tutorsTestData('all')[0]
+                    // })}
+                    >
+                        <Text style={courseStyles.tutorCheckButtonText}>查看導師</Text>
+                    </TouchableOpacity>
                 </View>
-            </View>
-
-            <View>
-                <Text>{'課程簡介: ' + courseInfo.course_description}</Text>
             </View>
 
             <View>
                 <View>
-                    <Text>課程內容:</Text>
+                    <Text style={courseStyles.infoTitle}>課程簡介:</Text>
                 </View>
-                <FlatList
-                    keyExtractor={(item) => item.lesson_id.toString()}
-                    data={lessonsInfo}
-                    showsVerticalScrollIndicator={false}
+                <View style={courseStyles.infoBox}>
+                    <Text style={courseStyles.infoText}>{courseInfo.course_description}</Text>
+                </View>
+            </View>
 
-                    ListFooterComponent={
-                        <View>
-                        </View>
+            <View>
+                <View>
+                    <Text style={courseStyles.infoTitle}>課程內容:</Text>
+                </View>
+                <View style={courseStyles.infoBox}>
+                    {
+                        lessonsInfo.map((item) => {
+                            return (
+                                <TouchableOpacity
+                                    key={item.lesson_id.toString()}
+                                    onPress={() => navigation.navigate('Lesson', { lesson: item.lesson_id })}
+                                >
+                                    <Text style={courseStyles.infoText}>{item.lesson_name}</Text>
+                                </TouchableOpacity>
+                            )
+                        })
                     }
-
-                    renderItem={({ item }) => (
-                        <TouchableOpacity
-                            onPress={() => navigation.navigate('Lesson', { lesson: item.lesson_id })}
-                        >
-                            <Text>{item.lesson_name}</Text>
-                        </TouchableOpacity>
-                    )}
-                />
+                </View>
                 <View>
 
                 </View>
@@ -225,30 +231,31 @@ export default function Courses() {
 
             <View>
                 <View>
-                    <Text>學生反映:</Text>
+                    <Text style={courseStyles.infoTitle}>學生反映:</Text>
                 </View>
-                <FlatList
-                    keyExtractor={(item) => item.comment}
-                    data={comments}
-                    showsVerticalScrollIndicator={false}
-
-                    ListFooterComponent={
-                        <View>
-                        </View>
+                <View style={courseStyles.infoBox}>
+                    {
+                        comments.map((item) => {
+                            return (
+                                <View
+                                    style={courseStyles.commentBox}
+                                    key={item.comment}
+                                >
+                                    <Text style={courseStyles.infoText}>{item.comment}</Text>
+                                    <View style={courseStyles.infoComment}>
+                                        <View style={{ marginRight: 16 }}>
+                                            <Stars score={item.rated_score} />
+                                        </View>
+                                        <Octicons name="dash" size={16} color="#666666" />
+                                        <Text style={{ ...courseStyles.infoText, ...courseStyles.infoCommentUser }}>{item.user_name}</Text>
+                                    </View>
+                                </View>
+                            )
+                        })
                     }
-
-                    renderItem={({ item }) => (
-                        <View>
-                            <Text>{item.comment}</Text>
-                            <Text>{item.user_name}</Text>
-                            <View>
-                                <Stars score={item.rated_score} />
-                            </View>
-                        </View>
-                    )}
-                />
+                </View>
             </View>
 
-        </View>
+        </ScrollView >
     )
 }
