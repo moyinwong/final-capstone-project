@@ -110,7 +110,10 @@ const HomePage: React.FC = () => {
         </Container>
       </section>
       <section className="courses-carousel">
-        <CarouselReact />
+        <CarouselReact type="popular" />
+      </section>
+      <section className="courses-carousel">
+        <CarouselReact type="goodComment" />
       </section>
     </div>
   );

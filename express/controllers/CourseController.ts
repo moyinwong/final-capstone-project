@@ -8,6 +8,18 @@ export class CourseController {
   popularCourses = async (req: Request, res: Response) => {
     try {
       const courses = await this.courseService.getMostPurchasedCourses();
+      console.log(courses.length);
+      res.json({ courses: courses });
+    } catch (e) {
+      console.log(e.message);
+      res.status(500).json({ message: "internal server error" });
+    }
+  };
+
+  goodCommentCourses = async (req: Request, res: Response) => {
+    try {
+      const courses = await this.courseService.getBestRatingCommentCourses();
+      console.log(courses.length);
       res.json({ courses: courses });
     } catch (e) {
       console.log(e.message);
@@ -44,28 +56,32 @@ export class CourseController {
   courseByInstructor = async (req: Request, res: Response) => {
     try {
       const { tutor } = req.params;
-      const courses = await this.courseService.getCourseByInstructor(tutor)
+      const courses = await this.courseService.getCourseByInstructor(tutor);
 
       if (!courses) {
-        res.status(401).json({ message: 'cannot find any course by this instructor'})
+        res
+          .status(401)
+          .json({ message: "cannot find any course by this instructor" });
       }
       // console.log(courses)
-      res.json({ courses })
-    } catch(e) {
+      res.json({ courses });
+    } catch (e) {
       console.log(e.message);
-      res.status(500).json({ message: 'error on course by instructor'})
+      res.status(500).json({ message: "error on course by instructor" });
     }
-  }
+  };
 
-  courseCreation = async (req: Request, res:Response) => {
+  courseCreation = async (req: Request, res: Response) => {
     try {
       const userEmail = req.params.userEmail;
-      const { courseTitle, 
-              courseCategory, 
-              coursePrice, 
-              courseDescription,
-              courseObjective, 
-              coursePrerequisite} = req.body;
+      const {
+        courseTitle,
+        courseCategory,
+        coursePrice,
+        courseDescription,
+        courseObjective,
+        coursePrerequisite,
+      } = req.body;
 
       const newCourseInfo: ICourseInfo = {
         courseTitle: courseTitle,
@@ -73,17 +89,21 @@ export class CourseController {
         coursePrice: parseInt(coursePrice),
         courseDescription: courseDescription,
         courseObjective: courseObjective,
-        coursePrerequisite: coursePrerequisite
-      }
+        coursePrerequisite: coursePrerequisite,
+      };
       const courseCover = req.file.filename;
 
-      const createdCourse = await this.courseService.createCourse(userEmail, newCourseInfo, courseCover)
-      console.log(createdCourse)
+      const createdCourse = await this.courseService.createCourse(
+        userEmail,
+        newCourseInfo,
+        courseCover
+      );
+      console.log(createdCourse);
 
-      res.status(200).json({ message: 'successfully created course'})
-    } catch(e) {
-      console.log(e.message)
-      res.status(500).json({ message: 'Cannot create course'})
+      res.status(200).json({ message: "successfully created course" });
+    } catch (e) {
+      console.log(e.message);
+      res.status(500).json({ message: "Cannot create course" });
     }
-  }
+  };
 }
