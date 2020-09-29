@@ -9,6 +9,29 @@ import fetch from "node-fetch";
 export class UserController {
   constructor(private userService: UserService) {}
 
+  signup = async (req: Request, res: Response) => {
+    try {
+      const userInfo = req.body;
+      const userImage = req.file;
+      console.log(userInfo)
+      let userId: number;
+      if (userImage) {
+        userId = await this.userService.signup(userInfo, userImage.filename)
+      } else {
+        userId = await this.userService.signup(userInfo)
+      }
+      console.log(userId)
+      res.status(200).json({ userId })
+    } catch(e) {
+      console.log(e.message);
+      if(e.message.match(/duplicate key value violates unique constraint "users_email_unique"/)) {
+        res.status(500).json({message: '電郵地址已註冊'})
+      } else {
+        res.status(500).json({message: 'signup: internal server error'})
+      }
+    }
+  }
+
   login = async (req: Request, res: Response) => {
     logger.debug(req.body.email);
     logger.debug(req.body.password);

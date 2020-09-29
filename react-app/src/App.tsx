@@ -22,6 +22,7 @@ import PaymentPage from "./pages/PaymentPage";
 import LessonCreatePage from "./pages/LessonCreatePage";
 import QuestionCreatePage from "./pages/QuestionCreatePage";
 import PrivateRoute from "./components/PrivateRoute";
+import SignupPage from "./pages/SignupPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -53,6 +54,7 @@ function App() {
         <Route path="/" exact={true} component={HomePage} />
         <Route path="/lesson" exact={true} component={LessonPage} />
         <Route path="/login" exact={true} component={LoginPage} />
+        <Route path="/signup" exact={true} component={SignupPage} />
         <Route path="/cart" exact={true} component={CartPage} />
         <Route
           path="/category/:categoryName"
