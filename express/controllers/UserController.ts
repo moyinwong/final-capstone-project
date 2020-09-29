@@ -59,6 +59,7 @@ export class UserController {
 
       res.json({
         token: token,
+        userId: user.id,
         email: user.email,
         isTutor: user.is_tutor,
       });
@@ -75,6 +76,7 @@ export class UserController {
       res.status(200).json({
         user: {
           email: user?.email,
+          id: user?.id,
           isTutor: user?.is_tutor,
         },
       });
@@ -138,6 +140,7 @@ export class UserController {
       const token = jwtSimple.encode(payload, jwt.jwtSecret);
       res.json({
         token: token,
+        id: user.id,
         email: user.email,
         isTutor: user.is_tutor,
       });
@@ -194,6 +197,7 @@ export class UserController {
       const token = jwtSimple.encode(payload, jwt.jwtSecret);
       res.json({
         token: token,
+        id: user.id,
         email: user.email,
         isTutor: user.is_tutor,
       });
@@ -231,4 +235,15 @@ export class UserController {
       res.status(500).json({ message: "Internal server error" });
     }
   };
+
+  getAllCourseDetail = async (req: Request, res: Response) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const courses = await this.userService.getAllCoursesDetail(userId);
+      res.status(200).json({ courses })
+    } catch(e) {
+      logger.error(e);
+      res.status(500).json({ message: 'internal server error'})
+    }
+  }
 }

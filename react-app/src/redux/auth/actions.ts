@@ -5,6 +5,7 @@ interface ILoginProcessing {
 interface ILoginSuccess {
   type: "@@AUTH/LOGIN_SUCCESS";
   token: string;
+  id: number;
 }
 
 interface ILoginFail {
@@ -26,10 +27,11 @@ interface ILogout {
   type: "@@AUTH/LOGOUT";
 }
 
-export function loginSuccess(token: string): ILoginSuccess {
+export function loginSuccess(token: string, userId: number): ILoginSuccess {
   return {
     type: "@@AUTH/LOGIN_SUCCESS" as "@@AUTH/LOGIN_SUCCESS",
     token: token,
+    id: userId
   };
 }
 

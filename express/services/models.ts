@@ -49,3 +49,18 @@ declare global {
     }
   }
 }
+
+export interface IUserCourse {
+  category_id: number;
+  course_id: number;
+  course_image: string;
+  course_name: string;
+  description: string;
+  objective: string;
+  prerequisites: string;
+  subcategory_id: null | number;
+  tutor_email: string;
+  tutor_introduction: string;
+  tutor_name: string;
+  tutor_title: string; 
+}

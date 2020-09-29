@@ -5,14 +5,14 @@ import { RouteProps, Redirect, Route } from 'react-router-dom';
 
 const PrivateRoute = ({ component, ...rest }: RouteProps) => {
 
-    const isAuthenticated = useSelector((state:IRootState)=>state.auth.isAuthenticated);
+    const isAuthenticated = localStorage.getItem('token');
     const Component = component;
     if (Component == null) {
         return null;
     }
 
     let render:(props:any)=>JSX.Element 
-    
+
     if(isAuthenticated){
         render = (props:any)=>(
             <Component {...props} />

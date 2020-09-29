@@ -157,4 +157,28 @@ export class UserService {
 
     return userAllowAccessCourses;
   };
+
+  getAllCoursesDetail = async (userId: number) => {
+    const courses = await this.knex
+    .select(
+      'purchased_courses.course_id',
+      'courses.category_id',
+      'courses.subcategory_id',
+      'courses.name as course_name',
+      'courses.image as course_image',
+      'courses.description',
+      'courses.objective',
+      'courses.prerequisites',
+      'users.name as tutor_name',
+      'users.email as tutor_email',
+      'users.title as tutor_title',
+      'users.introduction as tutor_introduction'
+    )
+    .from(tables.PURCHASED_COURSES)
+    .join(tables.COURSES, `${tables.COURSES}.id`, 'purchased_courses.course_id')
+    .join(tables.USERS, `${tables.USERS}.id`, `courses.tutor_id`)
+    .where(`${tables.PURCHASED_COURSES}.user_id`, userId)
+ 
+    return courses;
+  }
 }

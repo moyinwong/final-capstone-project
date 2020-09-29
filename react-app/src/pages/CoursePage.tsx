@@ -126,6 +126,7 @@ const CoursePage: React.FC = () => {
     const result = await fetchRes.json();
     const course: ICourse = result.course;
     console.log(course);
+
     return course;
     //console.log(course);
   };

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './LessonAccordion.scss'
 import { Accordion, Image, Card, Button } from 'react-bootstrap'
 import { IPureCourse } from '../pages/InstructorPage'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { ILesson } from '../pages/CoursePage'
 
 const LessonAccordion = (course: IPureCourse) => {
@@ -23,7 +23,6 @@ const LessonAccordion = (course: IPureCourse) => {
             setLessons([])
         } else {
             const result = await fetchRes.json();
-            console.log(result.lessons)
     
             result.lessons.sort((a: ILesson, b: ILesson) => a.lesson_id - b.lesson_id);
             setLessons(result.lessons);
@@ -45,10 +44,9 @@ const LessonAccordion = (course: IPureCourse) => {
                     {lessons.map((lesson, i) => 
                     <div key={i}>
                         {i + 1}: {lesson.lesson_name}
-                        <Button href={`/instructor/lesson/question/${lesson.lesson_name}`}>Add questions</Button>
+                        <Link to={`/instructor/lesson/question/${lesson.lesson_name}`}><Button>增加課堂問題</Button></Link>
                     </div>)}
-                    <Button href={`/instructor/lesson/creation/${course.name}`} 
-                    className="course-creation-button" variant="success">增加課堂</Button>
+                    <Link to={`/instructor/lesson/creation/${course.name}`}><Button className="course-creation-button" variant="success">增加課堂</Button></Link>
                 </Card.Body>
             </Accordion.Collapse>
         </>

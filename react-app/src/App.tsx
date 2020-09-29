@@ -23,6 +23,7 @@ import LessonCreatePage from "./pages/LessonCreatePage";
 import QuestionCreatePage from "./pages/QuestionCreatePage";
 import PrivateRoute from "./components/PrivateRoute";
 import SignupPage from "./pages/SignupPage";
+import UserCoursePage from "./pages/UserCoursePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -73,6 +74,11 @@ function App() {
           component={LessonPage}
         />
         {/* ... */}
+        <PrivateRoute
+          path="/my-course/:userId"
+          exact={true}
+          component={UserCoursePage}
+        />
         <PrivateRoute path="/instructor" exact={true} component={InstructorPage} />
         <PrivateRoute
           path="/instructor/course/creation"

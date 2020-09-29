@@ -10,6 +10,7 @@ export const authReducer = (
       return {
         ...state,
         token: action.token,
+        id: action.id,
         isAuthenticated: true,
         message: "",
       };

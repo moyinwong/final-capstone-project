@@ -25,15 +25,13 @@ export function login(
         password,
       }),
     });
-    console.log(password)
 
     //json object which contain token & user email
     const json = await res.json();
-    console.log(json)
 
     if (json.token != null) {
       localStorage.setItem("token", json.token);
-      dispatch(loginSuccess(json.token));
+      dispatch(loginSuccess(json.token, json.userId));
       dispatch(getUser(json.email));
       dispatch(checkTutor(json.isTutor));
       console.log(getState().router.location);
@@ -67,7 +65,7 @@ export function restoreLogin() {
       const json = await res.json();
 
       if (res.status === 200) {
-        dispatch(loginSuccess(token));
+        dispatch(loginSuccess(token, json.user.id));
         dispatch(getUser(json.user.email));
         dispatch(checkTutor(json.user.isTutor));
         // dispatch(push(getState().router.location.pathname));
@@ -103,7 +101,7 @@ export const loginGoogleThunk = (
 
     if (res.status === 200) {
       localStorage.setItem("token", data.token);
-      dispatch(loginSuccess(data.token));
+      dispatch(loginSuccess(data.tokenl, data.id));
       dispatch(getUser(data.email));
       dispatch(checkTutor(data.isTutor));
       if (previousLocation) {
@@ -139,7 +137,7 @@ export function loginFacebook(
     
     if (res.status === 200) {
       localStorage.setItem("token", json.token);
-      dispatch(loginSuccess(json.token));
+      dispatch(loginSuccess(json.token, json.id));
       dispatch(getUser(json.email));
       dispatch(checkTutor(json.isTutor));
       if (previousLocation) {

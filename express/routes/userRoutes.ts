@@ -14,3 +14,5 @@ userRoutes.get(
   userController.allowUserAccessCourse
 );
 userRoutes.get("/:user/course/all", isLoggedIn, userController.userAllCourses);
+
+userRoutes.get("/course-detail/all/:userId", isLoggedIn, userController.getAllCourseDetail);
