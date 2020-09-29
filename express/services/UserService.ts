@@ -165,7 +165,7 @@ export class UserService {
       'courses.category_id',
       'courses.subcategory_id',
       'courses.name as course_name',
-      'courses.image as course_image',
+      'courses.image',
       'courses.description',
       'courses.objective',
       'courses.prerequisites',

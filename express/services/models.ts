@@ -53,7 +53,7 @@ declare global {
 export interface IUserCourse {
   category_id: number;
   course_id: number;
-  course_image: string;
+  image: string;
   course_name: string;
   description: string;
   objective: string;
