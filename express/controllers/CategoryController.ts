@@ -22,6 +22,7 @@ export class CategoryController {
 
   subcategoryCourses = async (req: Request, res: Response) => {
     try {
+      console.log("haha");
       console.log(req.params);
       let subcategoryName: string = req.params.name;
       const courses = await this.categoryService.getCoursesBySubcategory(

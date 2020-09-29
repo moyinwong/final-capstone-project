@@ -52,5 +52,16 @@ export async function seed(knex: Knex): Promise<void> {
       objective: "提升學生說話技巧",
       prerequisites: "DSE 準考生",
     },
+    {
+      name: "一個字 Programming",
+      price: 99,
+      category_id: "15",
+      subcategory_id: "1",
+      tutor_id: 3,
+      image: "https://i.ytimg.com/vi/uA8jsazvSSM/maxresdefault.jpg",
+      description: "一個字 Programming",
+      objective: "提升學生Programming技巧",
+      prerequisites: "無",
+    },
   ]);
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   Accordion,
   Alert,
+  Breadcrumb,
   Button,
   Card,
   Dropdown,
@@ -42,8 +43,21 @@ const CategoryPage: React.FC = () => {
   const param: { categoryName: string } = useParams();
   const [isShowAlert, setIsShowAlert] = useState<boolean>(false);
   const [alertMsg, setAlertMsg] = useState<string>("");
+  const [isSubCategory, setIsSubCategory] = useState<boolean>(false);
 
   const { categoryName } = param;
+
+  console.log();
+
+  useEffect(() => {
+    if (
+      categoryName === "編程" ||
+      categoryName === "廚藝" ||
+      categoryName === "DIY" ||
+      categoryName === "美容"
+    )
+      setIsSubCategory(true);
+  }, [categoryName]);
 
   const dispatch = useDispatch();
 
@@ -65,7 +79,8 @@ const CategoryPage: React.FC = () => {
       let queryRoute: string = "/category/";
 
       //if is "others" category, change the api route
-      if (location.pathname.match(/others/)) {
+      if (location.pathname.match(/others\/./)) {
+        console.log("ahah");
         queryRoute += "others/";
       }
 
@@ -87,6 +102,8 @@ const CategoryPage: React.FC = () => {
         (a: ICourse, b: ICourse) =>
           parseInt(b.purchased_users_num) - parseInt(a.purchased_users_num)
       );
+
+      console.log(orderedCourses);
 
       setCourses(orderedCourses);
       //for reset
@@ -180,6 +197,13 @@ const CategoryPage: React.FC = () => {
           {alertMsg}
         </Alert>
       )}
+      <Breadcrumb>
+        <Breadcrumb.Item href="/">主頁</Breadcrumb.Item>
+        {isSubCategory && (
+          <Breadcrumb.Item href="/category/其他/">其他</Breadcrumb.Item>
+        )}
+        <Breadcrumb.Item active>{categoryName}課程</Breadcrumb.Item>
+      </Breadcrumb>
       <div className={"category-main-container"}>
         <div>
           <h1>所有{categoryName}課程</h1>

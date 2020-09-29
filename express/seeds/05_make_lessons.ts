@@ -122,5 +122,37 @@ export async function seed(knex: Knex): Promise<void> {
       video_url: "https://youtu.be/6-DvzmgM-Vc",
       course_id: 4,
     },
+    {
+      name: "【一個字 Programming】#0 安裝程式",
+      description: `一般人以為 Programming 是很複雜，遙不可及，即使有很多網上教學，大多數都以英文為主。Tecky Academy 製作全新廣東話【一個字Programming】淺白教學片，為任何職業人士、待業人士、甚至學生和全職媽媽等的繁忙都市人，可以只需花5分鐘「一個字」的時間去認識 Programming。我們每星期會上傳一集！讓你輕鬆了解 Programming！　
+
+      今集《【一個字Programming 】#0安裝程式的內容》，就由最基本的步驟說起 — 安裝程式！
+      要安裝哪些程式？哪些版本比較穩定？Windows、macOS、Linux安裝過程中可能會遇到什麼問題？由我們的首席導師Alex為您們逐一講解吧！
+      
+      下集預告： 《第一個簡單 Program 的誕生 - Hello World》
+      
+      記得訂閱 Tecky Academy YouTube頻道： https://bit.ly/2ErlzEb
+      ～讓Tecky Academy定時為你們提供更多有關程式設計的實用短片～`,
+      is_trial: true,
+      video_url: "https://youtu.be/uA8jsazvSSM",
+      course_id: 5,
+    },
+    {
+      name: "【一個字 Programming】#1 第一個程式：Hello World",
+      description: `《#1 第一個程式：Hello World》
+
+      上一集教完大家安裝程式軟件後，今集會教大家寫第一個程式 “Hello World”！
+      在於JaveScript世界內，每一個符號的組合都有特別意思或指令，歡迎大家一邊
+      觀看教學短片，一邊動動手指試做練習。
+      
+      下集預告： String （字串）是什麼！？ 程式 ＋ 字串 ＝指令
+                         留意下集內容，讓大家慢慢開始”寫劇本”吧！
+      
+      記得訂閱 Tecky Academy YouTube頻道： https://bit.ly/2ErlzEb
+      ～讓Tecky Academy定時為你們提供更多有關程式設計的實用短片～`,
+      is_trial: false,
+      video_url: "https://youtu.be/oZCM4u7d_6U",
+      course_id: 5,
+    },
   ]);
 }
