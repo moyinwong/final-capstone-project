@@ -19,7 +19,7 @@ function CustomFacebookLogin(props) {
 
   const fBCallback = (userInfo) => {
     if (userInfo.accessToken) {
-      console.log(previousLocation)
+      console.log(previousLocation);
       dispatch(loginFacebook(userInfo.accessToken, previousLocation));
     }
     return null;

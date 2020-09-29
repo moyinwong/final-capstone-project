@@ -3,8 +3,41 @@ import { IUser } from "./models";
 import { tables } from "../tables";
 import { logger } from "../logger";
 
+interface INewUser {
+  email: string;
+  password: string;
+  name: string;
+}
+
 export class UserService {
   constructor(private knex: Knex) {}
+
+  signup = async(userInfo: INewUser, userImage?: string) => {
+    let userId: any;
+    if (userImage) {
+      userId = (await this.knex
+      .insert({
+        email: userInfo.email,
+        password: userInfo.password,
+        name: userInfo.name,
+        image: userImage
+      })
+      .into(tables.USERS)
+      .returning('id'))[0]
+    } else {
+      userId = (await this.knex
+        .insert({
+          email: userInfo.email,
+          password: userInfo.password,
+          name: userInfo.name,
+          image: 'user-image-placeholder.png'
+        })
+        .into(tables.USERS)
+        .returning('id'))[0]
+    }
+
+    return userId
+  }
 
   getUserByEmail = async (email: string) => {
     const user = await this.knex<IUser>(tables.USERS)
