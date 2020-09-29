@@ -7,13 +7,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 // Icons
 import { FontAwesome } from '@expo/vector-icons';
 
+// Routes
+import LessonTopTap from '../topTap/lessonTopTap';
+
 // Screens
 import Home from '../../screens/bottomTap/homeStack/home';
 import TutorInfo from '../../screens/bottomTap/commonScreens/tutorInfo';
 import CoursesList from '../../screens/bottomTap/commonScreens/coursesList';
 import Course from '../../screens/bottomTap/commonScreens/course';
-import Lesson from '../../screens/bottomTap/commonScreens/lesson';
-import Exercise from '../../screens/bottomTap/commonScreens/exercise';
 
 // Functions
 import stackTransition from '../../functions/stackTransition';
@@ -83,17 +84,9 @@ export default function HomeStack(props: { navigation: { toggleDrawer: () => voi
             />
             <Stack.Screen
                 name="Lesson"
-                component={Lesson}
+                children={LessonTopTap}
                 options={{
                     title: '課堂',
-                    ...stackTransition
-                }}
-            />
-            <Stack.Screen
-                name="Exercise"
-                component={Exercise}
-                options={{
-                    title: '練習',
                     ...stackTransition
                 }}
             />

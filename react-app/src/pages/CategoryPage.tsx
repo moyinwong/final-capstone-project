@@ -204,7 +204,7 @@ const CategoryPage: React.FC = () => {
 
   //control panel
   const panelStyle = {
-    width: isFilterOpen ? 200 : 0,
+    width: isFilterOpen ? 205 : 0,
     opacity: isFilterOpen ? 1 : 0,
     //overflow: "hidden",
     transition: "all 0.3s ease-out",
@@ -212,7 +212,7 @@ const CategoryPage: React.FC = () => {
 
   const cardStyle = {
     border: isFilterOpen ? "1px solid rgba(0,0,0,.125)" : "none",
-    width: isFilterOpen ? 170 : 0,
+    width: isFilterOpen ? 205 : 0,
     opacity: isFilterOpen ? 1 : 0,
     transition: "all 0.3s ease-out",
   };
@@ -224,10 +224,6 @@ const CategoryPage: React.FC = () => {
           {alertMsg}
         </Alert>
       )}
-      <div style={{ position: "fixed" }}>{Yposition.Y}</div>
-      <div style={{ position: "fixed", top: 70 }}>
-        {document.body.clientHeight}
-      </div>
       <Breadcrumb>
         <Breadcrumb.Item href="/">主頁</Breadcrumb.Item>
         {isSubCategory && (
@@ -304,6 +300,7 @@ const CategoryPage: React.FC = () => {
                                     readonly={true}
                                     initialRating={parseFloat(e)}
                                   />
+                                  以上
                                 </>
                               }
                               onClick={handleRatingFormClick}
@@ -327,7 +324,7 @@ const CategoryPage: React.FC = () => {
                   <Card.Body>
                     <div>
                       <Form>
-                        {["少於HK$50", "少於HK$200", "少於HK$300"].map((e) => {
+                        {["少於HK$100", "少於HK$200", "少於HK$300"].map((e) => {
                           return (
                             <Form.Check
                               className="rating-form"

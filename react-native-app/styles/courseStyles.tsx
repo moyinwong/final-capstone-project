@@ -46,8 +46,36 @@ const coursesListStyles = StyleSheet.create({
         fontSize: 17,
         color: '#555555'
     },
+    courseButtonContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'flex-start',
+        marginTop: 8
+    },
+    courseButton: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 8,
+        width: 135,
+        borderRadius: 10,
+        backgroundColor: '#53a451',
+    },
+    courseBuyButton: {
+        paddingVertical: 8,
+        paddingHorizontal: 24,
+        borderRadius: 10,
+        backgroundColor: '#e96a43'
+    },
+    courseButtonText: {
+        fontSize: 19,
+        color: '#ffffff'
+    },
     tutorBox: {
-        marginVertical: 8,
+        marginTop: 8,
+        marginBottom: 12,
         marginHorizontal: 2,
         borderRadius: 12,
         display: 'flex',
@@ -83,28 +111,76 @@ const coursesListStyles = StyleSheet.create({
         fontSize: 18,
         color: '#000000'
     },
-    tutorSubscribedBox: {
-        display: 'flex',
-        flexDirection: 'row'
-    },
-    tutorNumOfSubscribedText: {
-        fontSize: 18,
-        color: '#e96a43'
-    },
-    tutorSubscribedText: {
-        fontSize: 18,
-        color: '#22c736'
-    },
-    tutorSubscribeButton: {
+    tutorCheckButton: {
         marginLeft: 24,
         paddingVertical: 8,
         paddingHorizontal: 24,
         borderRadius: 10,
-        backgroundColor: '#e96a43'
+        backgroundColor: '#ffffff',
+        borderColor: '#e96a43',
+        borderWidth: 1
     },
-    tutorSubscribeButtonText: {
+    tutorCheckButtonText: {
         fontSize: 19,
-        color: '#ffffff'
+        color: '#e96a43'
+    },
+    infoBox: {
+        marginTop: 3,
+        marginBottom: 12,
+        marginHorizontal: 2,
+        borderRadius: 12,
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        backgroundColor: '#ffffff',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
+    infoTitle: {
+        marginLeft: 6,
+        fontSize: 20
+    },
+    DescriptionText: {
+        marginTop: 3,
+        marginBottom: 12,
+        fontSize: 18
+    },
+    infoText: {
+        marginVertical: 3,
+        fontSize: 18
+    },
+    lessonBox: {
+        marginVertical: 3
+    },
+    lessonText: {
+        fontSize: 18,
+        color: '#5b96f7'
+    },
+    commentBox: {
+        marginVertical: 3
+    },
+    infoComment: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    infoCommentUser: {
+        fontSize: 16,
+        color: '#666666'
+    },
+    separator: {
+        marginVertical: 10,
+        width: '100%',
+        borderBottomColor: '#cccccc',
+        borderBottomWidth: 1
     }
 });
 
