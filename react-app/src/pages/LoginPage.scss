@@ -1,0 +1,24 @@
+#social-login-button-container {
+  margin: 40px 0px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  button {
+    width: 40px;
+    height: 40px;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    background-color: transparent;
+  }
+
+  img {
+    width: 35px;
+    height: 35px;
+  }
+
+  #facebook-icon {
+    width: 40px;
+    height: 40px;
+  }
+}
