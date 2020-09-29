@@ -51,7 +51,7 @@ export async function seed(knex: Knex): Promise<void> {
       description: "DSE中文說話",
       objective: "提升學生說話技巧",
       prerequisites: "DSE 準考生",
-    },
+    }, 
     {
       name: "一個字 Programming",
       price: 99,

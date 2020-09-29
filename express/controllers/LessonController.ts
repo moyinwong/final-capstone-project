@@ -109,7 +109,7 @@ export class LessonController {
   createLesson = async (req: Request, res: Response) => {
     try {
       const { courseName } = req.params;
-      const lessonInfo = req.body;
+      const lessonInfo:ILessonWithoutCourseId = req.body;
       let courseMaterial = req.files;
 
       let materialArray: any[] = [];
@@ -149,7 +149,7 @@ export class LessonController {
       let questionAndAnswersId: any[] = [];
       for (let item of questionInfos) {
         let question = item.value;
-        let choices = item.choices;
+        let choices: IChoice[] = item.choices;
 
         let questionId = await this.lessonService.createLessonQuestion(
           question,

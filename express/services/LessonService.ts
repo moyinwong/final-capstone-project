@@ -230,7 +230,7 @@ export class LessonService {
   createLessonQuestion = async (
     question: string,
     lessonName: string,
-    choices: []
+    choices: IChoice[]
   ) => {
     const lessonIdArray = await this.knex
       .select("id")
@@ -264,11 +264,9 @@ export class LessonService {
         .returning("id");
       let mcAnswerId = mcIdArray[0];
 
-      console.log(mcAnswerId);
+       mcAnswerIdArray.push(mcAnswerId);
     }
 
-    // return [ questionId, mcAnswerIdArray ]
-    // return questionId
-    return questionId;
+    return [ questionId, mcAnswerIdArray ]
   };
 }
