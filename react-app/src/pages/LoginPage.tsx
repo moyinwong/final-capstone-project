@@ -130,8 +130,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
 import { Alert, Form } from "react-bootstrap";
 import GoogleLogin from "react-google-login";
-import ReactFacebookLogin, { ReactFacebookLoginInfo } from "react-facebook-login";
-import FacebookLogin from '../components/CustomFacebookLogin'
+import ReactFacebookLogin, {
+  ReactFacebookLoginInfo,
+} from "react-facebook-login";
 import "./LoginPage.scss";
 
 
@@ -239,7 +240,7 @@ export default function LoginPage(state: {
   const fBCallback = (
     userInfo: ReactFacebookLoginInfo & { accessToken: string }
   ) => {
-    console.log(previousLocation)
+    console.log(userInfo.accessToken);
     if (userInfo.accessToken) {
       console.log(userInfo.accessToken)
       dispatch(loginFacebook(userInfo.accessToken, previousLocation));
@@ -325,21 +326,20 @@ export default function LoginPage(state: {
               cookiePolicy={"single_host_origin"}
             />
 
-            {/* <FacebookLogin previousLocation /> */}
-          </div>
-          {/* <Form.Group>
-            <div className="fb-button">
-            <ReactFacebookLogin
-                buttonStyle={{ width: "230px" }}
-                appId={process.env.REACT_APP_FACEBOOK_APP_ID || ""}
-                autoLoad={false}
-                fields="name,email,picture"
-                onClick={fBOnCLick}
-                callback={fBCallback}
-                
-              />
-            </div>
-          </Form.Group> */}
+            {/* <Form.Group>
+              <div className="fb-button">
+                {
+                  <ReactFacebookLogin
+                    buttonStyle={{ width: "230px" }}
+                    appId={process.env.REACT_APP_FACEBOOK_APP_ID || ""}
+                    autoLoad={false}
+                    fields="name,email,picture"
+                    onClick={fBOnCLick}
+                    callback={fBCallback}
+                  />
+                }
+              </div>
+            </Form.Group> */}
 
 
           <Grid container>

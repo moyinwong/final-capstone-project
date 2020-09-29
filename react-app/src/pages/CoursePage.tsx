@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ICourse } from "./CategoryPage";
 import { IRootState } from "../redux/store";
 import Rating from "react-rating";
-import { Accordion, Alert, Button, Card } from "react-bootstrap";
+import { Accordion, Alert, Breadcrumb, Button, Card } from "react-bootstrap";
 
 import { addCourse } from "../redux/cart/actions";
 import "./CoursePage.scss";
@@ -32,11 +32,29 @@ interface IComment {
   rated_score: string;
 }
 
+const categories: string[] = [
+  "中文",
+  "英文",
+  "數學",
+  "通識",
+  "物理",
+  "化學",
+  "生物",
+  "經濟",
+  "歷史",
+  "企會財",
+  "ICT",
+  "視覺藝術",
+  "M1",
+  "M2",
+];
+
 const CoursePage: React.FC = () => {
   const param: { courseName: string } = useParams();
   //const { courseName } = param;
   const [courseName, setCourseName] = useState<string>(param.courseName);
   const [course, setCourse] = useState<ICourse>();
+  const [isSubCategory, setIsSubCategory] = useState<boolean>(false);
   const dispatch = useDispatch();
   //const token = localStorage.getItem("token");
   const userEmail = useSelector((state: IRootState) => state.auth.email);
@@ -57,6 +75,7 @@ const CoursePage: React.FC = () => {
       try {
         const newCourse = await getAllCoursesByCategory(courseName);
         setCourse(newCourse);
+        setIsSubCategory(newCourse.category_id === 15);
         document.title = ` ${newCourse.course_name}`;
       } catch (err) {
         console.error(err.message);
@@ -201,6 +220,16 @@ const CoursePage: React.FC = () => {
       )}
       {isReady && course && lessons.length > 0 && (
         <>
+          <Breadcrumb>
+            <Breadcrumb.Item href="/">主頁</Breadcrumb.Item>
+            {isSubCategory && (
+              <Breadcrumb.Item href="/category/其他/">其他</Breadcrumb.Item>
+            )}
+            <Breadcrumb.Item>
+              {categories[course.category_id - 1]}課程
+            </Breadcrumb.Item>
+            <Breadcrumb.Item active>{course.course_name}</Breadcrumb.Item>
+          </Breadcrumb>
           <div className="course-top-background">
             <div>
               <div className="responsive-container" style={{ display: "none" }}>

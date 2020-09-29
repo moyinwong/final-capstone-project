@@ -11,15 +11,24 @@ function CustomFacebookLogin({ previousLocation }) {
     return null;
   };
 
+  // const responseFacebook = (response) => {
+  //   console.log(response);
+  // };
+
   const fBCallback = (userInfo) => {
     if (userInfo.accessToken) {
+<<<<<<< HEAD
       console.log(userInfo.accessToken)
+=======
+      console.log("userInfo", userInfo);
+>>>>>>> 7237a36c579723a726ca24f13ea751542325bc78
       dispatch(loginFacebook(userInfo.accessToken, previousLocation));
     }
     return null;
   };
 
   return (
+<<<<<<< HEAD
     <FacebookLogin
       style={{}}
       appId={process.env.REACT_APP_FACEBOOK_APP_ID || ""}
@@ -29,13 +38,28 @@ function CustomFacebookLogin({ previousLocation }) {
       callback={fBCallback}
       render={(renderProps) => (
         <button onClick={renderProps.onClick}>
+=======
+    <>
+      {console.log(process.env.REACT_APP_FACEBOOK_APP_ID || "")}
+      <FacebookLogin
+        appId={process.env.REACT_APP_FACEBOOK_APP_ID || ""}
+        autoLoad={false}
+        fields="name,email,picture"
+        onClick={fBOnCLick}
+        callback={fBCallback}
+        render={(renderProps) => (
+          // <button onClick={renderProps.onClick} callback={renderProps.callback}>
+>>>>>>> 7237a36c579723a726ca24f13ea751542325bc78
           <img
             id="facebook-icon"
             src={require("../pages/icons/0000016_facebook-like-button-plugin.png")}
+            onClick={renderProps.onClick}
+            callback={renderProps.fBCallback}
           />
-        </button>
-      )}
-    />
+          //</button>
+        )}
+      />
+    </>
   );
 }
 

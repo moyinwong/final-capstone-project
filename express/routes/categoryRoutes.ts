@@ -5,4 +5,3 @@ export const categoryRoutes = express.Router();
 
 categoryRoutes.get("/:name", categoryController.categoryCourses);
 categoryRoutes.get("/others/:name", categoryController.subcategoryCourses);
-

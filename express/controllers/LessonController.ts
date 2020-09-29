@@ -16,13 +16,14 @@ export class LessonController {
           course,
           user
         );
+        console.log("lessons with user", lessons);
         if (lessons.length !== 0) {
           return res.status(200).json({ lessons });
         }
       }
 
       lessons = await this.lessonService.getLessonSummaryByCourse(course);
-
+      console.log("lessons", lessons);
       if (lessons.length === 0) {
         return res.status(401).json({ message: "no lesson found" });
       }
@@ -108,6 +109,7 @@ export class LessonController {
   createLesson = async (req: Request, res: Response) => {
     try {
       const { courseName } = req.params;
+<<<<<<< HEAD
       const lessonInfo: ILessonWithoutCourseId = req.body
       let courseMaterial = req.files
 
@@ -120,16 +122,39 @@ export class LessonController {
         }
         const createdLesson = await this.lessonService.createLesson(lessonInfo, courseName, materialArray);
         return res.status(200).json({ createdLesson })
+=======
+      const lessonInfo = req.body;
+      let courseMaterial = req.files;
+
+      let materialArray: any[] = [];
+      if (courseMaterial.length > 0) {
+        for (let material of courseMaterial) {
+          materialArray.push(material.filename);
+          console.log("materialarray", materialArray);
+        }
+        // let courseMaterial = req.files
+        const createdLesson = await this.lessonService.createLesson(
+          lessonInfo,
+          courseName,
+          materialArray
+        );
+        return res.status(200).json({ createdLesson });
+>>>>>>> 7237a36c579723a726ca24f13ea751542325bc78
       } else {
-        const createdLesson = await this.lessonService.createLesson(lessonInfo, courseName);
-        return res.status(200).json({ createdLesson })
+        const createdLesson = await this.lessonService.createLesson(
+          lessonInfo,
+          courseName
+        );
+        return res.status(200).json({ createdLesson });
       }
 
     } catch (e) {
-      console.log(e.message)
-      return res.status(500).json({message: 'createLesson: internal server error'})
+      console.log(e.message);
+      return res
+        .status(500)
+        .json({ message: "createLesson: internal server error" });
     }
-  }
+  };
 
   createLessonQuestion = async (req: Request, res: Response) => {
     try {
@@ -138,6 +163,7 @@ export class LessonController {
 
       let questionAndAnswersId: any[] = [];
       for (let item of questionInfos) {
+<<<<<<< HEAD
         let question: string = item.value;
         let choices: IChoice[] = item.choices
 
@@ -149,6 +175,29 @@ export class LessonController {
     } catch(e) {
       console.log(e.message)
       return res.status(500).json({ message: 'createQuestion: internal server error'});
+=======
+        let question = item.value;
+        let choices = item.choices;
+
+        let questionId = await this.lessonService.createLessonQuestion(
+          question,
+          lessonName,
+          choices
+        );
+        questionAndAnswersId.push(questionId);
+      }
+
+      console.log(questionAndAnswersId);
+
+      return res
+        .status(200)
+        .json({ message: "successfully created questions" });
+    } catch (e) {
+      console.log(e.message);
+      return res
+        .status(500)
+        .json({ message: "createQuestion: internal server error" });
+>>>>>>> 7237a36c579723a726ca24f13ea751542325bc78
     }
-  }
+  };
 }
