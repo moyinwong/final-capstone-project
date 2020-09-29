@@ -64,16 +64,14 @@ const coursesListStyles = StyleSheet.create({
         backgroundColor: '#53a451',
     },
     courseBuyButton: {
-        backgroundColor: '#ffffff',
-        borderColor: '#e96a43',
-        borderWidth: 1
+        paddingVertical: 8,
+        paddingHorizontal: 24,
+        borderRadius: 10,
+        backgroundColor: '#e96a43'
     },
     courseButtonText: {
         fontSize: 19,
         color: '#ffffff'
-    },
-    courseBuyButtonText: {
-        color: '#e96a43'
     },
     tutorBox: {
         marginTop: 8,
@@ -118,11 +116,13 @@ const coursesListStyles = StyleSheet.create({
         paddingVertical: 8,
         paddingHorizontal: 24,
         borderRadius: 10,
-        backgroundColor: '#e96a43'
+        backgroundColor: '#ffffff',
+        borderColor: '#e96a43',
+        borderWidth: 1
     },
     tutorCheckButtonText: {
         fontSize: 19,
-        color: '#ffffff'
+        color: '#e96a43'
     },
     infoBox: {
         marginTop: 3,
@@ -147,6 +147,11 @@ const coursesListStyles = StyleSheet.create({
     infoTitle: {
         marginLeft: 6,
         fontSize: 20
+    },
+    DescriptionText: {
+        marginTop: 3,
+        marginBottom: 12,
+        fontSize: 18
     },
     infoText: {
         marginVertical: 3,

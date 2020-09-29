@@ -168,7 +168,7 @@ export default function Courses() {
                             style={{ ...courseStyles.courseButton, ...courseStyles.courseBuyButton }}
                             onPress={() => console.log('buy')}
                         >
-                            <Text style={{ ...courseStyles.courseButtonText, ...courseStyles.courseBuyButtonText }}>立即購買</Text>
+                            <Text style={courseStyles.courseButtonText}>立即購買</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -200,15 +200,6 @@ export default function Courses() {
 
             <View>
                 <View>
-                    <Text style={courseStyles.infoTitle}>課程簡介:</Text>
-                </View>
-                <View style={courseStyles.infoBox}>
-                    <Text style={courseStyles.infoText}>{courseInfo.course_description}</Text>
-                </View>
-            </View>
-
-            <View>
-                <View>
                     <Text style={courseStyles.infoTitle}>課程內容:</Text>
                 </View>
 
@@ -217,6 +208,10 @@ export default function Courses() {
                     keyExtractor={(item) => item.lesson_id.toString()}
                     data={lessonsInfo}
                     scrollEnabled={false}
+
+                    ListHeaderComponent={
+                        <Text style={courseStyles.DescriptionText}>{'簡介: ' + courseInfo.course_description}</Text>
+                    }
 
                     ItemSeparatorComponent={() => (
                         <View style={courseStyles.separator}></View>
