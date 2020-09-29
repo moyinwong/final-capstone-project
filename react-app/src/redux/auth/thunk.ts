@@ -135,7 +135,8 @@ export function loginFacebook(
 
     //json object which contain token & user email
     const json = await res.json();
-
+    console.log('hello')
+    
     if (res.status === 200) {
       localStorage.setItem("token", json.token);
       dispatch(loginSuccess(json.token));

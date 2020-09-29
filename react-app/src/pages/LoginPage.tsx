@@ -354,6 +354,7 @@ export default function LoginPage(state: {
               </Link>
             </Grid>
           </Grid>
+          </div>
         </form>
       </div>
 
