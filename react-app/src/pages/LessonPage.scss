@@ -23,6 +23,19 @@
 }
 
 .tab-content {
+  height: 100%;
+
+  #description-container {
+    display: flex;
+    justify-content: center;
+
+    p {
+      width: 80vw;
+      text-align: left;
+      white-space: pre-line;
+    }
+  }
+
   .player-wrapper {
     //   height: 100%;
     //   width: 100%;
@@ -39,6 +52,11 @@
 
   .material-content {
     padding: 50px 0px;
+    font-size: 20px;
+  }
+
+  .purchase-first {
+    padding: 50px;
     font-size: 20px;
   }
 

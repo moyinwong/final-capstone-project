@@ -123,7 +123,7 @@ export async function seed(knex: Knex): Promise<void> {
       course_id: 4,
     },
     {
-      name: "【一個字 Programming】#0 安裝程式",
+      name: "【一個字 Programming】0 安裝程式",
       description: `一般人以為 Programming 是很複雜，遙不可及，即使有很多網上教學，大多數都以英文為主。Tecky Academy 製作全新廣東話【一個字Programming】淺白教學片，為任何職業人士、待業人士、甚至學生和全職媽媽等的繁忙都市人，可以只需花5分鐘「一個字」的時間去認識 Programming。我們每星期會上傳一集！讓你輕鬆了解 Programming！　
 
       今集《【一個字Programming 】#0安裝程式的內容》，就由最基本的步驟說起 — 安裝程式！
@@ -138,7 +138,7 @@ export async function seed(knex: Knex): Promise<void> {
       course_id: 5,
     },
     {
-      name: "【一個字 Programming】#1 第一個程式：Hello World",
+      name: "【一個字 Programming】1 第一個程式：Hello World",
       description: `《#1 第一個程式：Hello World》
 
       上一集教完大家安裝程式軟件後，今集會教大家寫第一個程式 “Hello World”！

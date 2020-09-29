@@ -130,7 +130,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
 import { Alert, Form } from "react-bootstrap";
 import GoogleLogin from "react-google-login";
-import { ReactFacebookLoginInfo } from "react-facebook-login";
+import ReactFacebookLogin, {
+  ReactFacebookLoginInfo,
+} from "react-facebook-login";
 import "./LoginPage.scss";
 import FacebookLogin from "../components/CustomFacebookLogin";
 
@@ -238,6 +240,7 @@ export default function LoginPage(state: {
   const fBCallback = (
     userInfo: ReactFacebookLoginInfo & { accessToken: string }
   ) => {
+    console.log(userInfo.accessToken);
     if (userInfo.accessToken) {
       dispatch(loginFacebook(userInfo.accessToken, previousLocation));
     }
@@ -319,17 +322,19 @@ export default function LoginPage(state: {
             />
 
             {/* <Form.Group>
-            <div className="fb-button"> */}
-            {/* <ReactFacebookLogin
-                buttonStyle={{ width: "230px" }}
-                appId={process.env.REACT_APP_FACEBOOK_APP_ID || ""}
-                autoLoad={false}
-                fields="name,email,picture"
-                onClick={fBOnCLick}
-                callback={fBCallback}
-              /> */}
-            {/* </div>
-          </Form.Group> */}
+              <div className="fb-button">
+                {
+                  <ReactFacebookLogin
+                    buttonStyle={{ width: "230px" }}
+                    appId={process.env.REACT_APP_FACEBOOK_APP_ID || ""}
+                    autoLoad={false}
+                    fields="name,email,picture"
+                    onClick={fBOnCLick}
+                    callback={fBCallback}
+                  />
+                }
+              </div>
+            </Form.Group> */}
 
             <FacebookLogin previousLocation />
           </div>

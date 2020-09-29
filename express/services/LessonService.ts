@@ -28,6 +28,7 @@ export class LessonService {
   getLessonSummaryByCourse = async (course: string) => {
     const lessons: Array<ILesson> = await this.knex
       .select(
+        "courses.category_id",
         "courses.id as course_id",
         "courses.name as course_name",
         "courses.tutor_id",
@@ -89,8 +90,24 @@ export class LessonService {
 
   getLessonAccessibility = async (lessonName: string) => {
     const [lesson] = await this.knex
-      .select("*")
-      .from(`${tables.LESSONS}`)
+      .select(
+        "courses.category_id",
+        "courses.subcategory_id",
+        "courses.id as course_id",
+        "courses.name as course_name",
+        "courses.tutor_id",
+        "lessons.id as lesson_id",
+        "lessons.name as lesson_name",
+        "lessons.description as lesson_description",
+        "is_trial",
+        "video_url"
+      )
+      .from(tables.COURSES)
+      .innerJoin(
+        tables.LESSONS,
+        `${tables.COURSES}.id`,
+        `${tables.LESSONS}.course_id`
+      )
       .where(`${tables.LESSONS}.name`, lessonName)
       .limit(1);
     return lesson;
@@ -164,87 +181,91 @@ export class LessonService {
     return lesson;
   };
 
-  createLesson = async (lessonInfo: ILessonWithoutCourseId, courseName: string, materialArray?:any[]) => {
-    const courseIdArray = await (this.knex
-      .select('id')
+  createLesson = async (
+    lessonInfo: ILessonWithoutCourseId,
+    courseName: string,
+    materialArray?: any[]
+  ) => {
+    const courseIdArray = await this.knex
+      .select("id")
       .from(tables.COURSES)
-      .where('name', courseName))
-    const courseId = courseIdArray[0].id
+      .where("name", courseName);
+    const courseId = courseIdArray[0].id;
     // console.log(lessonInfo)
-    let isTrial = lessonInfo.lessonIsTrial === 'true'
+    let isTrial = lessonInfo.lessonIsTrial === "true";
 
     const lessonId = await this.knex
-    .insert({
-      name: lessonInfo.lessonName,
-      description: lessonInfo.lessonDescription,
-      is_trial: isTrial,
-      video_url: lessonInfo.lessonVideoUrl,
-      course_id: courseId
-    })
-    .into(tables.LESSONS)
-    .returning('id')
+      .insert({
+        name: lessonInfo.lessonName,
+        description: lessonInfo.lessonDescription,
+        is_trial: isTrial,
+        video_url: lessonInfo.lessonVideoUrl,
+        course_id: courseId,
+      })
+      .into(tables.LESSONS)
+      .returning("id");
 
-    let filesUploaded:any[] = [];
+    let filesUploaded: any[] = [];
 
-    if(materialArray) {
+    if (materialArray) {
       for (let material of materialArray) {
         let fileUploaded = this.knex
           .insert({
             name: material.filename,
-            lesson_id: lessonId
+            lesson_id: lessonId,
           })
           .into(tables.FILES)
-          .returning('id')
+          .returning("id");
 
-        filesUploaded.push(fileUploaded)
+        filesUploaded.push(fileUploaded);
       }
     }
 
-    return lessonId
-  }
+    return lessonId;
+  };
 
-  createLessonQuestion = async (question: string, lessonName: string, choices: []) => {
-    const lessonIdArray = await (this.knex
-      .select('id')
+  createLessonQuestion = async (
+    question: string,
+    lessonName: string,
+    choices: []
+  ) => {
+    const lessonIdArray = await this.knex
+      .select("id")
       .from(tables.LESSONS)
-      .where('name', lessonName))
-    const lessonId = lessonIdArray[0].id
-  
-    const questionIdArray = await (this.knex
-    .insert({
-      question: question,
-      lesson_id: lessonId,
-      is_MC: true
-    })
-    .into(tables.QUESTIONS)
-    .returning('id'))
-    const questionId = questionIdArray[0]
+      .where("name", lessonName);
+    const lessonId = lessonIdArray[0].id;
+
+    const questionIdArray = await this.knex
+      .insert({
+        question: question,
+        lesson_id: lessonId,
+        is_MC: true,
+      })
+      .into(tables.QUESTIONS)
+      .returning("id");
+    const questionId = questionIdArray[0];
 
     // let mcAnswerIdArray = [];
 
     for (let choice of choices) {
       let answerBody = Object.keys(choice)[0];
-      let isTrue = choice[answerBody] === 'true';
+      let isTrue = choice[answerBody] === "true";
 
       let mcIdArray = await this.knex
-      .insert({
-        question_id: questionId,
-        answer_body: answerBody,
-        is_correct_answer: isTrue
-      })
-      .into(tables.MC_ANSWERS)
-      .returning('id')
-      let mcAnswerId = mcIdArray[0]
-      
-      console.log(mcAnswerId)
-    }
+        .insert({
+          question_id: questionId,
+          answer_body: answerBody,
+          is_correct_answer: isTrue,
+        })
+        .into(tables.MC_ANSWERS)
+        .returning("id");
+      let mcAnswerId = mcIdArray[0];
 
+      console.log(mcAnswerId);
+    }
 
     // return [ questionId, mcAnswerIdArray ]
     // return questionId
-    return questionId
-  }
-
-  
-
+    return questionId;
+  };
 }

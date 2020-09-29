@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
 
 import { useParams } from "react-router-dom";
-import { Button, Col, Form, Tab, Tabs } from "react-bootstrap";
+import { Breadcrumb, Button, Col, Form, Tab, Tabs } from "react-bootstrap";
 
 import { useForm } from "react-hook-form";
 import ReactLoading from "react-loading";
@@ -12,12 +12,15 @@ import CheckingModal from "../components/CheckingModal";
 import "./LessonPage.scss";
 
 interface ILessInfo {
-  id: number;
+  category_id: number;
+  subcategory_id: number;
+  lesson_id: number;
   name: string;
-  description: string;
+  lesson_description: string;
   is_trial: boolean;
   video_url: string;
   course_id: number;
+  course_name: string;
   created_at: string;
   updated_at: string;
 }
@@ -38,16 +41,39 @@ interface IFile {
   file_name: string;
 }
 
+const categories: string[] = [
+  "中文",
+  "英文",
+  "數學",
+  "通識",
+  "物理",
+  "化學",
+  "生物",
+  "經濟",
+  "歷史",
+  "企會財",
+  "ICT",
+  "視覺藝術",
+  "M1",
+  "M2",
+];
+
+const subcategories: string[] = ["編程", "廚藝", "DIY", "美容"];
+
 const LessonPage: React.FC = () => {
   //const url = useSelector((state: IRootState) => state.lesson.url); //for testing
   const param: { courseName: string; lessonName: string } = useParams();
   const { courseName, lessonName } = param;
+
+  console.log(courseName, lessonName);
+
   const token = localStorage.getItem("token");
   let userEmail: undefined | null | string = undefined;
   userEmail = useSelector((state: IRootState) => state.auth.email);
   const [isAllowAccess, setIsAllowAccess] = useState<boolean>(false);
   const [userRight, setUserRight] = useState<boolean | null>(null);
   const [lessonInfo, setLessonInfo] = useState<ILessInfo>();
+  const [isSubCategory, setIsSubCategory] = useState<boolean>(false);
   const [questionAndAnswer, setQuestionAndAnswer] = useState<
     Array<IQuestionAndAnswer>
   >([]);
@@ -106,16 +132,17 @@ const LessonPage: React.FC = () => {
 
     const result = await fetchRes.json();
 
-    //console.log("result: ", result);
+    console.log("result: ", result);
     if (result) {
       setIsAllowAccess(true);
-      setUserRight(true);
+      setUserRight(result.is_allow);
     } else {
       setUserRight(false);
     }
   };
 
   const getLessonInfo = async (lessonName: string) => {
+    console.log(lessonName);
     let queryRoute: string = "/lesson/info/";
     const fetchRes = await fetch(
       `${process.env.REACT_APP_BACKEND_URL}${queryRoute}${lessonName}`
@@ -123,7 +150,8 @@ const LessonPage: React.FC = () => {
 
     const result = await fetchRes.json();
     const { lessonInfo } = result;
-    //console.log(lessonInfo);
+    console.log("info: ", lessonInfo);
+    setIsSubCategory(lessonInfo.category_id === 15);
     if (lessonInfo.is_trial) {
       setIsAllowAccess(true);
     }
@@ -203,6 +231,18 @@ const LessonPage: React.FC = () => {
                   })}
                 />
               </div>
+              <Breadcrumb>
+                <Breadcrumb.Item href="/">主頁</Breadcrumb.Item>
+                {isSubCategory && (
+                  <Breadcrumb.Item href="/category/其他/">其他</Breadcrumb.Item>
+                )}
+                <Breadcrumb.Item>
+                  {subcategories[lessonInfo.subcategory_id - 1]}課程
+                </Breadcrumb.Item>
+                <Breadcrumb.Item active>
+                  {lessonInfo.course_name}
+                </Breadcrumb.Item>
+              </Breadcrumb>
               <Tabs defaultActiveKey="video" id="uncontrolled-tab-example">
                 <Tab
                   eventKey="video"
@@ -225,6 +265,9 @@ const LessonPage: React.FC = () => {
                       }}
                     />
                   </div>
+                  <div id="description-container">
+                    <p>{lessonInfo.lesson_description}</p>
+                  </div>
                 </Tab>
                 <Tab
                   eventKey="material"
@@ -235,6 +278,7 @@ const LessonPage: React.FC = () => {
                   }
                 >
                   <div className="material-content">可供下載：</div>
+                  {files.length === 0 && <div>暫時未有</div>}
                   {files.map((e, i) => {
                     return (
                       <div key={i}>
@@ -257,7 +301,12 @@ const LessonPage: React.FC = () => {
                     </>
                   }
                 >
-                  {!userRight && <div>請先購買此課堂</div>}
+                  {console.log(userRight)}
+                  {!userRight && (
+                    <div className="purchase-first">
+                      <div>請先購買此課堂</div>
+                    </div>
+                  )}
                   {userRight && (
                     <div className="exe-container">
                       <Form
@@ -289,13 +338,14 @@ const LessonPage: React.FC = () => {
                                   })}
                                 </Col>
                                 {errors[e.question] && "請選擇答案"}
+                                <Button variant="primary" type="submit">
+                                  提交
+                                </Button>
                               </>
                             );
                           }
                         })}
-                        <Button variant="primary" type="submit">
-                          提交
-                        </Button>
+
                         {isLoading && (
                           <ReactLoading
                             type={"spin"}
