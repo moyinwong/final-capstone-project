@@ -96,7 +96,7 @@ const CarouselReact: React.FC<{
   return (
     <>
       {isShowAlert && (
-        <Alert key="info" variant="warning" id="warning-alert">
+        <Alert key="info" variant="warning" className="warning-alert">
           {alertMsg}
         </Alert>
       )}

@@ -6,10 +6,13 @@ import {
   StripeCardElementOptions,
 } from "@stripe/stripe-js";
 //import { Button, Form } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
 import { ICourse } from "../pages/CategoryPage";
 import "./CheckoutForm.scss";
+import PaymentSuccessAlert from "./PaymentSuccessAlert";
+import { push } from "connected-react-router";
+import { string } from "yup";
 
 interface ICheckOutFormError {
   message: string;
@@ -132,9 +135,11 @@ const ResetButton: React.FC<{
 
 const CheckoutForm: React.FC<{
   immediatePurchaseCourse: ICourse | undefined;
-}> = (props: { immediatePurchaseCourse: ICourse | undefined }) => {
-  console.log("props: ", props.immediatePurchaseCourse);
-
+  pastLocation: string | undefined;
+}> = (props) => {
+  //console.log("props: ", props.immediatePurchaseCourse);
+  console.log("past: ", props.pastLocation);
+  const dispatch = useDispatch();
   const stripe = useStripe();
   const elements = useElements();
   const userEmail = useSelector((state: IRootState) => state.auth.email);
@@ -148,7 +153,7 @@ const CheckoutForm: React.FC<{
     name: "",
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const [isDone, setIsDone] = useState<boolean>(false);
   const authToken = localStorage.getItem("token");
   const [paymentIntent, setPaymentIntent] = useState<string>("");
 
@@ -246,9 +251,19 @@ const CheckoutForm: React.FC<{
       }
     );
 
-    const result = await confirmedPaymentRes.json();
-    console.log(result);
-    setIsLoading(false);
+    if (confirmedPaymentRes.status === 500) {
+      setIsLoading(false);
+      setError({ message: "internal server error" });
+    } else {
+      setIsLoading(false);
+      setIsDone(true);
+      if (typeof props.pastLocation === "string") {
+        const path: string = props.pastLocation;
+        setTimeout(() => dispatch(push(path)), 3000);
+      } else {
+        setTimeout(() => dispatch(push("/")), 3000);
+      }
+    }
   };
 
   const createPaymentIntent = async (courses: ICourse[], authToken: string) => {
@@ -333,6 +348,7 @@ const CheckoutForm: React.FC<{
           <div className="lds-dual-ring"></div>
         </div>
       )}
+      {isDone && <PaymentSuccessAlert />}
       <form className="Form stripe-form" onSubmit={handleSubmit}>
         <div className="stripe-form-title">
           <h1>請填寫付款資料</h1>

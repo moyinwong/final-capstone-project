@@ -24,6 +24,7 @@ export interface ICourse {
   price: string;
   id: number;
   category_id: number;
+  subcategory_id: number;
   purchased_users_num: string;
   rated_num: string;
   rated_score: string | null;
@@ -80,8 +81,11 @@ const CategoryPage: React.FC = () => {
       categoryName === "廚藝" ||
       categoryName === "DIY" ||
       categoryName === "美容"
-    )
+    ) {
       setIsSubCategory(true);
+    } else {
+      setIsSubCategory(false);
+    }
   }, [categoryName]);
 
   const dispatch = useDispatch();
@@ -186,7 +190,7 @@ const CategoryPage: React.FC = () => {
       })
       .filter((e) => {
         return (
-          parseFloat(e.price) <= parseFloat(priceSelection) ||
+          parseFloat(e.price) < parseFloat(priceSelection) ||
           priceSelection === "0"
         );
       });
@@ -220,7 +224,7 @@ const CategoryPage: React.FC = () => {
   return (
     <>
       {isShowAlert && (
-        <Alert key="info" variant="warning" id="warning-alert">
+        <Alert key="info" variant="warning" className="warning-alert">
           {alertMsg}
         </Alert>
       )}

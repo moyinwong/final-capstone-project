@@ -14,6 +14,8 @@ import "./CoursePage.scss";
 import CommentModal from "../components/CommentModal";
 
 export interface ILesson {
+  subcategory_id: number;
+  category_id: number;
   course_id: number;
   course_name: string;
   tutor_id: number;
@@ -49,6 +51,8 @@ const categories: string[] = [
   "M2",
 ];
 
+const subcategories: string[] = ["編程", "廚藝", "DIY", "美容"];
+
 const CoursePage: React.FC = () => {
   const param: { courseName: string } = useParams();
   //const { courseName } = param;
@@ -56,7 +60,7 @@ const CoursePage: React.FC = () => {
   const [course, setCourse] = useState<ICourse>();
   const [isSubCategory, setIsSubCategory] = useState<boolean>(false);
   const dispatch = useDispatch();
-  //const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
   const userEmail = useSelector((state: IRootState) => state.auth.email);
   const cartCourses = useSelector((state: IRootState) => state.cart.courses);
   const [isAllowAccess, setIsAllowAccess] = useState<boolean | null>(null);
@@ -215,7 +219,7 @@ const CoursePage: React.FC = () => {
   return (
     <>
       {isShowAlert && (
-        <Alert key="info" variant="warning" id="warning-alert">
+        <Alert key="info" variant="warning" className="warning-alert">
           {alertMsg}
         </Alert>
       )}
@@ -223,12 +227,25 @@ const CoursePage: React.FC = () => {
         <>
           <Breadcrumb>
             <Breadcrumb.Item href="/">主頁</Breadcrumb.Item>
-            {isSubCategory && (
-              <Breadcrumb.Item href="/category/其他/">其他</Breadcrumb.Item>
+            {isSubCategory ? (
+              <>
+                <Breadcrumb.Item href="/category/其他/">其他</Breadcrumb.Item>
+                <Breadcrumb.Item
+                  href={`/category/others/${
+                    subcategories[course.subcategory_id - 1]
+                  }/`}
+                >
+                  {subcategories[course.subcategory_id - 1]}課程
+                </Breadcrumb.Item>
+              </>
+            ) : (
+              <Breadcrumb.Item
+                href={`/category/${categories[course.category_id - 1]}/`}
+              >
+                {categories[course.category_id - 1]}課程
+              </Breadcrumb.Item>
             )}
-            <Breadcrumb.Item>
-              {categories[course.category_id - 1]}課程
-            </Breadcrumb.Item>
+
             <Breadcrumb.Item active>{course.course_name}</Breadcrumb.Item>
           </Breadcrumb>
           <div className="course-top-background">
@@ -253,7 +270,11 @@ const CoursePage: React.FC = () => {
                           已評價
                         </Button>
                       ) : (
-                        <CommentModal />
+                        <CommentModal
+                          userEmail={userEmail}
+                          courseName={courseName}
+                          token={token}
+                        />
                       )}
                     </div>
                   ) : (
@@ -348,7 +369,11 @@ const CoursePage: React.FC = () => {
                             已評價
                           </Button>
                         ) : (
-                          <CommentModal />
+                          <CommentModal
+                            userEmail={userEmail}
+                            courseName={courseName}
+                            token={token}
+                          />
                         )}
                       </>
                     ) : (
@@ -470,7 +495,32 @@ const CoursePage: React.FC = () => {
                         return (
                           <div key={i}>
                             <Card>
-                              <Card.Header>{e.rated_score}</Card.Header>
+                              <Card.Header>
+                                {e.rated_score}
+                                <Rating
+                                  stop={5}
+                                  emptySymbol={[
+                                    "far fa-star fa-2x",
+                                    "far fa-star fa-2x",
+                                    "far fa-star fa-2x",
+                                    "far fa-star fa-2x",
+                                    "far fa-star fa-2x",
+                                  ]}
+                                  fullSymbol={[
+                                    "fas fa-star fa-2x",
+                                    "fas fa-star fa-2x",
+                                    "fas fa-star fa-2x",
+                                    "fas fa-star fa-2x",
+                                    "fas fa-star fa-2x",
+                                  ]}
+                                  readonly={true}
+                                  initialRating={
+                                    course.rated_score
+                                      ? parseFloat(course.rated_score)
+                                      : 0
+                                  }
+                                />
+                              </Card.Header>
                               <Card.Body>
                                 <blockquote className="blockquote mb-0">
                                   <p>{e.comment}</p>

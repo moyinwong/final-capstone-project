@@ -15,7 +15,12 @@ import "./PaymentPage.scss";
 const PaymentPage: React.FC = (state: {
   children?: React.ReactNode;
   location?: {
-    state?: { course?: ICourse; pastLocation: string };
+    state?: {
+      course?: ICourse;
+      pastLocation: {
+        pathname?: string;
+      };
+    };
   };
 }) => {
   const dispatch = useDispatch();
@@ -23,7 +28,9 @@ const PaymentPage: React.FC = (state: {
   const immedatePurchaseCourse: ICourse | undefined =
     state.location?.state?.course;
 
-  const pastLocation: string | undefined = state.location?.state?.pastLocation;
+  const pastLocation: string | undefined =
+    state.location?.state?.pastLocation.pathname;
+  console.log("past1", pastLocation);
   useEffect(() => {
     document.getElementById("website-header")!.style.display = "none";
     return () => {
@@ -48,7 +55,10 @@ const PaymentPage: React.FC = (state: {
       <div className="stripe-form-container">
         <Elements stripe={stripePromise}>
           {/* <InjectedCheckoutForm elements="" stripe="" /> */}
-          <CheckoutForm immediatePurchaseCourse={immedatePurchaseCourse} />
+          <CheckoutForm
+            immediatePurchaseCourse={immedatePurchaseCourse}
+            pastLocation={pastLocation}
+          />
         </Elements>
       </div>
     </>

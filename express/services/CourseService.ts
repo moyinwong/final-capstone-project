@@ -189,6 +189,7 @@ export class CourseService {
             "courses.price",
             "courses.id",
             "category_id",
+            "subcategory_id",
             "users.name as tutor_name",
             "courses.image"
           )
@@ -210,6 +211,7 @@ export class CourseService {
             "courses.price",
             "courses.id",
             "category_id",
+            "subcategory_id",
             "users.name",
             "courses.image"
           )
@@ -222,6 +224,7 @@ export class CourseService {
         "price",
         "T1.id",
         "category_id",
+        "subcategory_id",
         "purchased_users_num",
         "rated_num",
         "rated_score",
@@ -240,6 +243,7 @@ export class CourseService {
         "price",
         "T1.id",
         "category_id",
+        "subcategory_id",
         "purchased_users_num",
         "rated_num",
         "rated_score",
@@ -281,7 +285,7 @@ export class CourseService {
       .from(tables.USERS)
       .where("email", tutorEmail);
     const userId = userIdArray[0].id;
-    
+
     const courses = this.knex
       .select("*")
       .from(tables.COURSES)
@@ -317,5 +321,38 @@ export class CourseService {
       .into(tables.COURSES);
 
     return course;
+  };
+
+  findPurchasedCourseId = async (userEmail: string, courseName: string) => {
+    const purchasedCourse = await this.knex
+      .select(`${tables.PURCHASED_COURSES}.id`)
+      .from(tables.PURCHASED_COURSES)
+      .leftJoin(
+        tables.COURSES,
+        `${tables.PURCHASED_COURSES}.course_id`,
+        `${tables.COURSES}.id`
+      )
+      .leftJoin(
+        tables.USERS,
+        `${tables.PURCHASED_COURSES}.user_id`,
+        `${tables.USERS}.id`
+      )
+      .where(`${tables.COURSES}.name`, courseName)
+      .andWhere(`${tables.USERS}.email`, userEmail)
+      .limit(1);
+
+    return purchasedCourse[0];
+  };
+
+  addNewComment = async (
+    purchasedCoursesId: number,
+    updateComment: string,
+    updateRating: number
+  ) => {
+    const result = await this.knex(`${tables.PURCHASED_COURSES}`)
+      .where(`${tables.PURCHASED_COURSES}.id`, purchasedCoursesId)
+      .update({ rated_score: updateRating, comment: updateComment });
+
+    return result;
   };
 }
