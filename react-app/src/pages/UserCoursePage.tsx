@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { IRootState } from '../redux/store';
 import { useSelector } from 'react-redux';
-import { Card, Container } from 'react-bootstrap';
+import { Card, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './UserCoursePage.scss';
 
@@ -46,29 +46,32 @@ const UserCoursePage = () => {
 
     return (
         <div>
-            {/* <Container> */}
-                {courses.map((course:IUserCourse, index) => (
-                    <Card className="carousel-card">
-                            <Link to={`/course/${course.course_name}`}>
-                                {course.image.match(/http/) ? (
-                                <Card.Img variant="top" src={course.image} />
-                                ) : <Card.Img id="carousel-card-img" variant="top" src={`http://localhost:8080/img/${course.image}`}/>}
-                                
-                            </Link>
-                            <Card.Body className="carousel-card-body">
-                                <div className="carousel-card-title">
-                                {course.course_name}
-                                </div>
-                                <div className="carousel-card-teacher">
-                                {course.tutor_name}
-                                </div>
-                                <div>
-                                    {course.description}
-                                </div>
-                            </Card.Body>
-                    </Card>
-                ))}
-            {/* </Container> */}
+            <Container>
+                <Row>
+                    {courses.map((course:IUserCourse, index) => (
+                        <Card id="carousel-card">
+                                <Link to={`/course/${course.course_name}`}>
+                                    {course.image.match(/http/) ? (
+                                    <Card.Img variant="top" src={course.image} />
+                                    ) : <Card.Img id="carousel-card-img" variant="top" src={`http://localhost:8080/img/${course.image}`}/>}
+                                    
+                                </Link>
+                                <Card.Body className="carousel-card-body">
+                                    <div className="carousel-card-title">
+                                    {course.course_name}
+                                    </div>
+                                    <div className="carousel-card-teacher">
+                                    {course.tutor_name}
+                                    </div>
+                                    <div>
+                                        {course.description}
+                                    </div>
+                                </Card.Body>
+                        </Card>
+                    ))}
+
+                </Row>
+            </Container>
         </div>
     )
 }

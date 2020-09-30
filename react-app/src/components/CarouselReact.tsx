@@ -64,7 +64,7 @@ const CarouselReact: React.FC<{
     slidesToScroll: 3,
     initialSlide: 0,
     autoplaySpeed: 3000,
-    autoplay: true,
+    // autoplay: true,
 
     responsive: [
       {

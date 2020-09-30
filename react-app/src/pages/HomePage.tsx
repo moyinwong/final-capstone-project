@@ -7,7 +7,7 @@ import CarouselReact from "../components/CarouselReact";
 //import { IRootState } from "../redux/store";
 //import { logout } from "../redux/auth/actions";
 //import Header from "../components/Header";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Image } from "react-bootstrap";
 import "./Homepage.scss";
 import { useEffect } from "react";
 //import DropdownMenu from "../components/DropdownMenu";
@@ -112,8 +112,9 @@ const HomePage: React.FC = () => {
       <section className="courses-carousel">
         <CarouselReact type="popular" />
       </section>
+      
       <div>
-        <img src={require("./icons/tecky.png")} />
+        <Image fluid src={require("./icons/tecky.png")} />
       </div>
       <section className="courses-carousel">
         <CarouselReact type="goodComment" />
