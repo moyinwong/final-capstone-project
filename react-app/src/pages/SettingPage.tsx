@@ -1,5 +1,4 @@
 import React, { useState, ChangeEvent, useEffect, useMemo } from 'react';
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -13,11 +12,11 @@ import "./SignupPage.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { push } from "connected-react-router";
 import { Alert, Image } from "react-bootstrap";
-import { login } from "../redux/auth/thunk";
 import './SettingPage.scss';
 import { getUser, logout } from '../redux/auth/actions';
 import { IRootState } from '../redux/store';
 
+//sleep function
 const sleep = (time: number) => new Promise((acc) => setTimeout(acc, time));
 
 interface IUser {
@@ -28,6 +27,7 @@ interface IUser {
     image: string;
 }
 
+//material-UI related styling
 function Copyright() {
     return (
       <Typography variant="body2" color="textSecondary" align="center">
@@ -61,6 +61,7 @@ function Copyright() {
     },
 }));
 
+//main component
 const SettingPage = () => {
     const classes = useStyles();
     const [firstName, setFirstName] =  useState("");
@@ -77,6 +78,7 @@ const SettingPage = () => {
     const userId = useSelector((state: IRootState) => state.auth.id);
     const dispatch = useDispatch();
 
+    //get user info 
     let getUserInfo = async () => {
         const token = localStorage.getItem("token");
 
@@ -98,18 +100,19 @@ const SettingPage = () => {
         
         let fullName = user.name.split(' ')
         
+        //fill in user info into input field
         setFirstName(fullName[1])
         setLastName(fullName[0])
         setProfilePicture(user.image)
         setEmail(user.email)
-
     }
 
-    useEffect(() => {
 
+    useEffect(() => {
         getUserInfo()
     }, [])
 
+    //fill in user info into input field when useState occur
     useEffect(() => {
         let firstNameField = document.getElementById('firstName') as HTMLInputElement
         if (firstNameField) {
@@ -125,6 +128,7 @@ const SettingPage = () => {
         }
     }, [firstName, lastName, email])
     
+    //changeHandler for individual field
     let handleFirstNameChange = (
       event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
     ) => {
@@ -153,6 +157,7 @@ const SettingPage = () => {
       setPassword(event.target.value);
     };
   
+    //access file input
     const fileSelector = document.getElementById('image');
     if(fileSelector) {
         fileSelector.addEventListener('change', (event: any) => {
@@ -165,6 +170,8 @@ const SettingPage = () => {
       //handle submit
     let submitHandler = async (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
       event.preventDefault();
+
+      //validation logic for individual field
       if (firstName.length === 0) {
           setIsFirstNameEmpty(true);
           return;
@@ -178,7 +185,6 @@ const SettingPage = () => {
         !password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm)) {
             setIsEmpty(true);
             return;
-
       } else {
           let fullName = (`${lastName} ${firstName}`)
           let formData = new FormData();
