@@ -80,6 +80,7 @@ export class UserController {
           image: user?.image,
           name: user?.name,
           isTutor: user?.is_tutor,
+          stripeId: user?.stripe_id
         },
       });
     } catch (e) {

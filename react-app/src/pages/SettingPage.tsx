@@ -26,6 +26,7 @@ interface IUser {
     id: number;
     isTutor: boolean | null;
     image: string;
+    stripeId: string;
 }
 
 //material-UI related styling
@@ -65,26 +66,33 @@ function Copyright() {
 //main component
 const SettingPage = () => {
     const classes = useStyles();
+
+    //related to input field
     const [firstName, setFirstName] =  useState("");
     const [lastName, setLastName] =  useState("");
     const [email, setEmail] =  useState("");
     const [password, setPassword] =  useState("");
     const [profilePicture, setProfilePicture] = useState('');
     const [image, setImage] =  useState<File | null>(null);
+
+    //related to input validation
     const [isError, setIsError] = useState(false);
     const [isEmpty, setIsEmpty] = useState(false);
     const [isFirstNameEmpty, setIsFirstNameEmpty] = useState(false);
     const [isLastNameEmpty, setIsLastNameEmpty] = useState(false);
     const [errMessage, setErrMessage] = useState('');
+
+    //related to userInfo
     const userId = useSelector((state: IRootState) => state.auth.id);
     const userEmail = useSelector((state: IRootState) => state.auth.email);
     const token = useSelector((state: IRootState) => state.auth.token);
     const dispatch = useDispatch();
 
-    //react bootstrap
+    //related to modal that contain stripe url
     const[show, setShow] = useState(false)
     const[stripeURL, setStripeURL] = useState('')
     const[isSubmitting, setIsSubmitting] = useState(false)
+    const[stripeId, setStripeId] = useState('');
 
     const handleClose = () => setShow(false);
 
@@ -107,7 +115,7 @@ const SettingPage = () => {
         }
         const json = await res.json();
         let user:IUser = json.user;
-        
+
         let fullName = user.name.split(' ')
         
         //fill in user info into input field
@@ -115,6 +123,11 @@ const SettingPage = () => {
         setLastName(fullName[0])
         setProfilePicture(user.image)
         setEmail(user.email)
+
+        if (user.stripeId) {
+            setStripeId(user.stripeId)
+        }
+        console.log(stripeId)
     }
 
 
@@ -363,18 +376,21 @@ const SettingPage = () => {
 
         </form>
 
-        <Button
-            startIcon={isSubmitting ? <CircularProgress size="1rem" /> : null}
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="secondary"
-            className={classes.submit}
-            onClick={handleStripe}
-            disabled={isSubmitting ? true : false}
-          >
-            成為導師
-          </Button>
+        {stripeId && 
+            <Button
+                startIcon={isSubmitting ? <CircularProgress size="1rem" /> : null}
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="secondary"
+                className={classes.submit}
+                onClick={handleStripe}
+                disabled={isSubmitting ? true : false}
+            >
+                成為導師
+            </Button>
+        }
+
       </div>
 
       {errMessage && <Alert variant="success">{errMessage}</Alert>}
