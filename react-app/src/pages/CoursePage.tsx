@@ -219,7 +219,7 @@ const CoursePage: React.FC = () => {
   return (
     <>
       {isShowAlert && (
-        <Alert key="info" variant="warning" id="warning-alert">
+        <Alert key="info" variant="warning" className="warning-alert">
           {alertMsg}
         </Alert>
       )}
@@ -495,7 +495,32 @@ const CoursePage: React.FC = () => {
                         return (
                           <div key={i}>
                             <Card>
-                              <Card.Header>{e.rated_score}</Card.Header>
+                              <Card.Header>
+                                {e.rated_score}
+                                <Rating
+                                  stop={5}
+                                  emptySymbol={[
+                                    "far fa-star fa-2x",
+                                    "far fa-star fa-2x",
+                                    "far fa-star fa-2x",
+                                    "far fa-star fa-2x",
+                                    "far fa-star fa-2x",
+                                  ]}
+                                  fullSymbol={[
+                                    "fas fa-star fa-2x",
+                                    "fas fa-star fa-2x",
+                                    "fas fa-star fa-2x",
+                                    "fas fa-star fa-2x",
+                                    "fas fa-star fa-2x",
+                                  ]}
+                                  readonly={true}
+                                  initialRating={
+                                    course.rated_score
+                                      ? parseFloat(course.rated_score)
+                                      : 0
+                                  }
+                                />
+                              </Card.Header>
                               <Card.Body>
                                 <blockquote className="blockquote mb-0">
                                   <p>{e.comment}</p>

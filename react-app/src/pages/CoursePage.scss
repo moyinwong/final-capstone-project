@@ -41,12 +41,14 @@
         margin: 5px;
       }
       .course-name {
-        font-size: 50px;
+        font-size: 2rem;
         font-weight: bold;
+        word-wrap: break-word;
       }
 
       .course-objective {
         font-size: 30px;
+        word-wrap: break-word;
       }
 
       .course-rating {

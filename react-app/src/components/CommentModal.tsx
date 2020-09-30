@@ -46,9 +46,15 @@ const CommentModal: React.FC<{
 
       const result = await fetchRes.json();
 
-      if (fetchRes.status === 500 || 401 || 400) {
-        throw new Error(result.message);
+      console.log(fetchRes.status);
+
+      if (
+        fetchRes.status === 500 ||
+        fetchRes.status === 401 ||
+        fetchRes.status === 400
+      ) {
         setShow(false);
+        throw new Error(result.message);
       }
 
       setShow(false);
@@ -78,7 +84,7 @@ const CommentModal: React.FC<{
   return (
     <>
       {isShowAlert && (
-        <Alert key="info" variant="warning" id="warning-alert">
+        <Alert key="info" variant="warning" className="warning-alert">
           {alertMsg}
         </Alert>
       )}

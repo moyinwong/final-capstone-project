@@ -22,15 +22,20 @@
   .course-content {
     display: flex;
     flex-direction: column;
+    width: 145px;
     flex: 3;
     padding: 0px 5px;
     text-align: left;
     justify-content: start;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     .course-name {
       width: 100%;
       font-size: 18px;
       font-weight: bold;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .course-objective {
