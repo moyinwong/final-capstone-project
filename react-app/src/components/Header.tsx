@@ -31,23 +31,24 @@ const Header = (props: any) => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
 
+  const cartCourses = useSelector((state: IRootState) => state.cart.courses);
+  const cartCoursesNum = cartCourses.length;
+
   const currentLocation = useLocation();
 
   useEffect(() => {
-    const pageClickEvent = (e:any) => {
-      setOpen(!open)
-    }
+    const pageClickEvent = (e: any) => {
+      setOpen(!open);
+    };
 
-    if(open) {
-      window.addEventListener('click', pageClickEvent)
+    if (open) {
+      window.addEventListener("click", pageClickEvent);
     }
 
     return () => {
-      window.removeEventListener('click', pageClickEvent)
-    }
-  }, [open])
-
-
+      window.removeEventListener("click", pageClickEvent);
+    };
+  }, [open]);
 
   return (
     <div id="website-header">
@@ -68,6 +69,9 @@ const Header = (props: any) => {
               dispatch(push("/cart"));
             }}
           >
+            {cartCoursesNum !== 0 && (
+              <div className="cart-course-num">{cartCoursesNum}</div>
+            )}
             <i className="fas fa-shopping-cart"></i>
           </div>
           <div className="mr-auto search-bar">
@@ -101,13 +105,20 @@ const Header = (props: any) => {
                       dispatch(push("/cart"));
                     }}
                   >
+                    {cartCoursesNum !== 0 && (
+                      <div className="cart-course-num">{cartCoursesNum}</div>
+                    )}
                     <i className="fas fa-shopping-cart"></i>
                   </div>
                   <button className="user-icon" onClick={() => setOpen(!open)}>
                     {/* <FontAwesomeIcon icon={faUser} size="1x"/> */}
                     <i className="far fa-user"></i>
                   </button>
-                  {open && <div ref={dropdownRef}><DropdownMenu /></div>}
+                  {open && (
+                    <div ref={dropdownRef}>
+                      <DropdownMenu />
+                    </div>
+                  )}
                 </div>
                 <Navbar.Text>歡迎，{userEmail}</Navbar.Text>{" "}
               </div>

@@ -13,6 +13,7 @@ import "./CheckoutForm.scss";
 import PaymentSuccessAlert from "./PaymentSuccessAlert";
 import { push } from "connected-react-router";
 import { string } from "yup";
+import { clear } from "../redux/cart/actions";
 
 interface ICheckOutFormError {
   message: string;
@@ -255,6 +256,9 @@ const CheckoutForm: React.FC<{
       setIsLoading(false);
       setError({ message: "internal server error" });
     } else {
+      if (!props.immediatePurchaseCourse) {
+        dispatch(clear());
+      }
       setIsLoading(false);
       setIsDone(true);
       if (typeof props.pastLocation === "string") {

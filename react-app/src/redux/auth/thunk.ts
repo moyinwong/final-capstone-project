@@ -43,7 +43,7 @@ export function login(
         dispatch(push("/"));
       }
     } else if (res.status === 401) {
-      console.log(res.status)
+      console.log(res.status);
       dispatch(loginFail("Wrong email/password"));
     }
   };
@@ -71,9 +71,9 @@ export function restoreLogin() {
         dispatch(getUser(json.user.email));
         dispatch(checkTutor(json.user.isTutor));
         if (getState().router.location.pathname.match(/login/)) {
-          dispatch(push('/'));
+          dispatch(push("/"));
         } else {
-          dispatch(push(getState().router.location.pathname))
+          //dispatch(push(getState().router.location.pathname));
         }
       } else {
         dispatch(loginFail(""));
@@ -124,10 +124,7 @@ export const loginGoogleThunk = (
   };
 };
 
-export function loginFacebook(
-  accessToken: string,
-  previousLocation: string
-) {
+export function loginFacebook(accessToken: string, previousLocation: string) {
   return async (dispatch: ThunkDispatch) => {
     const res = await fetch(
       `${process.env.REACT_APP_BACKEND_URL}/user/login/facebook`,
@@ -142,7 +139,7 @@ export function loginFacebook(
 
     //json object which contain token & user email
     const json = await res.json();
-    
+
     if (res.status === 200) {
       localStorage.setItem("token", json.token);
       dispatch(loginSuccess(json.token, json.id));
