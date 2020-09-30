@@ -1,0 +1,21 @@
+.payment-alert-container {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2000;
+  background-color: #cee1f1bd;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .fas.fa-check-circle {
+    font-size: 30vw;
+    color: rgb(96, 218, 92);
+  }
+
+  .alert-message {
+    padding: 0px;
+    font-size: 14vw;
+  }
+}
