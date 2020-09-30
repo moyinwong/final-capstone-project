@@ -32,11 +32,11 @@ const LessonAccordion = (course: IPureCourse) => {
       
     return (
         <>
-             <Accordion.Toggle as={Card.Header} eventKey={`${course.id}`}>
+            <Accordion.Toggle as={Card.Header} eventKey={`${course.id}`}>
                 {course.image.match(/http/) ? <Image src={course.image} fluid></Image> : 
                 <Image src={`http://localhost:8080/img/${course.image}`} fluid />
                 }
-                {course.name}
+                <div className="accordion-course-name">{course.name}</div>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey={`${course.id}`}>
                 <Card.Body>

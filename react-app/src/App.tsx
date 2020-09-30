@@ -85,7 +85,6 @@ function App() {
           exact={true}
           component={UserCoursePage}
         />
-        <PrivateRoute path="/instructor" exact={true} component={InstructorPage} />
         <PrivateRoute
           path="/instructor/course/creation"
           exact={true}
@@ -101,6 +100,7 @@ function App() {
           exact={true}
           component={QuestionCreatePage}
         />
+        <PrivateRoute path="/instructor" exact={true} component={InstructorPage} />
         <PrivateRoute path="/payment" exact={true} component={PaymentPage} />
         <Route path="/404" exact={true} component={NotFound} />
         <Route component={NotFound} />

@@ -1,14 +1,24 @@
 .course-creator-container div.accordion div.card-body {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;  
+    align-items: center;  
 
     a {
         align-self: center;
-        margin-top: 20px;
+        margin: 15px 0px;
+    }
+
+    div {
+        width: 300px;
     }
 }
 
 .accordion>.card>.card-header {
     display: flex;
+    .accordion-course-name {
+        margin-left: 20px;
+        font-size: 20px;
+        font-weight: bold;
+        color: rgb(59, 59, 59)
+    }
 }

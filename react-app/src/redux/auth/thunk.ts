@@ -34,7 +34,6 @@ export function login(
       dispatch(loginSuccess(json.token, json.userId));
       dispatch(getUser(json.email));
       dispatch(checkTutor(json.isTutor));
-      console.log(getState().router.location);
       if (previousLocation) {
         dispatch(push(previousLocation));
       } else if (previousLocation?.match(/login/)) {
@@ -73,7 +72,8 @@ export function restoreLogin() {
         if (getState().router.location.pathname.match(/login/)) {
           dispatch(push('/'));
         } else {
-          dispatch(push(getState().router.location.pathname))
+          console.log(getState().router.location);
+          // dispatch(push(getState().router.location.pathname))
         }
       } else {
         dispatch(loginFail(""));
