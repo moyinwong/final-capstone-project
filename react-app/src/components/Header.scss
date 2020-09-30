@@ -18,6 +18,19 @@
   align-items: center;
   margin-right: 10px;
 
+  .cart-course-num {
+    position: absolute;
+    background-color: red;
+    color: white;
+    width: 20px;
+    height: 20px;
+    top: -5px;
+    right: -5px;
+    border-radius: 10px;
+    line-height: 20px;
+    font-size: 14px;
+  }
+
   .fas {
     color: black;
   }

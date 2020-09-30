@@ -177,10 +177,17 @@ const tutorInfoStyles = StyleSheet.create({
         fontSize: 17,
         color: '#555555'
     },
+    coursePriceContainer: {
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-end',
+        marginBottom: 6
+    },
     coursePrice: {
         fontSize: 17,
-        color: '#e96a43',
-        marginTop: 5
+        color: '#e96a43'
     },
     courseScoreContainer: {
         display: 'flex',

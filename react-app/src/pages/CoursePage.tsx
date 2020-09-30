@@ -226,21 +226,37 @@ const CoursePage: React.FC = () => {
       {isReady && course && lessons.length > 0 && (
         <>
           <Breadcrumb>
-            <Breadcrumb.Item href="/">主頁</Breadcrumb.Item>
+            <Breadcrumb.Item onClick={() => dispatch(push("/"))}>
+              主頁
+            </Breadcrumb.Item>
             {isSubCategory ? (
               <>
-                <Breadcrumb.Item href="/category/其他/">其他</Breadcrumb.Item>
                 <Breadcrumb.Item
-                  href={`/category/others/${
-                    subcategories[course.subcategory_id - 1]
-                  }/`}
+                  onClick={() => dispatch(push("/category/其他/"))}
+                >
+                  其他
+                </Breadcrumb.Item>
+                <Breadcrumb.Item
+                  onClick={() =>
+                    dispatch(
+                      push(
+                        `/category/others/${
+                          subcategories[course.subcategory_id - 1]
+                        }/`
+                      )
+                    )
+                  }
                 >
                   {subcategories[course.subcategory_id - 1]}課程
                 </Breadcrumb.Item>
               </>
             ) : (
               <Breadcrumb.Item
-                href={`/category/${categories[course.category_id - 1]}/`}
+                onClick={() =>
+                  dispatch(
+                    push(`/category/${categories[course.category_id - 1]}/`)
+                  )
+                }
               >
                 {categories[course.category_id - 1]}課程
               </Breadcrumb.Item>

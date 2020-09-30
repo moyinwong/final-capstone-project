@@ -15,6 +15,7 @@ import Rating from "react-rating";
 import { useDispatch } from "react-redux";
 //import { push } from "connected-react-router";
 import "./CategoryPage.scss";
+import { push } from "connected-react-router";
 
 export interface ICourse {
   course_name: string;
@@ -229,9 +230,13 @@ const CategoryPage: React.FC = () => {
         </Alert>
       )}
       <Breadcrumb>
-        <Breadcrumb.Item href="/">主頁</Breadcrumb.Item>
+        <Breadcrumb.Item onClick={() => dispatch(push("/"))}>
+          主頁
+        </Breadcrumb.Item>
         {isSubCategory && (
-          <Breadcrumb.Item href="/category/其他/">其他</Breadcrumb.Item>
+          <Breadcrumb.Item onClick={() => dispatch(push("/category/其他/"))}>
+            其他
+          </Breadcrumb.Item>
         )}
         <Breadcrumb.Item active>{categoryName}課程</Breadcrumb.Item>
       </Breadcrumb>
