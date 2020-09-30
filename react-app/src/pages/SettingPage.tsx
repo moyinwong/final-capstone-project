@@ -76,6 +76,8 @@ const SettingPage = () => {
     const [isLastNameEmpty, setIsLastNameEmpty] = useState(false);
     const [errMessage, setErrMessage] = useState('');
     const userId = useSelector((state: IRootState) => state.auth.id);
+    const userEmail = useSelector((state: IRootState) => state.auth.email);
+    const token = useSelector((state: IRootState) => state.auth.token);
     const dispatch = useDispatch();
 
     //get user info 
@@ -216,6 +218,19 @@ const SettingPage = () => {
       }
     };
 
+    let handleStripe = async () => {
+        const res = await fetch(
+            `${process.env.REACT_APP_BACKEND_URL}/payment/create-stripe-connect-account/${userEmail}`, {
+            method: 'PUT',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        const result = await res.json()
+        const stripeUrl = result.url;
+        alert(stripeUrl)
+
+    }
     
     return (
         <Container component="main" maxWidth="xs">
@@ -338,6 +353,7 @@ const SettingPage = () => {
             variant="contained"
             color="secondary"
             className={classes.submit}
+            onClick={handleStripe}
           >
             成為導師
           </Button>

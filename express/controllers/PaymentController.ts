@@ -19,9 +19,15 @@ export class PaymentController {
 
   createStripeAccount = async (req: Request, res: Response) => {
     try {
+      const { userEmail } = req.params;
+
+
       const account = await this.paymentService.createStripeConnectAccount(
-        "testing2@abc.com"
+        userEmail
       );
+
+      const userId = await this.paymentService.inputStripeId(account.id, userEmail);
+      logger.debug(userId);
 
       const accountLink = await this.paymentService.createAccountLinks(
         account.id

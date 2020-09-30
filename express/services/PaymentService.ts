@@ -11,7 +11,7 @@ export class PaymentService {
     const account = await stripe.accounts.create({
       type: "express",
       country: "HK",
-      email: "clintco10@example.com",
+      email: email,
       capabilities: {
         card_payments: { requested: true },
         transfers: { requested: true },
@@ -95,11 +95,21 @@ export class PaymentService {
 
   createAccountLinks = async (accountId: string) => {
     const accountLinks = await stripe.accountLinks.create({
-      account: "acct_1HVXrIF1vd04vxx6",
+      account: accountId,
       refresh_url: "https://localhost:3000",
       return_url: "https://localhost:3000",
       type: "account_onboarding",
     });
     return accountLinks;
   };
+
+  inputStripeId = async (accountId: number, userEmail: string) => {
+    const userId = await this.knex(tables.USERS)
+    .update({
+      stripe_id: accountId
+    }, ['id'])
+    .where('email', userEmail);
+
+    return userId;
+  }
 }
