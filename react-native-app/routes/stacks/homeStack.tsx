@@ -80,7 +80,7 @@ export default function HomeStack(props: { navigation: { toggleDrawer: () => voi
                 name="TutorsList"
                 component={TutorsList}
                 options={{
-                    title: '導師列表',
+                    title: '導師圑隊',
                     ...stackTransition
                 }}
             />

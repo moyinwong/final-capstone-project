@@ -46,6 +46,10 @@ const coursesListStyles = StyleSheet.create({
         fontSize: 17,
         color: '#555555'
     },
+    coursePrice: {
+        fontSize: 21,
+        color: '#e96a43'
+    },
     courseButtonContainer: {
         display: 'flex',
         flexDirection: 'row',
@@ -132,6 +136,15 @@ const coursesListStyles = StyleSheet.create({
         fontSize: 19,
         color: '#e96a43'
     },
+    titleContainer: {
+        display: 'flex',
+        flexDirection: 'row'
+    },
+    titleSubContainer: {
+        marginTop: 6,
+        marginBottom: 8,
+        marginRight: 16
+    },
     infoBox: {
         marginTop: 3,
         marginBottom: 12,
@@ -152,9 +165,15 @@ const coursesListStyles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5
     },
-    infoTitle: {
+    activeInfoTitle: {
         marginLeft: 6,
-        fontSize: 20
+        fontSize: 22,
+        color: '#000000'
+    },
+    inActiveInfoTitle: {
+        marginLeft: 6,
+        fontSize: 22,
+        color: '#828282'
     },
     DescriptionText: {
         marginTop: 3,
