@@ -77,7 +77,7 @@ const HomePage: React.FC = () => {
               </div>
             </Col>
           </Row>
-          <Row>
+          <Row className="section-cards">
             <Col>
               <div className="section-card">
                 <div>

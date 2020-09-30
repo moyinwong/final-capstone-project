@@ -42,14 +42,15 @@ const UserCoursePage = () => {
         let result = await res.json();
         let courses:IUserCourse[] = result.courses
         setCourses(courses);
+        console.log(courses);
     }
 
     return (
         <div>
             <Container id="user-courses-container">
-                <Row>
+                <Row id="user-courses-row">
                     {courses.map((course:IUserCourse, index) => (
-                        <Card id="carousel-card">
+                        <Card id="user-courses-card">
                                 <Link to={`/course/${course.course_name}`}>
                                     {course.image.match(/http/) ? (
                                     <Card.Img variant="top" src={course.image} />

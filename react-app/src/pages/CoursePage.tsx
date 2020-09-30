@@ -514,11 +514,7 @@ const CoursePage: React.FC = () => {
                                     "fas fa-star fa-2x",
                                   ]}
                                   readonly={true}
-                                  initialRating={
-                                    course.rated_score
-                                      ? parseFloat(course.rated_score)
-                                      : 0
-                                  }
+                                  initialRating={parseFloat(e.rated_score)}
                                 />
                               </Card.Header>
                               <Card.Body>
