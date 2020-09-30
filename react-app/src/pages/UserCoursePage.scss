@@ -54,3 +54,19 @@ img#carousel-card-img.card-img-top {
         justify-content: space-around;
     }
 }
+
+.course-section-title-container {
+    font-size: 40px;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    background-color: #505763;
+    color: white;
+
+    .course-section-title-div {
+        max-width: 1080px;
+        width: 80%;
+        display: flex;
+        justify-content: flex-start;
+    }
+}

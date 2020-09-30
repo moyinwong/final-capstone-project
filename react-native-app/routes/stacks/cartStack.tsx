@@ -11,7 +11,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import LessonTopTap from '../topTap/lessonTopTap';
 
 // Screens
-import TutorsTopTap from '../topTap/tutorsTopTap';
+import Cart from '../../screens/bottomTap/cartStack/cart';
 import TutorInfo from '../../screens/bottomTap/commonScreens/tutorInfo';
 import CoursesList from '../../screens/bottomTap/commonScreens/coursesList';
 import Course from '../../screens/bottomTap/commonScreens/course';
@@ -19,7 +19,7 @@ import Course from '../../screens/bottomTap/commonScreens/course';
 // Functions
 import stackTransition from '../../functions/stackTransition';
 
-export default function TutorStack(props: { navigation: { toggleDrawer: () => void; }; }) {
+export default function CartStack(props: { navigation: { toggleDrawer: () => void; }; }) {
     const Stack = createStackNavigator();
 
     function toggleDrawerClick(): void {
@@ -28,6 +28,7 @@ export default function TutorStack(props: { navigation: { toggleDrawer: () => vo
 
     return (
         <Stack.Navigator
+            initialRouteName="Cart"
             headerMode="float"
             screenOptions={{
                 headerStyle: {
@@ -51,18 +52,10 @@ export default function TutorStack(props: { navigation: { toggleDrawer: () => vo
             }}
         >
             <Stack.Screen
-                name="TutorsList"
-                children={TutorsTopTap}
+                name="Cart"
+                component={Cart}
                 options={{
-                    title: '導師列表',
-                    ...stackTransition
-                }}
-            />
-            <Stack.Screen
-                name="TutorInfo"
-                component={TutorInfo}
-                options={{
-                    title: '導師',
+                    title: '購物車',
                     ...stackTransition
                 }}
             />
@@ -79,6 +72,14 @@ export default function TutorStack(props: { navigation: { toggleDrawer: () => vo
                 component={Course}
                 options={{
                     title: '課程',
+                    ...stackTransition
+                }}
+            />
+            <Stack.Screen
+                name="Tutor"
+                component={TutorInfo}
+                options={{
+                    title: '導師',
                     ...stackTransition
                 }}
             />

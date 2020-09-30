@@ -22,7 +22,9 @@ export default function HomeCategories() {
             <View style={homeCategoriesStyles.subContainer}>
                 <TouchableOpacity
                     style={homeCategoriesStyles.box}
-                    onPress={() => navigation.navigate('Subject', {screen: 'Subject'})}
+                    onPress={() => navigation.navigate('Subject',
+                        { screen: 'Subject' }
+                    )}
                 >
                     <MaterialIcons name="subject" color={'#5b96f7'} size={32} />
                     <Text style={homeCategoriesStyles.text}>瀏覽課程</Text>
@@ -30,6 +32,7 @@ export default function HomeCategories() {
 
                 <TouchableOpacity
                     style={homeCategoriesStyles.box}
+                    onPress={() => navigation.navigate('TutorsList')}
                 >
                     <AntDesign name="team" color={'#22c736'} size={32} />
                     <Text style={homeCategoriesStyles.text}>導師圑隊</Text>
@@ -39,7 +42,9 @@ export default function HomeCategories() {
             <View style={homeCategoriesStyles.subContainer}>
                 <TouchableOpacity
                     style={homeCategoriesStyles.box}
-                    onPress={() => navigation.navigate('MyCourse')}
+                    onPress={() => navigation.navigate('MyCourses',
+                        { screen: 'MyCourses' }
+                    )}
                 >
                     <Ionicons name="ios-school" color={'#ee4949'} size={32} />
                     <Text style={homeCategoriesStyles.text}>我的課程</Text>
@@ -47,6 +52,9 @@ export default function HomeCategories() {
 
                 <TouchableOpacity
                     style={homeCategoriesStyles.box}
+                    onPress={() => navigation.navigate('Cart',
+                        { screen: 'Cart' }
+                    )}
                 >
                     <AntDesign name="shoppingcart" color={'#e96a43'} size={32} />
                     <Text style={homeCategoriesStyles.text}>購物車</Text>

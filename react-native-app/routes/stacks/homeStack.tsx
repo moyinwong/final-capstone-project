@@ -12,6 +12,7 @@ import LessonTopTap from '../topTap/lessonTopTap';
 
 // Screens
 import Home from '../../screens/bottomTap/homeStack/home';
+import TutorsList from '../../screens/bottomTap/commonScreens/tutorsList';
 import TutorInfo from '../../screens/bottomTap/commonScreens/tutorInfo';
 import CoursesList from '../../screens/bottomTap/commonScreens/coursesList';
 import Course from '../../screens/bottomTap/commonScreens/course';
@@ -28,6 +29,7 @@ export default function HomeStack(props: { navigation: { toggleDrawer: () => voi
 
     return (
         <Stack.Navigator
+            initialRouteName="Home"
             headerMode="float"
             screenOptions={{
                 headerStyle: {
@@ -59,14 +61,6 @@ export default function HomeStack(props: { navigation: { toggleDrawer: () => voi
                 }}
             />
             <Stack.Screen
-                name="Tutor"
-                component={TutorInfo}
-                options={{
-                    title: '導師',
-                    ...stackTransition
-                }}
-            />
-            <Stack.Screen
                 name="CoursesList"
                 component={CoursesList}
                 options={{
@@ -79,6 +73,22 @@ export default function HomeStack(props: { navigation: { toggleDrawer: () => voi
                 component={Course}
                 options={{
                     title: '課程',
+                    ...stackTransition
+                }}
+            />
+            <Stack.Screen
+                name="TutorsList"
+                component={TutorsList}
+                options={{
+                    title: '導師列表',
+                    ...stackTransition
+                }}
+            />
+            <Stack.Screen
+                name="TutorInfo"
+                component={TutorInfo}
+                options={{
+                    title: '導師',
                     ...stackTransition
                 }}
             />

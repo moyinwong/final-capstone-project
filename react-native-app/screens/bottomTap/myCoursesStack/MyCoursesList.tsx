@@ -80,7 +80,9 @@ export default function MyCoursesList() {
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={myCoursesStyles.courseBox}
-                        onPress={() => navigation.navigate('Course', { courseName: item.course_name })}
+                        onPress={() => navigation.navigate('Course',
+                            { courseName: item.course_name }
+                        )}
                         onLongPress={() => showCommentOrRateBox()}
                     >
                         <View style={myCoursesStyles.coursePicContainer}>

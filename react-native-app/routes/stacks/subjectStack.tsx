@@ -12,6 +12,7 @@ import SubjectTopTap from '../topTap/subjectTopTap';
 import LessonTopTap from '../topTap/lessonTopTap';
 
 // Screens
+import TutorInfo from '../../screens/bottomTap/commonScreens/tutorInfo';
 import CoursesList from '../../screens/bottomTap/commonScreens/coursesList';
 import Course from '../../screens/bottomTap/commonScreens/course';
 
@@ -27,6 +28,7 @@ export default function SubjectStack(props: { navigation: { toggleDrawer: () => 
 
     return (
         <Stack.Navigator
+            initialRouteName="Subject"
             headerMode="float"
             screenOptions={{
                 headerStyle: {
@@ -70,6 +72,14 @@ export default function SubjectStack(props: { navigation: { toggleDrawer: () => 
                 component={Course}
                 options={{
                     title: '課程',
+                    ...stackTransition
+                }}
+            />
+            <Stack.Screen
+                name="Tutor"
+                component={TutorInfo}
+                options={{
+                    title: '導師',
                     ...stackTransition
                 }}
             />
