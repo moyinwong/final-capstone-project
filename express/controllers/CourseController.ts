@@ -106,4 +106,36 @@ export class CourseController {
       res.status(500).json({ message: "Cannot create course" });
     }
   };
+
+  updateComment = async (req: Request, res: Response) => {
+    try {
+      const userEmail = req.params.userEmail;
+      const { courseName, comment, rating } = req.body;
+
+      const purchasedCourse = await this.courseService.findPurchasedCourseId(
+        userEmail,
+        courseName
+      );
+      if (!purchasedCourse)
+        return res
+          .status(401)
+          .json({ message: "user has no right to access course" });
+      const purchasedCourseId = purchasedCourse.id;
+
+      const result = await this.courseService.addNewComment(
+        purchasedCourseId,
+        comment,
+        parseInt(rating)
+      );
+      console.log(result);
+
+      if (result[0] !== 1)
+        return res.status(400).json({ message: "fail to update" });
+
+      return res.status(200).json({ message: "success" });
+    } catch (e) {
+      console.log(e.message);
+      res.status(500).json({ message: "Cannot create course" });
+    }
+  };
 }

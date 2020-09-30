@@ -343,7 +343,7 @@ export class CourseService {
   addNewComment = async (
     purchasedCoursesId: number,
     updateComment: string,
-    updateRating: 1 | 2 | 3 | 4 | 5
+    updateRating: number
   ) => {
     const result = await this.knex
       .where(`${tables.PURCHASED_COURSES}.id`, "=", purchasedCoursesId)
