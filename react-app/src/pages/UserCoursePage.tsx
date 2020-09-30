@@ -47,7 +47,11 @@ const UserCoursePage = () => {
 
     return (
         <div>
-            <div>我的課程</div>
+            <div className="course-section-title-container">
+                <div className="course-section-title-div">
+                    <div className="course-section-title">我的課程</div>
+                </div>
+            </div>
 
             <Container id="user-courses-container">
                 <Row id="user-courses-row">
