@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
 
 import { useParams } from "react-router-dom";
@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import ReactLoading from "react-loading";
 import CheckingModal from "../components/CheckingModal";
 import "./LessonPage.scss";
+import { push } from "connected-react-router";
 
 interface ILessInfo {
   category_id: number;
@@ -88,6 +89,8 @@ const LessonPage: React.FC = () => {
     }[]
   >([]);
   const [isReadyRender, setIsReadyRender] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
 
   //edit title once started
   useEffect(() => {
@@ -232,16 +235,26 @@ const LessonPage: React.FC = () => {
                 />
               </div>
               <Breadcrumb>
-                <Breadcrumb.Item href="/">主頁</Breadcrumb.Item>
+                <Breadcrumb.Item onClick={() => dispatch(push("/"))}>
+                  主頁
+                </Breadcrumb.Item>
                 {isSubCategory ? (
                   <>
-                    <Breadcrumb.Item href="/category/其他/">
+                    <Breadcrumb.Item
+                      onClick={() => dispatch(push("/category/其他/"))}
+                    >
                       其他
                     </Breadcrumb.Item>
                     <Breadcrumb.Item
-                      href={`/category/其他/${
-                        subcategories[lessonInfo.subcategory_id - 1]
-                      }`}
+                      onClick={() =>
+                        dispatch(
+                          push(
+                            `/category/其他/${
+                              subcategories[lessonInfo.subcategory_id - 1]
+                            }`
+                          )
+                        )
+                      }
                     >
                       {subcategories[lessonInfo.subcategory_id - 1]}課程
                     </Breadcrumb.Item>
@@ -249,13 +262,21 @@ const LessonPage: React.FC = () => {
                 ) : (
                   <>
                     <Breadcrumb.Item
-                      href={`/category/${
-                        categories[lessonInfo.category_id - 1]
-                      }`}
+                      onClick={() =>
+                        dispatch(
+                          push(
+                            `/category/${
+                              categories[lessonInfo.category_id - 1]
+                            }`
+                          )
+                        )
+                      }
                     >
                       {categories[lessonInfo.category_id - 1]}課程
                     </Breadcrumb.Item>
-                    <Breadcrumb.Item href={`/course/${courseName}`}>
+                    <Breadcrumb.Item
+                      onClick={() => dispatch(push(`/course/${courseName}`))}
+                    >
                       {courseName}
                     </Breadcrumb.Item>
                   </>
