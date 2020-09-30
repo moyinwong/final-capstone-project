@@ -184,9 +184,14 @@ export default function TutorInfo() {
                                 {/* sssdsfvdsvdsvdsbvsdbsdbsdbds */}
                                 {false ?
                                     (
-                                        <Text style={{ ...tutorInfoStyles.coursePrice, color: '#22c736' }}>{"已購買"}</Text>
+                                        <View style={tutorInfoStyles.coursePriceContainer}>
+                                            <MaterialIcons name="done" size={26} color="#22c736" />
+                                            <Text style={{ ...tutorInfoStyles.coursePrice, color: '#22c736' }}>{"已購買"}</Text>
+                                        </View>
                                     ) : (
-                                        <Text style={tutorInfoStyles.coursePrice}>{"價錢: $" + item.price}</Text>
+                                        <View style={tutorInfoStyles.coursePriceContainer}>
+                                            <Text style={tutorInfoStyles.coursePrice}>{"價錢: $" + item.price}</Text>
+                                        </View>
                                     )}
                             </View>
 
