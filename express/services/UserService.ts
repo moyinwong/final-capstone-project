@@ -5,7 +5,7 @@ import { logger } from "../logger";
 
 interface INewUser {
   email: string;
-  password: string;
+  password?: string;
   name: string;
 }
 
@@ -37,6 +37,51 @@ export class UserService {
         .returning('id'))[0]
     }
     return userId
+  }
+
+  editProfile = async(userInfo: INewUser, userId: number, userImage?: string) => {
+    let editedUserId: any;
+    if (userImage && userInfo.password) {
+      editedUserId = (await this.knex(tables.USERS)
+        .where('id', userId)
+        .update({
+          email: userInfo.email,
+          password: userInfo.password,
+          name: userInfo.name,
+          image: userImage,
+        }, ['id'])
+      )
+    } else if (userInfo.password) {
+      editedUserId = (await this.knex(tables.USERS)
+        .where('id', userId)
+        .update({
+          email: userInfo.email,
+          password: userInfo.password,
+          name: userInfo.name,
+        }, ['id'])
+      )
+    } else if (userImage) {
+      editedUserId = (await this.knex(tables.USERS)
+        .where('id', userId)
+        .update({
+          email: userInfo.email,
+          name: userInfo.name,
+          image: userImage,
+        }, ['id'])
+      )
+    } else {
+      editedUserId = (await this.knex(tables.USERS)
+        .where('id', userId)
+        .update({
+          email: userInfo.email,
+          name: userInfo.name,
+        }, ['id'])
+      )
+    }
+
+    console.log(editedUserId)
+
+    return editedUserId;
   }
 
   getUserByEmail = async (email: string) => {

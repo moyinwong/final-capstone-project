@@ -209,6 +209,31 @@ export class UserController {
     }
   };
 
+  editProfile = async (req: Request, res: Response) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const userInfo = req.body;
+
+      if (userInfo.password) {
+        userInfo.password = await hashPassword(userInfo.password);
+      }
+      const userImage = req.file;
+
+      let editedUserId;
+      if (userImage) {
+        editedUserId = await this.userService.editProfile(userInfo, userId, userImage.filename)
+      } else {
+        editedUserId = await this.userService.editProfile(userInfo, userId)
+      }
+
+      res.status(200).json({ editedUserId })
+
+    } catch(e) {
+      logger.error(e);
+      res.status(500).json({ message: 'editProfile: internal server error'})
+    }
+  }
+
   allowUserAccessCourse = async (req: Request, res: Response) => {
     try {
       const { user, course } = req.params;

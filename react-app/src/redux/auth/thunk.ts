@@ -37,6 +37,8 @@ export function login(
       console.log(getState().router.location);
       if (previousLocation) {
         dispatch(push(previousLocation));
+      } else if (previousLocation?.match(/login/)) {
+        dispatch(push("/"));
       } else {
         dispatch(push("/"));
       }
@@ -68,7 +70,11 @@ export function restoreLogin() {
         dispatch(loginSuccess(token, json.user.id));
         dispatch(getUser(json.user.email));
         dispatch(checkTutor(json.user.isTutor));
-        // dispatch(push(getState().router.location.pathname));
+        if (getState().router.location.pathname.match(/login/)) {
+          dispatch(push('/'));
+        } else {
+          dispatch(push(getState().router.location.pathname))
+        }
       } else {
         dispatch(loginFail(""));
       }
@@ -107,6 +113,8 @@ export const loginGoogleThunk = (
       if (previousLocation) {
         console.log("1");
         dispatch(push(previousLocation));
+      } else if (previousLocation?.match(/login/)) {
+        dispatch(push("/"));
       } else {
         dispatch(push("/"));
       }
@@ -142,6 +150,8 @@ export function loginFacebook(
       dispatch(checkTutor(json.isTutor));
       if (previousLocation) {
         dispatch(push(previousLocation));
+      } else if (previousLocation?.match(/login/)) {
+        dispatch(push("/"));
       } else {
         dispatch(push("/"));
       }

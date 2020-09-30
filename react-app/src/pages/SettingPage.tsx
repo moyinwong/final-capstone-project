@@ -15,8 +15,10 @@ import { push } from "connected-react-router";
 import { Alert, Image } from "react-bootstrap";
 import { login } from "../redux/auth/thunk";
 import './SettingPage.scss';
-import { getUser } from '../redux/auth/actions';
+import { getUser, logout } from '../redux/auth/actions';
 import { IRootState } from '../redux/store';
+
+const sleep = (time: number) => new Promise((acc) => setTimeout(acc, time));
 
 interface IUser {
     email: string;
@@ -72,6 +74,7 @@ const SettingPage = () => {
     const [isFirstNameEmpty, setIsFirstNameEmpty] = useState(false);
     const [isLastNameEmpty, setIsLastNameEmpty] = useState(false);
     const [errMessage, setErrMessage] = useState('');
+    const userId = useSelector((state: IRootState) => state.auth.id);
     const dispatch = useDispatch();
 
     let getUserInfo = async () => {
@@ -105,7 +108,6 @@ const SettingPage = () => {
     useEffect(() => {
 
         getUserInfo()
-    
     }, [])
 
     useEffect(() => {
@@ -121,7 +123,6 @@ const SettingPage = () => {
         if (emailField) {
             emailField.value = email
         }
-
     }, [firstName, lastName, email])
     
     let handleFirstNameChange = (
@@ -173,28 +174,36 @@ const SettingPage = () => {
       } else if (!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
           setIsError(true);
           return;
-      } else if (!password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm)) {
-          setIsEmpty(true);
-          return;
+      } else if (password.length > 0 && 
+        !password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm)) {
+            setIsEmpty(true);
+            return;
+
       } else {
           let fullName = (`${lastName} ${firstName}`)
           let formData = new FormData();
           formData.append('email', email);
-          formData.append('password', password);
           formData.append('name', fullName);
   
           if (image) {
               formData.append('image', image);
           }
+          if (password) {
+            formData.append('password', password);
+          }
   
-          const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/signup`, {
-              method: 'POST',
+          const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/edit-profile/${userId}`, {
+              method: 'PUT',
               body: formData
           });
           const result = await res.json()
   
           if (res.status === 200) {
-              dispatch(login(email, password));
+              setErrMessage('Successfully edited your profile! Please login again')
+              await sleep(2000);
+              localStorage.removeItem("token");
+              dispatch(logout());
+              dispatch(push('/login'));
           } else {
               setErrMessage(result.message);
           }
@@ -215,14 +224,13 @@ const SettingPage = () => {
         </Typography>
 
         <div>
-            {profilePicture.match(/http/) ? <Image src={profilePicture}></Image> : <Image src={`http://localhost:8080/img/${profilePicture}`}/>}
+            {profilePicture.match(/http/) ? <Image id="edit-user-image" src={profilePicture}></Image> : <Image id="edit-user-image" src={`http://localhost:8080/img/${profilePicture}`}/>}
         </div>
 
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                
                 defaultValue={firstName}
                 error={isFirstNameEmpty}
                 helperText={isFirstNameEmpty ? "請填寫名字" : ""}
@@ -317,9 +325,19 @@ const SettingPage = () => {
 
 
         </form>
+
+        <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="secondary"
+            className={classes.submit}
+          >
+            成為導師
+          </Button>
       </div>
 
-      {errMessage && <Alert variant="danger">{errMessage}</Alert>}
+      {errMessage && <Alert variant="success">{errMessage}</Alert>}
       <Box mt={5}>
         <Copyright />
       </Box>

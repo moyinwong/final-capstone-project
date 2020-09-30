@@ -5,6 +5,7 @@ export const userRoutes = express.Router();
 
 userRoutes.post("/signup", upload.single('image'), userController.signup);
 userRoutes.post("/login", userController.login);
+userRoutes.put("/edit-profile/:userId",upload.single('image'), userController.editProfile);
 userRoutes.get("/info", isLoggedIn, userController.getInfo);
 userRoutes.post("/login/google", userController.loginGoogle);
 userRoutes.post("/login/facebook", userController.loginFacebook);

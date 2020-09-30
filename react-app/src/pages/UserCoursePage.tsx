@@ -46,7 +46,7 @@ const UserCoursePage = () => {
 
     return (
         <div>
-            <Container>
+            <Container id="user-courses-container">
                 <Row>
                     {courses.map((course:IUserCourse, index) => (
                         <Card id="carousel-card">
