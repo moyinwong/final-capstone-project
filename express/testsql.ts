@@ -5,21 +5,20 @@ const knex = Knex(knexConfig["development"]);
 import { tables } from "./tables";
 
 const testKnex = knex
-  .select("*")
-  .from(tables.PURCHASED_COURSES)
-  .leftJoin(
-    tables.COURSES,
-    `${tables.PURCHASED_COURSES}.course_id`,
-    `${tables.COURSES}.id`
+  .select(
+    `discussion_id`,
+    `${tables.THREADS}.id as threads_id`,
+    `${tables.DISCUSSIONS}.topic as topic`,
+    `${tables.DISCUSSIONS}.content as discussion_content`,
+    `${tables.THREADS}.content as thread.content`
   )
-  .leftJoin(
-    tables.USERS,
-    `${tables.PURCHASED_COURSES}.user_id`,
-    `${tables.USERS}.id`
+  .from(`${tables.DISCUSSIONS}`)
+  .rightJoin(
+    `${tables.THREADS}`,
+    `${tables.DISCUSSIONS}.id`,
+    `${tables.THREADS}.discussion_id`
   )
-  .where(`${tables.COURSES}.name`, "DSE 中文 5* 攻略")
-  .andWhere(`${tables.USERS}.email`, "apple@abc.com")
-  .limit(1);
+  .where(`${tables.DISCUSSIONS}.lesson_id`, 1);
 
 const test = async () => {
   return testKnex.toSQL();

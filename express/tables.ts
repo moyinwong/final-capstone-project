@@ -11,4 +11,6 @@ export const tables = Object.freeze({
   MC_ANSWERS: "mc_answers",
   SUBMISSIONS: "submissions",
   SAVED_ANSWERS: "saved_answers",
+  DISCUSSIONS: "discussions",
+  THREADS: "threads",
 });

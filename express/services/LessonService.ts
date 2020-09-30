@@ -264,9 +264,31 @@ export class LessonService {
         .returning("id");
       let mcAnswerId = mcIdArray[0];
 
-       mcAnswerIdArray.push(mcAnswerId);
+      mcAnswerIdArray.push(mcAnswerId);
     }
 
-    return [ questionId, mcAnswerIdArray ]
+    return [questionId, mcAnswerIdArray];
+  };
+
+  getDiscussionThreadsByLessonId = async (lessonId: number) => {
+    const threads = await this.knex
+    .select(
+      `discussion_id`,
+      `${tables.THREADS}.id as threads_id`,
+      `${tables.DISCUSSIONS}.topic as topic`,
+      `${tables.DISCUSSIONS}.content as discussion_content`,
+      `${tables.THREADS}.content as thread.content`
+    )
+    .from(`${tables.DISCUSSIONS}`)
+    .rightJoin(
+      `${tables.THREADS}`,
+      `${tables.DISCUSSIONS}.id`,
+      `${tables.THREADS}.discussion_id`
+    )
+    .where(`${tables.DISCUSSIONS}.lesson_id`, lessonId;
+
+    //need to build controller
+
+    return threads;
   };
 }
