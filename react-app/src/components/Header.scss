@@ -7,7 +7,7 @@
 .icon-button {
   border: 0;
   padding: 0;
-  background: rgb(23, 240, 204);
+  background: #E4E6EB;
   height: 40px;
   width: 40px;
   border-radius: 20px;
@@ -24,7 +24,12 @@
 }
 
 .icon-button:hover {
+  background: #d6d7db;
   cursor: pointer;
+}
+
+.icon-button:focus {
+  background: rgb(23, 240, 204);
 }
 
 .icon-button.responsive {
@@ -58,10 +63,18 @@
 //   background-color: grey;
 //   border-radius: 20px;
 
+.user-icon:hover {
+  background: #d6d7db;
+}
+
+.user-icon:focus {
+  background: rgb(23, 240, 204);
+}
 .user-icon {
   border: 0;
   padding: 0;
-  background: rgb(23, 240, 204);
+  // background: rgb(23, 240, 204);
+  background: #E4E6EB;
   height: 40px;
   width: 40px;
   border-radius: 20px;

@@ -47,6 +47,8 @@ const UserCoursePage = () => {
 
     return (
         <div>
+            <div>我的課程</div>
+
             <Container id="user-courses-container">
                 <Row id="user-courses-row">
                     {courses.map((course:IUserCourse, index) => (

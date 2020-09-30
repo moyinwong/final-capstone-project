@@ -16,16 +16,14 @@
   .navbar-dark .navbar-nav .nav-link:hover {
     color: black!important;
   }
+
+  .navbar-dark .navbar-nav .show>.nav-link {
+    color: black;
+  }
 }
 
 
 .navbar {
-
-  // .navbar-dark .navbar-nav .show>.nav-link {
-  //   color: black!important;
-  // }
-
-
 
   .dropdown-item-link {
     color: black !important;
