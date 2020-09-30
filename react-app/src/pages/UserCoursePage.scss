@@ -44,7 +44,7 @@ img#carousel-card-img.card-img-top {
 #user-courses-card {
     width: 300px;
     height: 400px;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
 }
 
 #user-courses-container {
@@ -60,8 +60,9 @@ img#carousel-card-img.card-img-top {
     padding: 30px;
     display: flex;
     justify-content: center;
-    background-color: #505763;
-    color: white;
+    // background-color: #505763;
+    background-image: linear-gradient(45deg, #3a7cb4, #1dfdc6, #8ff57d);
+    color: rgb(44, 42, 42);
 
     .course-section-title-div {
         max-width: 1080px;

@@ -4,7 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
 
 import { useParams } from "react-router-dom";
-import { Breadcrumb, Button, Col, Form, Tab, Tabs } from "react-bootstrap";
+import {
+  Breadcrumb,
+  Button,
+  Col,
+  Form,
+  Nav,
+  OverlayTrigger,
+  Row,
+  Tab,
+  Tabs,
+  Tooltip,
+} from "react-bootstrap";
 
 import { useForm } from "react-hook-form";
 import ReactLoading from "react-loading";
@@ -337,6 +348,57 @@ const LessonPage: React.FC = () => {
                   })}
                 </Tab>
                 <Tab
+                  eventKey="discussion"
+                  title={
+                    <>
+                      討論區 <i className="far fa-comments"></i>
+                    </>
+                  }
+                >
+                  {!userRight && (
+                    <div className="purchase-first">
+                      <div>請先購買此課堂</div>
+                    </div>
+                  )}
+                  {userRight && (
+                    <Tab.Container
+                      id="left-tabs-example"
+                      defaultActiveKey="first"
+                    >
+                      <Row>
+                        <Col sm={3}>
+                          <Nav variant="pills" className="flex-column">
+                            <Nav.Item>
+                              <OverlayTrigger
+                                key="top"
+                                placement="top"
+                                overlay={
+                                  <Tooltip id={`tooltip-top`}>
+                                    Tooltip on top.
+                                  </Tooltip>
+                                }
+                              >
+                                <Nav.Link eventKey="first">
+                                  問題1.................................
+                                </Nav.Link>
+                              </OverlayTrigger>
+                            </Nav.Item>
+                            <Nav.Item>
+                              <Nav.Link eventKey="second">Tab 2</Nav.Link>
+                            </Nav.Item>
+                          </Nav>
+                        </Col>
+                        <Col sm={9}>
+                          <Tab.Content>
+                            <Tab.Pane eventKey="first">ihihihhi</Tab.Pane>
+                            <Tab.Pane eventKey="second"></Tab.Pane>
+                          </Tab.Content>
+                        </Col>
+                      </Row>
+                    </Tab.Container>
+                  )}
+                </Tab>
+                <Tab
                   eventKey="exercise"
                   title={
                     <>
@@ -344,7 +406,7 @@ const LessonPage: React.FC = () => {
                     </>
                   }
                 >
-                  {console.log(userRight)}
+                  {/* {console.log(userRight)} */}
                   {!userRight && (
                     <div className="purchase-first">
                       <div>請先購買此課堂</div>
@@ -381,13 +443,13 @@ const LessonPage: React.FC = () => {
                                   })}
                                 </Col>
                                 {errors[e.question] && "請選擇答案"}
-                                <Button variant="primary" type="submit">
-                                  提交
-                                </Button>
                               </>
                             );
                           }
                         })}
+                        <Button variant="primary" type="submit">
+                          提交
+                        </Button>
 
                         {isLoading && (
                           <ReactLoading
