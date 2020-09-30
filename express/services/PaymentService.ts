@@ -105,11 +105,34 @@ export class PaymentService {
 
   inputStripeId = async (accountId: number, userEmail: string) => {
     const userId = await this.knex(tables.USERS)
-    .update({
-      stripe_id: accountId
-    }, ['id'])
-    .where('email', userEmail);
+      .update(
+        {
+          stripe_id: accountId,
+        },
+        ["id"]
+      )
+      .where("email", userEmail);
 
     return userId;
-  }
+  };
+
+  getStripeId = async (userEmail: string) => {
+    const result = await this.knex
+      .select("stripe_id")
+      .from(`${tables.USERS}`)
+      .where("email", userEmail)
+      .limit(1);
+
+    return result;
+  };
+
+  retrieveStripeAccountStatus = async (stripeId: string) => {
+    const account = await stripe.account.retrieve(stripeId);
+    return account;
+  };
+
+  createStripeLoginLink = async (stripeId: string) => {
+    const loginLink = await stripe.accounts.createLoginLink(stripeId);
+    return loginLink;
+  };
 }

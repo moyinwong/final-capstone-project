@@ -21,12 +21,14 @@ export class PaymentController {
     try {
       const { userEmail } = req.params;
 
-
       const account = await this.paymentService.createStripeConnectAccount(
         userEmail
       );
 
-      const userId = await this.paymentService.inputStripeId(account.id, userEmail);
+      const userId = await this.paymentService.inputStripeId(
+        account.id,
+        userEmail
+      );
       logger.debug(userId);
 
       const accountLink = await this.paymentService.createAccountLinks(
@@ -103,11 +105,79 @@ export class PaymentController {
 
   createAccountLink = async (req: Request, res: Response) => {
     try {
+      const { userEmail } = req.params;
+
+      const userInfo = await this.paymentService.getStripeId(userEmail);
+
+      if (userInfo.length === 0) {
+        return res.status(400).json({ message: "no such user" });
+      }
+
+      const stripeId = userInfo[0].stripe_id;
+
+      if (!stripeId) {
+        return res.status(400).json({ message: "user has no stripe account" });
+      }
+
       const accountLink = await this.paymentService.createAccountLinks(
-        "acct_1HVYOVLAxpq9vdD8"
+        stripeId
       );
 
       return res.json({ url: accountLink.url });
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).json({ message: "internal server error" });
+    }
+  };
+
+  getStripeAccountStatus = async (req: Request, res: Response) => {
+    try {
+      const { userEmail } = req.params;
+
+      const userInfo = await this.paymentService.getStripeId(userEmail);
+
+      if (userInfo.length === 0) {
+        return res.status(400).json({ message: "no such user" });
+      }
+
+      const stripeId = userInfo[0].stripe_id;
+
+      if (!stripeId) {
+        return res.status(400).json({ message: "user has no stripe account" });
+      }
+
+      const accountInfo = await this.paymentService.retrieveStripeAccountStatus(
+        stripeId
+      );
+
+      return res.json({ stripestatus: accountInfo.charges_enabled });
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).json({ message: "internal server error" });
+    }
+  };
+
+  getStripeAccountLoginLink = async (req: Request, res: Response) => {
+    try {
+      const { userEmail } = req.params;
+
+      const userInfo = await this.paymentService.getStripeId(userEmail);
+
+      if (userInfo.length === 0) {
+        return res.status(400).json({ message: "no such user" });
+      }
+
+      const stripeId = userInfo[0].stripe_id;
+
+      if (!stripeId) {
+        return res.status(400).json({ message: "user has no stripe account" });
+      }
+
+      const loginLink = await this.paymentService.createStripeLoginLink(
+        stripeId
+      );
+
+      return res.json({ link: loginLink });
     } catch (err) {
       console.log(err.message);
       return res.status(500).json({ message: "internal server error" });
