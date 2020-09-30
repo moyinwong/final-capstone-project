@@ -1,23 +1,12 @@
 import React from "react";
-//import { push } from "connected-react-router";
-//import { useDispatch, useSelector } from "react-redux";
-
 import CarouselReact from "../components/CarouselReact";
-//import BurgerMenu from "../components/BurgerMenu";
-//import { IRootState } from "../redux/store";
-//import { logout } from "../redux/auth/actions";
-//import Header from "../components/Header";
 import { Container, Row, Col, Image } from "react-bootstrap";
 import "./Homepage.scss";
 import { useEffect } from "react";
+import { Button } from "react-bootstrap";
 //import DropdownMenu from "../components/DropdownMenu";
 
 const HomePage: React.FC = () => {
-  // const test = async () => {
-  //   let res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/category/test`);
-  //   let result = await res.json();
-  //   console.log(result);
-  // };
 
   useEffect(() => {
     document.title = "e-ducate";
@@ -26,6 +15,28 @@ const HomePage: React.FC = () => {
 
   return (
     <div>
+      <section className="section-banner">
+        <Container>
+          <Row>
+            {/* <div className="section-banner-container"> */}
+              <Col>
+                <div className="section-banner-text">
+                <div style={{color: '#212121'}}>仲去補習社？	&bull;	&bull;	&bull;</div>
+                <div style={{fontSize: '30px', color: '#777272'}}>用E-DUCATE上堂，我地幫你搞掂哂！</div>
+                <Button href="/signup" variant="light">立刻註冊</Button>
+                </div>
+              </Col>
+              <Col><img style={{height: '300px', margin: '30px'}} src={require('./icons/geography.png')}/></Col>
+              
+            {/* </div> */}
+          </Row>
+        </Container>
+      </section>
+
+      <section className="courses-carousel">
+        <CarouselReact type="popular" />
+      </section>
+
       <section className="body-section-intro">
         <Container>
           <Row className="justify-content-centers">
@@ -109,9 +120,7 @@ const HomePage: React.FC = () => {
           </Row>
         </Container>
       </section>
-      <section className="courses-carousel">
-        <CarouselReact type="popular" />
-      </section>
+
       
       <div>
         <Image fluid src={require("./icons/tecky.png")} />
