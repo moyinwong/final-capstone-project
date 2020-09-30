@@ -274,7 +274,7 @@ const SettingPage = () => {
     }
     
     let handleURL = async (status: any) => {
-
+      setIsSubmitting(true);
       let stripeURL;
 
       if (!status) {
@@ -300,6 +300,7 @@ const SettingPage = () => {
 
       setStripeURL(stripeURL)
       setShow(true);
+      setIsSubmitting(false);
     }
 
 
@@ -437,18 +438,32 @@ const SettingPage = () => {
         {/* if user has clicked on register stripe account but didnt finished onboarding*/}
         {stripeStatus === false && 
           <Button
+            startIcon={isSubmitting ? <CircularProgress size="1rem" /> : null}
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="secondary"
+            className={classes.submit}
             onClick={() => handleURL(stripeStatus)}
+            disabled={isSubmitting ? true : false}
           >
-            前往Stripe填寫資料
+            前往Stripe完成登記用戶
           </Button>
         }
 
         {/* if user already has a stripe account and finished onboarding */}
         {stripeStatus === true &&
           <Button
+            startIcon={isSubmitting ? <CircularProgress size="1rem" /> : null}
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="secondary"
+            className={classes.submit}
             onClick={() => handleURL(stripeStatus)}
+            disabled={isSubmitting ? true : false}
           >
-            前往Stripe帳戶
+            查看你的Stripe帳戶
           </Button>
         }
 
@@ -461,16 +476,13 @@ const SettingPage = () => {
 
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
-          <Modal.Title>前往Stripe填寫Stripe用戶資料</Modal.Title>
+          <Modal.Title>前往Stripe</Modal.Title>
         </Modal.Header>
 
         <Modal.Body><a onClick={() => setShow(false)} href={stripeURL} target="_blank">{stripeURL}</a></Modal.Body>
         <Modal.Footer>
           <Button color="secondary" onClick={handleClose}>
             Close
-          </Button>
-          <Button color="primary" onClick={handleClose}>
-            Save Changes
           </Button>
         </Modal.Footer>
       </Modal>

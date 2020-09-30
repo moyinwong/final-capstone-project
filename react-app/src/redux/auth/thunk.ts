@@ -34,7 +34,6 @@ export function login(
       dispatch(loginSuccess(json.token, json.userId));
       dispatch(getUser(json.email));
       dispatch(checkTutor(json.isTutor));
-      console.log(getState().router.location);
       if (previousLocation) {
         dispatch(push(previousLocation));
       } else if (previousLocation?.match(/login/)) {
