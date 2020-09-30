@@ -57,7 +57,7 @@ const HomePage: React.FC = () => {
                 </div>
                 <div>
                   <h6>靈活學習</h6>
-                  <div>按自己的節奏隨時隨地學習，靈活運用時間</div>
+                  <div>隨時隨地學習，靈活運用時間</div>
                 </div>
               </div>
             </Col>

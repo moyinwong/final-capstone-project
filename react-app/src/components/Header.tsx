@@ -63,7 +63,7 @@ const Header = (props: any) => {
             </Link>
           </Navbar.Brand>
           {/* <div className='blank-space'>{' '}</div> */}
-          <div
+          <button
             className="icon-button responsive"
             onClick={() => {
               dispatch(push("/cart"));
@@ -73,7 +73,7 @@ const Header = (props: any) => {
               <div className="cart-course-num">{cartCoursesNum}</div>
             )}
             <i className="fas fa-shopping-cart"></i>
-          </div>
+          </button>
           <div className="mr-auto search-bar">
             <Nav>
               <Form inline>
@@ -99,7 +99,7 @@ const Header = (props: any) => {
                   className="user-icon-container"
                   style={{ display: "flex", flexDirection: "row" }}
                 >
-                  <div
+                  <button
                     className="icon-button"
                     onClick={() => {
                       dispatch(push("/cart"));
@@ -109,7 +109,7 @@ const Header = (props: any) => {
                       <div className="cart-course-num">{cartCoursesNum}</div>
                     )}
                     <i className="fas fa-shopping-cart"></i>
-                  </div>
+                  </button>
                   <button className="user-icon" onClick={() => setOpen(!open)}>
                     {/* <FontAwesomeIcon icon={faUser} size="1x"/> */}
                     <i className="far fa-user"></i>

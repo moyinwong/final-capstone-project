@@ -40,7 +40,7 @@ const LessonAccordion = (course: IPureCourse) => {
             </Accordion.Toggle>
             <Accordion.Collapse eventKey={`${course.id}`}>
                 <Card.Body>
-                    {lessons.length === 0 && <div>No classes yet</div>}
+                    {lessons.length === 0 && <div>未有堂喎，快啲加返啦</div>}
                     {lessons.map((lesson, i) => 
                     <div key={i}>
                         {i + 1}: {lesson.lesson_name}
