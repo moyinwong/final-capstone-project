@@ -25,6 +25,7 @@ export function createIsLoggedIn(userService: UserService) {
       //has token
       const payload: { id: number } = jwtSimple.decode(token, jwt.jwtSecret);
       const user = await userService.getUserByID(payload.id);
+
       if (!user) {
         return res.status(401).json({ msg: "Permission Denied - No user" });
       }

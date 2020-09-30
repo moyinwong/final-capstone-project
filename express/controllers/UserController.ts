@@ -71,12 +71,14 @@ export class UserController {
 
   getInfo = async (req: Request, res: Response) => {
     try {
-      const user = req.user;
+      const user: any = req.user;
 
       res.status(200).json({
         user: {
           email: user?.email,
           id: user?.id,
+          image: user?.image,
+          name: user?.name,
           isTutor: user?.is_tutor,
         },
       });

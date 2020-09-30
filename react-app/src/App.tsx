@@ -24,6 +24,7 @@ import QuestionCreatePage from "./pages/QuestionCreatePage";
 import PrivateRoute from "./components/PrivateRoute";
 import SignupPage from "./pages/SignupPage";
 import UserCoursePage from "./pages/UserCoursePage";
+import SettingPage from "./pages/SettingPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -74,6 +75,11 @@ function App() {
           component={LessonPage}
         />
         {/* ... */}
+        <PrivateRoute
+          path="/setting/:userId"
+          exact={true}
+          component={SettingPage}
+        />
         <PrivateRoute
           path="/my-course/:userId"
           exact={true}
