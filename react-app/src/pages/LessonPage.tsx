@@ -15,7 +15,7 @@ interface ILessInfo {
   category_id: number;
   subcategory_id: number;
   lesson_id: number;
-  name: string;
+  lesson_name: string;
   lesson_description: string;
   is_trial: boolean;
   video_url: string;
@@ -233,14 +233,36 @@ const LessonPage: React.FC = () => {
               </div>
               <Breadcrumb>
                 <Breadcrumb.Item href="/">主頁</Breadcrumb.Item>
-                {isSubCategory && (
-                  <Breadcrumb.Item href="/category/其他/">其他</Breadcrumb.Item>
+                {isSubCategory ? (
+                  <>
+                    <Breadcrumb.Item href="/category/其他/">
+                      其他
+                    </Breadcrumb.Item>
+                    <Breadcrumb.Item
+                      href={`/category/其他/${
+                        subcategories[lessonInfo.subcategory_id - 1]
+                      }`}
+                    >
+                      {subcategories[lessonInfo.subcategory_id - 1]}課程
+                    </Breadcrumb.Item>
+                  </>
+                ) : (
+                  <>
+                    <Breadcrumb.Item
+                      href={`/category/${
+                        categories[lessonInfo.category_id - 1]
+                      }`}
+                    >
+                      {categories[lessonInfo.category_id - 1]}課程
+                    </Breadcrumb.Item>
+                    <Breadcrumb.Item href={`/course/${courseName}`}>
+                      {courseName}
+                    </Breadcrumb.Item>
+                  </>
                 )}
-                <Breadcrumb.Item>
-                  {subcategories[lessonInfo.subcategory_id - 1]}課程
-                </Breadcrumb.Item>
+
                 <Breadcrumb.Item active>
-                  {lessonInfo.course_name}
+                  {lessonInfo.lesson_name}
                 </Breadcrumb.Item>
               </Breadcrumb>
               <Tabs defaultActiveKey="video" id="uncontrolled-tab-example">

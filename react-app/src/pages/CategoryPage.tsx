@@ -24,6 +24,7 @@ export interface ICourse {
   price: string;
   id: number;
   category_id: number;
+  subcategory_id: number;
   purchased_users_num: string;
   rated_num: string;
   rated_score: string | null;

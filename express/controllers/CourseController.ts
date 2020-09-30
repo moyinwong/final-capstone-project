@@ -1,6 +1,7 @@
 import { CourseService, ICourseInfo } from "../services/CourseService";
 
 import { Request, Response } from "express";
+import { logger } from "../logger";
 
 export class CourseController {
   constructor(private courseService: CourseService) {}
@@ -109,8 +110,8 @@ export class CourseController {
 
   updateComment = async (req: Request, res: Response) => {
     try {
-      const userEmail = req.params.userEmail;
-      const { courseName, comment, rating } = req.body;
+      logger.debug("haha");
+      const { userEmail, courseName, comment, rating } = req.body;
 
       const purchasedCourse = await this.courseService.findPurchasedCourseId(
         userEmail,
@@ -122,6 +123,8 @@ export class CourseController {
           .json({ message: "user has no right to access course" });
       const purchasedCourseId = purchasedCourse.id;
 
+      logger.debug(purchasedCourseId);
+
       const result = await this.courseService.addNewComment(
         purchasedCourseId,
         comment,
@@ -129,13 +132,13 @@ export class CourseController {
       );
       console.log(result);
 
-      if (result[0] !== 1)
+      if (result !== 1)
         return res.status(400).json({ message: "fail to update" });
 
       return res.status(200).json({ message: "success" });
     } catch (e) {
       console.log(e.message);
-      res.status(500).json({ message: "Cannot create course" });
+      return res.status(500).json({ message: "Cannot create course" });
     }
   };
 }

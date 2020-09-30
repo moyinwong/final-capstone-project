@@ -1,9 +1,13 @@
 import React, { ChangeEvent, useState } from "react";
-import { Form, Modal } from "react-bootstrap";
+import { Alert, Form, Modal } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import Rating from "react-rating";
 
-const CommentModal: React.FC = () => {
+const CommentModal: React.FC<{
+  userEmail: string | null;
+  courseName: string;
+  token: string | null;
+}> = (props) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -12,12 +16,55 @@ const CommentModal: React.FC = () => {
   const [comment, setComment] = useState<string>("");
   const [rating, setRating] = useState<number>(0);
 
-  const handleSubmit = (event: React.FormEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    console.log(comment);
-    console.log(rating);
+  const [alertMsg, setAlertMsg] = useState<string>("");
+  const [isShowAlert, setIsShowAlert] = useState(false);
 
-    //fetch
+  const handleSubmit = async (event: React.FormEvent<HTMLInputElement>) => {
+    try {
+      event.preventDefault();
+
+      const fetchBody = {
+        userEmail: props.userEmail,
+        courseName: props.courseName,
+        comment,
+        rating,
+      };
+
+      const queryRoute: string = "/course/comment/update";
+
+      const fetchRes = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}${queryRoute}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${props.token}`,
+          },
+          body: JSON.stringify(fetchBody),
+        }
+      );
+
+      const result = await fetchRes.json();
+
+      if (fetchRes.status === 500 || 401 || 400) {
+        throw new Error(result.message);
+        setShow(false);
+      }
+
+      setShow(false);
+      setAlertMsg("已成功評價");
+      setIsShowAlert(true);
+      setTimeout(() => {
+        setIsShowAlert(false);
+      }, 3000);
+    } catch (err) {
+      console.error(err.message);
+      setAlertMsg(err.message);
+      setIsShowAlert(true);
+      setTimeout(() => {
+        setIsShowAlert(false);
+      }, 3000);
+    }
   };
 
   const handleRatingOnchange = (value: any) => {
@@ -30,6 +77,11 @@ const CommentModal: React.FC = () => {
 
   return (
     <>
+      {isShowAlert && (
+        <Alert key="info" variant="warning" id="warning-alert">
+          {alertMsg}
+        </Alert>
+      )}
       <Button variant="success" onClick={handleShow}>
          評價
       </Button>
@@ -82,7 +134,13 @@ const CommentModal: React.FC = () => {
             <Button
               variant="primary"
               type="submit"
-              disabled={!rating || !comment}
+              disabled={
+                !rating ||
+                !comment ||
+                !props.userEmail ||
+                !props.token ||
+                !props.courseName
+              }
             >
               提交
             </Button>
