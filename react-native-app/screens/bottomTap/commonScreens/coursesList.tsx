@@ -118,7 +118,9 @@ export default function CoursesList() {
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={coursesListStyles.courseBox}
-                        onPress={() => navigation.navigate('Course', { courseName: item.course_name })}
+                        onPress={() => navigation.navigate('Course',
+                            { courseName: item.course_name }
+                        )}
                         // sssssssssssssssssssssssss
                         onLongPress={() => showModal(true)}
                     >

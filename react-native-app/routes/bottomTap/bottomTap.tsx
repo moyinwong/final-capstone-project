@@ -10,7 +10,7 @@ import { FontAwesome, MaterialIcons, AntDesign, Ionicons } from '@expo/vector-ic
 // Routes
 import HomeStack from '../stacks/homeStack';
 import SubjectStack from '../stacks/subjectStack';
-import TutorStack from '../stacks/tutorStack';
+import CartStack from '../stacks/cartStack';
 import MyCoursesStack from '../stacks/myCoursesStack';
 
 export default function BottomTap() {
@@ -46,17 +46,17 @@ export default function BottomTap() {
                 }}
             />
             <Tab.Screen
-                name="Tutor"
-                children={TutorStack}
+                name="Cart"
+                children={CartStack}
                 options={{
-                    tabBarLabel: '導師',
+                    tabBarLabel: '購物車',
                     tabBarIcon: ({ color }) => (
                         <AntDesign name="team" color={color} size={24} />
                     )
                 }}
             />
             <Tab.Screen
-                name="MyCourse"
+                name="MyCourses"
                 children={MyCoursesStack}
                 options={{
                     tabBarLabel: '我的課程',
