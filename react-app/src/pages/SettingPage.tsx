@@ -11,10 +11,11 @@ import Container from "@material-ui/core/Container";
 import "./SignupPage.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { push } from "connected-react-router";
-import { Alert, Image } from "react-bootstrap";
+import { Alert, Image, Modal } from "react-bootstrap";
 import './SettingPage.scss';
 import { getUser, logout } from '../redux/auth/actions';
 import { IRootState } from '../redux/store';
+import { CircularProgress } from '@material-ui/core';
 
 //sleep function
 const sleep = (time: number) => new Promise((acc) => setTimeout(acc, time));
@@ -79,6 +80,13 @@ const SettingPage = () => {
     const userEmail = useSelector((state: IRootState) => state.auth.email);
     const token = useSelector((state: IRootState) => state.auth.token);
     const dispatch = useDispatch();
+
+    //react bootstrap
+    const[show, setShow] = useState(false)
+    const[stripeURL, setStripeURL] = useState('')
+    const[isSubmitting, setIsSubmitting] = useState(false)
+
+    const handleClose = () => setShow(false);
 
     //get user info 
     let getUserInfo = async () => {
@@ -219,6 +227,7 @@ const SettingPage = () => {
     };
 
     let handleStripe = async () => {
+        setIsSubmitting(true)
         const res = await fetch(
             `${process.env.REACT_APP_BACKEND_URL}/payment/create-stripe-connect-account/${userEmail}`, {
             method: 'PUT',
@@ -226,10 +235,17 @@ const SettingPage = () => {
                 Authorization: `Bearer ${token}`,
             },
         })
+
+        if (res.status != 200) {
+            alert('something is wrong')
+            return;
+        }
+
         const result = await res.json()
         const stripeUrl = result.url;
-        alert(stripeUrl)
-
+        setStripeURL(stripeUrl);
+        setShow(true);
+        setIsSubmitting(false);
     }
     
     return (
@@ -348,12 +364,14 @@ const SettingPage = () => {
         </form>
 
         <Button
+            startIcon={isSubmitting ? <CircularProgress size="1rem" /> : null}
             type="submit"
             fullWidth
             variant="contained"
             color="secondary"
             className={classes.submit}
             onClick={handleStripe}
+            disabled={isSubmitting ? true : false}
           >
             成為導師
           </Button>
@@ -363,6 +381,22 @@ const SettingPage = () => {
       <Box mt={5}>
         <Copyright />
       </Box>
+
+      <Modal show={show} onHide={handleClose} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>前往Stripe填寫Stripe用戶資料</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body><a onClick={() => setShow(false)} href={stripeURL} target="_blank">{stripeURL}</a></Modal.Body>
+        <Modal.Footer>
+          <Button color="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button color="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
     )
 }
