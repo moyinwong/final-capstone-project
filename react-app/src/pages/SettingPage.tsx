@@ -93,6 +93,7 @@ const SettingPage = () => {
     const[stripeURL, setStripeURL] = useState('')
     const[isSubmitting, setIsSubmitting] = useState(false)
     const[stripeId, setStripeId] = useState('');
+    const[stripeStatus, setStripeStatus] = useState<boolean | null>(null)
 
     const handleClose = () => setShow(false);
 
@@ -126,8 +127,19 @@ const SettingPage = () => {
 
         if (user.stripeId) {
             setStripeId(user.stripeId)
+
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/payment/check-stripe-account-status/${user.email}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            })
+            const result = await res.json();
+            const stripeStatus = result.stripestatus;
+
+            setStripeStatus(stripeStatus)
+            console.log(stripeStatus)
         }
-        console.log(stripeId)
     }
 
 
@@ -261,6 +273,36 @@ const SettingPage = () => {
         setIsSubmitting(false);
     }
     
+    let handleURL = async (status: any) => {
+
+      let stripeURL;
+
+      if (!status) {
+        const res = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/payment/create-stripe-account-link/${userEmail}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+          },
+        })
+        const result = await res.json()
+        stripeURL = result.url;
+      } else {
+        const res = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/payment/create-login-link/${userEmail}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+          },
+        })
+        const result = await res.json()
+        console.log(result)
+        stripeURL = result.link.url;
+      }
+
+      setStripeURL(stripeURL)
+      setShow(true);
+    }
+
+
     return (
         <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -376,19 +418,38 @@ const SettingPage = () => {
 
         </form>
 
-        {stripeId && 
-            <Button
-                startIcon={isSubmitting ? <CircularProgress size="1rem" /> : null}
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="secondary"
-                className={classes.submit}
-                onClick={handleStripe}
-                disabled={isSubmitting ? true : false}
-            >
-                成為導師
-            </Button>
+        {/* if user doesnt have stripe account */}
+        {stripeStatus === null &&
+          <Button
+              startIcon={isSubmitting ? <CircularProgress size="1rem" /> : null}
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="secondary"
+              className={classes.submit}
+              onClick={handleStripe}
+              disabled={isSubmitting ? true : false}
+          >
+              成為導師
+          </Button>
+        }
+
+        {/* if user has clicked on register stripe account but didnt finished onboarding*/}
+        {stripeStatus === false && 
+          <Button
+            onClick={() => handleURL(stripeStatus)}
+          >
+            前往Stripe填寫資料
+          </Button>
+        }
+
+        {/* if user already has a stripe account and finished onboarding */}
+        {stripeStatus === true &&
+          <Button
+            onClick={() => handleURL(stripeStatus)}
+          >
+            前往Stripe帳戶
+          </Button>
         }
 
       </div>

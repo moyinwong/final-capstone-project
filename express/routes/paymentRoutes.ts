@@ -28,11 +28,13 @@ paymentRoutes.get(
   isLoggedIn,
   paymentController.createAccountLink
 );
+
 paymentRoutes.get(
   "/check-stripe-account-status/:userEmail",
   isLoggedIn,
   paymentController.getStripeAccountStatus
 );
+
 paymentRoutes.get(
   "/create-login-link/:userEmail",
   isLoggedIn,
