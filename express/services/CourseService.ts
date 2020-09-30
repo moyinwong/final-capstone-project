@@ -15,6 +15,7 @@ export interface ICourseInfo {
   courseObjective: string;
   courseDescription: string;
   coursePrerequisite: string;
+  courseSubcategory?: number | undefined;
 }
 
 export class CourseService {
@@ -306,7 +307,25 @@ export class CourseService {
       .where("email", userEmail);
     const userId = userIdArray[0];
 
-    const course = await this.knex
+    console.log(courseInfo.courseSubcategory)
+    let course;
+    if (courseInfo.courseSubcategory) {
+      course = await this.knex
+      .insert({
+        name: courseInfo.courseTitle,
+        price: courseInfo.coursePrice,
+        category_id: courseInfo.courseCategory,
+        subcategory_id: courseInfo.courseSubcategory,
+        tutor_id: userId.id,
+        image: courseCover,
+        description: courseInfo.courseDescription,
+        objective: courseInfo.courseObjective,
+        prerequisites: courseInfo.coursePrerequisite,
+      })
+      .returning("id")
+      .into(tables.COURSES); 
+    } else {
+      course = await this.knex
       .insert({
         name: courseInfo.courseTitle,
         price: courseInfo.coursePrice,
@@ -319,6 +338,8 @@ export class CourseService {
       })
       .returning("id")
       .into(tables.COURSES);
+    }
+
 
     return course;
   };

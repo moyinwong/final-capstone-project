@@ -285,7 +285,7 @@ export class LessonService {
       `${tables.DISCUSSIONS}.id`,
       `${tables.THREADS}.discussion_id`
     )
-    .where(`${tables.DISCUSSIONS}.lesson_id`, lessonId;
+    .where(`${tables.DISCUSSIONS}.lesson_id`, lessonId);
 
     //need to build controller
 

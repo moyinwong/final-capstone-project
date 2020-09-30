@@ -8,7 +8,6 @@ export class LessonController {
   courseLessons = async (req: Request, res: Response) => {
     try {
       const { course, user } = req.params;
-      logger.debug(course, user);
 
       let lessons;
       if (user) {
@@ -23,7 +22,7 @@ export class LessonController {
       }
 
       lessons = await this.lessonService.getLessonSummaryByCourse(course);
-      console.log("lessons", lessons);
+
       if (lessons.length === 0) {
         return res.status(401).json({ message: "no lesson found" });
       }

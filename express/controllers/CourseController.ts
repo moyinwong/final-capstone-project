@@ -84,14 +84,35 @@ export class CourseController {
         coursePrerequisite,
       } = req.body;
 
-      const newCourseInfo: ICourseInfo = {
-        courseTitle: courseTitle,
-        courseCategory: parseInt(courseCategory),
-        coursePrice: parseInt(coursePrice),
-        courseDescription: courseDescription,
-        courseObjective: courseObjective,
-        coursePrerequisite: coursePrerequisite,
-      };
+      let newCourseInfo: ICourseInfo;
+      let courseSubcategory;
+
+      let courseCategoryId = parseInt(courseCategory);
+      console.log('line 91: ' + courseCategoryId)
+      if(courseCategoryId == 151 || courseCategoryId == 152 
+        || courseCategoryId == 153 || courseCategoryId == 154) {
+          courseSubcategory = courseCategoryId - 150
+          newCourseInfo = {
+            courseTitle: courseTitle,
+            courseCategory: 15,
+            courseSubcategory: courseSubcategory,
+            coursePrice: parseInt(coursePrice),
+            courseDescription: courseDescription,
+            courseObjective: courseObjective,
+            coursePrerequisite: coursePrerequisite,
+          };
+      } else {
+        newCourseInfo = {
+          courseTitle: courseTitle,
+          courseCategory: courseCategory,
+          coursePrice: parseInt(coursePrice),
+          courseDescription: courseDescription,
+          courseObjective: courseObjective,
+          coursePrerequisite: coursePrerequisite,
+        };
+      }
+
+      
       const courseCover = req.file.filename;
 
       const createdCourse = await this.courseService.createCourse(

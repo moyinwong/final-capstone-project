@@ -111,7 +111,12 @@ const CourseCreatePage = () => {
               await sleep(1000);
               const formData = new FormData();
               formData.append("courseTitle", values.courseTitle);
-              formData.append("courseCategory", values.courseCategory);
+
+              console.log(values.courseCategory)
+              let courseCategoryId = values.courseCategory;
+
+              
+              formData.append("courseCategory", courseCategoryId);
               formData.append("coursePrice", values.coursePrice);
               formData.append("courseObjective", values.courseObjective);
               formData.append("courseDescription", values.courseDescription);
@@ -159,7 +164,10 @@ const CourseCreatePage = () => {
                     <MenuItem value={12}>視覺藝術</MenuItem>
                     <MenuItem value={13}>M1</MenuItem>
                     <MenuItem value={14}>M2</MenuItem>
-                    <MenuItem value={15}>其他</MenuItem>
+                    <MenuItem value={151}>編程</MenuItem>
+                    <MenuItem value={152}>廚藝</MenuItem>
+                    <MenuItem value={153}>DIY</MenuItem>
+                    <MenuItem value={154}>美容</MenuItem>
                   </Field>
                 </FormControl>
               </Box>
