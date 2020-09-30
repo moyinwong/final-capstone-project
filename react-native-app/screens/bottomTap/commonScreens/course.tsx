@@ -1,6 +1,6 @@
 // React, React Native
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, FlatList, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, FlatList, ScrollView, Pressable } from 'react-native';
 
 // Navigation
 import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
@@ -127,6 +127,12 @@ export default function Courses() {
         }, [courseName])
     );
 
+    // Render
+    // State
+    const [showLessons, setShowLessons] = useState(
+        true
+    );
+
     // Dummy Data
     const isSubscribed = false;
 
@@ -157,6 +163,9 @@ export default function Courses() {
                         <Stars score={courseInfo.rated_score} />
 
                     </View>
+                    {/* sdsdgdsgsdgvsgbsdgbsrbhsbhsrbhsrrs */}
+                    {true && <Text style={courseStyles.coursePrice}>{'價錢: $' + courseInfo.price}</Text>}
+
                     {/* sdsdgdsgsdgvsgbsdgbsrbhsbhsrbhsrrs */}
                     {true ? (
                         <View style={courseStyles.courseButtonContainer}>
@@ -210,71 +219,82 @@ export default function Courses() {
             </View>
 
             <View>
-                <View>
-                    <Text style={courseStyles.infoTitle}>課程內容:</Text>
+                <View style={courseStyles.titleContainer}>
+                    <Pressable
+                        style={courseStyles.titleSubContainer}
+                        onPress={() => setShowLessons(true)}
+                    >
+                        <Text
+                            style={showLessons ? (courseStyles.activeInfoTitle) : (courseStyles.inActiveInfoTitle)}
+                        >
+                            課程內容
+                        </Text>
+                    </Pressable>
+                    <Pressable
+                        style={courseStyles.titleSubContainer}
+                        onPress={() => setShowLessons(false)}
+                    >
+                        <Text
+                            style={showLessons ? (courseStyles.inActiveInfoTitle) : (courseStyles.activeInfoTitle)}
+                        >
+                            學生反映
+                        </Text>
+                    </Pressable>
                 </View>
 
-                <FlatList
-                    style={courseStyles.infoBox}
-                    keyExtractor={(item) => item.lesson_id.toString()}
-                    data={lessonsInfo}
-                    scrollEnabled={false}
+                {showLessons ? (
+                    <FlatList
+                        style={courseStyles.infoBox}
+                        keyExtractor={(item) => item.lesson_id.toString()}
+                        data={lessonsInfo}
+                        scrollEnabled={false}
 
-                    ListHeaderComponent={
-                        <Text style={courseStyles.DescriptionText}>{'簡介: ' + courseInfo.course_description}</Text>
-                    }
+                        ListHeaderComponent={
+                            <Text style={courseStyles.DescriptionText}>{'簡介: ' + courseInfo.course_description}</Text>
+                        }
 
-                    ItemSeparatorComponent={() => (
-                        <View style={courseStyles.separator}></View>
-                    )}
+                        ItemSeparatorComponent={() => (
+                            <View style={courseStyles.separator}></View>
+                        )}
 
-                    renderItem={({ item }) => (
-                        <TouchableOpacity
-                            style={courseStyles.lessonBox}
-                            onPress={() => navigation.navigate('Lesson',
-                                { lesson: item.lesson_id }
+                        renderItem={({ item }) => (
+                            <TouchableOpacity
+                                style={courseStyles.lessonBox}
+                                onPress={() => navigation.navigate('Lesson',
+                                    { lesson: item.lesson_id }
+                                )}
+                            >
+                                <Text style={courseStyles.lessonText}>{item.lesson_name}</Text>
+                            </TouchableOpacity>
+                        )}
+                    />
+                ) : (
+                        <FlatList
+                            style={courseStyles.infoBox}
+                            keyExtractor={(item) => item.comment}
+                            data={comments}
+                            scrollEnabled={false}
+
+                            ItemSeparatorComponent={() => (
+                                <View style={courseStyles.separator}></View>
                             )}
-                        >
-                            <Text style={courseStyles.lessonText}>{item.lesson_name}</Text>
-                        </TouchableOpacity>
-                    )}
-                />
 
-                <View>
-
-                </View>
-            </View>
-
-            <View>
-                <View>
-                    <Text style={courseStyles.infoTitle}>學生反映:</Text>
-                </View>
-
-                <FlatList
-                    style={courseStyles.infoBox}
-                    keyExtractor={(item) => item.comment}
-                    data={comments}
-                    scrollEnabled={false}
-
-                    ItemSeparatorComponent={() => (
-                        <View style={courseStyles.separator}></View>
-                    )}
-
-                    renderItem={({ item }) => (
-                        <View
-                            style={courseStyles.commentBox}
-                        >
-                            <Text style={courseStyles.infoText}>{item.comment}</Text>
-                            <View style={courseStyles.infoComment}>
-                                <View style={{ marginRight: 16 }}>
-                                    <Stars score={item.rated_score} />
+                            renderItem={({ item }) => (
+                                <View
+                                    style={courseStyles.commentBox}
+                                >
+                                    <Text style={courseStyles.infoText}>{item.comment}</Text>
+                                    <View style={courseStyles.infoComment}>
+                                        <View style={{ marginRight: 16 }}>
+                                            <Stars score={item.rated_score} />
+                                        </View>
+                                        <Octicons name="dash" size={16} color="#666666" />
+                                        <Text style={{ ...courseStyles.infoText, ...courseStyles.infoCommentUser }}>{item.user_name}</Text>
+                                    </View>
                                 </View>
-                                <Octicons name="dash" size={16} color="#666666" />
-                                <Text style={{ ...courseStyles.infoText, ...courseStyles.infoCommentUser }}>{item.user_name}</Text>
-                            </View>
-                        </View>
+                            )}
+                        />
                     )}
-                />
 
             </View>
 
