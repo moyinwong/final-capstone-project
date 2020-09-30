@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 
 // Navigation
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 // Functions
 import showSubscribeBox from '../../../functions/showSubscribeBox';
@@ -19,17 +19,10 @@ export default function TutorsList() {
 
     // Hooks
     const navigation = useNavigation();
-    const route = useRoute();
-
-    // Params
-    let category = 'all';
-    if (route.params) {
-        category = route.params.category;
-    }
 
     // State
     const [tutorsData, setTutorsData] = useState(
-        tutorsTestData(category)
+        tutorsTestData('all')
     );
 
     return (
@@ -50,7 +43,9 @@ export default function TutorsList() {
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={tutorsStyles.tutorBox}
-                        onPress={() => navigation.navigate('TutorInfo', { tutor: item })}
+                        onPress={() => navigation.navigate('TutorInfo',
+                            { tutor: item }
+                        )}
                         onLongPress={() => showSubscribeBox()}
                     >
                         <View style={tutorsStyles.tutorPicContainer}>

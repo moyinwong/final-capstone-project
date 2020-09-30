@@ -231,7 +231,9 @@ export default function Courses() {
                     renderItem={({ item }) => (
                         <TouchableOpacity
                             style={courseStyles.lessonBox}
-                            onPress={() => navigation.navigate('Lesson', { lesson: item.lesson_id })}
+                            onPress={() => navigation.navigate('Lesson',
+                                { lesson: item.lesson_id }
+                            )}
                         >
                             <Text style={courseStyles.lessonText}>{item.lesson_name}</Text>
                         </TouchableOpacity>

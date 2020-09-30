@@ -12,6 +12,8 @@ const questionsTable = tables.QUESTIONS;
 const mcAnswersTable = tables.MC_ANSWERS;
 const submissionsTable = tables.SUBMISSIONS;
 const savedAnswersTable = tables.SAVED_ANSWERS;
+const discussionsTable = tables.DISCUSSIONS;
+const threadsTable = tables.THREADS;
 
 export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable(usersTable, (table) => {
@@ -143,6 +145,7 @@ export async function up(knex: Knex): Promise<void> {
   });
 
   await knex.schema.createTable(savedAnswersTable, (table) => {
+    table.increments();
     table
       .integer("question_id")
       .references("id")
@@ -158,9 +161,36 @@ export async function up(knex: Knex): Promise<void> {
     table.boolean("is_done");
     table.timestamps(false, true);
   });
+
+  await knex.schema.createTable(discussionsTable, (table) => {
+    table.increments();
+    table.integer("user_id").references("id").inTable("users").notNullable();
+    table
+      .integer("lesson_id")
+      .references("id")
+      .inTable("lessons")
+      .notNullable();
+    table.string("topic");
+    table.text("content");
+    table.timestamps(false, true);
+  });
+
+  await knex.schema.createTable(threadsTable, (table) => {
+    table.increments();
+    table.integer("user_id").references("id").inTable("users").notNullable();
+    table
+      .integer("discussion_id")
+      .references("id")
+      .inTable("discussions")
+      .notNullable();
+    table.text("content");
+    table.timestamps(false, true);
+  });
 }
 
 export async function down(knex: Knex): Promise<void> {
+  await knex.schema.dropTable(threadsTable);
+  await knex.schema.dropTable(discussionsTable);
   await knex.schema.dropTable(savedAnswersTable);
   await knex.schema.dropTable(submissionsTable);
   await knex.schema.dropTable(mcAnswersTable);

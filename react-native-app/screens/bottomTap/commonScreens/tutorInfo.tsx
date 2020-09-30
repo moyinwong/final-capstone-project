@@ -158,7 +158,9 @@ export default function TutorInfo() {
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={tutorInfoStyles.courseBox}
-                        onPress={() => navigation.navigate('Course', { courseName: item.course_name })}
+                        onPress={() => navigation.navigate('Course',
+                            { courseName: item.course_name }
+                        )}
                         // ssssssdddfvesfgergerger
                         onLongPress={() => showModal(false)}
                     >

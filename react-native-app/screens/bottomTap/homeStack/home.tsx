@@ -127,7 +127,9 @@ export default function Home() {
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={homeStyles.courseBox}
-                        onPress={() => navigation.navigate('Course', { courseName: item.course_name })}
+                        onPress={() => navigation.navigate('Course',
+                            { courseName: item.course_name }
+                        )}
                         // ssssssssssssssssssss
                         onLongPress={() => showModal(false)}
                     >
@@ -189,7 +191,9 @@ export default function Home() {
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={homeStyles.courseBox}
-                        onPress={() => navigation.navigate('Course', { courseName: item.course_name })}
+                        onPress={() => navigation.navigate('Course',
+                            { courseName: item.course_name }
+                        )}
                         // ssssssssssssssssssss
                         onLongPress={() => showModal(false)}
                     >
