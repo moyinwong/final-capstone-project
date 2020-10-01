@@ -11,7 +11,7 @@ import Container from "@material-ui/core/Container";
 import "./SignupPage.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { push } from "connected-react-router";
-import { Alert, Image, Modal } from "react-bootstrap";
+import { Image, Modal, Alert } from "react-bootstrap";
 import './SettingPage.scss';
 import { getUser, logout } from '../redux/auth/actions';
 import { IRootState } from '../redux/store';

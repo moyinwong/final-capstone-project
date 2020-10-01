@@ -13,4 +13,5 @@ export const tables = Object.freeze({
   SAVED_ANSWERS: "saved_answers",
   DISCUSSIONS: "discussions",
   THREADS: "threads",
+  LESSON_COMPLETION: "lesson_completion"
 });

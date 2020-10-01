@@ -7,7 +7,9 @@ courseRoutes.post(
   "/create/:userEmail",
   upload.single("file"),
   courseController.courseCreation
-);
+  );
+  
+courseRoutes.get("/completion", courseController.checkCompletion);
 courseRoutes.get("/all/:tutor", courseController.courseByInstructor);
 courseRoutes.get("/popular", courseController.popularCourses);
 courseRoutes.get("/good-comment", courseController.popularCourses);

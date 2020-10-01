@@ -50,33 +50,33 @@ const CourseCreatePage = () => {
 
   const firstValidationSchema = Yup.object().shape({
     courseTitle: Yup.string()
-      .min(3, "Too Short!")
-      .max(15, "Too Long!")
-      .required("Required"),
+      .min(3, "不如寫多啲")
+      .max(15, "不如寫少啲")
+      .required("必須填寫"),
     courseCategory: Yup.string().required("Required"),
   });
 
   const secondValidationSchema = Yup.object().shape({
     coursePrice: Yup.number()
-      .min(0, "Min price is 0")
-      .max(100000, "Too expensive")
-      .required("Required"),
+      .min(0, "最低價錢為$0")
+      .max(100000, "太貴啦")
+      .required("必須填寫"),
     courseObjective: Yup.string()
-      .min(5, "Too Short")
-      .max(50, "Too Long!")
-      .required("Required"),
+      .min(5, "不如寫多啲")
+      .max(50, "不如寫少啲")
+      .required("必須填寫"),
     courseDescription: Yup.string()
-      .min(5, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Required"),
+      .min(5, "不如寫多啲")
+      .max(50, "不如寫少啲")
+      .required("必須填寫"),
     coursePrerequisite: Yup.string()
-      .min(5, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Required"),
+      .min(5, "不如寫多啲")
+      .max(50, "不如寫少啲")
+      .required("必須填寫"),
   });
 
   const thirdValidationSchema = Yup.object().shape({
-    file: Yup.mixed().required("A file is required"),
+    file: Yup.mixed().required("請提供課程封面"),
   });
 
   return (

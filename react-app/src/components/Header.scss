@@ -168,3 +168,9 @@
   //   display: none;
   // }
 }
+
+@media screen and (min-width: 726px) {
+  .user-info {
+    margin-right: 20px;
+  }
+}

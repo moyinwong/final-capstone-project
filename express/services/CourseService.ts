@@ -376,4 +376,13 @@ export class CourseService {
 
     return result;
   };
+
+  checkCompletion = async (courseId: number, userId: number) => {
+    const completedLessonsId = await this.knex(tables.LESSON_COMPLETION)
+      .select('lesson_id')
+      .where('course_id', courseId)
+      .andWhere('user_id', userId);
+    
+    return completedLessonsId 
+  }
 }

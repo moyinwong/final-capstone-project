@@ -170,4 +170,27 @@ export class LessonController {
         .json({ message: "createQuestion: internal server error" });
     }
   };
+
+  lessonCompleted = async (req: Request, res: Response) => {
+    try {
+      const lessonId = parseInt(req.params.lessonId);
+      const userId = parseInt(req.params.userId);
+      const courseId = parseInt(req.params.courseId)
+
+      let checkCompletion = await this.lessonService.checkLessonCompleted(lessonId, userId)
+
+      if (checkCompletion) {
+        return res.status(201).json({ message: 'already completed this lesson'})
+      }
+      let completionId = await this.lessonService.lessonCompleted(lessonId, userId, courseId);
+
+      return res.status(200).json({ completionId })
+    } catch (e) {
+      logger.debug(e);
+      return res
+        .status(500)
+        .json({ message: "lessonCompleted: internal server error" });
+    }
+  }
+
 }

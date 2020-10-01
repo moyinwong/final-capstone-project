@@ -13,7 +13,7 @@ export async function seed(knex: Knex): Promise<void> {
     const randomObj: any = {
       name: faker.name.findName(),
       description: faker.commerce.productDescription(),
-      is_trial: false,
+      is_trial: Math.random() >= 0.5,
       video_url: "https://youtu.be/oZCM4u7d_6U",
       course_id: randomCourseId,
     };

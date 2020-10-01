@@ -17,7 +17,7 @@ export async function seed(knex: Knex): Promise<void> {
       category_id: randomCategoryId,
       tutor_id: Math.floor(Math.random() * 2) + 3,
       // either 3 or 4 (tutor id)
-      image: `https://picsum.photos/260/145?random=${i}`,
+      image: `https://picsum.photos/777/434?random=${i}`,
       description: faker.commerce.productDescription(),
       objective: "提升學生技巧",
       prerequisites: "無",

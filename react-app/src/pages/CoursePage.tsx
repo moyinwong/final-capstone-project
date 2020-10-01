@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 
 import { useLocation, useParams } from "react-router-dom";
 import { push } from "connected-react-router";
@@ -12,6 +12,10 @@ import { Accordion, Alert, Breadcrumb, Button, Card } from "react-bootstrap";
 import { addCourse } from "../redux/cart/actions";
 import "./CoursePage.scss";
 import CommentModal from "../components/CommentModal";
+import { FormControlLabel, Checkbox } from "@material-ui/core";
+import { object } from "yup";
+
+const sleep = (time: number) => new Promise((acc) => setTimeout(acc, time));
 
 export interface ILesson {
   subcategory_id: number;
@@ -61,6 +65,7 @@ const CoursePage: React.FC = () => {
   const [isSubCategory, setIsSubCategory] = useState<boolean>(false);
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
+  const userId = useSelector((state: IRootState) => state.auth.id);
   const userEmail = useSelector((state: IRootState) => state.auth.email);
   const cartCourses = useSelector((state: IRootState) => state.cart.courses);
   const [isAllowAccess, setIsAllowAccess] = useState<boolean | null>(null);
@@ -70,6 +75,8 @@ const CoursePage: React.FC = () => {
   const [isReady, setIsReady] = useState(false);
   const [isShowAlert, setIsShowAlert] = useState(false);
   const [alertMsg, setAlertMsg] = useState<string>("");
+  const [courseId, setCourseId] = useState<number | null>(null);
+  const [checkBoxState, setCheckBoxState] = useState<{[key: string]: boolean}>({})
   const currentLocation = useLocation();
 
   //run once when init
@@ -102,12 +109,19 @@ const CoursePage: React.FC = () => {
     try {
       if (course) getLessonInfoByCourse(course.course_name);
       if (course) getCommentsByCourse(course.course_name);
+      // if (course) getCompletedLesson();
     } catch (err) {
       console.error(err.message);
       setAlertMsg(err.message);
       setIsShowAlert(true);
     }
   }, [course, userEmail]);
+
+  //run once when init, for retrieving completed lessons
+  useEffect(() => {
+    getCompletedLesson();
+  }, [courseId])
+
 
   const getAllCoursesByCategory = async (courseName: string) => {
     //console.log(courseName);
@@ -188,6 +202,10 @@ const CoursePage: React.FC = () => {
       setIsAllowAccess(false);
     }
     result.lessons.sort((a: ILesson, b: ILesson) => a.lesson_id - b.lesson_id);
+
+    let course = result.lessons[0];
+    let courseId = course.course_id;
+    setCourseId(courseId);
     setLessons(result.lessons);
   };
 
@@ -216,6 +234,54 @@ const CoursePage: React.FC = () => {
       setIsShowAlert(false);
     }, 3000);
   }
+
+  //handle click on complete lesson checkbox, insert data into backend
+  const handleCheckBoxChange = async (event: any, lessonId: number) => {
+    setCheckBoxState({...checkBoxState, [event.target.name]: event.target.checked});
+    // console.log(event.target.checked)
+    let queryRoute = '/lesson/completion'
+    const res = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}${queryRoute}/${courseId}/${lessonId}/${userId}`, {
+        method: 'POST',
+      })
+    const result = await res.json();
+    
+    if (res.status != 200) {
+      setAlertMsg(result.message)
+      setIsShowAlert(true);
+      await sleep(2000)
+      setIsShowAlert(false);
+    } else {
+      console.log('line:248' + result.completionId)
+    }
+    console.log(checkBoxState)
+  }
+
+  //get all completed lessons by user
+  const getCompletedLesson = async () => {
+    let queryRoute = '/course/completion'
+    const res = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}${queryRoute}?courseId=${courseId}&userId=${userId}`
+    )
+    const result = await res.json();
+    
+    if (res.status != 200) {
+      console.log('line: 267: something is wrong when checking completed lessons')
+    } else {
+      //an array of completed lessons id
+      let lessonIdArray = result.completedLessonId;
+
+      //mark the checkbox property related to specific lesson as true
+      let checkBoxObj:{[key: string]: boolean} = {}
+      for (let i = 0; i < lessonIdArray.length; i++) {
+        let lessonId = lessonIdArray[i]['lesson_id']
+        let checkBox = `checked${lessonId}`
+        checkBoxObj[checkBox] = true;
+      }
+      setCheckBoxState(checkBoxObj)
+    }
+  }
+
   return (
     <>
       {isShowAlert && (
@@ -285,6 +351,8 @@ const CoursePage: React.FC = () => {
                         <Button variant="success" disabled>
                           已評價
                         </Button>
+                      ) : lessons[0].tutor_id === userId ? (
+                        <Button variant="success" disabled>導師不能評價</Button>
                       ) : (
                         <CommentModal
                           userEmail={userEmail}
@@ -450,6 +518,16 @@ const CoursePage: React.FC = () => {
                             >
                               {i + 1 + ". " + e.lesson_name}
                             </Accordion.Toggle>
+                            <FormControlLabel
+                              disabled={checkBoxState[`checked${e.lesson_id}`] || false}
+                              control={<Checkbox
+                              checked={checkBoxState[`checked${e.lesson_id}`] || false}
+                              onChange={(event) => {
+                                handleCheckBoxChange(event, e.lesson_id)
+                              }} 
+                              name={`checked${e.lesson_id}`} />}
+                              label="完成"
+                            />
                           </Card.Header>
                           <Accordion.Collapse eventKey="0">
                             <Card.Body>

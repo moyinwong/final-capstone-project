@@ -162,4 +162,19 @@ export class CourseController {
       return res.status(500).json({ message: "Cannot create course" });
     }
   };
+
+  checkCompletion = async (req: Request, res: Response) => {
+    try {
+      const courseId:number = parseInt(req.query.courseId as any)
+      const userId = parseInt(req.query.userId as any)
+      
+      const completedLessonId = await this.courseService.checkCompletion(courseId, userId);
+      console.log(completedLessonId)
+      return res.status(200).json({ completedLessonId })
+
+    } catch (e) {
+      logger.debug(e);
+      return res.status(500).json({ message: "internal server error" });
+    }
+  }
 }

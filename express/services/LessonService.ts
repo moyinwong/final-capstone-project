@@ -68,7 +68,9 @@ export class LessonService {
 
     let lessons: Array<ILesson>;
 
-    if (checkUserIsTutor) {
+    console.log(checkUserIsTutor)
+    if (checkUserIsTutor.length != 0) {
+      console.log('hello')
       lessons = await this.knex
         .select(
           "courses.id as course_id",
@@ -80,17 +82,11 @@ export class LessonService {
           "is_trial",
           "video_url",
           "users.email as user_email",
-          "purchased_courses.comment"
         )
         .from(tables.COURSES)
         .leftJoin(
-          tables.PURCHASED_COURSES,
-          `${tables.COURSES}.id`,
-          `${tables.PURCHASED_COURSES}.course_id`
-        )
-        .leftJoin(
           tables.USERS,
-          `${tables.PURCHASED_COURSES}.user_id`,
+          `${tables.COURSES}.tutor_id`,
           `${tables.USERS}.id`
         )
         .innerJoin(
@@ -100,42 +96,42 @@ export class LessonService {
         )
         .where("courses.tutor_id", userId)
         .andWhere("courses.name", course);
+        
+      } else {
+        lessons = await this.knex
+          .select(
+            "courses.id as course_id",
+            "courses.name as course_name",
+            "courses.tutor_id",
+            "lessons.id as lesson_id",
+            "lessons.name as lesson_name",
+            "lessons.description as lesson_description",
+            "is_trial",
+            "video_url",
+            "users.email as user_email",
+            "purchased_courses.comment"
+          )
+          .from(tables.COURSES)
+          .leftJoin(
+            tables.PURCHASED_COURSES,
+            `${tables.COURSES}.id`,
+            `${tables.PURCHASED_COURSES}.course_id`
+          )
+          .leftJoin(
+            tables.USERS,
+            `${tables.PURCHASED_COURSES}.user_id`,
+            `${tables.USERS}.id`
+          )
+          .innerJoin(
+            tables.LESSONS,
+            `${tables.COURSES}.id`,
+            `${tables.LESSONS}.course_id`
+          )
+          .where("users.email", userEmail)
+          .andWhere("courses.name", course);
+      }
+      return lessons;
 
-    } else {
-      lessons = await this.knex
-        .select(
-          "courses.id as course_id",
-          "courses.name as course_name",
-          "courses.tutor_id",
-          "lessons.id as lesson_id",
-          "lessons.name as lesson_name",
-          "lessons.description as lesson_description",
-          "is_trial",
-          "video_url",
-          "users.email as user_email",
-          "purchased_courses.comment"
-        )
-        .from(tables.COURSES)
-        .leftJoin(
-          tables.PURCHASED_COURSES,
-          `${tables.COURSES}.id`,
-          `${tables.PURCHASED_COURSES}.course_id`
-        )
-        .leftJoin(
-          tables.USERS,
-          `${tables.PURCHASED_COURSES}.user_id`,
-          `${tables.USERS}.id`
-        )
-        .innerJoin(
-          tables.LESSONS,
-          `${tables.COURSES}.id`,
-          `${tables.LESSONS}.course_id`
-        )
-        .where("users.email", userEmail)
-        .andWhere("courses.name", course);
-    }
-
-    return lessons;
   };
 
   getLessonAccessibility = async (lessonName: string) => {
@@ -338,4 +334,35 @@ export class LessonService {
 
     return threads;
   };
+
+  lessonCompleted = async (lessonId: number, userId: number, courseId: number) => {
+
+
+    const completionId = await this.knex
+    .insert({
+      user_id: userId,
+      lesson_id: lessonId,
+      course_id: courseId
+    })
+    .into(tables.LESSON_COMPLETION)
+    .returning('id');
+
+    console.log(completionId)
+    return completionId[0];
+
+  }
+
+  checkLessonCompleted = async (lessonId: number, userId: number) => {
+    const checkIfcompleted = await this.knex
+    .select('user_id')
+    .from(tables.LESSON_COMPLETION)
+    .where('lesson_id', lessonId)
+    .andWhere('user_id', userId);
+
+    if (checkIfcompleted.length > 0) {
+      return true; 
+    } else {
+      return false;
+    }
+  }
 }
