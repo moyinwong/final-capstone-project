@@ -1,5 +1,5 @@
 .category-main-container {
-  padding: 30px;
+  margin-top: 30px;
 
   .button-container {
     display: flex;
@@ -31,5 +31,11 @@
 
   .all-course-container {
     width: 100%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1470px;
   }
 }

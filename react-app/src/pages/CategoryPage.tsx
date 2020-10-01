@@ -8,6 +8,7 @@ import {
   Dropdown,
   DropdownButton,
   Form,
+  Container,
 } from "react-bootstrap";
 import { useLocation, useParams } from "react-router-dom";
 import FlattedCard from "../components/FlattedCard";
@@ -240,128 +241,132 @@ const CategoryPage: React.FC = () => {
         )}
         <Breadcrumb.Item active>{categoryName}課程</Breadcrumb.Item>
       </Breadcrumb>
-      <div className={"category-main-container"}>
-        <div>
-          <h1>所有{categoryName}課程</h1>
-        </div>
-        <div className="button-container">
-          <Button
-            variant="outline-secondary"
-            onClick={() => setIsFilterOpen(!isFilterOpen)}
-          >
-            篩選
-          </Button>
 
-          <DropdownButton
-            variant="outline-secondary"
-            id="dropdown-basic-button"
-            title={orderMethod}
-          >
-            <Dropdown.Item onClick={handleOrderButtonClick}>
-              最受歡迎
-            </Dropdown.Item>
-            <Dropdown.Item onClick={handleOrderButtonClick}>
-              最低價錢
-            </Dropdown.Item>
-            <Dropdown.Item onClick={handleOrderButtonClick}>
-              最受好評
-            </Dropdown.Item>
-          </DropdownButton>
-        </div>
+      <Container>
 
-        <div className={"panel-card-container"}>
-          <div className={"panel"} style={panelStyle}>
-            <Accordion defaultActiveKey="0">
-              <Card style={cardStyle}>
-                <Accordion.Toggle as={Card.Header} eventKey="0">
-                  評分
-                </Accordion.Toggle>
-                <Accordion.Collapse eventKey="0">
-                  <Card.Body>
-                    <div>
-                      <Form>
-                        {["4.5", "4.0", "3.5"].map((e) => {
-                          return (
-                            <Form.Check
-                              className="rating-form"
-                              type="radio"
-                              id={e}
-                              key={e}
-                              label={
-                                <>
-                                  {e}
-                                  <Rating
-                                    stop={5}
-                                    emptySymbol={[
-                                      "far fa-star fa-2x",
-                                      "far fa-star fa-2x",
-                                      "far fa-star fa-2x",
-                                      "far fa-star fa-2x",
-                                      "far fa-star fa-2x",
-                                    ]}
-                                    fullSymbol={[
-                                      "fas fa-star fa-2x",
-                                      "fas fa-star fa-2x",
-                                      "fas fa-star fa-2x",
-                                      "fas fa-star fa-2x",
-                                      "fas fa-star fa-2x",
-                                    ]}
-                                    readonly={true}
-                                    initialRating={parseFloat(e)}
-                                  />
-                                  以上
-                                </>
-                              }
-                              onClick={handleRatingFormClick}
-                              checked={ratingSelection === e}
-                              readOnly={true}
-                            />
-                          );
-                        })}
-                      </Form>
-                    </div>
-                  </Card.Body>
-                </Accordion.Collapse>
-              </Card>
-            </Accordion>
-            <Accordion defaultActiveKey="0">
-              <Card style={cardStyle}>
-                <Accordion.Toggle as={Card.Header} eventKey="0">
-                  價錢
-                </Accordion.Toggle>
-                <Accordion.Collapse eventKey="0">
-                  <Card.Body>
-                    <div>
-                      <Form>
-                        {["少於HK$100", "少於HK$200", "少於HK$300"].map((e) => {
-                          return (
-                            <Form.Check
-                              className="rating-form"
-                              type="radio"
-                              id={e}
-                              key={e}
-                              label={e}
-                              onClick={handlePriceFormClick}
-                              checked={"少於HK$" + priceSelection === e}
-                              readOnly={true}
-                            />
-                          );
-                        })}
-                      </Form>
-                    </div>
-                  </Card.Body>
-                </Accordion.Collapse>
-              </Card>
-            </Accordion>
+        <div className={"category-main-container"}>
+          <div>
+            <h1>所有{categoryName}課程</h1>
+          </div>
+          <div className="button-container">
+            <Button
+              variant="outline-secondary"
+              onClick={() => setIsFilterOpen(!isFilterOpen)}
+            >
+              篩選
+            </Button>
+
+            <DropdownButton
+              variant="outline-secondary"
+              id="dropdown-basic-button"
+              title={orderMethod}
+            >
+              <Dropdown.Item onClick={handleOrderButtonClick}>
+                最受歡迎
+              </Dropdown.Item>
+              <Dropdown.Item onClick={handleOrderButtonClick}>
+                最低價錢
+              </Dropdown.Item>
+              <Dropdown.Item onClick={handleOrderButtonClick}>
+                最受好評
+              </Dropdown.Item>
+            </DropdownButton>
           </div>
 
-          <div className="all-course-container">
-            {courses.slice(0, displayCourseNum).map((course, i) => (
-              <FlattedCard key={i} {...course}></FlattedCard>
-            ))}
+          <div className={"panel-card-container"}>
+            <div className={"panel"} style={panelStyle}>
+              <Accordion defaultActiveKey="0">
+                <Card style={cardStyle}>
+                  <Accordion.Toggle as={Card.Header} eventKey="0">
+                    評分
+                  </Accordion.Toggle>
+                  <Accordion.Collapse eventKey="0">
+                    <Card.Body>
+                      <div>
+                        <Form>
+                          {["4.5", "4.0", "3.5"].map((e) => {
+                            return (
+                              <Form.Check
+                                className="rating-form"
+                                type="radio"
+                                id={e}
+                                key={e}
+                                label={
+                                  <>
+                                    {e}
+                                    <Rating
+                                      stop={5}
+                                      emptySymbol={[
+                                        "far fa-star fa-2x",
+                                        "far fa-star fa-2x",
+                                        "far fa-star fa-2x",
+                                        "far fa-star fa-2x",
+                                        "far fa-star fa-2x",
+                                      ]}
+                                      fullSymbol={[
+                                        "fas fa-star fa-2x",
+                                        "fas fa-star fa-2x",
+                                        "fas fa-star fa-2x",
+                                        "fas fa-star fa-2x",
+                                        "fas fa-star fa-2x",
+                                      ]}
+                                      readonly={true}
+                                      initialRating={parseFloat(e)}
+                                    />
+                                    以上
+                                  </>
+                                }
+                                onClick={handleRatingFormClick}
+                                checked={ratingSelection === e}
+                                readOnly={true}
+                              />
+                            );
+                          })}
+                        </Form>
+                      </div>
+                    </Card.Body>
+                  </Accordion.Collapse>
+                </Card>
+              </Accordion>
+              <Accordion defaultActiveKey="0">
+                <Card style={cardStyle}>
+                  <Accordion.Toggle as={Card.Header} eventKey="0">
+                    價錢
+                  </Accordion.Toggle>
+                  <Accordion.Collapse eventKey="0">
+                    <Card.Body>
+                      <div>
+                        <Form>
+                          {["少於HK$100", "少於HK$200", "少於HK$300"].map((e) => {
+                            return (
+                              <Form.Check
+                                className="rating-form"
+                                type="radio"
+                                id={e}
+                                key={e}
+                                label={e}
+                                onClick={handlePriceFormClick}
+                                checked={"少於HK$" + priceSelection === e}
+                                readOnly={true}
+                              />
+                            );
+                          })}
+                        </Form>
+                      </div>
+                    </Card.Body>
+                  </Accordion.Collapse>
+                </Card>
+              </Accordion>
+            </div>
+
+            <div className="all-course-container">
+              {courses.slice(0, displayCourseNum).map((course, i) => (
+                <FlattedCard key={i} {...course}></FlattedCard>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      </Container>
     </>
   );
 };
