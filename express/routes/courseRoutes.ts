@@ -9,6 +9,7 @@ courseRoutes.post(
   courseController.courseCreation
   );
   
+courseRoutes.get("/all/lessons/:courseId", courseController.getAllLessons);
 courseRoutes.get("/completion", courseController.checkCompletion);
 courseRoutes.get("/all/:tutor", courseController.courseByInstructor);
 courseRoutes.get("/popular", courseController.popularCourses);

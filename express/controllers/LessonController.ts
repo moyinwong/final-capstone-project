@@ -174,7 +174,6 @@ export class LessonController {
     }
   };
 
-<<<<<<< HEAD
   lessonCompleted = async (req: Request, res: Response) => {
     try {
       const lessonId = parseInt(req.params.lessonId);
@@ -197,7 +196,6 @@ export class LessonController {
     }
   }
 
-=======
   getThreads = async (req: Request, res: Response) => {
     try {
       const { lessonId } = req.params;
@@ -211,5 +209,4 @@ export class LessonController {
       return res.status(500).json({ message: "internal server error" });
     }
   };
->>>>>>> a761fb2ff332b8d2b7ae567beceb7e5e683f0abc
 }

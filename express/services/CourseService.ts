@@ -385,4 +385,12 @@ export class CourseService {
     
     return completedLessonsId 
   }
+
+  getAllLessons = async (courseId: number) => {
+    const lessons = await this.knex(tables.LESSONS)
+    .count('lessons.id', {as: 'lesson_num'})
+    .where('lessons.course_id', courseId)
+
+    return lessons[0];
+  }
 }

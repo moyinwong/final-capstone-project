@@ -231,13 +231,29 @@ export class UserService {
       'users.name as tutor_name',
       'users.email as tutor_email',
       'users.title as tutor_title',
-      'users.introduction as tutor_introduction'
+      'users.introduction as tutor_introduction',
     )
     .from(tables.PURCHASED_COURSES)
     .join(tables.COURSES, `${tables.COURSES}.id`, 'purchased_courses.course_id')
+    .join(tables.LESSONS, `${tables.LESSONS}.id`, 'courses.id')
     .join(tables.USERS, `${tables.USERS}.id`, `courses.tutor_id`)
+    .groupBy(
+      'purchased_courses.course_id',
+      'courses.category_id',
+      'courses.subcategory_id',
+      'courses.name',
+      'courses.image',
+      'courses.description',
+      'courses.objective',
+      'courses.prerequisites',
+      'users.name',
+      'users.email',
+      'users.title',
+      'users.introduction',
+    )
     .where(`${tables.PURCHASED_COURSES}.user_id`, userId)
  
     return courses;
   }
+
 }

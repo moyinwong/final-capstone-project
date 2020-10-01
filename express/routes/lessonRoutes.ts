@@ -20,3 +20,4 @@ lessonRoutes.post(
 );
 lessonRoutes.get("/threads/retrieve/:lessonId", lessonController.getThreads);
 lessonRoutes.post('/completion/:courseId/:lessonId/:userId', lessonController.lessonCompleted)
+

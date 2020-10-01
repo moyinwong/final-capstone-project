@@ -8,7 +8,7 @@ const randomLessonList: any[] = [];
 
 export async function seed(knex: Knex): Promise<void> {
   //generate random lesson
-  for (let i = 0; i < 401; i++) {
+  for (let i = 0; i < 800; i++) {
     const randomCourseId: number = Math.floor(Math.random() * 305) + 1;
     const randomObj: any = {
       name: faker.name.findName(),

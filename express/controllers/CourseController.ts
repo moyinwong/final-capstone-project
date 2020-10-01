@@ -177,4 +177,16 @@ export class CourseController {
       return res.status(500).json({ message: "internal server error" });
     }
   }
+
+  getAllLessons = async (req: Request, res: Response) => {
+    try {
+      const courseId = parseInt(req.params.courseId)
+
+      const lessons = await this.courseService.getAllLessons(courseId);
+      return res.status(200).json({ lessons })
+    } catch (e) {
+      logger.debug(e);
+      return res.status(500).json({ message: "internal server error" });
+    }
+  }
 }
