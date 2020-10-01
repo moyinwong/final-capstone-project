@@ -163,6 +163,20 @@ export class UserService {
     userEmail: string,
     courseName: string
   ) => {
+    const userId = (await this.knex(tables.USERS)
+      .select('id')
+      .where('email', userEmail)
+      .first()).id;
+
+    const checkUserIsTutor = await this.knex(tables.COURSES)
+      .select('courses.name')
+      .where('name', courseName)
+      .andWhere('tutor_id', userId)
+
+    if (checkUserIsTutor.length !== 0) {
+      return true;
+    }
+
     const userAllowAccessCourses: Array<{
       user_email: string;
       course_name: string | null;

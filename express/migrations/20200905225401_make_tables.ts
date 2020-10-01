@@ -84,7 +84,7 @@ export async function up(knex: Knex): Promise<void> {
 
   await knex.schema.createTable(lessonsTable, (table) => {
     table.increments();
-    table.string("name").notNullable().unique();
+    table.string("name").notNullable();
     table.text("description");
     table.boolean("is_trial");
     table.string("video_url");

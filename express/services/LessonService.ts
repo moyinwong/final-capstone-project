@@ -56,37 +56,84 @@ export class LessonService {
     course: string,
     userEmail: string
   ) => {
-    const lessons: Array<ILesson> = await this.knex
-      .select(
-        "courses.id as course_id",
-        "courses.name as course_name",
-        "courses.tutor_id",
-        "lessons.id as lesson_id",
-        "lessons.name as lesson_name",
-        "lessons.description as lesson_description",
-        "is_trial",
-        "video_url",
-        "users.email as user_email",
-        "purchased_courses.comment"
-      )
-      .from(tables.COURSES)
-      .leftJoin(
-        tables.PURCHASED_COURSES,
-        `${tables.COURSES}.id`,
-        `${tables.PURCHASED_COURSES}.course_id`
-      )
-      .leftJoin(
-        tables.USERS,
-        `${tables.PURCHASED_COURSES}.user_id`,
-        `${tables.USERS}.id`
-      )
-      .innerJoin(
-        tables.LESSONS,
-        `${tables.COURSES}.id`,
-        `${tables.LESSONS}.course_id`
-      )
-      .where("users.email", userEmail)
-      .andWhere("courses.name", course);
+    const userId = (await this.knex(tables.USERS)
+      .select('id')
+      .where('email', userEmail)
+      .first()).id;
+
+    const checkUserIsTutor = await this.knex(tables.COURSES)
+      .select('courses.name')
+      .where('name', course)
+      .andWhere('tutor_id', userId)
+
+    let lessons: Array<ILesson>;
+
+    if (checkUserIsTutor) {
+      lessons = await this.knex
+        .select(
+          "courses.id as course_id",
+          "courses.name as course_name",
+          "courses.tutor_id",
+          "lessons.id as lesson_id",
+          "lessons.name as lesson_name",
+          "lessons.description as lesson_description",
+          "is_trial",
+          "video_url",
+          "users.email as user_email",
+          "purchased_courses.comment"
+        )
+        .from(tables.COURSES)
+        .leftJoin(
+          tables.PURCHASED_COURSES,
+          `${tables.COURSES}.id`,
+          `${tables.PURCHASED_COURSES}.course_id`
+        )
+        .leftJoin(
+          tables.USERS,
+          `${tables.PURCHASED_COURSES}.user_id`,
+          `${tables.USERS}.id`
+        )
+        .innerJoin(
+          tables.LESSONS,
+          `${tables.COURSES}.id`,
+          `${tables.LESSONS}.course_id`
+        )
+        .where("courses.tutor_id", userId)
+        .andWhere("courses.name", course);
+
+    } else {
+      lessons = await this.knex
+        .select(
+          "courses.id as course_id",
+          "courses.name as course_name",
+          "courses.tutor_id",
+          "lessons.id as lesson_id",
+          "lessons.name as lesson_name",
+          "lessons.description as lesson_description",
+          "is_trial",
+          "video_url",
+          "users.email as user_email",
+          "purchased_courses.comment"
+        )
+        .from(tables.COURSES)
+        .leftJoin(
+          tables.PURCHASED_COURSES,
+          `${tables.COURSES}.id`,
+          `${tables.PURCHASED_COURSES}.course_id`
+        )
+        .leftJoin(
+          tables.USERS,
+          `${tables.PURCHASED_COURSES}.user_id`,
+          `${tables.USERS}.id`
+        )
+        .innerJoin(
+          tables.LESSONS,
+          `${tables.COURSES}.id`,
+          `${tables.LESSONS}.course_id`
+        )
+        .where("users.email", userEmail)
+        .andWhere("courses.name", course);
+    }
 
     return lessons;
   };

@@ -4,7 +4,13 @@
 
 .navigation-bar a {
   color: black;
-  padding: 0.5rem 0.5rem;
+  padding: 1rem 1rem;
+}
+
+.navigation-bar a:hover {
+  background-color: #f1f1f1;
+  box-shadow: 0px 0px 15px 2px rgb(238 255 237);
+
 }
 
 .navigation-bar {
@@ -32,6 +38,7 @@
 
 
 .navbar {
+  padding: 0px;
 
   .dropdown-item-link {
     color: black !important;
@@ -46,7 +53,7 @@
   }
 
   .dropdown-item:hover {
-    background-color: turquoise;
+    // background-color: turquoise;
     transition: cubic-bezier(0.075, 0.82, 0.165, 1);
   }
 

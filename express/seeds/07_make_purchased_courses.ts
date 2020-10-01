@@ -1,9 +1,32 @@
 import * as Knex from "knex";
 import { tables } from "../tables";
+import faker from 'faker';
+
+faker.locale = "en"
 
 const purchasedCoursesTable = tables.PURCHASED_COURSES;
+const randomPurchasedCourseList: any[] = [];
 
 export async function seed(knex: Knex): Promise<void> {
+
+  //generate random purchased_course
+  for (let i = 0; i < 100; i++) {
+    const randomUserId: number = Math.floor(Math.random() * 99) + 1;
+    const randomCourseId: number = Math.floor(Math.random() * 299) + 1;
+    const randomPaidAmount: number = Math.floor(Math.random() * 100)
+    const randomRating: number = Math.floor(Math.random() * 3) + 1
+    const randomObj: any = {
+      user_id: randomUserId,
+      course_id: randomCourseId,
+      payment_method: 'credit card',
+      paid_amount: randomPaidAmount,
+      rated_score: randomRating,
+      comment: faker.commerce.productAdjective()
+    };
+
+    randomPurchasedCourseList.push(randomObj);
+  }
+
   // Deletes ALL existing entries
   await knex(purchasedCoursesTable).del();
 
@@ -33,5 +56,5 @@ export async function seed(knex: Knex): Promise<void> {
       rated_score: 5,
       comment: "excellent course ever!!!",
     },
-  ]);
+  ].concat(randomPurchasedCourseList));
 }

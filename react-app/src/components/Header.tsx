@@ -134,6 +134,7 @@ const Header = (props: any) => {
                 <i className="fas fa-shopping-cart"></i>
               </div>
               <Button
+                className="login-button"
                 variant="success"
                 onClick={() => {
                   setOpen(false);

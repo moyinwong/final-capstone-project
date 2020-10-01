@@ -16,17 +16,17 @@ const HomePage: React.FC = () => {
   return (
     <div>
       <section className="section-banner">
-        <Container>
+        <Container fluid="lg">
           <Row>
             {/* <div className="section-banner-container"> */}
-              <Col>
+              <Col >
                 <div className="section-banner-text">
                 <div style={{color: '#212121'}}>仲去補習社？	&bull;	&bull;	&bull;</div>
-                <div style={{fontSize: '30px', color: '#777272'}}>用E-DUCATE上堂，我地幫你搞掂哂！</div>
+                <div style={{fontSize: '30px', color: '#777272'}}>用E-DUCATE上堂，我地幫你搞掂！</div>
                 <Button href="/signup" variant="light">立刻註冊</Button>
                 </div>
               </Col>
-              <Col><img style={{height: '300px', margin: '30px'}} src={require('./icons/geography.png')}/></Col>
+              <Col ><img style={{height: '280px', margin: '30px 0px'}} src={require('./icons/geography.png')}/></Col>
               
             {/* </div> */}
           </Row>
@@ -121,12 +121,12 @@ const HomePage: React.FC = () => {
         </Container>
       </section>
 
-      
-      <div>
-        <Image fluid src={require("./icons/tecky.png")} />
-      </div>
       <section className="courses-carousel">
         <CarouselReact type="goodComment" />
+      </section>
+
+      <section>
+        <Image fluid src={require("./icons/tecky.png")} />
       </section>
     </div>
   );
