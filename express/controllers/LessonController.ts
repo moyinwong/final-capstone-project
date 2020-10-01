@@ -1,4 +1,8 @@
-import { LessonService, IChoice, ILessonWithoutCourseId } from "../services/LessonService";
+import {
+  LessonService,
+  IChoice,
+  ILessonWithoutCourseId,
+} from "../services/LessonService";
 import { Request, Response } from "express";
 import { logger } from "../logger";
 
@@ -108,7 +112,7 @@ export class LessonController {
   createLesson = async (req: Request, res: Response) => {
     try {
       const { courseName } = req.params;
-      const lessonInfo:ILessonWithoutCourseId = req.body;
+      const lessonInfo: ILessonWithoutCourseId = req.body;
       let courseMaterial = req.files;
 
       let materialArray: any[] = [];
@@ -131,7 +135,6 @@ export class LessonController {
         );
         return res.status(200).json({ createdLesson });
       }
-
     } catch (e) {
       console.log(e.message);
       return res
@@ -168,6 +171,20 @@ export class LessonController {
       return res
         .status(500)
         .json({ message: "createQuestion: internal server error" });
+    }
+  };
+
+  getThreads = async (req: Request, res: Response) => {
+    try {
+      const { lessonId } = req.params;
+      const threads = await this.lessonService.getDiscussionThreadsByLessonId(
+        parseInt(lessonId)
+      );
+
+      return res.json({ threads });
+    } catch (e) {
+      console.log(e.message);
+      return res.status(500).json({ message: "internal server error" });
     }
   };
 }

@@ -56,15 +56,17 @@ export class LessonService {
     course: string,
     userEmail: string
   ) => {
-    const userId = (await this.knex(tables.USERS)
-      .select('id')
-      .where('email', userEmail)
-      .first()).id;
+    const userId = (
+      await this.knex(tables.USERS)
+        .select("id")
+        .where("email", userEmail)
+        .first()
+    ).id;
 
     const checkUserIsTutor = await this.knex(tables.COURSES)
-      .select('courses.name')
-      .where('name', course)
-      .andWhere('tutor_id', userId)
+      .select("courses.name")
+      .where("name", course)
+      .andWhere("tutor_id", userId);
 
     let lessons: Array<ILesson>;
 
@@ -100,7 +102,6 @@ export class LessonService {
         )
         .where("courses.tutor_id", userId)
         .andWhere("courses.name", course);
-
     } else {
       lessons = await this.knex
         .select(
@@ -319,20 +320,26 @@ export class LessonService {
 
   getDiscussionThreadsByLessonId = async (lessonId: number) => {
     const threads = await this.knex
-    .select(
-      `discussion_id`,
-      `${tables.THREADS}.id as threads_id`,
-      `${tables.DISCUSSIONS}.topic as topic`,
-      `${tables.DISCUSSIONS}.content as discussion_content`,
-      `${tables.THREADS}.content as thread.content`
-    )
-    .from(`${tables.DISCUSSIONS}`)
-    .rightJoin(
-      `${tables.THREADS}`,
-      `${tables.DISCUSSIONS}.id`,
-      `${tables.THREADS}.discussion_id`
-    )
-    .where(`${tables.DISCUSSIONS}.lesson_id`, lessonId);
+      .select(
+        `discussion_id`,
+        `${tables.THREADS}.id as threads_id`,
+        `${tables.DISCUSSIONS}.topic as topic`,
+        `${tables.DISCUSSIONS}.content as discussion_content`,
+        `${tables.THREADS}.content as thread_content`,
+        `${tables.USERS}.name as username`
+      )
+      .from(`${tables.DISCUSSIONS}`)
+      .rightJoin(
+        `${tables.THREADS}`,
+        `${tables.DISCUSSIONS}.id`,
+        `${tables.THREADS}.discussion_id`
+      )
+      .leftJoin(
+        `${tables.USERS}`,
+        `${tables.THREADS}.user_id`,
+        `${tables.USERS}.id`
+      )
+      .where(`${tables.DISCUSSIONS}.lesson_id`, lessonId);
 
     //need to build controller
 

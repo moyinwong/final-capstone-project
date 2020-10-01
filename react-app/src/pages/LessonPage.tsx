@@ -53,6 +53,16 @@ interface IFile {
   file_name: string;
 }
 
+interface IThread {
+  discussion_id: number;
+  discussion_content: string;
+  topic: string;
+  file_name: string;
+  threads_id: number;
+  thread_content: string;
+  username: string;
+}
+
 const categories: string[] = [
   "中文",
   "英文",
@@ -99,6 +109,8 @@ const LessonPage: React.FC = () => {
       isCorrect: string;
     }[]
   >([]);
+
+  const [threads, setThreads] = useState<IThread[]>([]);
   const [isReadyRender, setIsReadyRender] = useState<boolean>(false);
 
   const dispatch = useDispatch();
@@ -120,6 +132,14 @@ const LessonPage: React.FC = () => {
       await getFiles(lessonName);
     })();
   }, [userEmail]);
+
+  useEffect(() => {
+    (async () => {
+      console.log("hahahaahahh");
+      if (lessonInfo?.lesson_id && threads.length === 0)
+        await getThreads(lessonInfo.lesson_id);
+    })();
+  }, [lessonInfo]);
 
   //set is ready render after retrieve all data
   useEffect(() => {
@@ -192,6 +212,21 @@ const LessonPage: React.FC = () => {
     const result = await fetchRes.json();
     const { files } = result;
     setFiles(files);
+  };
+
+  const getThreads = async (lessonId: number) => {
+    let queryRoute: string = "/lesson/threads/retrieve/";
+    const fetchRes = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}${queryRoute}${lessonId}`
+    );
+
+    const result = await fetchRes.json();
+    const { threads } = result;
+
+    //sort the thread by discussion id
+    threads.sort((a: IThread, b: IThread) => a.discussion_id - b.discussion_id);
+    console.log("threads :", threads);
+    setThreads(threads);
   };
 
   //handle answer on submit
@@ -367,30 +402,54 @@ const LessonPage: React.FC = () => {
                     >
                       <Row>
                         <Col sm={3}>
-                          <Nav variant="pills" className="flex-column">
-                            <Nav.Item>
-                              <OverlayTrigger
-                                key="top"
-                                placement="top"
-                                overlay={
-                                  <Tooltip id={`tooltip-top`}>
-                                    Tooltip on top.
-                                  </Tooltip>
-                                }
-                              >
-                                <Nav.Link eventKey="first">
-                                  問題1.................................
-                                </Nav.Link>
-                              </OverlayTrigger>
-                            </Nav.Item>
-                            <Nav.Item>
-                              <Nav.Link eventKey="second">Tab 2</Nav.Link>
-                            </Nav.Item>
-                          </Nav>
+                          {threads.map((e, i, arr) => {
+                            if (
+                              i === 0 ||
+                              (i !== 0 &&
+                                e.discussion_id !== arr[i - 1].discussion_id)
+                            ) {
+                              return (
+                                <Nav variant="pills" className="flex-column">
+                                  <Nav.Item>
+                                    <OverlayTrigger
+                                      key="top"
+                                      placement="top"
+                                      overlay={
+                                        <Tooltip id={`tooltip-top`}>
+                                          Tooltip on top.
+                                        </Tooltip>
+                                      }
+                                    >
+                                      <Nav.Link eventKey={i}>
+                                        問題{i}.................................
+                                      </Nav.Link>
+                                    </OverlayTrigger>
+                                  </Nav.Item>
+                                  {/* <Nav.Item>
+                                    <Nav.Link eventKey="second">Tab 2</Nav.Link>
+                                  </Nav.Item> */}
+                                </Nav>
+                              );
+                            }
+                          })}
                         </Col>
                         <Col sm={9}>
                           <Tab.Content>
-                            <Tab.Pane eventKey="first">ihihihhi</Tab.Pane>
+                            {threads.map((e, i, a) => (
+                              <Tab.Pane eventKey={i}>
+                                {a
+                                  .filter(
+                                    (e2) => e2.discussion_id === e.discussion_id
+                                  )
+                                  .map((e3) => (
+                                    <div>
+                                      <div>{e3.thread_content}</div>
+                                      <div>{e3.username}</div>
+                                    </div>
+                                  ))}
+                              </Tab.Pane>
+                            ))}
+
                             <Tab.Pane eventKey="second"></Tab.Pane>
                           </Tab.Content>
                         </Col>
