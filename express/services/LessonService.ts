@@ -56,15 +56,17 @@ export class LessonService {
     course: string,
     userEmail: string
   ) => {
-    const userId = (await this.knex(tables.USERS)
-      .select('id')
-      .where('email', userEmail)
-      .first()).id;
+    const userId = (
+      await this.knex(tables.USERS)
+        .select("id")
+        .where("email", userEmail)
+        .first()
+    ).id;
 
     const checkUserIsTutor = await this.knex(tables.COURSES)
-      .select('courses.name')
-      .where('name', course)
-      .andWhere('tutor_id', userId)
+      .select("courses.name")
+      .where("name", course)
+      .andWhere("tutor_id", userId);
 
     let lessons: Array<ILesson>;
 
@@ -96,6 +98,7 @@ export class LessonService {
         )
         .where("courses.tutor_id", userId)
         .andWhere("courses.name", course);
+<<<<<<< HEAD
         
       } else {
         lessons = await this.knex
@@ -132,6 +135,43 @@ export class LessonService {
       }
       return lessons;
 
+=======
+    } else {
+      lessons = await this.knex
+        .select(
+          "courses.id as course_id",
+          "courses.name as course_name",
+          "courses.tutor_id",
+          "lessons.id as lesson_id",
+          "lessons.name as lesson_name",
+          "lessons.description as lesson_description",
+          "is_trial",
+          "video_url",
+          "users.email as user_email",
+          "purchased_courses.comment"
+        )
+        .from(tables.COURSES)
+        .leftJoin(
+          tables.PURCHASED_COURSES,
+          `${tables.COURSES}.id`,
+          `${tables.PURCHASED_COURSES}.course_id`
+        )
+        .leftJoin(
+          tables.USERS,
+          `${tables.PURCHASED_COURSES}.user_id`,
+          `${tables.USERS}.id`
+        )
+        .innerJoin(
+          tables.LESSONS,
+          `${tables.COURSES}.id`,
+          `${tables.LESSONS}.course_id`
+        )
+        .where("users.email", userEmail)
+        .andWhere("courses.name", course);
+    }
+
+    return lessons;
+>>>>>>> a761fb2ff332b8d2b7ae567beceb7e5e683f0abc
   };
 
   getLessonAccessibility = async (lessonName: string) => {
@@ -315,20 +355,26 @@ export class LessonService {
 
   getDiscussionThreadsByLessonId = async (lessonId: number) => {
     const threads = await this.knex
-    .select(
-      `discussion_id`,
-      `${tables.THREADS}.id as threads_id`,
-      `${tables.DISCUSSIONS}.topic as topic`,
-      `${tables.DISCUSSIONS}.content as discussion_content`,
-      `${tables.THREADS}.content as thread.content`
-    )
-    .from(`${tables.DISCUSSIONS}`)
-    .rightJoin(
-      `${tables.THREADS}`,
-      `${tables.DISCUSSIONS}.id`,
-      `${tables.THREADS}.discussion_id`
-    )
-    .where(`${tables.DISCUSSIONS}.lesson_id`, lessonId);
+      .select(
+        `discussion_id`,
+        `${tables.THREADS}.id as threads_id`,
+        `${tables.DISCUSSIONS}.topic as topic`,
+        `${tables.DISCUSSIONS}.content as discussion_content`,
+        `${tables.THREADS}.content as thread_content`,
+        `${tables.USERS}.name as username`
+      )
+      .from(`${tables.DISCUSSIONS}`)
+      .rightJoin(
+        `${tables.THREADS}`,
+        `${tables.DISCUSSIONS}.id`,
+        `${tables.THREADS}.discussion_id`
+      )
+      .leftJoin(
+        `${tables.USERS}`,
+        `${tables.THREADS}.user_id`,
+        `${tables.USERS}.id`
+      )
+      .where(`${tables.DISCUSSIONS}.lesson_id`, lessonId);
 
     //need to build controller
 
