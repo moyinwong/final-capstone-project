@@ -11,26 +11,28 @@ export default function Tutorial(this: any, props: { navigation: { goBack: () =>
 
     // Hooks
     const [showVideo, setShowVideo] = useState(false);
-    // const [playing, setPlaying] = useState(false);
+    const [playing, setPlaying] = useState(true);
 
-    // const onStateChange = useCallback((state) => {
-    //     if (state === "ended") {
-    //         setPlaying(false);
-    //         Alert.alert("您已完成課堂");
-    //     }
-    // }, []);
+    const onStateChange = useCallback((state) => {
+        if (state === "ended") {
+            setPlaying(false);
+            Alert.alert("您已完成課堂");
+        }
+    }, []);
 
     const myUrl = 'https://youtu.be/oZCM4u7d_6U';
 
     return (
         <View style={globalStyles.container}>
             {showVideo ? (
-                // <YoutubePlayer
-                //     height={300}
-                //     play={playing}
-                //     videoId={"/k8KZ3cSbKC8"}
-                //     onChangeState={onStateChange}
-                // />
+                <YoutubePlayer
+                    height={300}
+                    play={playing}
+                    videoId={"/k8KZ3cSbKC8"}
+                    onChangeState={onStateChange}
+
+                    allowWebViewZoom={true}
+                />
 
                 // <WebView
                 //     originWhitelist={['*']}
@@ -38,15 +40,6 @@ export default function Tutorial(this: any, props: { navigation: { goBack: () =>
                 //     javaScriptEnabled={true}
                 //     domStorageEnabled={true}
                 // />
-
-                // <YouTube
-                //     // apiKey='AIzaSyBDTPBWOEZXuWmrz1b3VBE-6nUJAWvfYGA'
-                //     videoId='k8KZ3cSbKC8'
-                //     play={true}
-                //     fullscreen={true}
-                //     loop={false}
-                // />
-                <Text>aaa</Text>
             ) : (
                     <Text>Video</Text>
                 )
