@@ -13,71 +13,51 @@ export async function seed(knex: Knex): Promise<void> {
       user_id: 1,
       lesson_id: 1,
       topic: "hdfjkahdjfhskjdhfjkhsdkfkashdjfhfhjkasdhflhalsdf",
-      content:
-        "hfjkahsdkjfhkjasdhflafdkahsdf\nhakdshfkjhasjdkfhjklahsdkfhlahsdfkhlsdhflasdf\nhakdsfhlkashdkfhklsdhfkhasdhfjkshd",
     },
     {
       user_id: 1,
       lesson_id: 1,
       topic: "hdfjkahdjfhskjdhfjkhsdkfkashdjfhfhjkasdhflhalsdf",
-      content:
-        "hfjkahsdkjfhkjasdhflafdkahsdf\nhakdshfkjhasjdkfhjklahsdkfhlahsdfkhlsdhflasdf\nhakdsfhlkashdkfhklsdhfkhasdhfjkshd",
     },
     {
       user_id: 1,
       lesson_id: 1,
       topic: "hdfjkahdjfhskjdhfjkhsdkfkashdjfhfhjkasdhflhalsdf",
-      content:
-        "hfjkahsdkjfhkjasdhflafdkahsdf\nhakdshfkjhasjdkfhjklahsdkfhlahsdfkhlsdhflasdf\nhakdsfhlkashdkfhklsdhfkhasdhfjkshd",
     },
     {
       user_id: 1,
       lesson_id: 1,
       topic: "hdfjkahdjfhskjdhfjkhsdkfkashdjfhfhjkasdhflhalsdf",
-      content:
-        "hfjkahsdkjfhkjasdhflafdkahsdf\nhakdshfkjhasjdkfhjklahsdkfhlahsdfkhlsdhflasdf\nhakdsfhlkashdkfhklsdhfkhasdhfjkshd",
     },
     {
       user_id: 1,
       lesson_id: 1,
       topic: "hdfjkahdjfhskjdhfjkhsdkfkashdjfhfhjkasdhflhalsdf",
-      content:
-        "hfjkahsdkjfhkjasdhflafdkahsdf\nhakdshfkjhasjdkfhjklahsdkfhlahsdfkhlsdhflasdf\nhakdsfhlkashdkfhklsdhfkhasdhfjkshd",
     },
     {
       user_id: 1,
       lesson_id: 1,
       topic: "hdfjkahdjfhskjdhfjkhsdkfkashdjfhfhjkasdhflhalsdf",
-      content:
-        "hfjkahsdkjfhkjasdhflafdkahsdf\nhakdshfkjhasjdkfhjklahsdkfhlahsdfkhlsdhflasdf\nhakdsfhlkashdkfhklsdhfkhasdhfjkshd",
     },
     {
       user_id: 1,
       lesson_id: 1,
       topic: "hdfjkahdjfhskjdhfjkhsdkfkashdjfhfhjkasdhflhalsdf",
-      content:
-        "hfjkahsdkjfhkjasdhflafdkahsdf\nhakdshfkjhasjdkfhjklahsdkfhlahsdfkhlsdhflasdf\nhakdsfhlkashdkfhklsdhfkhasdhfjkshd",
     },
     {
       user_id: 1,
       lesson_id: 1,
       topic: "hdfjkahdjfhskjdhfjkhsdkfkashdjfhfhjkasdhflhalsdf",
-      content:
-        "hfjkahsdkjfhkjasdhflafdkahsdf\nhakdshfkjhasjdkfhjklahsdkfhlahsdfkhlsdhflasdf\nhakdsfhlkashdkfhklsdhfkhasdhfjkshd",
     },
     {
       user_id: 1,
       lesson_id: 1,
       topic: "hdfjkahdjfhskjdhfjkhsdkfkashdjfhfhjkasdhflhalsdf",
-      content:
-        "hfjkahsdkjfhkjasdhflafdkahsdf\nhakdshfkjhasjdkfhjklahsdkfhlahsdfkhlsdhflasdf\nhakdsfhlkashdkfhklsdhfkhasdhfjkshd",
     },
     {
       user_id: 1,
       lesson_id: 1,
       topic: "hdfjkahdjfhskjdhfjkhsdkfkashdjfhfhjkasdhflhalsdf",
-      content:
-        "hfjkahsdkjfhkjasdhflafdkahsdf\nhakdshfkjhasjdkfhjklahsdkfhlahsdfkhlsdhflasdf\nhakdsfhlkashdkfhklsdhfkhasdhfjkshd",
     },
   ]);
 }
