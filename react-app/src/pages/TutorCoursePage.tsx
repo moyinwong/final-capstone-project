@@ -64,9 +64,6 @@ const TutorCoursePage = () => {
     return (
         <div>
             <div className="course-section-title-container">
-                {/* <div className="course-section-title-div">
-                    <div className="course-section-title">導師</div>
-                </div> */}
                 <div className="tutor-info-section">
                     <div className="tutor-name">{tutorInfo?.name}</div>
                     <div className="tutor-title">{tutorInfo?.title}</div>

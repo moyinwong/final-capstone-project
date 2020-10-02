@@ -7,6 +7,8 @@ interface INewUser {
   email: string;
   password?: string;
   name: string;
+  title?: string;
+  introduction?: string;
 }
 
 export class UserService {
@@ -49,6 +51,8 @@ export class UserService {
           password: userInfo.password,
           name: userInfo.name,
           image: userImage,
+          title: userInfo.title,
+          introduction: userInfo.introduction,
         }, ['id'])
       )
     } else if (userInfo.password) {
@@ -58,6 +62,8 @@ export class UserService {
           email: userInfo.email,
           password: userInfo.password,
           name: userInfo.name,
+          title: userInfo.title,
+          introduction: userInfo.introduction,
         }, ['id'])
       )
     } else if (userImage) {
@@ -67,6 +73,8 @@ export class UserService {
           email: userInfo.email,
           name: userInfo.name,
           image: userImage,
+          title: userInfo.title,
+          introduction: userInfo.introduction,
         }, ['id'])
       )
     } else {
@@ -75,6 +83,8 @@ export class UserService {
         .update({
           email: userInfo.email,
           name: userInfo.name,
+          title: userInfo.title,
+          introduction: userInfo.introduction,
         }, ['id'])
       )
     }
@@ -82,6 +92,14 @@ export class UserService {
     console.log(editedUserId)
 
     return editedUserId;
+  }
+
+  registerAsTutor = async (userEmail: string) => {
+    // const user = await this.knex(tables.USERS)
+    // .insert({
+    //   is_tutor: true
+    // })
+    console.log('line: 93 userService')
   }
 
   getUserByEmail = async (email: string) => {

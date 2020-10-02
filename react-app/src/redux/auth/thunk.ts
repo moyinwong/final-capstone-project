@@ -73,6 +73,7 @@ export function restoreLogin() {
           dispatch(push("/"));
         } else {
           //dispatch(push(getState().router.location.pathname));
+          // dispatch(push('/'))
         }
       } else {
         dispatch(loginFail(""));
