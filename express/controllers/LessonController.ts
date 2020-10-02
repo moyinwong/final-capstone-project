@@ -178,23 +178,32 @@ export class LessonController {
     try {
       const lessonId = parseInt(req.params.lessonId);
       const userId = parseInt(req.params.userId);
-      const courseId = parseInt(req.params.courseId)
+      const courseId = parseInt(req.params.courseId);
 
-      let checkCompletion = await this.lessonService.checkLessonCompleted(lessonId, userId)
+      let checkCompletion = await this.lessonService.checkLessonCompleted(
+        lessonId,
+        userId
+      );
 
       if (checkCompletion) {
-        return res.status(201).json({ message: 'already completed this lesson'})
+        return res
+          .status(201)
+          .json({ message: "already completed this lesson" });
       }
-      let completionId = await this.lessonService.lessonCompleted(lessonId, userId, courseId);
+      let completionId = await this.lessonService.lessonCompleted(
+        lessonId,
+        userId,
+        courseId
+      );
 
-      return res.status(200).json({ completionId })
+      return res.status(200).json({ completionId });
     } catch (e) {
       logger.debug(e);
       return res
         .status(500)
         .json({ message: "lessonCompleted: internal server error" });
     }
-  }
+  };
 
   getThreads = async (req: Request, res: Response) => {
     try {
@@ -204,6 +213,54 @@ export class LessonController {
       );
 
       return res.json({ threads });
+    } catch (e) {
+      console.log(e.message);
+      return res.status(500).json({ message: "internal server error" });
+    }
+  };
+
+  createNewTopic = async (req: Request, res: Response) => {
+    try {
+      const { userEmail, lessonId, newTopic, newContent } = req.body;
+
+      const [AddTopicId] = await this.lessonService.addNewTopic(
+        userEmail,
+        parseInt(lessonId),
+        newTopic
+      );
+
+      if (!AddTopicId) res.status(400).json({ message: "fail to update" });
+
+      const AddThreadsNum = await this.lessonService.addNewThread(
+        userEmail,
+        AddTopicId,
+        newContent
+      );
+
+      if (AddThreadsNum.length === 0)
+        res.status(400).json({ message: "fail to update" });
+
+      return res.json({ message: "success" });
+    } catch (e) {
+      console.log(e.message);
+      return res.status(500).json({ message: "internal server error" });
+    }
+  };
+
+  createNewThread = async (req: Request, res: Response) => {
+    try {
+      const { userEmail, discussionId, newContent } = req.body;
+
+      const AddThreadsNum = await this.lessonService.addNewThread(
+        userEmail,
+        parseInt(discussionId),
+        newContent
+      );
+
+      if (AddThreadsNum.length === 0)
+        res.status(400).json({ message: "fail to update" });
+
+      return res.json({ message: "success" });
     } catch (e) {
       console.log(e.message);
       return res.status(500).json({ message: "internal server error" });
