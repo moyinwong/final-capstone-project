@@ -7,6 +7,10 @@ const coursesTable = tables.COURSES;
 
 const randomCourseList: any[] = [];
 
+function randomIntFromInterval(min:number, max:number) { // min and max included 
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 export async function seed(knex: Knex): Promise<void> {
   //generate random course
   for (let i = 0; i < 301; i++) {
@@ -15,8 +19,8 @@ export async function seed(knex: Knex): Promise<void> {
       name: faker.system.fileName(),
       price: Math.floor(Math.random() * 500) + 40,
       category_id: randomCategoryId,
-      tutor_id: Math.floor(Math.random() * 2) + 3,
-      // either 3 or 4 (tutor id)
+      tutor_id: randomIntFromInterval(2, 10),
+      // 1 - 10 (tutor id)
       image: `https://picsum.photos/777/434?random=${i}`,
       description: faker.commerce.productDescription(),
       objective: "提升學生技巧",
