@@ -34,6 +34,7 @@ export interface ICourse {
   image: string;
   lessons_number: number;
   trash?: boolean;
+  tutor_image?: string;
 }
 
 const CategoryPage: React.FC = () => {

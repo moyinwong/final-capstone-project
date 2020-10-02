@@ -431,7 +431,11 @@ const CoursePage: React.FC = () => {
                 </div>
                 <div className="tutor-name">
                   導師： {course.tutor_name}
-                  <img src={} alt="tutor profile picture"></img>
+                  {course.tutor_image?.match(/http/) ? (
+                    <img className="tutor-image" src={course.tutor_image} alt="tutor profile picture" />
+                    ) : ( <img className="tutor-image" src={`http://localhost:8080/img/${course.tutor_image}`} 
+                          alt="tutor profile picture"/>)
+                  }
                 </div>
               </div>
               <Card className="sticky">

@@ -192,6 +192,7 @@ export class CourseService {
             "category_id",
             "subcategory_id",
             "users.name as tutor_name",
+            "users.image as tutor_image",
             "courses.image"
           )
           .count("purchased_courses.user_id", { as: "purchased_users_num" })
@@ -214,6 +215,7 @@ export class CourseService {
             "category_id",
             "subcategory_id",
             "users.name",
+            "users.image",
             "courses.image"
           )
       )
@@ -229,8 +231,8 @@ export class CourseService {
         "purchased_users_num",
         "rated_num",
         "rated_score",
-
         "tutor_name",
+        "tutor_image",
         "image"
       )
       .count("lessons.id", { as: "lessons_number" })
@@ -249,6 +251,7 @@ export class CourseService {
         "rated_num",
         "rated_score",
         "tutor_name",
+        "tutor_image",
         "image"
       )
       .where("course_name", courseName)
