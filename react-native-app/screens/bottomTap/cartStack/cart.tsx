@@ -27,7 +27,7 @@ export default function Cart(props: { navigation: { goBack: () => void; }; }) {
     const navigation = useNavigation();
 
     return (
-        <View style={{...globalStyles.container, paddingHorizontal: 0}}>
+        <View style={{ ...globalStyles.container, paddingHorizontal: 0 }}>
 
             <FlatList
                 style={cartStyles.flatList}
@@ -70,6 +70,7 @@ export default function Cart(props: { navigation: { goBack: () => void; }; }) {
                                     <Text style={cartStyles.coursePrice}>{"價錢: $" + item.price}</Text>
                                     <TouchableOpacity
                                         onPress={() => removeCartList(item)}
+                                        style={cartStyles.deleteButton}
                                     >
                                         <MaterialIcons name="delete" size={27} color="#a5aebf" />
                                     </TouchableOpacity>

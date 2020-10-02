@@ -1,5 +1,5 @@
 // React, React Native
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Text, Image, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 
 // Navigation
@@ -54,7 +54,7 @@ export default function TutorInfo() {
 
     const allCategoryName = 'all'
     useFocusEffect(
-        React.useCallback(() => {
+        useCallback(() => {
             getAllCoursesByCategory(allCategoryName);
         }, [allCategoryName])
     );

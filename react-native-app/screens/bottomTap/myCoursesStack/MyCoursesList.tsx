@@ -1,5 +1,5 @@
 // React, React Native
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 
 // Navigation
@@ -35,7 +35,7 @@ export default function MyCoursesList() {
 
     const allCategoryName = 'all'
     useFocusEffect(
-        React.useCallback(() => {
+        useCallback(() => {
             getAllCoursesByCategory(allCategoryName);
         }, [allCategoryName])
     );

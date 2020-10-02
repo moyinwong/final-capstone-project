@@ -79,6 +79,9 @@ const cartStyles = StyleSheet.create({
         fontSize: 20,
         color: '#e96a43'
     },
+    deleteButton: {
+        paddingLeft: 8
+    },
     paymentContainer: {
         backgroundColor: "#a5aebf"
     },

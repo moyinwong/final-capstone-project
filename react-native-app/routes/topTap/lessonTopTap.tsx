@@ -5,7 +5,7 @@ import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 // Screens
-import Video from '../../screens/bottomTap/commonScreens/lessonTopTap/video';
+import Tutorial from '../../screens/bottomTap/commonScreens/lessonTopTap/tutorial';
 import Exercise from '../../screens/bottomTap/commonScreens/lessonTopTap/exercise';
 import Materials from '../../screens/bottomTap/commonScreens/lessonTopTap/materials';
 
@@ -27,8 +27,8 @@ export default function LessonTopTab() {
             }}
         >
             <Tab.Screen
-                name="Video"
-                component={Video}
+                name="Tutorial"
+                component={Tutorial}
                 initialParams={{ category: 'subscribed' }}
                 options={{
                     title: "影片"

@@ -1,5 +1,5 @@
 // React, React Native
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useCallback } from 'react';
 import { View, Text, Image, TouchableOpacity, FlatList, ScrollView, Pressable } from 'react-native';
 
 // Navigation
@@ -125,7 +125,7 @@ export default function Courses() {
     }
 
     useFocusEffect(
-        React.useCallback(() => {
+        useCallback(() => {
             getCourseInfo(courseName);
             getLessonsInfo(courseName);
             getComments(courseName);

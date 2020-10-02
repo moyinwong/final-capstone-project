@@ -1,5 +1,5 @@
 // React, React Native
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList, ScrollView } from 'react-native';
 
 // Navigation
@@ -35,7 +35,7 @@ export default function Home() {
 
     const popularCategoryName = 'all'
     useFocusEffect(
-        React.useCallback(() => {
+        useCallback(() => {
             getPopularCourses(popularCategoryName);
         }, [popularCategoryName])
     );
@@ -71,7 +71,7 @@ export default function Home() {
 
     const goodCategoryName = 'all'
     useFocusEffect(
-        React.useCallback(() => {
+        useCallback(() => {
             getGoodCourses(goodCategoryName);
         }, [goodCategoryName])
     );
