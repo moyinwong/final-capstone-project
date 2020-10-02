@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useLocation, useParams, Link } from "react-router-dom";
 import { push } from "connected-react-router";
@@ -13,7 +13,6 @@ import { addCourse } from "../redux/cart/actions";
 import "./CoursePage.scss";
 import CommentModal from "../components/CommentModal";
 import { FormControlLabel, Checkbox } from "@material-ui/core";
-import { object } from "yup";
 
 const sleep = (time: number) => new Promise((acc) => setTimeout(acc, time));
 

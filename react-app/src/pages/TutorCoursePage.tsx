@@ -81,7 +81,7 @@ const TutorCoursePage = () => {
                 <h1>我教授的課程 ({courses.length})</h1>
             <div className="course-card-container">
                 {courses.map((course, index) => (
-                    <div className="course-card">
+                    <div className="course-card" key={index}>
                         <SingleCard {...course} />
                     </div>
                 ))}

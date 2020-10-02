@@ -88,9 +88,7 @@ const InstructorPage = () => {
                                 <Card>
                                     <Card.Header className="accordion-card-title">你的課程</Card.Header>
                                     {courses.map((course, i) => (
-                                        <>
-                                            <LessonAccordion key={i} {...course}/>
-                                        </>
+                                        <LessonAccordion {...course} key={i}/>
                                     ))}
                                 </Card>
                             </Accordion>

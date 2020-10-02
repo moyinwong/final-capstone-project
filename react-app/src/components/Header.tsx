@@ -66,9 +66,7 @@ const Header = (props: any) => {
       <div className="web-navbar">
         <Navbar bg="light" variant="light">
           <Navbar.Brand href="/">
-            <Link to="/">
               <img className="website-logo" src={require("../logo.png")} />
-            </Link>
           </Navbar.Brand>
           {/* <div className='blank-space'>{' '}</div> */}
           <button

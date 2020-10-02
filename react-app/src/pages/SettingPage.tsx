@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useEffect, useMemo } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { push } from "connected-react-router";
 import { Image, Modal, Alert } from "react-bootstrap";
 import './SettingPage.scss';
-import { getUser, logout } from '../redux/auth/actions';
+import { logout } from '../redux/auth/actions';
 import { IRootState } from '../redux/store';
 import { CircularProgress } from '@material-ui/core';
 
@@ -211,14 +211,14 @@ const SettingPage = () => {
     let handleTitleChange = (
       event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
     ) => {
-      setIsEmpty(false);
+      setIsTitleEmpty(false);
       setTitle(event.target.value);
     };
 
     let handleIntroductionChange = (
       event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
     ) => {
-      setIsEmpty(false);
+      setIsIntroductionEmpty(false);
       setIntroduction(event.target.value);
     };
   

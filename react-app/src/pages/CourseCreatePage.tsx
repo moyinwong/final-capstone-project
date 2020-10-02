@@ -143,7 +143,7 @@ const CourseCreatePage = () => {
                 <FormControl className={classes.formControl}>
                   <InputLabel htmlFor="courseCategory">課程類別</InputLabel>
                   <Field
-                    fullidth
+                    fullWidth
                     name="courseCategory"
                     component={Select}
                     inputProps={{

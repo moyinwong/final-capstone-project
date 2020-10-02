@@ -12,7 +12,6 @@ import { ICourse } from "../pages/CategoryPage";
 import "./CheckoutForm.scss";
 import PaymentSuccessAlert from "./PaymentSuccessAlert";
 import { push } from "connected-react-router";
-import { string } from "yup";
 import { clear } from "../redux/cart/actions";
 
 interface ICheckOutFormError {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Accordion,
   Alert,
@@ -57,7 +57,7 @@ const CategoryPage: React.FC = () => {
 
   //const [totalYHeight, setTotalYHeight] = useState(0);
   const { categoryName } = param;
-  console.log(Yposition, displayCourseNum, totalCourseNum)
+
   function handleScroll(event: any) {
     //setTotalYHeight((prevHeight) => document.body.clientHeight);
     setYPosition({
@@ -80,7 +80,7 @@ const CategoryPage: React.FC = () => {
       //console.log("hahahha");
       setDisplayCourseNum((prevNum) => prevNum + 10);
     }
-  }, [Yposition]);
+  }, [Yposition, totalCourseNum, displayCourseNum]);
 
   useEffect(() => {
     if (

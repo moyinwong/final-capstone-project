@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import './LessonCreatePage.scss'
 import { useParams } from 'react-router-dom'
 import './CourseCreatePage.scss'
@@ -133,7 +133,7 @@ const LessonCreatePage = () => {
                                     <FormControl className={classes.formControl}>
                                         <InputLabel htmlFor="lessonIsTrial">允許試堂</InputLabel>
                                         <Field
-                                            fullidth
+                                            fullWidth
                                             name="lessonIsTrial" 
                                             component={Select} 
                                             inputProps={{
