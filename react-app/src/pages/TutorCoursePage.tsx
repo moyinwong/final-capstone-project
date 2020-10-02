@@ -18,7 +18,7 @@ interface ITutorInfo {
 const TutorCoursePage = () => {
     const param: { tutorEmail: string } = useParams();
     const tutorEmail = param.tutorEmail;
-
+    const [totalStudents, setTotalStudents] = useState<number | null>(null)
     const [courses, setCourses] = useState<ICourse[]>([]);
     const [tutorInfo, setTutorInfo] = useState<ITutorInfo | null>(null);
 
@@ -27,6 +27,7 @@ const TutorCoursePage = () => {
         if(tutorEmail) {
             getAllCourseByTutor(tutorEmail);
             getTutorInfo();
+            getTotalStudentsByTutor();
         }
     }, [tutorEmail])
 
@@ -51,6 +52,15 @@ const TutorCoursePage = () => {
         setCourses(orderedCourses);
     }
 
+    const getTotalStudentsByTutor = async () => {
+        let queryRoute = '/course/tutor/number-of-students'
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}${queryRoute}/${tutorEmail}`)
+        const result = await res.json();
+        const students = result.totalStudentNumber
+        const totalStudents: number = students.student_num
+        setTotalStudents(totalStudents)
+    }
+
     return (
         <div>
             <div className="course-section-title-container">
@@ -60,13 +70,14 @@ const TutorCoursePage = () => {
                 <div className="tutor-info-section">
                     <div className="tutor-name">{tutorInfo?.name}</div>
                     <div className="tutor-title">{tutorInfo?.title}</div>
-                    <div className="tutor-intro">關於我</div>
+                    <div className="tutor-intro-title">總學生人數：{totalStudents}</div>
+                    <div className="tutor-intro-title">關於我</div>
                     <div className="tutor-intro">{tutorInfo?.introduction}</div>
                 </div>
-                <div>
+                <div className="tutor-image">
                     {tutorInfo?.image.match(/http/) ? (
-                        <img className="tutor-image" src={tutorInfo.image}></img>
-                    ) : (<img className="tutor-image" src={`http://localhost:8080/img/${tutorInfo?.image}`}></img>)}
+                        <img style={{height: '150px'}} src={tutorInfo.image}></img>
+                    ) : (<img style={{height: '150px'}} src={`http://localhost:8080/img/${tutorInfo?.image}`}></img>)}
                     <div>{tutorInfo?.linkedin}</div>
                 </div>
             </div>

@@ -420,7 +420,7 @@ export class CourseService {
     return tutor;
   }
 
-  getCourseInfoByTutor = async (tutorEmail: string) => {
+  getCourseDetailByTutor = async (tutorEmail: string) => {
     const courses = await this.knex
       .with(
         "T1",
@@ -505,5 +505,22 @@ export class CourseService {
       .limit(500);
 
     return courses;
+  }
+
+  getTotalStudentNumberOfTutor = async (tutorEmail: string) => {
+    const userIdArray = await this.knex
+      .select("id")
+      .from(tables.USERS)
+      .where("email", tutorEmail);
+    const userId = userIdArray[0].id;
+
+    const totalStudentNumber = await this.knex
+    .count('purchased_courses.id', {as : 'student_num'})
+    .from(tables.COURSES)
+    .join(tables.PURCHASED_COURSES, `${tables.PURCHASED_COURSES}.course_id`, 'courses.id')
+    .where('courses.tutor_id', userId)
+    .first()
+
+    return totalStudentNumber;
   }
 }

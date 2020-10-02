@@ -9,6 +9,7 @@ courseRoutes.post(
   courseController.courseCreation
 );
 
+courseRoutes.get("/tutor/number-of-students/:tutorEmail", courseController.getTotalStudentNumberOfTutor);
 courseRoutes.get("/tutor/:tutorEmail", courseController.getCourseDetailByTutor);
 courseRoutes.get("/tutor/info/:tutorEmail", courseController.getTutorInfo);
 courseRoutes.get("/all/lessons/:courseId", courseController.getAllLessons);

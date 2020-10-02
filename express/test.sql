@@ -57,3 +57,13 @@ INSERT into mc_answers(question_id, answer_body, is_correct_answer) VALUES (12, 
 
 
 
+select
+ COUNT (purchased_courses.id) as total_student
+ from courses 
+ JOIN purchased_courses on courses.id = purchased_courses.course_id
+ where tutor_id = 3;
+
+ SELECT * 
+ FROM courses
+ JOIN purchased_courses on courses.id = purchased_courses.course_id
+ WHERE courses.tutor_id = 3;

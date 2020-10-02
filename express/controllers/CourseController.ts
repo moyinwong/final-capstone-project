@@ -206,9 +206,21 @@ export class CourseController {
   getCourseDetailByTutor = async (req: Request, res: Response) => {
     try {
       const { tutorEmail } = req.params;
-      const courses = await this.courseService.getCourseInfoByTutor(tutorEmail)
+      const courses = await this.courseService.getCourseDetailByTutor(tutorEmail)
 
       return res.status(200).json({ courses })
+    } catch (e) {
+      logger.debug(e);
+      return res.status(500).json({ message: "internal server error" });
+    }
+  }
+
+  getTotalStudentNumberOfTutor = async (req: Request, res: Response) => {
+    try {
+      const { tutorEmail } = req.params;
+      const totalStudentNumber = await this.courseService.getTotalStudentNumberOfTutor(tutorEmail)
+
+      return res.status(200).json({ totalStudentNumber })
     } catch (e) {
       logger.debug(e);
       return res.status(500).json({ message: "internal server error" });

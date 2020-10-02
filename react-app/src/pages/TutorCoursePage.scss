@@ -3,10 +3,12 @@
     padding: 30px;
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     justify-content: center;
     // background-color: #505763;
     background-image: linear-gradient(45deg, #3a7cb4, #1dfdc6, #8ff57d);
     color: rgb(44, 42, 42);
+    margin-bottom: 30px;
 
     .course-section-title-div {
         max-width: 1080px;
@@ -18,15 +20,28 @@
     .tutor-info-section {
         text-align: left;
         margin-right: 20px;
+
+        .tutor-name {
+            font-weight: bolder;
+        }
+
         .tutor-title {
             font-size: 25px;
         }
 
-        .tutor-intro {
+        .tutor-intro-title {
             font-size: 18px;
+            font-weight: bolder;
+            margin-top: 10px;
         }
 
-        img.tutor-image {
+        .tutor-intro {
+            max-width: 1000px;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .tutor-image > img{
             height: 150px!important;
 
         }

@@ -101,7 +101,7 @@ export async function seed(knex: Knex): Promise<void> {
         stripe_id: "acct_1HVXrIF1vd04vxx6",
         title: "課程講師",
         introduction:
-          "Alex 曾榮獲多項本地及亞太科技大獎，作為多家科技公司的顧問和 Play More Limited 前首席技術官，他具備軟件開發和管理的專業知識。",
+          "Jason 沉心於編寫程式和程式教學，他加入 Tecky 之前本地一間物聯網公司作為商業智能分析師，主要負責分析源數據去解決客戶的問題。他曾處理過的項目包括冷鏈解決方案、醫護解決方案等等，並使用數據視覺化和數據分析等工具。",
       },
       {
         email: "andrew@tecky.com",
