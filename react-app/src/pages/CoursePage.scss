@@ -120,6 +120,10 @@
 .lesson-container {
   .accordion > .card > .card-header {
     justify-content: space-between;
+
+    .MuiTypography-body1 {
+      text-align:right;
+    }
   }
 }
 @media (max-width: 1080px) {

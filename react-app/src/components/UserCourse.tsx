@@ -17,9 +17,8 @@ const UserCourse = (course:IUserCourse) => {
         const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}${queryRoute}/${course.course_id}`)
         const result = await res.json()
         let lesson = result.lessons;
-        let lessonNum = lesson.lesson_num;
+        let lessonNum: number = lesson.lesson_num;
         setAllLessons(lessonNum);
-        // console.log(lessonNum)
     }
 
     const getCompletedLesson = async () => {
@@ -34,9 +33,8 @@ const UserCourse = (course:IUserCourse) => {
         } else {
           //an array of completed lessons id
           let lessonIdArray = result.completedLessonId;
-          let userCompletedLength = lessonIdArray.length;
+          let userCompletedLength: number = lessonIdArray.length;
           setUserCompletedLessons(userCompletedLength);
-        //   console.log(userCompletedLessons)
         }
     }
 
@@ -82,6 +80,7 @@ const UserCourse = (course:IUserCourse) => {
         <div>
             <Card id="user-courses-card">
                     <Link to={`/course/${course.course_name}`}>
+                        
                         {course.image.match(/http/) ? (
                         <Card.Img variant="top" src={course.image} />
                         ) : <Card.Img id="carousel-card-img" variant="top" src={`http://localhost:8080/img/${course.image}`}/>}
@@ -89,10 +88,10 @@ const UserCourse = (course:IUserCourse) => {
                     </Link>
                     <Card.Body className="carousel-card-body">
                         <div className="carousel-card-title">
-                        {course.course_name}
+                            {course.course_name}
                         </div>
                         <div className="carousel-card-teacher">
-                        {course.tutor_name}
+                            {course.tutor_name}
                         </div>
                         <div>
                             {course.description}
