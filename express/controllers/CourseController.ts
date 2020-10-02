@@ -189,4 +189,29 @@ export class CourseController {
       return res.status(500).json({ message: "internal server error" });
     }
   }
+
+  getTutorInfo = async (req: Request, res: Response) => {
+    try {
+      const tutorEmail = req.params.tutorEmail;
+
+      const tutorInfo = await this.courseService.getTutorInfo(tutorEmail);
+
+      return res.status(200).json({ tutorInfo });
+    } catch (e) {
+      logger.debug(e);
+      return res.status(500).json({ message: "internal server error" });
+    }
+  }
+
+  getCourseDetailByTutor = async (req: Request, res: Response) => {
+    try {
+      const { tutorEmail } = req.params;
+      const courses = await this.courseService.getCourseInfoByTutor(tutorEmail)
+
+      return res.status(200).json({ courses })
+    } catch (e) {
+      logger.debug(e);
+      return res.status(500).json({ message: "internal server error" });
+    }
+  }
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, Link } from "react-router-dom";
 import { push } from "connected-react-router";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -430,12 +430,18 @@ const CoursePage: React.FC = () => {
                   學生人數： {course?.purchased_users_num}
                 </div>
                 <div className="tutor-name">
-                  導師： {course.tutor_name}
-                  {course.tutor_image?.match(/http/) ? (
-                    <img className="tutor-image" src={course.tutor_image} alt="tutor profile picture" />
-                    ) : ( <img className="tutor-image" src={`http://localhost:8080/img/${course.tutor_image}`} 
-                          alt="tutor profile picture"/>)
-                  }
+                  導師:    
+                  <span>
+                    <Link style={{display: 'inline', marginLeft: '10px'}} to={`/tutor/${course.tutor_email}`}>
+                      {course.tutor_name}
+                      {course.tutor_image?.match(/http/) ? (
+                        <img className="tutor-image" src={course.tutor_image} alt="tutor profile picture" />
+                        ) : ( <img className="tutor-image" src={`http://localhost:8080/img/${course.tutor_image}`} 
+                              alt="tutor profile picture"/>)
+                      }
+                    </Link> 
+                    
+                  </span>
                 </div>
               </div>
               <Card className="sticky">
@@ -507,11 +513,11 @@ const CoursePage: React.FC = () => {
             <div>
               <div className="bottom-info-container">
                 <div className="course-description">
-                  <p className="sub-title">課程簡介：</p>
+                  <p className="sub-title">課程簡介</p>
                   {course.course_description}
                 </div>
                 <div className="lesson-container">
-                  <p className="sub-title">課程內容：</p>
+                  <p className="sub-title">課程內容</p>
 
                   {lessons.map((e, i) => {
                     return (

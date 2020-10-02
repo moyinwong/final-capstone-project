@@ -1,0 +1,45 @@
+.course-section-title-container {
+    font-size: 40px;
+    padding: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    // background-color: #505763;
+    background-image: linear-gradient(45deg, #3a7cb4, #1dfdc6, #8ff57d);
+    color: rgb(44, 42, 42);
+
+    .course-section-title-div {
+        max-width: 1080px;
+        width: 80%;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .tutor-info-section {
+        text-align: left;
+        margin-right: 20px;
+        .tutor-title {
+            font-size: 25px;
+        }
+
+        .tutor-intro {
+            font-size: 18px;
+        }
+
+        img.tutor-image {
+            height: 150px!important;
+
+        }
+    }
+}
+
+.course-card-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+.course-card {
+    height: 300px;
+    width: 300px;
+    margin: 30px;
+}

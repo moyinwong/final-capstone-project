@@ -240,7 +240,7 @@ const SettingPage = () => {
           const result = await res.json()
   
           if (res.status === 200) {
-              setErrMessage('Successfully edited your profile! Please login again')
+              setErrMessage('成功更改用戶資料! 請重新登入')
               await sleep(2000);
               localStorage.removeItem("token");
               dispatch(logout());

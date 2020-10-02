@@ -35,6 +35,7 @@ export interface ICourse {
   lessons_number: number;
   trash?: boolean;
   tutor_image?: string;
+  tutor_email?: string;
 }
 
 const CategoryPage: React.FC = () => {
@@ -56,7 +57,7 @@ const CategoryPage: React.FC = () => {
 
   //const [totalYHeight, setTotalYHeight] = useState(0);
   const { categoryName } = param;
-
+  console.log(Yposition, displayCourseNum, totalCourseNum)
   function handleScroll(event: any) {
     //setTotalYHeight((prevHeight) => document.body.clientHeight);
     setYPosition({

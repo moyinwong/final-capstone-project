@@ -25,6 +25,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import SignupPage from "./pages/SignupPage";
 import UserCoursePage from "./pages/UserCoursePage";
 import SettingPage from "./pages/SettingPage";
+import TutorCoursePage from "./pages/TutorCoursePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -73,6 +74,11 @@ function App() {
           path="/course/:courseName/lesson/:lessonName"
           exact={true}
           component={LessonPage}
+        />
+        <Route
+          path="/tutor/:tutorEmail"
+          exact={true}
+          component={TutorCoursePage}
         />
         {/* ... */}
         <PrivateRoute
