@@ -182,6 +182,7 @@ export default function TutorInfo() {
 
                                     <Stars score={item.rated_score} />
 
+                                    <Text style={{ ...tutorInfoStyles.courseInfoText, fontSize: 16 }}>{" (" + item.rated_num + ")"}</Text>
                                 </View>
                                 {/* sssdsfvdsvdsvdsbvsdbsdbsdbds */}
                                 {false ?

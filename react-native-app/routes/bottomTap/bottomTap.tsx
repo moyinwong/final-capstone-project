@@ -51,7 +51,7 @@ export default function BottomTap() {
                 options={{
                     tabBarLabel: '購物車',
                     tabBarIcon: ({ color }) => (
-                        <AntDesign name="team" color={color} size={24} />
+                        <AntDesign name="shoppingcart" color={color} size={24} />
                     )
                 }}
             />

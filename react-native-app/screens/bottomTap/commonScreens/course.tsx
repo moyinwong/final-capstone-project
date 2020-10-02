@@ -167,6 +167,7 @@ export default function Courses() {
 
                         <Stars score={courseInfo.rated_score} />
 
+                        <Text style={{ ...courseStyles.courseInfoText, fontSize: 16 }}>{" (" + courseInfo.rated_num + ")"}</Text>
                     </View>
                     {/* sdsdgdsgsdgvsgbsdgbsrbhsbhsrbhsrrs */}
                     {true && <Text style={courseStyles.coursePrice}>{'價錢: $' + courseInfo.price}</Text>}
