@@ -1,9 +1,29 @@
 import * as Knex from "knex";
 import { tables } from "../tables";
+import faker from 'faker'
 
 const threadsTables = tables.THREADS;
 
+function randomIntFromInterval(min:number, max:number) { // min and max included 
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+const randomThreadList: any[] = [];
+
 export async function seed(knex: Knex): Promise<void> {
+
+  // //generate random thread
+  for (let i = 0; i < 500; i++) {
+    const randomUserId: number = randomIntFromInterval(1, 11);
+    const randomLessonId: number = randomIntFromInterval(1, 100)
+    const randomObj: any = {
+      user_id: randomUserId,
+      discussion_id: randomLessonId,
+      content: faker.commerce.productDescription()
+    };
+
+    randomThreadList.push(randomObj);
+  }
+
   // Deletes ALL existing entries
   await knex(threadsTables).del();
 
@@ -13,37 +33,37 @@ export async function seed(knex: Knex): Promise<void> {
       user_id: 1,
       discussion_id: 1,
       content:
-        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
+        "岩阿我都覺得係\n",
     },
     {
       user_id: 1,
       discussion_id: 1,
       content:
-        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
+        "我都唔識喎\n",
     },
     {
       user_id: 1,
       discussion_id: 1,
       content:
-        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
+        "不如問返老師\n",
     },
     {
       user_id: 1,
       discussion_id: 1,
       content:
-        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
+        "留TG再講\n",
     },
     {
       user_id: 1,
       discussion_id: 1,
       content:
-        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
+        "唔知喎\n",
     },
     {
       user_id: 1,
       discussion_id: 1,
       content:
-        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
+        "你試下睇返條片\n",
     },
     {
       user_id: 1,
@@ -189,5 +209,5 @@ export async function seed(knex: Knex): Promise<void> {
       content:
         "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
     },
-  ]);
+  ].concat(randomThreadList));
 }

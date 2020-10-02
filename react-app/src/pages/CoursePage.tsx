@@ -531,16 +531,19 @@ const CoursePage: React.FC = () => {
                             >
                               {i + 1 + ". " + e.lesson_name}
                             </Accordion.Toggle>
-                            <FormControlLabel
-                              disabled={checkBoxState[`checked${e.lesson_id}`] || false}
-                              control={<Checkbox
-                              checked={checkBoxState[`checked${e.lesson_id}`] || false}
-                              onChange={(event) => {
-                                handleCheckBoxChange(event, e.lesson_id)
-                              }} 
-                              name={`checked${e.lesson_id}`} />}
-                              label="完成"
-                            />
+                            {e.user_email ? 
+                              <FormControlLabel
+                                disabled={checkBoxState[`checked${e.lesson_id}`] || false}
+                                control={<Checkbox
+                                checked={checkBoxState[`checked${e.lesson_id}`] || false}
+                                onChange={(event) => {
+                                  handleCheckBoxChange(event, e.lesson_id)
+                                }} 
+                                name={`checked${e.lesson_id}`} />}
+                                label="完成"
+                              /> : ''
+                            }
+
                           </Card.Header>
                           <Accordion.Collapse eventKey="0">
                             <Card.Body>
