@@ -8,6 +8,9 @@ import { useNavigation } from '@react-navigation/native';
 // Context
 import { CartContext } from '../../../contexts/cartContext';
 
+// Icons
+import { MaterialIcons } from '@expo/vector-icons';
+
 // Functions
 import showCommentOrRateBox from '../../../functions/showCommentOrRateBox';
 
@@ -24,10 +27,7 @@ export default function Cart(props: { navigation: { goBack: () => void; }; }) {
     const navigation = useNavigation();
 
     return (
-        <View style={globalStyles.container}>
-            <Text>Cart Screen</Text>
-            <Text>{'Number: ' + cartList.length}</Text>
-            <Text>{'Sum: ' + cartSum}</Text>
+        <View style={{...globalStyles.container, paddingHorizontal: 0}}>
 
             <FlatList
                 style={cartStyles.flatList}
@@ -68,6 +68,11 @@ export default function Cart(props: { navigation: { goBack: () => void; }; }) {
 
                                 <View style={cartStyles.courseSubInfoLowerContainer}>
                                     <Text style={cartStyles.coursePrice}>{"價錢: $" + item.price}</Text>
+                                    <TouchableOpacity
+                                        onPress={() => removeCartList(item)}
+                                    >
+                                        <MaterialIcons name="delete" size={27} color="#a5aebf" />
+                                    </TouchableOpacity>
                                 </View>
 
                             </View>
@@ -75,6 +80,21 @@ export default function Cart(props: { navigation: { goBack: () => void; }; }) {
                     </TouchableOpacity>
                 )}
             />
+
+            <View style={cartStyles.paymentContainer}>
+                <View style={cartStyles.totalPriceContainer}>
+                    <Text style={cartStyles.totalPrice}>{'合共:'}</Text>
+                    <Text style={cartStyles.totalPrice}>{'$ ' + cartSum}</Text>
+                </View>
+                <View>
+                    <TouchableOpacity
+                        style={cartStyles.payButton}
+                        onPress={() => console.log('付款')}
+                    >
+                        <Text style={cartStyles.payText}>付款</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
 
         </View>
     )

@@ -151,6 +151,7 @@ export default function Home() {
 
                                     <Stars score={item.rated_score} />
 
+                                    <Text style={{ ...homeStyles.courseInfoText, fontSize: 16 }}>{" (" + item.rated_num + ")"}</Text>
                                 </View>
                                 {/* sssdsfvdsvdsvdsbvsdbsdbsdbds */}
                                 {false ?
@@ -215,6 +216,7 @@ export default function Home() {
 
                                     <Stars score={item.rated_score} />
 
+                                    <Text style={{ ...homeStyles.courseInfoText, fontSize: 16 }}>{" (" + item.rated_num + ")"}</Text>
                                 </View>
                                 {/* sssdsfvdsvdsvdsbvsdbsdbsdbds */}
                                 {false ?

@@ -5,7 +5,8 @@ const cartStyles = StyleSheet.create({
     flatList: {
         flex: 1,
         paddingTop: 8,
-        paddingBottom: 20
+        paddingBottom: 20,
+        paddingHorizontal: 10
     },
     courseBox: {
         flex: 1,
@@ -69,14 +70,45 @@ const cartStyles = StyleSheet.create({
     },
     courseSubInfoLowerContainer: {
         display: 'flex',
+        width: '100%',
         flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        paddingRight: 16
+        justifyContent: 'space-between',
+        alignItems: 'flex-start'
     },
     coursePrice: {
-        fontSize: 17,
+        fontSize: 20,
         color: '#e96a43'
+    },
+    paymentContainer: {
+        backgroundColor: "#a5aebf"
+    },
+    totalPriceContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingTop: 6,
+        paddingBottom: 3,
+        paddingHorizontal: 12
+    },
+    totalPrice: {
+        fontSize: 20,
+        color: '#ffffff'
+    },
+    payButton: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#ffffff',
+        paddingVertical: 8,
+        marginTop: 6,
+        marginBottom: 12,
+        marginHorizontal: 40,
+        borderRadius: 12
+    },
+    payText: {
+        fontSize: 20,
+        color: '#333333'
     }
 });
 
