@@ -64,9 +64,6 @@ const TutorCoursePage = () => {
     return (
         <div>
             <div className="course-section-title-container">
-                {/* <div className="course-section-title-div">
-                    <div className="course-section-title">導師</div>
-                </div> */}
                 <div className="tutor-info-section">
                     <div className="tutor-name">{tutorInfo?.name}</div>
                     <div className="tutor-title">{tutorInfo?.title}</div>
@@ -84,7 +81,7 @@ const TutorCoursePage = () => {
                 <h1>我教授的課程 ({courses.length})</h1>
             <div className="course-card-container">
                 {courses.map((course, index) => (
-                    <div className="course-card">
+                    <div className="course-card" key={index}>
                         <SingleCard {...course} />
                     </div>
                 ))}

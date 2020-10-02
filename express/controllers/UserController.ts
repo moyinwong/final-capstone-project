@@ -69,6 +69,14 @@ export class UserController {
     }
   };
 
+  registerAsTutor = async (req: Request, res: Response) => {
+    const userEmail = req.params.userEmail;
+
+    const user = await this.userService.registerAsTutor(userEmail);
+
+    return user;
+  }
+
   getInfo = async (req: Request, res: Response) => {
     try {
       const user: any = req.user;
@@ -80,6 +88,8 @@ export class UserController {
           image: user?.image,
           name: user?.name,
           isTutor: user?.is_tutor,
+          title: user?.title,
+          introduction: user?.introduction,
           stripeId: user?.stripe_id
         },
       });
@@ -274,4 +284,5 @@ export class UserController {
       res.status(500).json({ message: 'internal server error'})
     }
   }
+
 }

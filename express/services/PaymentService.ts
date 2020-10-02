@@ -1,5 +1,6 @@
 import Knex from "knex";
 import { tables } from "../tables";
+import { logger } from "../logger";
 //import { tables } from "../tables";
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 //import { logger } from "../logger";
@@ -8,6 +9,13 @@ export class PaymentService {
   constructor(private knex: Knex) {}
 
   createStripeConnectAccount = async (email: string) => {
+    const user = await this.knex(tables.USERS)
+    .where('email', email)
+    .update({
+      is_tutor: true
+    }, ['id'])
+    logger.debug(user)
+
     const account = await stripe.accounts.create({
       type: "express",
       country: "HK",

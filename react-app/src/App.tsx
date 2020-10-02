@@ -26,6 +26,7 @@ import SignupPage from "./pages/SignupPage";
 import UserCoursePage from "./pages/UserCoursePage";
 import SettingPage from "./pages/SettingPage";
 import TutorCoursePage from "./pages/TutorCoursePage";
+import SearchResultPage from "./pages/SearchResultPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -69,6 +70,11 @@ function App() {
           exact={true}
           component={CategoryPage}
         />
+        <Route
+          path="/search/:searchText"
+          exact={true}
+          component={SearchResultPage}
+        />
         <Route path="/course/:courseName" exact={true} component={CoursePage} />
         <Route
           path="/course/:courseName/lesson/:lessonName"
@@ -106,7 +112,7 @@ function App() {
           exact={true}
           component={QuestionCreatePage}
         />
-        <PrivateRoute path="/instructor" exact={true} component={InstructorPage} />
+        <PrivateRoute path="/instructor" exact={true} component={InstructorPage}/>
         <PrivateRoute path="/payment" exact={true} component={PaymentPage} />
         <Route path="/404" exact={true} component={NotFound} />
         <Route component={NotFound} />

@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useEffect, useMemo } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { push } from "connected-react-router";
 import { Image, Modal, Alert } from "react-bootstrap";
 import './SettingPage.scss';
-import { getUser, logout } from '../redux/auth/actions';
+import { logout } from '../redux/auth/actions';
 import { IRootState } from '../redux/store';
 import { CircularProgress } from '@material-ui/core';
 
@@ -27,6 +27,8 @@ interface IUser {
     isTutor: boolean | null;
     image: string;
     stripeId: string;
+    title: string;
+    introduction: string;
 }
 
 //material-UI related styling
@@ -74,10 +76,14 @@ const SettingPage = () => {
     const [password, setPassword] =  useState("");
     const [profilePicture, setProfilePicture] = useState('');
     const [image, setImage] =  useState<File | null>(null);
+    const [title, setTitle] = useState('');
+    const [introduction, setIntroduction] = useState('')
 
     //related to input validation
     const [isError, setIsError] = useState(false);
     const [isEmpty, setIsEmpty] = useState(false);
+    const [isTitleEmpty, setIsTitleEmpty] = useState(false);
+    const [isIntroductionEmpty, setIsIntroductionEmpty] = useState(false);
     const [isFirstNameEmpty, setIsFirstNameEmpty] = useState(false);
     const [isLastNameEmpty, setIsLastNameEmpty] = useState(false);
     const [errMessage, setErrMessage] = useState('');
@@ -89,11 +95,11 @@ const SettingPage = () => {
     const dispatch = useDispatch();
 
     //related to modal that contain stripe url
-    const[show, setShow] = useState(false)
-    const[stripeURL, setStripeURL] = useState('')
-    const[isSubmitting, setIsSubmitting] = useState(false)
-    const[stripeId, setStripeId] = useState('');
-    const[stripeStatus, setStripeStatus] = useState<boolean | null>(null)
+    const [show, setShow] = useState(false)
+    const [stripeURL, setStripeURL] = useState('')
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [stripeId, setStripeId] = useState('');
+    const [stripeStatus, setStripeStatus] = useState<boolean | null>(null)
 
     const handleClose = () => setShow(false);
 
@@ -124,6 +130,8 @@ const SettingPage = () => {
         setLastName(fullName[0])
         setProfilePicture(user.image)
         setEmail(user.email)
+        setTitle(user.title)
+        setIntroduction(user.introduction)
 
         if (user.stripeId) {
             setStripeId(user.stripeId)
@@ -161,6 +169,14 @@ const SettingPage = () => {
         if (emailField) {
             emailField.value = email
         }
+        let titleField = document.getElementById('title') as HTMLInputElement
+        if (titleField) {
+            titleField.value = title
+        }
+        let introductionField = document.getElementById('introduction') as HTMLInputElement
+        if (introductionField) {
+            introductionField.value = introduction
+        }
     }, [firstName, lastName, email])
     
     //changeHandler for individual field
@@ -191,6 +207,20 @@ const SettingPage = () => {
       setIsEmpty(false);
       setPassword(event.target.value);
     };
+
+    let handleTitleChange = (
+      event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+    ) => {
+      setIsTitleEmpty(false);
+      setTitle(event.target.value);
+    };
+
+    let handleIntroductionChange = (
+      event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+    ) => {
+      setIsIntroductionEmpty(false);
+      setIntroduction(event.target.value);
+    };
   
     //access file input
     const fileSelector = document.getElementById('image');
@@ -218,13 +248,21 @@ const SettingPage = () => {
           return;
       } else if (password.length > 0 && 
         !password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm)) {
-            setIsEmpty(true);
-            return;
+          setIsEmpty(true);
+          return;
+      } else if (title.length === 0) {
+          setIsTitleEmpty(true);
+          return;
+      } else if (title.length === 0) {
+        setIsIntroductionEmpty(true);
+        return;
       } else {
           let fullName = (`${lastName} ${firstName}`)
           let formData = new FormData();
           formData.append('email', email);
           formData.append('name', fullName);
+          formData.append('title', title);
+          formData.append('introduction', introduction);
   
           if (image) {
               formData.append('image', image);
@@ -250,6 +288,12 @@ const SettingPage = () => {
           }
       }
     };
+
+    let handleBeTutor = async () => {
+      // const res = await fetch(`${}`, {
+      //   method: 'POST',
+      // })
+    }
 
     let handleStripe = async () => {
         setIsSubmitting(true)
@@ -305,188 +349,230 @@ const SettingPage = () => {
 
 
     return (
-        <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        {/* <Avatar className={classes.avatar}> */}
-          {/* <LockOutlinedIcon /> */}
-        {/* </Avatar> */}
+      <Container component="main" maxWidth="md">
+        <CssBaseline />
+        <div className={classes.paper}>
+          {/* <Avatar className={classes.avatar}> */}
+            {/* <LockOutlinedIcon /> */}
+          {/* </Avatar> */}
 
-        <Typography component="h1" variant="h5">
-          更改你的帳戶資料
-        </Typography>
+          <Typography component="h1" variant="h5">
+            更改你的帳戶資料
+          </Typography>
 
-        <div>
-            {profilePicture.match(/http/) ? <Image id="edit-user-image" src={profilePicture}></Image> : <Image id="edit-user-image" src={`http://localhost:8080/img/${profilePicture}`}/>}
-        </div>
+          <div>
+              {profilePicture.match(/http/) ? <Image id="edit-user-image" src={profilePicture}></Image> : <Image id="edit-user-image" src={`http://localhost:8080/img/${profilePicture}`}/>}
+          </div>
 
-        <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                defaultValue={firstName}
-                error={isFirstNameEmpty}
-                helperText={isFirstNameEmpty ? "請填寫名字" : ""}
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                required
+          <form className={classes.form} noValidate>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  defaultValue={firstName}
+                  error={isFirstNameEmpty}
+                  helperText={isFirstNameEmpty ? "請填寫名字" : ""}
+                  autoComplete="fname"
+                  name="firstName"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="名"
+                  autoFocus
+                  onChange={handleFirstNameChange}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  defaultValue={`${lastName}`}
+                  error={isLastNameEmpty}
+                  helperText={isLastNameEmpty ? "請填寫姓氏" : ""}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="姓"
+                  name="lastName"
+                  autoComplete="lname"
+                  onChange={handleLastNameChange}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  defaultValue={email}
+                  error={isError}
+                  helperText={isError ? "無效電郵格式" : ""}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="電郵地址"
+                  name="email"
+                  autoComplete="email"
+                  onChange={handleEmailChange}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  error={isEmpty}
+                  helperText={isEmpty ? "密碼長度至少為8個字元，並至少包含1個數字、1個大寫英文字母、1個小寫英文字母" :  ''}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="更加密碼"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={handlePassWordChange}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                  更改你的個人頭像
+              </Grid>
+
+
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  type="file"
+                  id="image"
+                  name="image"
+                />
+              </Grid>
+
+              {(stripeStatus === false || stripeStatus === true) &&
+              <>
+                  <Grid item xs={12}>
+                  <TextField
+                    defaultValue={title}
+                    error={isError}
+                    helperText={isError ? "必須填寫" : ""}
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="title"
+                    label="導師頭銜"
+                    name="title"
+                    autoComplete="title"
+                    onChange={handleTitleChange}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                <TextField
+                  multiline
+                  defaultValue={introduction}
+                  error={isError}
+                  helperText={isError ? "必須填寫" : ""}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="introduction"
+                  label="導師簡介"
+                  name="introduction"
+                  autoComplete="introduction"
+                  onChange={handleIntroductionChange}
+                />
+                </Grid>
+              </>
+
+              }
+
+            </Grid>
+
+
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={submitHandler}
+            >
+              更改
+            </Button>
+
+
+          </form>
+
+          {/* if user doesnt have stripe account */}
+          {stripeStatus === null &&
+            <Button
+                startIcon={isSubmitting ? <CircularProgress size="1rem" /> : null}
+                type="submit"
                 fullWidth
-                id="firstName"
-                label="名"
-                autoFocus
-                onChange={handleFirstNameChange}
-              />
-            </Grid>
+                variant="contained"
+                color="secondary"
+                className={classes.submit}
+                onClick={() => {
+                  handleStripe();
+                }}
+                disabled={isSubmitting ? true : false}
+            >
+                成為導師
+            </Button>
+          }
 
-            <Grid item xs={12} sm={6}>
-              <TextField
-                defaultValue={`${lastName}`}
-                error={isLastNameEmpty}
-                helperText={isLastNameEmpty ? "請填寫姓氏" : ""}
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="姓"
-                name="lastName"
-                autoComplete="lname"
-                onChange={handleLastNameChange}
-              />
-            </Grid>
-
-            <Grid item xs={12}>
-              <TextField
-                defaultValue={email}
-                error={isError}
-                helperText={isError ? "無效電郵格式" : ""}
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="電郵地址"
-                name="email"
-                autoComplete="email"
-                onChange={handleEmailChange}
-              />
-            </Grid>
-
-            <Grid item xs={12}>
-              <TextField
-                error={isEmpty}
-                helperText={isEmpty ? "密碼長度至少為8個字元，並至少包含1個數字、1個大寫英文字母、1個小寫英文字母" :  ''}
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="更加密碼"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={handlePassWordChange}
-              />
-            </Grid>
-
-            <Grid item xs={12}>
-                更改你的個人頭像
-            </Grid>
-
-
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                type="file"
-                id="image"
-                name="image"
-              />
-            </Grid>
-
-          </Grid>
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={submitHandler}
-          >
-            更改
-          </Button>
-
-
-        </form>
-
-        {/* if user doesnt have stripe account */}
-        {stripeStatus === null &&
-          <Button
+          {/* if user has clicked on register stripe account but didnt finished onboarding*/}
+          {stripeStatus === false && 
+            <Button
               startIcon={isSubmitting ? <CircularProgress size="1rem" /> : null}
               type="submit"
               fullWidth
               variant="contained"
               color="secondary"
               className={classes.submit}
-              onClick={handleStripe}
+              onClick={() => handleURL(stripeStatus)}
               disabled={isSubmitting ? true : false}
-          >
-              成為導師
-          </Button>
-        }
+            >
+              前往Stripe完成登記用戶
+            </Button>
+          }
 
-        {/* if user has clicked on register stripe account but didnt finished onboarding*/}
-        {stripeStatus === false && 
-          <Button
-            startIcon={isSubmitting ? <CircularProgress size="1rem" /> : null}
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="secondary"
-            className={classes.submit}
-            onClick={() => handleURL(stripeStatus)}
-            disabled={isSubmitting ? true : false}
-          >
-            前往Stripe完成登記用戶
-          </Button>
-        }
+          {/* if user already has a stripe account and finished onboarding */}
+          {stripeStatus === true &&
+            <Button
+              startIcon={isSubmitting ? <CircularProgress size="1rem" /> : null}
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="secondary"
+              className={classes.submit}
+              onClick={() => handleURL(stripeStatus)}
+              disabled={isSubmitting ? true : false}
+            >
+              查看你的Stripe帳戶
+            </Button>
+          }
 
-        {/* if user already has a stripe account and finished onboarding */}
-        {stripeStatus === true &&
-          <Button
-            startIcon={isSubmitting ? <CircularProgress size="1rem" /> : null}
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="secondary"
-            className={classes.submit}
-            onClick={() => handleURL(stripeStatus)}
-            disabled={isSubmitting ? true : false}
-          >
-            查看你的Stripe帳戶
-          </Button>
-        }
+        </div>
 
-      </div>
+        {errMessage && <Alert variant="success">{errMessage}</Alert>}
+        <Box mt={5}>
+          <Copyright />
+        </Box>
 
-      {errMessage && <Alert variant="success">{errMessage}</Alert>}
-      <Box mt={5}>
-        <Copyright />
-      </Box>
+        <Modal show={show} onHide={handleClose} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>前往Stripe</Modal.Title>
+          </Modal.Header>
 
-      <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>前往Stripe</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body><a onClick={() => setShow(false)} href={stripeURL} target="_blank">{stripeURL}</a></Modal.Body>
-        <Modal.Footer>
-          <Button color="secondary" onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </Container>
+          <Modal.Body><a onClick={() => setShow(false)} href={stripeURL} target="_blank">{stripeURL}</a></Modal.Body>
+          <Modal.Footer>
+            <Button color="secondary" onClick={handleClose}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </Container>
     )
 }
 

@@ -57,7 +57,7 @@ const UserCoursePage = () => {
             <Container id="user-courses-container">
                 <Row id="user-courses-row">
                     {courses.map((course:IUserCourse, index) => (
-                        <UserCourse {...course}/>
+                        <UserCourse {...course} key={index}/>
                         // <Card id="user-courses-card">
                         //         <Link to={`/course/${course.course_name}`}>
                         //             {course.image.match(/http/) ? (

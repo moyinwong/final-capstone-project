@@ -11,7 +11,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import "./SignupPage.scss";
 import { useDispatch } from "react-redux";
-import { push } from "connected-react-router";
 import { Alert } from "react-bootstrap";
 import { login } from "../redux/auth/thunk";
 

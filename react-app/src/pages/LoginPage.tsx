@@ -10,10 +10,10 @@ import Typography from "@material-ui/core/Typography";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { login, loginGoogleThunk, loginFacebook } from "../redux/auth/thunk";
+import { login, loginGoogleThunk } from "../redux/auth/thunk";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
-import { Alert, Form } from "react-bootstrap";
+import { Alert } from "react-bootstrap";
 import GoogleLogin from "react-google-login";
 import "./LoginPage.scss";
 import CustomFacebookLogin from "../components/CustomFacebookLogin";
@@ -184,6 +184,7 @@ export default function LoginPage(state: {
                   disabled={renderProps.disabled}
                 >
                   <img
+                    alt="Google logo"
                     src={require("../pages/icons/1004px-Google__G__Logo.svg.png")}
                   />
                 </button>

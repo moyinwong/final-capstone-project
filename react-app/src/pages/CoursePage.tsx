@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useLocation, useParams, Link } from "react-router-dom";
 import { push } from "connected-react-router";
@@ -13,7 +13,6 @@ import { addCourse } from "../redux/cart/actions";
 import "./CoursePage.scss";
 import CommentModal from "../components/CommentModal";
 import { FormControlLabel, Checkbox } from "@material-ui/core";
-import { object } from "yup";
 
 const sleep = (time: number) => new Promise((acc) => setTimeout(acc, time));
 
@@ -531,16 +530,19 @@ const CoursePage: React.FC = () => {
                             >
                               {i + 1 + ". " + e.lesson_name}
                             </Accordion.Toggle>
-                            <FormControlLabel
-                              disabled={checkBoxState[`checked${e.lesson_id}`] || false}
-                              control={<Checkbox
-                              checked={checkBoxState[`checked${e.lesson_id}`] || false}
-                              onChange={(event) => {
-                                handleCheckBoxChange(event, e.lesson_id)
-                              }} 
-                              name={`checked${e.lesson_id}`} />}
-                              label="完成"
-                            />
+                            {e.user_email ? 
+                              <FormControlLabel
+                                disabled={checkBoxState[`checked${e.lesson_id}`] || false}
+                                control={<Checkbox
+                                checked={checkBoxState[`checked${e.lesson_id}`] || false}
+                                onChange={(event) => {
+                                  handleCheckBoxChange(event, e.lesson_id)
+                                }} 
+                                name={`checked${e.lesson_id}`} />}
+                                label="完成"
+                              /> : ''
+                            }
+
                           </Card.Header>
                           <Accordion.Collapse eventKey="0">
                             <Card.Body>

@@ -18,7 +18,7 @@ const DarkModeSwitch: React.FC = () => {
         type="switch"
         id="dark-mode-switch"
         label="黑夜模式"
-        onClick={() => {
+        onChange={() => {
           dispatch(switchDarkMode(!isDarkMode));
         }}
         checked={isDarkMode as any}
