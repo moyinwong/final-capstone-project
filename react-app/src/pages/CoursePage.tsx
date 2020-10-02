@@ -399,7 +399,7 @@ const CoursePage: React.FC = () => {
                 <div className="course-objective">{course.objective}</div>
                 <div className="course-rating">
                   <span>
-                    {course.rated_score ? parseFloat(course.rated_score) : 0}
+                    {course.rated_score ? (Math.round(parseFloat(course.rated_score) * 100)) / 100 : 0}
                   </span>
                   {
                     <Rating
@@ -429,7 +429,10 @@ const CoursePage: React.FC = () => {
                 <div className="course-student-num">
                   學生人數： {course?.purchased_users_num}
                 </div>
-                <div className="tutor-name">導師： {course.tutor_name}</div>
+                <div className="tutor-name">
+                  導師： {course.tutor_name}
+                  <img src={} alt="tutor profile picture"></img>
+                </div>
               </div>
               <Card className="sticky">
                 <Card.Img

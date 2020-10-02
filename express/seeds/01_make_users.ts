@@ -53,7 +53,7 @@ export async function seed(knex: Knex): Promise<void> {
       {
         email: "cat@abc.com",
         password: hashedPassword,
-        name: "teacher01",
+        name: "Cat Cheung",
         image: "test-1.png",
         is_tutor: true,
         stripe_id: "acct_1HVIZmEar5uWLoZR",
@@ -63,7 +63,7 @@ export async function seed(knex: Knex): Promise<void> {
       {
         email: "dog@abc.com",
         password: hashedPassword,
-        name: "teacher02",
+        name: "Dog Tang",
         image: "test-1.png",
         is_tutor: true,
         stripe_id: "acct_1HVXrIF1vd04vxx6",

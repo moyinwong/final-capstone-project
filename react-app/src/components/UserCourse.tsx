@@ -80,7 +80,7 @@ const UserCourse = (course:IUserCourse) => {
         <div>
             <Card id="user-courses-card">
                     <Link to={`/course/${course.course_name}`}>
-                        
+
                         {course.image.match(/http/) ? (
                         <Card.Img variant="top" src={course.image} />
                         ) : <Card.Img id="carousel-card-img" variant="top" src={`http://localhost:8080/img/${course.image}`}/>}
@@ -98,7 +98,7 @@ const UserCourse = (course:IUserCourse) => {
                         </div>
                     </Card.Body>
                     <Card.Footer>
-                        <ProgressBar variant="success" now={progress} />
+                        <ProgressBar variant="success" now={progress} label={`${Math.ceil(progress)}%`}/>
                     </Card.Footer>
             </Card>
         </div>
