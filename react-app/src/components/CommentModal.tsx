@@ -107,6 +107,7 @@ const CommentModal: React.FC<{
               as="textarea"
               onChange={handleCommentOnChange}
               style={{ height: 150 }}
+              maxLength={300}
             />
             <div style={{ margin: 10 }}>
               評分：

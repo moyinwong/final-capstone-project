@@ -19,5 +19,9 @@ lessonRoutes.post(
   lessonController.createLessonQuestion
 );
 lessonRoutes.get("/threads/retrieve/:lessonId", lessonController.getThreads);
-lessonRoutes.post('/completion/:courseId/:lessonId/:userId', lessonController.lessonCompleted)
-
+lessonRoutes.post(
+  "/completion/:courseId/:lessonId/:userId",
+  lessonController.lessonCompleted
+);
+lessonRoutes.post("/topic/create", lessonController.createNewTopic);
+lessonRoutes.post("/thread/create", lessonController.createNewThread);

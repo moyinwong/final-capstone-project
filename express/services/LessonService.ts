@@ -372,4 +372,50 @@ export class LessonService {
       return false;
     }
   };
+
+  addNewTopic = async (
+    userEmail: string,
+    lessonId: number,
+    newTopic: string
+  ) => {
+    const user = await this.knex
+      .select("id")
+      .from(tables.USERS)
+      .where("email", userEmail)
+      .limit(1);
+
+    const userId = user[0].id;
+
+    const AddTopicId = await this.knex(tables.DISCUSSIONS)
+      .insert({
+        user_id: userId,
+        lesson_id: lessonId,
+        topic: newTopic,
+      })
+      .returning("id");
+
+    return AddTopicId;
+  };
+
+  addNewThread = async (
+    userEmail: string,
+    discussionId: number,
+    newThread: string
+  ) => {
+    const user = await this.knex
+      .select("id")
+      .from(tables.USERS)
+      .where("email", userEmail)
+      .limit(1);
+
+    const userId = user[0].id;
+
+    const AddThreadNum = await this.knex(tables.THREADS).insert({
+      user_id: userId,
+      discussion_id: discussionId,
+      content: newThread,
+    });
+
+    return AddThreadNum;
+  };
 }

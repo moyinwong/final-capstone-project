@@ -24,6 +24,7 @@ import CheckingModal from "../components/CheckingModal";
 import "./LessonPage.scss";
 import { push } from "connected-react-router";
 import { current } from "immer";
+import NewDiscussionModal from "../components/NewDiscussionModal";
 
 interface ILessInfo {
   category_id: number;
@@ -55,7 +56,7 @@ interface IFile {
   file_name: string;
 }
 
-interface IThread {
+export interface IThread {
   discussion_id: number;
   topic: string;
   file_name: string;
@@ -256,16 +257,6 @@ const LessonPage: React.FC = () => {
     setIsLoading(false);
   };
 
-  function handleNewTopic(event: React.MouseEvent) {
-    console.log(event);
-    console.log(event.currentTarget);
-  }
-
-  function handleNewReply(event: React.MouseEvent<HTMLInputElement>) {
-    console.log(event);
-    console.log(event.currentTarget.value);
-  }
-
   return (
     <>
       {isReadyRender && (
@@ -446,9 +437,18 @@ const LessonPage: React.FC = () => {
                             }
                           })}
                           <Nav.Item>
-                            <Button onClick={handleNewTopic}>
+                            {
+                              <NewDiscussionModal
+                                type="topic"
+                                userEmail={userEmail}
+                                lessonId={lessonInfo.lesson_id}
+                                token={token}
+                                setThreads={setThreads}
+                              />
+                            }
+                            {/* <Button onClick={handleNewTopic}>
                               新增討論主題
-                            </Button>
+                            </Button> */}
                           </Nav.Item>
                         </Col>
                         <Col sm={9}>
@@ -466,12 +466,22 @@ const LessonPage: React.FC = () => {
                                         arr[i - 1].discussion_id !==
                                           e.discussion_id ? (
                                           <>
-                                            <Button
+                                            {
+                                              <NewDiscussionModal
+                                                type="reply"
+                                                discussionId={e.discussion_id}
+                                                userEmail={userEmail}
+                                                lessonId={lessonInfo.lesson_id}
+                                                token={token}
+                                                setThreads={setThreads}
+                                              />
+                                            }
+                                            {/* <Button
                                               onClick={handleNewReply}
                                               value={e.discussion_id}
                                             >
                                               新增回覆
-                                            </Button>
+                                            </Button> */}
                                           </>
                                         ) : (
                                           <>{}</>
