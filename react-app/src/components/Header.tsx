@@ -21,6 +21,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import "./Header.scss";
 import DropdownMenu from "./DropdownMenu";
 import { Link, useLocation } from "react-router-dom";
+import { TextField } from "@material-ui/core";
 
 const Header = (props: any) => {
   const dispatch = useDispatch();
@@ -50,6 +51,13 @@ const Header = (props: any) => {
     };
   }, [open]);
 
+  const handleSearch = async (event: any) => {
+    event.preventDefault();
+    let searchText = (document.getElementById('search-bar')! as HTMLInputElement).value
+
+    dispatch(push(`/search/${searchText}`))
+
+  }
   return (
     <div id="website-header">
       <div className="burger-menu">
@@ -81,8 +89,9 @@ const Header = (props: any) => {
                   type="text"
                   placeholder="Search"
                   className="mr-sm-2"
+                  id="search-bar"
                 />
-                <Button variant="outline-primary">Search</Button>
+                <Button onClick={handleSearch} type="submit" variant="outline-primary">Search</Button>
               </Form>
               <DarkModeSwitch />
             </Nav>

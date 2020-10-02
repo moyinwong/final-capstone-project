@@ -1,0 +1,41 @@
+.category-main-container {
+    margin-top: 30px;
+  
+    .button-container {
+      display: flex;
+      padding: 20px 0px;
+  
+      .btn {
+        margin-right: 5px;
+      }
+    }
+  
+    .panel-card-container {
+      display: flex;
+      min-width: 205px;
+  
+      .card-body {
+        height: 112px;
+  
+        .form-check {
+          overflow: hidden;
+          height: 24px;
+          line-height: 24px;
+        }
+      }
+    }
+  
+    .panel > div {
+      margin-bottom: 10px;
+    }
+  
+    .all-course-container {
+      width: 100%;
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .container {
+      max-width: 1470px;
+    }
+  }

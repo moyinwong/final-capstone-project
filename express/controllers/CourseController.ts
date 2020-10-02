@@ -226,4 +226,20 @@ export class CourseController {
       return res.status(500).json({ message: "internal server error" });
     }
   }
+
+  getCourseBySearch = async (req: Request, res: Response) => {
+    try {
+      let searchText = '';
+      if (req.query.search) {
+        searchText = req.query.search as any;
+      }
+
+      const courses = await this.courseService.getCourseBySearch(searchText);
+
+      return res.status(200).json({ courses })
+    } catch (e) {
+      logger.debug(e);
+      return res.status(500).json({ message: "internal server error" });
+    }
+  }
 }
