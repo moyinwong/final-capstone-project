@@ -165,18 +165,13 @@ export async function up(knex: Knex): Promise<void> {
 
   await knex.schema.createTable(discussionsTable, (table) => {
     table.increments();
-    table
-      .integer("user_id")
-      .references("id")
-      .inTable("users")
-      .notNullable();
+    table.integer("user_id").references("id").inTable("users").notNullable();
     table
       .integer("lesson_id")
       .references("id")
       .inTable("lessons")
       .notNullable();
     table.string("topic");
-    table.text("content");
     table.timestamps(false, true);
   });
 
@@ -194,11 +189,7 @@ export async function up(knex: Knex): Promise<void> {
 
   await knex.schema.createTable(lessonCompletionTable, (table) => {
     table.increments();
-    table
-      .integer("user_id")
-      .references("id")
-      .inTable("users")
-      .notNullable();
+    table.integer("user_id").references("id").inTable("users").notNullable();
     table
       .integer("lesson_id")
       .references("id")
@@ -210,7 +201,7 @@ export async function up(knex: Knex): Promise<void> {
       .inTable("courses")
       .notNullable();
     table.timestamps(false, true);
-  })
+  });
 }
 
 export async function down(knex: Knex): Promise<void> {

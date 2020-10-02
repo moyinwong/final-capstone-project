@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import {
   Breadcrumb,
   Button,
+  Card,
   Col,
   Form,
   Nav,
@@ -22,6 +23,7 @@ import ReactLoading from "react-loading";
 import CheckingModal from "../components/CheckingModal";
 import "./LessonPage.scss";
 import { push } from "connected-react-router";
+import { current } from "immer";
 
 interface ILessInfo {
   category_id: number;
@@ -55,7 +57,6 @@ interface IFile {
 
 interface IThread {
   discussion_id: number;
-  discussion_content: string;
   topic: string;
   file_name: string;
   threads_id: number;
@@ -255,6 +256,16 @@ const LessonPage: React.FC = () => {
     setIsLoading(false);
   };
 
+  function handleNewTopic(event: React.MouseEvent) {
+    console.log(event);
+    console.log(event.currentTarget);
+  }
+
+  function handleNewReply(event: React.MouseEvent<HTMLInputElement>) {
+    console.log(event);
+    console.log(event.currentTarget.value);
+  }
+
   return (
     <>
       {isReadyRender && (
@@ -401,7 +412,7 @@ const LessonPage: React.FC = () => {
                       defaultActiveKey="first"
                     >
                       <Row>
-                        <Col sm={3}>
+                        <Col sm={3} className="topic-nav">
                           {threads.map((e, i, arr) => {
                             if (
                               i === 0 ||
@@ -410,32 +421,68 @@ const LessonPage: React.FC = () => {
                             ) {
                               return (
                                 <Nav variant="pills" className="flex-column">
-                                  <Nav.Item>
+                                  <Nav.Item className="topic-nav-item">
                                     <OverlayTrigger
                                       key="top"
                                       placement="top"
                                       overlay={
                                         <Tooltip id={`tooltip-top`}>
-                                          Tooltip on top.
+                                          {e.topic}
                                         </Tooltip>
                                       }
                                     >
-                                      <Nav.Link eventKey={i}>
-                                        問題{i}.................................
+                                      <Nav.Link eventKey={e.discussion_id}>
+                                        <p>
+                                          <span>
+                                            <i className="far fa-comments"></i>{" "}
+                                          </span>
+                                          {e.topic}
+                                        </p>
                                       </Nav.Link>
                                     </OverlayTrigger>
                                   </Nav.Item>
-                                  {/* <Nav.Item>
-                                    <Nav.Link eventKey="second">Tab 2</Nav.Link>
-                                  </Nav.Item> */}
                                 </Nav>
                               );
                             }
                           })}
+                          <Nav.Item>
+                            <Button onClick={handleNewTopic}>
+                              新增討論主題
+                            </Button>
+                          </Nav.Item>
                         </Col>
                         <Col sm={9}>
-                          <Tab.Content>
-                            {threads.map((e, i, a) => (
+                          <Tab.Content className="thread-container">
+                            {threads.map((e, i, arr) => (
+                              <Tab.Pane eventKey={e.discussion_id}>
+                                <div className="thread">
+                                  <Card>
+                                    <Card.Body>
+                                      <blockquote className="blockquote mb-0">
+                                        <p>{e.thread_content}</p>
+
+                                        <p className="username">{e.username}</p>
+                                        {i === 0 ||
+                                        arr[i - 1].discussion_id !==
+                                          e.discussion_id ? (
+                                          <>
+                                            <Button
+                                              onClick={handleNewReply}
+                                              value={e.discussion_id}
+                                            >
+                                              新增回覆
+                                            </Button>
+                                          </>
+                                        ) : (
+                                          <>{}</>
+                                        )}
+                                      </blockquote>
+                                    </Card.Body>
+                                  </Card>
+                                </div>
+                              </Tab.Pane>
+                            ))}
+                            {/* {threads.map((e, i, a) => (
                               <Tab.Pane eventKey={i}>
                                 {a
                                   .filter(
@@ -448,9 +495,7 @@ const LessonPage: React.FC = () => {
                                     </div>
                                   ))}
                               </Tab.Pane>
-                            ))}
-
-                            <Tab.Pane eventKey="second"></Tab.Pane>
+                            ))} */}
                           </Tab.Content>
                         </Col>
                       </Row>

@@ -141,5 +141,53 @@ export async function seed(knex: Knex): Promise<void> {
       content:
         "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
     },
+    {
+      user_id: 1,
+      discussion_id: 3,
+      content:
+        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
+    },
+    {
+      user_id: 1,
+      discussion_id: 4,
+      content:
+        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
+    },
+    {
+      user_id: 1,
+      discussion_id: 5,
+      content:
+        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
+    },
+    {
+      user_id: 1,
+      discussion_id: 6,
+      content:
+        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
+    },
+    {
+      user_id: 1,
+      discussion_id: 7,
+      content:
+        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
+    },
+    {
+      user_id: 1,
+      discussion_id: 8,
+      content:
+        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
+    },
+    {
+      user_id: 1,
+      discussion_id: 9,
+      content:
+        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
+    },
+    {
+      user_id: 1,
+      discussion_id: 10,
+      content:
+        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
+    },
   ]);
 }

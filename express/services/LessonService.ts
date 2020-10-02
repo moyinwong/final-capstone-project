@@ -70,9 +70,9 @@ export class LessonService {
 
     let lessons: Array<ILesson>;
 
-    console.log(checkUserIsTutor)
+    console.log(checkUserIsTutor);
     if (checkUserIsTutor.length != 0) {
-      console.log('hello')
+      console.log("hello");
       lessons = await this.knex
         .select(
           "courses.id as course_id",
@@ -83,7 +83,7 @@ export class LessonService {
           "lessons.description as lesson_description",
           "is_trial",
           "video_url",
-          "users.email as user_email",
+          "users.email as user_email"
         )
         .from(tables.COURSES)
         .leftJoin(
@@ -320,7 +320,6 @@ export class LessonService {
         `discussion_id`,
         `${tables.THREADS}.id as threads_id`,
         `${tables.DISCUSSIONS}.topic as topic`,
-        `${tables.DISCUSSIONS}.content as discussion_content`,
         `${tables.THREADS}.content as thread_content`,
         `${tables.USERS}.name as username`
       )
@@ -342,34 +341,35 @@ export class LessonService {
     return threads;
   };
 
-  lessonCompleted = async (lessonId: number, userId: number, courseId: number) => {
-
-
+  lessonCompleted = async (
+    lessonId: number,
+    userId: number,
+    courseId: number
+  ) => {
     const completionId = await this.knex
-    .insert({
-      user_id: userId,
-      lesson_id: lessonId,
-      course_id: courseId
-    })
-    .into(tables.LESSON_COMPLETION)
-    .returning('id');
+      .insert({
+        user_id: userId,
+        lesson_id: lessonId,
+        course_id: courseId,
+      })
+      .into(tables.LESSON_COMPLETION)
+      .returning("id");
 
-    console.log(completionId)
+    console.log(completionId);
     return completionId[0];
-
-  }
+  };
 
   checkLessonCompleted = async (lessonId: number, userId: number) => {
     const checkIfcompleted = await this.knex
-    .select('user_id')
-    .from(tables.LESSON_COMPLETION)
-    .where('lesson_id', lessonId)
-    .andWhere('user_id', userId);
+      .select("user_id")
+      .from(tables.LESSON_COMPLETION)
+      .where("lesson_id", lessonId)
+      .andWhere("user_id", userId);
 
     if (checkIfcompleted.length > 0) {
-      return true; 
+      return true;
     } else {
       return false;
     }
-  }
+  };
 }
