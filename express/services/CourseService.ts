@@ -171,8 +171,11 @@ export class CourseService {
         "tutor_name",
         "image"
       )
+      .whereNot("rated_score", null)
       .orderBy("rated_score", "desc")
       .limit(8);
+
+    console.log(courses);
 
     return courses;
   };
@@ -310,39 +313,38 @@ export class CourseService {
       .where("email", userEmail);
     const userId = userIdArray[0];
 
-    console.log(courseInfo.courseSubcategory)
+    console.log(courseInfo.courseSubcategory);
     let course;
     if (courseInfo.courseSubcategory) {
       course = await this.knex
-      .insert({
-        name: courseInfo.courseTitle,
-        price: courseInfo.coursePrice,
-        category_id: courseInfo.courseCategory,
-        subcategory_id: courseInfo.courseSubcategory,
-        tutor_id: userId.id,
-        image: courseCover,
-        description: courseInfo.courseDescription,
-        objective: courseInfo.courseObjective,
-        prerequisites: courseInfo.coursePrerequisite,
-      })
-      .returning("id")
-      .into(tables.COURSES); 
+        .insert({
+          name: courseInfo.courseTitle,
+          price: courseInfo.coursePrice,
+          category_id: courseInfo.courseCategory,
+          subcategory_id: courseInfo.courseSubcategory,
+          tutor_id: userId.id,
+          image: courseCover,
+          description: courseInfo.courseDescription,
+          objective: courseInfo.courseObjective,
+          prerequisites: courseInfo.coursePrerequisite,
+        })
+        .returning("id")
+        .into(tables.COURSES);
     } else {
       course = await this.knex
-      .insert({
-        name: courseInfo.courseTitle,
-        price: courseInfo.coursePrice,
-        category_id: courseInfo.courseCategory,
-        tutor_id: userId.id,
-        image: courseCover,
-        description: courseInfo.courseDescription,
-        objective: courseInfo.courseObjective,
-        prerequisites: courseInfo.coursePrerequisite,
-      })
-      .returning("id")
-      .into(tables.COURSES);
+        .insert({
+          name: courseInfo.courseTitle,
+          price: courseInfo.coursePrice,
+          category_id: courseInfo.courseCategory,
+          tutor_id: userId.id,
+          image: courseCover,
+          description: courseInfo.courseDescription,
+          objective: courseInfo.courseObjective,
+          prerequisites: courseInfo.coursePrerequisite,
+        })
+        .returning("id")
+        .into(tables.COURSES);
     }
-
 
     return course;
   };
@@ -382,18 +384,18 @@ export class CourseService {
 
   checkCompletion = async (courseId: number, userId: number) => {
     const completedLessonsId = await this.knex(tables.LESSON_COMPLETION)
-      .select('lesson_id')
-      .where('course_id', courseId)
-      .andWhere('user_id', userId);
-    
-    return completedLessonsId 
-  }
+      .select("lesson_id")
+      .where("course_id", courseId)
+      .andWhere("user_id", userId);
+
+    return completedLessonsId;
+  };
 
   getAllLessons = async (courseId: number) => {
     const lessons = await this.knex(tables.LESSONS)
-    .count('lessons.id', {as: 'lesson_num'})
-    .where('lessons.course_id', courseId)
+      .count("lessons.id", { as: "lesson_num" })
+      .where("lessons.course_id", courseId);
 
     return lessons[0];
-  }
+  };
 }
