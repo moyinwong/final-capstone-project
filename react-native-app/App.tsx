@@ -11,6 +11,9 @@ import LeftDrawer from './routes/drawer/leftDrawer';
 // Screens
 import Login from './screens/login/login';
 
+// Contexts
+import CartContextProvider from './contexts/cartContext';
+
 // Dummy Variable
 const isSignIn = true;
 
@@ -19,12 +22,14 @@ export default function App() {
   enableScreens();
 
   return (
-    isSignIn ? (
-      <NavigationContainer>
-        {LeftDrawer()}
-      </NavigationContainer>
-    ) : (
-        <Login />
-      )
+    <CartContextProvider>
+      {isSignIn ? (
+        <NavigationContainer>
+          {LeftDrawer()}
+        </NavigationContainer>
+      ) : (
+          <Login />
+        )}
+    </CartContextProvider>
   );
 }
