@@ -1,9 +1,12 @@
 // React, React Native
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, Image, TouchableOpacity, FlatList, ScrollView, Pressable } from 'react-native';
 
 // Navigation
 import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
+
+// Context
+import { CartContext } from '../../../contexts/cartContext';
 
 // Components
 import Stars from '../../../sharedComponents/stars';
@@ -17,9 +20,11 @@ import courseStyles from '../../../styles/courseStyles';
 
 // Data
 import envData from '../../../data/env';
-import { Item } from 'react-native-paper/lib/typescript/src/components/List/List';
 
 export default function Courses() {
+
+    // Context
+    const { addCartList } = useContext(CartContext);
 
     // Hooks
     const navigation = useNavigation();
@@ -35,7 +40,7 @@ export default function Courses() {
     // Course Info
     // State
     const [courseInfo, setCourseInfo] = useState(
-        courseName
+        []
     );
 
     // Fetch
@@ -171,7 +176,7 @@ export default function Courses() {
                         <View style={courseStyles.courseButtonContainer}>
                             <TouchableOpacity
                                 style={courseStyles.courseButton}
-                                onPress={() => console.log('add to cart')}
+                                onPress={() => addCartList(courseInfo)}
                             >
                                 <Text style={courseStyles.courseButtonText}>加到購物車</Text>
                             </TouchableOpacity>
