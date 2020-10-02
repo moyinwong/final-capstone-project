@@ -72,8 +72,11 @@ const CategoryPage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (Yposition.Y > document.body.clientHeight) {
-      ////console.log("hahahha");
+    if (
+      Yposition.Y >= document.body.clientHeight &&
+      displayCourseNum < totalCourseNum
+    ) {
+      //console.log("hahahha");
       setDisplayCourseNum((prevNum) => prevNum + 10);
     }
   }, [Yposition]);
@@ -244,7 +247,6 @@ const CategoryPage: React.FC = () => {
       </Breadcrumb>
 
       <Container>
-
         <div className={"category-main-container"}>
           <div>
             <h1>所有{categoryName}課程</h1>
@@ -338,20 +340,22 @@ const CategoryPage: React.FC = () => {
                     <Card.Body>
                       <div>
                         <Form>
-                          {["少於HK$100", "少於HK$200", "少於HK$300"].map((e) => {
-                            return (
-                              <Form.Check
-                                className="rating-form"
-                                type="radio"
-                                id={e}
-                                key={e}
-                                label={e}
-                                onClick={handlePriceFormClick}
-                                checked={"少於HK$" + priceSelection === e}
-                                readOnly={true}
-                              />
-                            );
-                          })}
+                          {["少於HK$100", "少於HK$200", "少於HK$300"].map(
+                            (e) => {
+                              return (
+                                <Form.Check
+                                  className="rating-form"
+                                  type="radio"
+                                  id={e}
+                                  key={e}
+                                  label={e}
+                                  onClick={handlePriceFormClick}
+                                  checked={"少於HK$" + priceSelection === e}
+                                  readOnly={true}
+                                />
+                              );
+                            }
+                          )}
                         </Form>
                       </div>
                     </Card.Body>
