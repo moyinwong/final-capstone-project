@@ -1,17 +1,27 @@
 import React from "react";
-import { Text, TextInput, View, Button, Alert } from "react-native";
+import { Text, TextInput, View, Alert, Button } from "react-native";
 import { PaymentsStripe as Stripe } from "expo-payments-stripe";
-//import { Button } from "react-native-paper";
 import envData from "../../data/env";
 import { Formik, Field } from "formik";
-import { string, object, number, date } from "yup";
+//import { string, object, number, date } from "yup";
+import * as yup from "yup";
 import valid from "card-validator";
+import { black } from "react-native-paper/lib/typescript/src/styles/colors";
 
 Stripe.setOptionsAsync({
   publishableKey:
     "pk_test_51H5XkyCDvfrPMmRKTzJR6lhsYHm6bUyjWqh9YVxA8dYkhAxRR2QqVUdaCuWAF0tPDaQNCoZRmSHI7jTnUODDcXUN00rXrCxG5M", // Your key
   androidPayMode: "test", // [optional] used to set wallet environment (AndroidPay)
 });
+
+interface CardInfo {
+  email: string;
+  cardHolderName: string;
+  cardNum: string;
+  expMonth: string;
+  expYear: string;
+  cvc: string;
+}
 
 function StripeForm() {
   //
@@ -28,18 +38,19 @@ function StripeForm() {
   //
   //
 
-  const charge = async () => {
+  const charge = async (cardInfo: CardInfo) => {
     console.log("run");
 
     const params = {
       // mandatory
-      number: "4242424242424242",
-      expMonth: 11,
-      expYear: 24,
-      cvc: "223",
+      number: cardInfo.cardNum,
+      expMonth: parseInt(cardInfo.expMonth),
+      expYear: parseInt(cardInfo.expYear),
+      cvc: cardInfo.cvc,
       // optional
-      name: "hihi",
+      name: cardInfo.cardHolderName,
       currency: "hkd",
+      email: cardInfo.email,
     };
 
     const token: any = await Stripe.createTokenWithCardAsync(params);
@@ -68,55 +79,122 @@ function StripeForm() {
   };
 
   //yup schema
-  let schema = object().shape({
-    email: string().email(),
-    cardNum: string()
+  let schema = yup.object().shape({
+    email: yup.string().email("請填寫正確電郵"),
+    cardHolderName: yup
+      .string()
+      .test(
+        "test-name", // this is used internally by yup
+        "無效姓名", //validation message
+        (value) => {
+          //console.log(valid.number(value).isValid);
+          return valid.cardholderName(value).isValid;
+        }
+      ) // return true false based on validation
+      .required("必需填寫此項"),
+    cardNum: yup
+      .string()
       .test(
         "test-number", // this is used internally by yup
         "無效信用卡", //validation message
-        (value: any) => {
-          console.log(valid.number(value).isValid);
-          return;
+        (value) => {
+          //console.log(valid.number(value).isValid);
+          return valid.number(value).isValid;
         }
       ) // return true false based on validation
       .max(16)
-      .required(),
-    cvc: string()
+      .required("必需填寫此項"),
+    expMonth: yup
+      .string()
+      .test("test-expirymonth", "錯誤月份", (value: any) => {
+        //console.log(valid.expirationMonth(value).isValid);
+        return valid.expirationMonth(value).isValid;
+      })
+      .max(2)
+      .required("必需填寫此項"),
+    expYear: yup
+      .string()
+      .test("test-expiryyear", "錯誤年份", (value: any) => {
+        //console.log(valid.expirationYear(value).isValid);
+        return valid.expirationYear(value).isValid;
+      })
+      .max(2)
+      .required("必需填寫此項"),
+    cvc: yup
+      .string()
       .test("cvc", "無效cvc", (value: any) => {
         //console.log(valid.cvv(value).isValid);
         return valid.cvv(value).isValid;
       })
       .max(3)
-      .required(),
+      .required("必需填寫此項"),
   });
 
   return (
     <View
       style={{
         display: "flex",
-        flexWrap: "wrap",
+        height: "100%",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
       }}
     >
-      <Text>Stripe</Text>
+      <Text>Stripe Form</Text>
 
       <Formik
-        initialValues={{ email: "", cardNum: "", expDate: "", cvc: "" }}
-        onSubmit={(values) => Alert.alert(JSON.stringify(values))}
-        //validationSchema={schema}
+        initialValues={{
+          email: "",
+          cardHolderName: "",
+          cardNum: "",
+          expMonth: "",
+          expYear: "",
+          cvc: "",
+        }}
+        onSubmit={(values) => charge(values)}
+        validationSchema={schema}
       >
-        {({ handleChange, handleBlur, isValid, handleSubmit, values }) => (
+        {({
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          isValid,
+          handleSubmit,
+          values,
+        }) => (
           <View>
             <Text>電郵</Text>
+            <View style={{ borderBottomColor: "black", borderBottomWidth: 2 }}>
+              <TextInput
+                onChangeText={handleChange("email")}
+                onBlur={handleBlur("email")}
+                value={values.email}
+                style={{
+                  width: 300,
+                }}
+              />
+            </View>
+            {touched.email && errors.email && (
+              <View>
+                <Text>{errors.email}</Text>
+              </View>
+            )}
+            <Text>持卡人姓名</Text>
+
             <TextInput
-              onChangeText={handleChange("email")}
-              onBlur={handleBlur("email")}
-              value={values.email}
+              onChangeText={handleChange("cardHolderName")}
+              onBlur={handleBlur("cardHolderName")}
+              value={values.cardHolderName}
               style={{ backgroundColor: "green", width: 300 }}
             />
+            {touched.cardHolderName && errors.cardHolderName && (
+              <View>
+                <Text>{errors.cardHolderName}</Text>
+              </View>
+            )}
             <Text>信用卡號碼</Text>
+
             <TextInput
               onChangeText={handleChange("cardNum")}
               onBlur={handleBlur("cardNum")}
@@ -124,24 +202,57 @@ function StripeForm() {
               maxLength={16}
               style={{ backgroundColor: "yellow", width: 300 }}
             />
+            {touched.cardNum && errors.cardNum && (
+              <View>
+                <Text>{errors.cardNum}</Text>
+              </View>
+            )}
+
+            <Text>過期日期</Text>
+
             <View style={{ display: "flex", flexDirection: "row" }}>
-              <Text>過期日期</Text>
               <TextInput
-                onChangeText={handleChange("expDate")}
-                onBlur={handleBlur("expDate")}
-                value={values.expDate}
-                style={{ backgroundColor: "red", width: 100 }}
+                onChangeText={handleChange("expMonth")}
+                onBlur={handleBlur("expMonth")}
+                value={values.expMonth}
+                style={{ backgroundColor: "red", width: 50 }}
+                maxLength={2}
               />
-              <Text>cvc</Text>
+              {touched.expMonth && errors.expMonth && (
+                <View>
+                  <Text>{errors.expMonth}</Text>
+                </View>
+              )}
+              <Text>/</Text>
+
               <TextInput
-                onChangeText={handleChange("cvc")}
-                onBlur={handleBlur("cvc")}
-                value={values.cvc}
-                maxLength={3}
-                style={{ backgroundColor: "orange", width: 100 }}
+                onChangeText={handleChange("expYear")}
+                onBlur={handleBlur("expYear")}
+                value={values.expYear}
+                style={{ backgroundColor: "purple", width: 50 }}
+                maxLength={2}
               />
+              {touched.expYear && errors.expYear && (
+                <View>
+                  <Text>{errors.expYear}</Text>
+                </View>
+              )}
             </View>
-            <Button onPress={handleSubmit} title="提交" />
+            <Text>cvc</Text>
+
+            <TextInput
+              onChangeText={handleChange("cvc")}
+              onBlur={handleBlur("cvc")}
+              value={values.cvc}
+              maxLength={3}
+              style={{ backgroundColor: "orange", width: 100 }}
+            />
+            {touched.cvc && errors.cvc && (
+              <View>
+                <Text>{errors.cvc}</Text>
+              </View>
+            )}
+            <Button onPress={handleSubmit} title="提交" disabled={!isValid} />
           </View>
         )}
       </Formik>
