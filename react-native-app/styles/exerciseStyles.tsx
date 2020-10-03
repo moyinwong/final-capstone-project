@@ -27,7 +27,17 @@ const exerciseStyles = StyleSheet.create({
         fontSize: 20
     },
     answerBox: {
-        marginVertical: 2
+        marginVertical: 0
+    },
+    selectedBox: {
+        backgroundColor: '#5b96f7',
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+        borderRadius: 8
+    },
+    nonSelectedBox: {
+        paddingVertical: 8,
+        paddingHorizontal: 16,
     },
     answerText: {
         fontSize: 18,

@@ -1,6 +1,6 @@
 // React, React Native
 import React, { useState, useCallback, useContext } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 
 // Context
@@ -15,7 +15,6 @@ import exerciseStyles from '../../../../styles/exerciseStyles';
 
 // Data
 import envData from '../../../../data/env';
-import { ForceTouchGestureHandler } from 'react-native-gesture-handler';
 
 export default function Exercise(props: { navigation: { goBack: () => void; }; }) {
 
@@ -39,10 +38,6 @@ export default function Exercise(props: { navigation: { goBack: () => void; }; }
         []
     );
 
-    const [storedAnswers, setStoredAnswers] = useState(
-        {}
-    );
-
     // Fetch
     async function getQuestionsAnswers(lesson: string) {
         try {
@@ -57,7 +52,12 @@ export default function Exercise(props: { navigation: { goBack: () => void; }; }
             );
 
             const result = await fetchRes.json();
-            setQuestionsAnswers(result.questionAndAnswer);
+
+            let tempResult = result.questionAndAnswer
+            for (let item of tempResult) {
+                item.isSelected = false;
+            }
+            setQuestionsAnswers(tempResult);
 
             const seenQuestionsArray = new Set();
             const filteredQuestionsArray = result.questionAndAnswer.filter(item => {
@@ -65,8 +65,6 @@ export default function Exercise(props: { navigation: { goBack: () => void; }; }
                 seenQuestionsArray.add(item.question_id);
                 return !duplicate
             })
-
-            console.log(filteredQuestionsArray);
 
             setFilteredQuestions(filteredQuestionsArray);
         } catch (err) {
@@ -79,6 +77,28 @@ export default function Exercise(props: { navigation: { goBack: () => void; }; }
             getQuestionsAnswers(lesson);
         }, [lesson])
     );
+
+    function saveAnswer(question_id: number, answer_id: number) {
+        let tempAnswers = questionsAnswers;
+        for (let item of tempAnswers) {
+            if (item.question_id == question_id) {
+                item.isSelected = false;
+            }
+            if (item.answer_id == answer_id) {
+                item.isSelected = true;
+            }
+        }
+        setQuestionsAnswers(tempAnswers);
+
+        const seenQuestionsArray = new Set();
+        const filteredQuestionsArray = tempAnswers.filter(item => {
+            const duplicate = seenQuestionsArray.has(item.question_id);
+            seenQuestionsArray.add(item.question_id);
+            return !duplicate
+        })
+
+        setFilteredQuestions(filteredQuestionsArray);
+    }
 
     return (
         <View style={globalStyles.container}>
@@ -93,13 +113,21 @@ export default function Exercise(props: { navigation: { goBack: () => void; }; }
                         </View>
                         {questionsAnswers.filter(item => (item.question_id === questionItem.question_id)).map(answerItem => {
                             return (
-                                <TouchableOpacity
+                                <Pressable
                                     key={answerItem.answer_id}
                                     style={exerciseStyles.answerBox}
-                                    onPress={() => console.log(answerItem.answer_id)}
+                                    onPress={() => saveAnswer(questionItem.question_id, answerItem.answer_id)}
                                 >
-                                    <Text style={exerciseStyles.answerText}>{answerItem.answer_body}</Text>
-                                </TouchableOpacity>
+                                    {answerItem.isSelected ? (
+                                        <View style={exerciseStyles.selectedBox}>
+                                            <Text style={{ ...exerciseStyles.answerText, color: '#ffffff' }}>{answerItem.answer_body}</Text>
+                                        </View>
+                                    ) : (
+                                            <View style={exerciseStyles.nonSelectedBox}>
+                                                <Text style={exerciseStyles.answerText}>{answerItem.answer_body}</Text>
+                                            </View>
+                                        )}
+                                </Pressable>
                             )
                         })}
                     </View>
