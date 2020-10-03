@@ -23,6 +23,7 @@ deploy:
           git pull origin master;
           git checkout production;
           git pull origin production;
+          cd express;
           yarn install;
           yarn knex migrate:latest --env production;
           forever restart index.js;"
