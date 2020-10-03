@@ -29,9 +29,9 @@ export default function App() {
         {isSignIn ? (
           <NavigationContainer>{LeftDrawer()}</NavigationContainer>
         ) : (
-            // <StripeForm />
-            <Login />
-          )}
+          //<StripeForm />
+          <Login />
+        )}
       </LessonContextProvider>
     </CartContextProvider>
   );
