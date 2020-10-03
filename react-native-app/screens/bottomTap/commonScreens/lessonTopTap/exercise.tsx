@@ -21,9 +21,6 @@ export default function Exercise(props: { navigation: { goBack: () => void; }; }
     // Context
     const { lessonName } = useContext(LessonContext);
 
-    // Hooks
-    const isFocused = useIsFocused();
-
     // Lesson Files
     // State
     const [lesson, setLesson] = useState(
