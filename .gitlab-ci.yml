@@ -1,0 +1,28 @@
+image: node:latest
+
+stages:
+  - deploy
+
+deploy:
+  before_script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > private.pem
+    - chmod 400 private.pem
+    - ssh-add private.pem > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan -H 54.255.120.244 > ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  stage: deploy
+  only:
+    - production
+  script:
+    - ssh ubuntu@54.255.120.244 
+        "cd final-capstone-project;
+          git pull origin master;
+          git checkout production;
+          git pull origin production;
+          yarn install;
+          yarn knex migrate:latest --env production;
+          forever restart index.js;"
