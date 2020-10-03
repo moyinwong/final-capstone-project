@@ -7,6 +7,7 @@ import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/nativ
 
 // Context
 import { CartContext } from '../../../contexts/cartContext';
+import { LessonContext } from '../../../contexts/lessonContext';
 
 // Components
 import Stars from '../../../sharedComponents/stars';
@@ -25,6 +26,7 @@ export default function Courses() {
 
     // Context
     const { addCartList } = useContext(CartContext);
+    const { setLesson } = useContext(LessonContext);
 
     // Hooks
     const navigation = useNavigation();
@@ -131,6 +133,14 @@ export default function Courses() {
             getComments(courseName);
         }, [courseName])
     );
+
+    function goToLesson(lesson_name: string) {
+        setLesson(lesson_name);
+
+        navigation.navigate('Lesson',
+            { lesson: lesson_name }
+        )
+    }
 
     // Render
     // State
@@ -266,9 +276,7 @@ export default function Courses() {
                         renderItem={({ item }) => (
                             <TouchableOpacity
                                 style={courseStyles.lessonBox}
-                                onPress={() => navigation.navigate('Lesson',
-                                    { lesson: item.lesson_id }
-                                )}
+                                onPress={() => goToLesson(item.lesson_name)}
                             >
                                 <Text style={courseStyles.lessonText}>{item.lesson_name}</Text>
                             </TouchableOpacity>

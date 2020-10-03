@@ -13,10 +13,11 @@ import Login from "./screens/login/login";
 
 // Contexts
 import CartContextProvider from "./contexts/cartContext";
+import LessonContextProvider from "./contexts/lessonContext";
 import StripeForm from "./screens/stripe/StripeForm";
 
 // Dummy Variable
-const isSignIn = false;
+const isSignIn = true;
 
 export default function App() {
   // Before rendering any navigation stack
@@ -24,12 +25,14 @@ export default function App() {
 
   return (
     <CartContextProvider>
-      {isSignIn ? (
-        <NavigationContainer>{LeftDrawer()}</NavigationContainer>
-      ) : (
-        <StripeForm />
-        // <Login />
-      )}
+      <LessonContextProvider>
+        {isSignIn ? (
+          <NavigationContainer>{LeftDrawer()}</NavigationContainer>
+        ) : (
+            // <StripeForm />
+            <Login />
+          )}
+      </LessonContextProvider>
     </CartContextProvider>
   );
 }
