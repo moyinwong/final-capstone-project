@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import Stripe from "expo-payments-stripe";
+import { PaymentsStripe as Stripe } from "expo-payments-stripe";
 
 Stripe.setOptionsAsync({
   publishableKey:
