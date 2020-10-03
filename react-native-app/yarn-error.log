@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add expo-payments-stripe @types/expo-payments-stripe
+  /usr/local/bin/node /usr/local/bin/yarn add formik @types/formik
 
 PATH: 
   /Users/chung/Library/Android/sdk/platform-tools:/Users/chung/miniconda3/bin:/Users/chung/miniconda3/condabin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Library/Frameworks/Python.framework/Versions/3.8/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Applications/Postgres.app/Contents/Versions/latest/bin
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fexpo-payments-stripe: Not found
+  Error: https://registry.yarnpkg.com/@types%2fformik: Not found
       at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66987:18)
       at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140748:22)
       at Request.emit (events.js:210:5)
@@ -47,6 +47,7 @@ npm manifest:
       "expo": "^39.0.0",
       "expo-constants": "~9.2.0",
       "expo-linear-gradient": "~8.3.0",
+      "expo-payments-stripe": "^8.3.0",
       "expo-status-bar": "~1.0.2",
       "react": "16.13.1",
       "react-dom": "16.13.1",
@@ -2645,6 +2646,13 @@ Lockfile:
     version "9.0.0"
     resolved "https://registry.yarnpkg.com/expo-location/-/expo-location-9.0.0.tgz#43906dbd503803f6029a814df51f0370c3b4a765"
     integrity sha512-HsPyn/S73LS/LKpK0Cd/H9Dm9PohbnojYUM475s9DEeOBQitYbnSCKNdSz5vkG+Fqqh6mh4eHPy9dF/21I2rkg==
+  
+  expo-payments-stripe@^8.3.0:
+    version "8.3.0"
+    resolved "https://registry.yarnpkg.com/expo-payments-stripe/-/expo-payments-stripe-8.3.0.tgz#2e636e52951d8d7fdde3395404ff76948c437d1c"
+    integrity sha512-zEycDo0QQTzfY1oka2C9VJ7Hz7DbRzBk3kEaKdXCcSNHR2Gh1Js32SDtwPMUOYGfJighv37+Z+BwfDumnwgKwg==
+    dependencies:
+      prop-types "^15.6.0"
   
   expo-permissions@~9.3.0:
     version "9.3.0"

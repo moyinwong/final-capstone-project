@@ -16,7 +16,7 @@ import CartContextProvider from "./contexts/cartContext";
 import StripeForm from "./screens/stripe/StripeForm";
 
 // Dummy Variable
-const isSignIn = false;
+const isSignIn = true;
 
 export default function App() {
   // Before rendering any navigation stack

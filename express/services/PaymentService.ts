@@ -9,12 +9,13 @@ export class PaymentService {
   constructor(private knex: Knex) {}
 
   createStripeConnectAccount = async (email: string) => {
-    const user = await this.knex(tables.USERS)
-    .where('email', email)
-    .update({
-      is_tutor: true
-    }, ['id'])
-    logger.debug(user)
+    const user = await this.knex(tables.USERS).where("email", email).update(
+      {
+        is_tutor: true,
+      },
+      ["id"]
+    );
+    logger.debug(user);
 
     const account = await stripe.accounts.create({
       type: "express",
@@ -142,5 +143,14 @@ export class PaymentService {
   createStripeLoginLink = async (stripeId: string) => {
     const loginLink = await stripe.accounts.createLoginLink(stripeId);
     return loginLink;
+  };
+
+  createPaymentByCharge = async (stripeToken: string, chargeAmount: number) => {
+    const data: any = await stripe.charges.create({
+      source: stripeToken,
+      amount: chargeAmount * 100,
+      currency: "hkd",
+    });
+    return data;
   };
 }

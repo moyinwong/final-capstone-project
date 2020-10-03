@@ -105,7 +105,6 @@ export class PaymentController {
 
   createAccountLink = async (req: Request, res: Response) => {
     try {
-
       const { userEmail } = req.params;
 
       const userInfo = await this.paymentService.getStripeId(userEmail);
@@ -179,6 +178,26 @@ export class PaymentController {
       );
 
       return res.json({ link: loginLink });
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).json({ message: "internal server error" });
+    }
+  };
+
+  MobilePayment = async (req: Request, res: Response) => {
+    try {
+      const { stripeToken, chargeAmount } = req.body;
+
+      const data = await this.paymentService.createPaymentByCharge(
+        stripeToken,
+        parseFloat(chargeAmount)
+      );
+
+      console.log(data);
+
+      if (data.status !== "succeeded") throw new Error(data.message);
+
+      return res.json({ message: "success" });
     } catch (err) {
       console.log(err.message);
       return res.status(500).json({ message: "internal server error" });
