@@ -191,6 +191,22 @@ const coursesListStyles = StyleSheet.create({
         fontSize: 18,
         color: '#5b96f7'
     },
+    trialTextContainer: {
+        marginTop: 6,
+        width: 135,
+        borderColor: '#22c736',
+        borderWidth: 1,
+        borderRadius: 8,
+        paddingVertical: 8,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    trialText: {
+        fontSize: 18,
+        color: '#22c736'
+    },
     commentBox: {
         marginVertical: 3
     },

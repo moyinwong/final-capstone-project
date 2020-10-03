@@ -210,30 +210,6 @@ export default function Courses() {
                 </View>
             </View>
 
-            <View style={courseStyles.tutorBox}>
-                <View style={courseStyles.tutorPicContainer}>
-                    <Image
-                        style={courseStyles.tutorPic}
-                        resizeMode='cover'
-                        source={{ uri: courseInfo.image }}
-                    />
-                </View>
-                <View>
-                    <Text style={courseStyles.tutorName}>{courseInfo.tutor_name}</Text>
-                </View>
-                <View style={{ marginLeft: 40 }}>
-                    <TouchableOpacity
-                        style={courseStyles.tutorCheckButton}
-                        onPress={() => console.log(courseInfo.tutor_name)}
-                    // onPress={() => navigation.navigate('TutorInfo', {
-                    //     tutor: tutorsTestData('all')[0]
-                    // })}
-                    >
-                        <Text style={courseStyles.tutorCheckButtonText}>查看導師</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-
             <View>
                 <View style={courseStyles.titleContainer}>
                     <Pressable
@@ -279,6 +255,11 @@ export default function Courses() {
                                 onPress={() => goToLesson(item.lesson_name)}
                             >
                                 <Text style={courseStyles.lessonText}>{item.lesson_name}</Text>
+                                {item.is_trial &&
+                                    <View style={courseStyles.trialTextContainer}>
+                                        <Text style={courseStyles.trialText}>可免費試堂</Text>
+                                    </View>
+                                }
                             </TouchableOpacity>
                         )}
                     />
@@ -310,6 +291,30 @@ export default function Courses() {
                         />
                     )}
 
+            </View>
+
+            <View style={courseStyles.tutorBox}>
+                <View style={courseStyles.tutorPicContainer}>
+                    <Image
+                        style={courseStyles.tutorPic}
+                        resizeMode='cover'
+                        source={{ uri: courseInfo.image }}
+                    />
+                </View>
+                <View>
+                    <Text style={courseStyles.tutorName}>{courseInfo.tutor_name}</Text>
+                </View>
+                <View style={{ marginLeft: 40 }}>
+                    <TouchableOpacity
+                        style={courseStyles.tutorCheckButton}
+                        onPress={() => console.log(courseInfo.tutor_name)}
+                    // onPress={() => navigation.navigate('TutorInfo', {
+                    //     tutor: tutorsTestData('all')[0]
+                    // })}
+                    >
+                        <Text style={courseStyles.tutorCheckButtonText}>查看導師</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
 
         </ScrollView >
