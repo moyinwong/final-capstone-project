@@ -89,7 +89,7 @@ const Header = (props: any) => {
                   className="mr-sm-2"
                   id="search-bar"
                 />
-                <Button onClick={handleSearch} type="submit" variant="outline-primary">Search</Button>
+                <Button onClick={handleSearch} type="submit" variant="outline-success">Search</Button>
               </Form>
               <DarkModeSwitch />
             </Nav>

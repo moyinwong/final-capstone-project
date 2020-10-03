@@ -21,7 +21,7 @@ export async function seed(knex: Knex): Promise<void> {
       category_id: randomCategoryId,
       tutor_id: randomIntFromInterval(2, 10),
       // 1 - 10 (tutor id)
-      image: `https://picsum.photos/777/434?random=${i}`,
+      image: `https://picsum.photos/seed/picsum${i}/777/434`,
       description: faker.commerce.productDescription(),
       objective: "提升學生技巧",
       prerequisites: "無",
