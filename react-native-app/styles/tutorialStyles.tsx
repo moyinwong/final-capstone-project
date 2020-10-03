@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 
 const tutorialStyles = StyleSheet.create({
     videoContainer: {
-        height: 360,
+        height: 480,
         width: '100%'
     }
 });

@@ -30,7 +30,6 @@ export default function Tutorial(this: any, props: { navigation: { goBack: () =>
                         height={1080}
                         videoId={"k8KZ3cSbKC8"}
                         onChangeState={onStateChange}
-
                         allowWebViewZoom={true}
                     />
                 </View>
