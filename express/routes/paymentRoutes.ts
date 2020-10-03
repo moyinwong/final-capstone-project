@@ -40,3 +40,8 @@ paymentRoutes.get(
   isLoggedIn,
   paymentController.getStripeAccountLoginLink
 );
+paymentRoutes.post(
+  "/charge",
+  // isLoggedIn,
+  paymentController.MobilePayment
+);
