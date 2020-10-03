@@ -1,16 +1,16 @@
 // React, React Native
 import React, { useState, useCallback } from 'react';
 import { View, Text, Alert, TouchableOpacity } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 import YoutubePlayer from "react-native-youtube-iframe";
-import { WebView } from 'react-native-webview';
 
 // Styles
 import globalStyles from '../../../../styles/globalStyles';
+import tutorialStyles from '../../../../styles/tutorialStyles';
 
 export default function Tutorial(this: any, props: { navigation: { goBack: () => void; }; }) {
 
     // Hooks
-    const [showVideo, setShowVideo] = useState(false);
     const [playing, setPlaying] = useState(true);
 
     const onStateChange = useCallback((state) => {
@@ -20,36 +20,25 @@ export default function Tutorial(this: any, props: { navigation: { goBack: () =>
         }
     }, []);
 
-    const myUrl = 'https://youtu.be/oZCM4u7d_6U';
+    const isFocused = useIsFocused();
 
     return (
         <View style={globalStyles.container}>
-            {showVideo ? (
-                <YoutubePlayer
-                    height={300}
-                    play={playing}
-                    videoId={"/k8KZ3cSbKC8"}
-                    onChangeState={onStateChange}
+            {isFocused ? (
+                <View style={tutorialStyles.videoContainer}>
+                    <YoutubePlayer
+                        height={1080}
+                        videoId={"k8KZ3cSbKC8"}
+                        onChangeState={onStateChange}
 
-                    allowWebViewZoom={true}
-                />
-
-                // <WebView
-                //     originWhitelist={['*']}
-                //     source={{ uri: "https://www.youtube.com/embed/k8KZ3cSbKC8" }}
-                //     javaScriptEnabled={true}
-                //     domStorageEnabled={true}
-                // />
+                        allowWebViewZoom={true}
+                    />
+                </View>
             ) : (
-                    <Text>Video</Text>
+                    <Text>影片</Text>
                 )
             }
 
-            <TouchableOpacity
-                onPress={() => setShowVideo(!showVideo)}
-            >
-                <Text>Start Lesson</Text>
-            </TouchableOpacity>
         </View >
     )
 }
