@@ -39,12 +39,12 @@ export default function Tutorial(this: any, props: { navigation: { goBack: () =>
         'lesson'
     );
 
-    const [videoInfo, setVideoInfo] = useState(
-        {}
-    );
-
     const [videoLink, setVideoLink] = useState(
         'link'
+    );
+
+    const [videoDescription, setVideoDescription] = useState(
+        '簡介'
     );
 
     // Fetch
@@ -69,8 +69,9 @@ export default function Tutorial(this: any, props: { navigation: { goBack: () =>
 
             const result = await fetchRes.json();
             let link = await (result.lessonInfo.video_url.split('youtu.be/')[1]);
+            let descriptionText = await (result.lessonInfo.lesson_description.split(" ").join(""));
             setVideoLink(link);
-            setVideoInfo(result.lessonInfo)
+            setVideoDescription(descriptionText);
         } catch (err) {
             console.log(err);
         }
@@ -97,7 +98,9 @@ export default function Tutorial(this: any, props: { navigation: { goBack: () =>
                     <Text>影片</Text>
                 )
             }
-            <Text>{videoInfo.lesson_description}</Text>
+            <View style={tutorialStyles.videoTextContainer}>
+                <Text style={tutorialStyles.videoText}>{videoDescription}</Text>
+            </View>
 
         </View >
     )
