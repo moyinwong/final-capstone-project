@@ -54,13 +54,6 @@ export default function Courses() {
                 `${envData.REACT_APP_BACKEND_URL}${queryRoute}${courseName}`
             );
 
-            //if no such category
-            if (fetchRes.status === 500) {
-                throw new Error("伺服器發生問題");
-                //dispatch(push("/404"));
-                //return;
-            }
-
             const result = await fetchRes.json();
             setCourseInfo(result.course);
         } catch (err) {
@@ -83,13 +76,6 @@ export default function Courses() {
                 `${envData.REACT_APP_BACKEND_URL}${queryRoute}${courseName}`
             );
 
-            //if no such category
-            if (fetchRes.status === 500) {
-                throw new Error("伺服器發生問題");
-                //dispatch(push("/404"));
-                //return;
-            }
-
             const result = await fetchRes.json();
             setLessonsInfo(result.lessons);
         } catch (err) {
@@ -111,13 +97,6 @@ export default function Courses() {
             const fetchRes = await fetch(
                 `${envData.REACT_APP_BACKEND_URL}${queryRoute}${courseName}/comment`
             );
-
-            //if no such category
-            if (fetchRes.status === 500) {
-                throw new Error("伺服器發生問題");
-                //dispatch(push("/404"));
-                //return;
-            }
 
             const result = await fetchRes.json();
             setComments(result.comments);

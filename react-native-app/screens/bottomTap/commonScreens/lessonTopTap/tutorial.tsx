@@ -60,13 +60,6 @@ export default function Tutorial(this: any, props: { navigation: { goBack: () =>
                 `${envData.REACT_APP_BACKEND_URL}${queryRoute}${lesson}`
             );
 
-            //if no such category
-            if (fetchRes.status === 500) {
-                throw new Error("伺服器發生問題");
-                //dispatch(push("/404"));
-                //return;
-            }
-
             const result = await fetchRes.json();
             let link = await (result.lessonInfo.video_url.split('youtu.be/')[1]);
             let descriptionText = await (result.lessonInfo.lesson_description.split(" ").join(""));

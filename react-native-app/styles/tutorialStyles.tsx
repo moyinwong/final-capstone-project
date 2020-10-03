@@ -8,10 +8,18 @@ const tutorialStyles = StyleSheet.create({
         marginTop: 18
     },
     videoTextContainer: {
-        backgroundColor: '#ffffff',
         borderRadius: 12,
         paddingVertical: 12,
-        paddingHorizontal: 18
+        paddingHorizontal: 18,
+        backgroundColor: '#ffffff',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
     },
     videoText: {
         fontSize: 20
