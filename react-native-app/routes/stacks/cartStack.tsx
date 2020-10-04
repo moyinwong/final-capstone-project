@@ -1,5 +1,6 @@
 // React, React Native
 import React from "react";
+import { LinearGradient } from 'expo-linear-gradient';
 
 // Navigation
 import { createStackNavigator } from "@react-navigation/stack";
@@ -34,9 +35,6 @@ export default function CartStack(props: {
       initialRouteName="Cart"
       headerMode="float"
       screenOptions={{
-        headerStyle: {
-          backgroundColor: "#5b96f7",
-        },
         headerTintColor: "#fff",
         headerTitleAlign: "center",
         headerTitleStyle: {
@@ -52,9 +50,17 @@ export default function CartStack(props: {
             }}
           />
         ),
+        headerBackground: () => (
+          <LinearGradient
+              start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+              colors={['rgba(119, 251, 176, 1)', 'rgba(166, 241, 141, 1)']}
+              style={{ height: '100%', width: '100%' }}
+          >
+          </LinearGradient>
+      ),
         headerLeftContainerStyle: {
           marginLeft: 18,
-        },
+        }
       }}
     >
       <Stack.Screen

@@ -5,7 +5,7 @@ const globalStyles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 10,
-        backgroundColor: "#eaeaf5"
+        backgroundColor: "#f9f9f9"
     },
     homeHorizontalFooter: {
         width: 18
