@@ -277,7 +277,7 @@ export default function Courses() {
                     <Image
                         style={courseStyles.tutorPic}
                         resizeMode='cover'
-                        source={{ uri: courseInfo.image }}
+                        source={{ uri: `${envData.REACT_APP_BACKEND_FILE_URL}/img/${courseInfo.tutor_image}` }}
                     />
                 </View>
                 <View>
@@ -286,10 +286,9 @@ export default function Courses() {
                 <View style={{ marginLeft: 40 }}>
                     <TouchableOpacity
                         style={courseStyles.tutorCheckButton}
-                        onPress={() => console.log(courseInfo.tutor_name)}
-                    // onPress={() => navigation.navigate('TutorInfo', {
-                    //     tutor: tutorsTestData('all')[0]
-                    // })}
+                        onPress={() => navigation.navigate('TutorInfo', {
+                            tutor: courseInfo.tutor_email
+                        })}
                     >
                         <Text style={courseStyles.tutorCheckButtonText}>查看導師</Text>
                     </TouchableOpacity>

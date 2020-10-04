@@ -57,9 +57,6 @@ const tutorInfoStyles = StyleSheet.create({
         color: '#555555',
         textAlign: 'center'
     },
-    tutorInfoDot: {
-        alignSelf: 'center'
-    },
     tutorSubscribeContainer: {
         marginTop: 12,
         display: 'flex',
@@ -69,26 +66,6 @@ const tutorInfoStyles = StyleSheet.create({
     tutorNumSubscribed: {
         fontSize: 19,
         color: '#e96a43'
-    },
-    tutorSubscribeButton: {
-        marginLeft: 24,
-        paddingVertical: 8,
-        paddingHorizontal: 24,
-        borderRadius: 10,
-        backgroundColor: '#e96a43'
-    },
-    tutorSubscribeButtonText: {
-        fontSize: 19,
-        color: '#ffffff'
-    },
-    tutorSubscribedBox: {
-        display: 'flex',
-        flexDirection: 'row',
-        marginLeft: 48
-    },
-    tutorSubscribedText: {
-        fontSize: 19,
-        color: '#22c736'
     },
     titleContainer: {
         display: 'flex',

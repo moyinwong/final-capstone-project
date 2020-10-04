@@ -22,9 +22,9 @@ const TutorCoursePage = () => {
     const [courses, setCourses] = useState<ICourse[]>([]);
     const [tutorInfo, setTutorInfo] = useState<ITutorInfo | null>(null);
 
-    
+
     useEffect(() => {
-        if(tutorEmail) {
+        if (tutorEmail) {
             getAllCourseByTutor(tutorEmail);
             getTutorInfo();
             getTotalStudentsByTutor();
@@ -47,7 +47,7 @@ const TutorCoursePage = () => {
         const orderedCourses = courses.slice();
         orderedCourses.sort(
             (a: IPureCourse, b: IPureCourse) =>
-            b.id -  a.id
+                b.id - a.id
         )
         setCourses(orderedCourses);
     }
@@ -73,12 +73,12 @@ const TutorCoursePage = () => {
                 </div>
                 <div className="tutor-image">
                     {tutorInfo?.image.match(/http/) ? (
-                        <img style={{height: '150px'}} src={tutorInfo.image}></img>
-                    ) : (<img style={{height: '150px'}} src={`http://localhost:8080/img/${tutorInfo?.image}`}></img>)}
+                        <img style={{ height: '150px' }} src={tutorInfo.image}></img>
+                    ) : (<img style={{ height: '150px' }} src={`http://localhost:8080/img/${tutorInfo?.image}`}></img>)}
                     <div>{tutorInfo?.linkedin}</div>
                 </div>
             </div>
-                <h1>我教授的課程 ({courses.length})</h1>
+            <h1>我教授的課程 ({courses.length})</h1>
             <div className="course-card-container">
                 {courses.map((course, index) => (
                     <div className="course-card" key={index}>

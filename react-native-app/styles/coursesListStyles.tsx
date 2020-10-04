@@ -57,26 +57,6 @@ const coursesListStyles = StyleSheet.create({
         paddingVertical: 3,
         paddingHorizontal: 9
     },
-    courseInfoLeftContainer: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        paddingTop: 10,
-        paddingRight: 8
-    },
-    tutorPicContainer: {
-        height: 45,
-        width: 45,
-        borderRadius: 100
-    },
-    tutorPic: {
-        flex: 1,
-        width: '100%',
-        height: '100%',
-        borderRadius: 100,
-        resizeMode: 'cover'
-    },
     courseInfoRightContainer: {
         flex: 1
     },

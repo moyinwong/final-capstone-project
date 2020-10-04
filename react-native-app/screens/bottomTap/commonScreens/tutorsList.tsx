@@ -43,9 +43,9 @@ export default function TutorsList() {
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={tutorsStyles.tutorBox}
-                        onPress={() => navigation.navigate('TutorInfo',
-                            { tutor: item }
-                        )}
+                        onPress={() => navigation.navigate('TutorInfo', {
+                            tutor: tutor_email
+                        })}
                         onLongPress={() => showSubscribeBox()}
                     >
                         <View style={tutorsStyles.tutorPicContainer}>
