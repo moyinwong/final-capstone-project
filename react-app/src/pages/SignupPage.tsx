@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -17,9 +17,9 @@ import { login } from "../redux/auth/thunk";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
+      {"Copyright © Clint Chow, Stanley Lau, Kelvin Wong. All rights reserved"}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Browse Website
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -60,7 +60,7 @@ const SignupPage = () => {
   const [isLastNameEmpty, setIsLastNameEmpty] = useState(false);
   const [errMessage, setErrMessage] = useState('');
   const dispatch = useDispatch();
-
+  
   let handleFirstNameChange = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {

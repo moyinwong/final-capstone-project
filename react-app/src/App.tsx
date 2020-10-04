@@ -27,6 +27,7 @@ import UserCoursePage from "./pages/UserCoursePage";
 import SettingPage from "./pages/SettingPage";
 import TutorCoursePage from "./pages/TutorCoursePage";
 import SearchResultPage from "./pages/SearchResultPage";
+import Footer from "./components/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -117,6 +118,8 @@ function App() {
         <Route path="/404" exact={true} component={NotFound} />
         <Route component={NotFound} />
       </Switch>
+
+      <Footer />
     </div>
   );
 }

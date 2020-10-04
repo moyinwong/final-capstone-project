@@ -4,9 +4,12 @@ import { Container, Row, Col, Image } from "react-bootstrap";
 import "./Homepage.scss";
 import { useEffect } from "react";
 import { Button } from "react-bootstrap";
+import { IRootState } from "../redux/store";
+import { useSelector } from "react-redux";
 //import DropdownMenu from "../components/DropdownMenu";
 
 const HomePage: React.FC = () => {
+  const userId = useSelector((state: IRootState) => state.auth.id);
 
   useEffect(() => {
     document.title = "e-ducate";
@@ -23,7 +26,7 @@ const HomePage: React.FC = () => {
                 <div className="section-banner-text">
                 <div style={{color: '#212121'}}>仲去補習社？	&bull;	&bull;	&bull;</div>
                 <div style={{fontSize: '30px', color: '#777272'}}>用E-DUCATE上堂，我地幫你搞掂！</div>
-                <Button href="/signup" variant="light">立刻註冊</Button>
+                {userId === null && <Button href="/signup" variant="light">立刻註冊</Button>}
                 </div>
               </Col>
               <Col >
@@ -135,7 +138,7 @@ const HomePage: React.FC = () => {
         <CarouselReact type="goodComment" />
       </section>
 
-      <section>
+      <section className="section-photo-banner">
         <Image fluid src={require("./icons/tecky.png")} />
       </section>
     </div>
