@@ -31,8 +31,6 @@ const inputStyle = {
 function StripeForm() {
   const cartCourses: any = useContext(CartContext);
 
-  const cartCourses: any = useContext(CartContext);
-
   console.log(cartCourses.cartList);
 
   let totalPrice = 0;
