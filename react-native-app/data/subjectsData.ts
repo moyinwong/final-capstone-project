@@ -35,18 +35,18 @@ const subjects = [
         id: '7'
     },
     {
-        title: '綜合科學',
-        pic: require('../assets/subjectsPic/sci.jpg'),
-        id: '8'
-    },
-    {
         title: 'M1',
         pic: require('../assets/subjectsPic/m1.jpg'),
-        id: '9'
+        id: '8'
     },
     {
         title: 'M2',
         pic: require('../assets/subjectsPic/m2.jpeg'),
+        id: '9'
+    },
+    {
+        title: '經濟',
+        pic: require('../assets/subjectsPic/econ.jpg'),
         id: '10'
     },
     {
@@ -55,70 +55,40 @@ const subjects = [
         id: '11'
     },
     {
-        title: '經濟',
-        pic: require('../assets/subjectsPic/econ.jpg'),
-        id: '12'
-    },
-    {
-        title: '中國文學',
-        pic: require('../assets/subjectsPic/chnLi.jpg'),
-        id: '13'
-    },
-    {
-        title: '英國文學',
-        pic: require('../assets/subjectsPic/engLi.jpg'),
-        id: '14'
-    },
-    {
-        title: '中國歷史',
-        pic: require('../assets/subjectsPic/chnHis.jpg'),
-        id: '15'
-    },
-    {
         title: '歷史',
         pic: require('../assets/subjectsPic/his.jpg'),
-        id: '16'
-    },
-    {
-        title: '地理',
-        pic: require('../assets/subjectsPic/geo.jpg'),
-        id: '17'
-    },
-    {
-        title: '倫理與宗教',
-        pic: require('../assets/subjectsPic/rsc.jpg'),
-        id: '18'
-    },
-    {
-        title: '旅遊與款待',
-        pic: require('../assets/subjectsPic/tour.jpg'),
-        id: '19'
-    },
-    {
-        title: '設計與科技',
-        pic: require('../assets/subjectsPic/dt.jpg'),
-        id: '20'
-    },
-    {
-        title: '資訊及通訊科技',
-        pic: require('../assets/subjectsPic/ict.jpg'),
-        id: '21'
-    },
-    {
-        title: '音樂',
-        pic: require('../assets/subjectsPic/music.jpg'),
-        id: '22'
+        id: '12'
     },
     {
         title: '視覺藝術',
         pic: require('../assets/subjectsPic/arts.jpg'),
-        id: '23'
+        id: '13'
     },
     {
-        title: '體育',
-        pic: require('../assets/subjectsPic/pe.jpg'),
-        id: '24'
-    }
+        title: '編程',
+        pic: require('../assets/subjectsPic/coding.jpg'),
+        id: '14'
+    },
+    {
+        title: 'ICT',
+        pic: require('../assets/subjectsPic/ict.jpg'),
+        id: '15'
+    },
+    {
+        title: '廚藝',
+        pic: require('../assets/subjectsPic/cooking.jpg'),
+        id: '16'
+    },
+    {
+        title: 'DIY',
+        pic: require('../assets/subjectsPic/diy.jpg'),
+        id: '17'
+    },
+    {
+        title: '美容',
+        pic: require('../assets/subjectsPic/beauty.jpeg'),
+        id: '18'
+    },
 ];
 
 export default function subjectsData(category: string) {
@@ -129,19 +99,19 @@ export default function subjectsData(category: string) {
             [start, end] = [0, 3];
             break;
         case 'science':
-            [start, end] = [4, 9];
+            [start, end] = [4, 8];
             break;
         case 'business':
-            [start, end] = [10, 11];
+            [start, end] = [9, 10];
             break;
         case 'linguistic':
-            [start, end] = [12, 16];
+            [start, end] = [11, 12];
             break;
         case 'other':
-            [start, end] = [17, 23];
+            [start, end] = [13, 17];
             break;
         default:
-            [start, end] = [0, 23];
+            [start, end] = [0, 17];
     }
 
     let value = [];
