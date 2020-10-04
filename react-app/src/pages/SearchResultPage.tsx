@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
     Accordion,
-    Alert,
-    Breadcrumb,
     Button,
     Card,
     Dropdown,
@@ -37,22 +35,6 @@ const SearchResultPage = () => {
             Y: event.target.scrollingElement.scrollTop + window.innerHeight,
         });
     }
-
-      //run once when init
-    useEffect(() => {
-        getCourseBySearch();
-        document.title = `搜尋結果`;
-        document.getElementById("website-header")!.style.display = "block";
-        return () => {
-        document.title = "e-ducate";
-        };
-    }, [window.location.href]);
-
-    // useEffect(() => {
-    //     if(searchText) {
-    //         getCourseBySearch();
-    //     }
-    // }, [searchText])
 
     useEffect(() => {
         window.addEventListener("scroll", handleScroll);
@@ -94,6 +76,16 @@ const SearchResultPage = () => {
         //for reset
         setInitCourses(orderedCourses);
     }
+
+    //run once when init
+    useEffect(() => {
+        getCourseBySearch();
+        document.title = `搜尋結果`;
+        document.getElementById("website-header")!.style.display = "block";
+        return () => {
+        document.title = "e-ducate";
+        };
+    }, [searchText]);
 
      //handle order button click
     function handleOrderButtonClick(event: React.MouseEvent<HTMLButtonElement>) {

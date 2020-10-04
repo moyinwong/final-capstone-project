@@ -1,7 +1,7 @@
 import { push } from "connected-react-router";
 import React from "react";
 import Rating from "react-rating";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ICourse } from "../pages/CategoryPage";
 import { removeCourse } from "../redux/cart/actions";
 import "./FlattedCard.scss";

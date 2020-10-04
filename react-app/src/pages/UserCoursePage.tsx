@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { IRootState } from '../redux/store';
 import { useSelector } from 'react-redux';
-import { Card, Container, Row, ProgressBar } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Container, Row } from 'react-bootstrap';
 import './UserCoursePage.scss';
 import UserCourse from '../components/UserCourse';
 
@@ -27,12 +26,6 @@ const UserCoursePage = () => {
     const userId = useSelector((state: IRootState) => state.auth.id)
     const [courses, setCourses] = useState<IUserCourse[]>([])
 
-    useEffect(() => {
-        if(userId) {
-            getAllCourse(userId)
-        }
-    }, [userId])
-
     let getAllCourse = async (userId: number) => {
         let queryRoute = "user/course-detail/all";
         let res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/${queryRoute}/${userId}`, {
@@ -46,6 +39,12 @@ const UserCoursePage = () => {
         console.log(courses);
     }
 
+    useEffect(() => {
+        if(userId) {
+            getAllCourse(userId)
+        }
+    }, [userId])
+
     return (
         <div>
             <div className="course-section-title-container">
@@ -58,28 +57,6 @@ const UserCoursePage = () => {
                 <Row id="user-courses-row">
                     {courses.map((course:IUserCourse, index) => (
                         <UserCourse {...course} key={index}/>
-                        // <Card id="user-courses-card">
-                        //         <Link to={`/course/${course.course_name}`}>
-                        //             {course.image.match(/http/) ? (
-                        //             <Card.Img variant="top" src={course.image} />
-                        //             ) : <Card.Img id="carousel-card-img" variant="top" src={`http://localhost:8080/img/${course.image}`}/>}
-                                    
-                        //         </Link>
-                        //         <Card.Body className="carousel-card-body">
-                        //             <div className="carousel-card-title">
-                        //             {course.course_name}
-                        //             </div>
-                        //             <div className="carousel-card-teacher">
-                        //             {course.tutor_name}
-                        //             </div>
-                        //             <div>
-                        //                 {course.description}
-                        //             </div>
-                        //         </Card.Body>
-                        //         <Card.Footer>
-                        //             <ProgressBar variant="success" now={40} />
-                        //         </Card.Footer>
-                        // </Card>
                     ))}
 
                 </Row>
