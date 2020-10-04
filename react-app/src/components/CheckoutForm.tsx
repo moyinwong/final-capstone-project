@@ -146,7 +146,7 @@ const CheckoutForm: React.FC<{
   const [error, setError] = useState<ICheckOutFormError | null>(null);
   const [cardComplete, setCardComplete] = useState(false);
   const [processing, setProcessing] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState(null);
+  //const [paymentMethod, setPaymentMethod] = useState(null);
   const [billingDetails, setBillingDetails] = useState({
     email: "",
     phone: "",
@@ -185,7 +185,7 @@ const CheckoutForm: React.FC<{
   const reset = () => {
     setError(null);
     setProcessing(false);
-    setPaymentMethod(null);
+    //setPaymentMethod(null);
     setBillingDetails({
       email: "",
       phone: "",

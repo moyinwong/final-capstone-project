@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../redux/store';
 import { push } from 'connected-react-router';
 import {useDropzone} from 'react-dropzone';
+import { ContactsOutlined } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -46,9 +47,7 @@ const LessonCreatePage = () => {
     //     setLessons(result.lessons);
     //   };
 
-    const dispatch = useDispatch();
     const classes = useStyles();
-    const userEmail = useSelector((state: IRootState) => state.auth.email);
     
     const submitHandler = async (formData: FormData) => {
         const queryRoute = '/lesson/creation'
@@ -56,6 +55,8 @@ const LessonCreatePage = () => {
             method: 'POST',
             body: formData
         })
+        const result = await res.json();
+        console.log(result);
     }
 
     const firstValidationSchema = Yup.object().shape({
@@ -210,27 +211,6 @@ export function FormikStepper({children, ...props}: FormikConfig<FormikValues>) 
 
     function isLastStep() {
         return step === childrenArray.length - 1
-    }
-
-    function showFile(files: any[]) {
-        if (!files.length) {
-            return null;
-        }
-
-        return (
-            <div>
-                <div>Dropped files:</div>
-                <ul>
-                    {
-                        files.map((file, i) => 
-                            <li key={i}>
-                                <div>{file.name}</div>
-                            </li>
-                        )
-                    }
-                </ul>
-            </div>
-        )
     }
 
     return (

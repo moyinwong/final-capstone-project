@@ -96,7 +96,7 @@ const CoursePage: React.FC = () => {
     return () => {
       document.title = "e-ducate";
     };
-  }, []);
+  }, [courseName]);
 
   //run once when init
   useEffect(() => {
@@ -245,7 +245,7 @@ const CoursePage: React.FC = () => {
       })
     const result = await res.json();
     
-    if (res.status != 200) {
+    if (res.status !== 200) {
       setAlertMsg(result.message)
       setIsShowAlert(true);
       await sleep(2000)
@@ -264,7 +264,7 @@ const CoursePage: React.FC = () => {
     )
     const result = await res.json();
     
-    if (res.status != 200) {
+    if (res.status !== 200) {
       console.log('line: 267: something is wrong when checking completed lessons')
     } else {
       //an array of completed lessons id
@@ -338,6 +338,7 @@ const CoursePage: React.FC = () => {
                       ? course.image
                       : `http://localhost:8080/img/${course.image}`
                   }
+                  alt="course"
                 />
                 <div className="price">HK$ {course.price}</div>
                 <div>
@@ -434,9 +435,9 @@ const CoursePage: React.FC = () => {
                     <Link style={{display: 'inline', marginLeft: '10px'}} to={`/tutor/${course.tutor_email}`}>
                       {course.tutor_name}
                       {course.tutor_image?.match(/http/) ? (
-                        <img className="tutor-image" src={course.tutor_image} alt="tutor profile picture" />
+                        <img className="tutor-image" src={course.tutor_image} alt="tutor profile" />
                         ) : ( <img className="tutor-image" src={`http://localhost:8080/img/${course.tutor_image}`} 
-                              alt="tutor profile picture"/>)
+                              alt="tutor profile"/>)
                       }
                     </Link> 
                     

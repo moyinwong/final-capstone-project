@@ -403,6 +403,36 @@ export class CourseService {
     return lessons[0];
   };
 
+
+  getAllTutorInfo = async () => {
+    const tutors = await this.knex(tables.USERS)
+      .select(
+        'users.id',
+        'users.name',
+        'users.image',
+        'users.linkedin',
+        'users.email', 
+        'users.title', 
+        'users.introduction',
+      )
+      .count('purchased_courses.id', {as : 'total_students_num'})
+      .from(tables.USERS)
+      .where('is_tutor', true)
+      .join(tables.COURSES, `${tables.COURSES}.tutor_id`, 'users.id')
+      .join(tables.PURCHASED_COURSES, `${tables.PURCHASED_COURSES}.course_id`, 'courses.id')
+      .groupBy(
+        'users.id',
+        'users.name',
+        'users.image',
+        'users.linkedin',
+        'users.email', 
+        'users.title', 
+        'users.introduction'
+      )
+  
+    return tutors;
+  }
+
   getTutorInfo = async (tutorEmail: string) => {
     const tutor = await this.knex(tables.USERS)
     .select(

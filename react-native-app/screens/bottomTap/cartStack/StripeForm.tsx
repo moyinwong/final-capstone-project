@@ -1,12 +1,11 @@
-import React from "react";
-import { Text, TextInput, View, Alert, Button } from "react-native";
+import React, { useContext } from "react";
+import { Text, TextInput, View, Button } from "react-native";
 import { PaymentsStripe as Stripe } from "expo-payments-stripe";
-import envData from "../../data/env";
-import { Formik, Field } from "formik";
-//import { string, object, number, date } from "yup";
+import envData from "../../../data/env";
+import { Formik } from "formik";
 import * as yup from "yup";
 import valid from "card-validator";
-import { black } from "react-native-paper/lib/typescript/src/styles/colors";
+import { CartContext } from "../../../contexts/cartContext";
 
 Stripe.setOptionsAsync({
   publishableKey:
@@ -23,20 +22,24 @@ interface CardInfo {
   cvc: string;
 }
 
+const inputStyle = {
+  borderBottomColor: "black",
+  borderBottomWidth: 2,
+  marginBottom: 10,
+};
+
 function StripeForm() {
-  //
-  //
-  //
-  //
-  //
-  //
-  //some code to get cart courses
-  //
-  //
-  //
-  //
-  //
-  //
+  const cartCourses: any = useContext(CartContext);
+
+  console.log(cartCourses.cartList);
+
+  let totalPrice = 0;
+
+  for (let course of cartCourses.cartList) {
+    totalPrice += Math.round(parseFloat(course.price), 2);
+  }
+
+  console.log(totalPrice);
 
   const charge = async (cardInfo: CardInfo) => {
     console.log("run");
@@ -69,7 +72,11 @@ function StripeForm() {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ stripeToken: stripeToken, chargeAmount: 101 }),
+        body: JSON.stringify({
+          stripeToken: stripeToken,
+          chargeAmount: totalPrice,
+          cartCourses: cartCourses.cartList,
+        }),
       }
     );
 
@@ -165,7 +172,7 @@ function StripeForm() {
         }) => (
           <View>
             <Text>電郵</Text>
-            <View style={{ borderBottomColor: "black", borderBottomWidth: 2 }}>
+            <View style={{ ...inputStyle }}>
               <TextInput
                 onChangeText={handleChange("email")}
                 onBlur={handleBlur("email")}
@@ -181,27 +188,31 @@ function StripeForm() {
               </View>
             )}
             <Text>持卡人姓名</Text>
+            <View style={{ ...inputStyle }}>
+              <TextInput
+                onChangeText={handleChange("cardHolderName")}
+                onBlur={handleBlur("cardHolderName")}
+                value={values.cardHolderName}
+                style={{ width: 300 }}
+              />
+            </View>
 
-            <TextInput
-              onChangeText={handleChange("cardHolderName")}
-              onBlur={handleBlur("cardHolderName")}
-              value={values.cardHolderName}
-              style={{ backgroundColor: "green", width: 300 }}
-            />
             {touched.cardHolderName && errors.cardHolderName && (
               <View>
                 <Text>{errors.cardHolderName}</Text>
               </View>
             )}
             <Text>信用卡號碼</Text>
+            <View style={{ ...inputStyle }}>
+              <TextInput
+                onChangeText={handleChange("cardNum")}
+                onBlur={handleBlur("cardNum")}
+                value={values.cardNum}
+                maxLength={16}
+                style={{ width: 300 }}
+              />
+            </View>
 
-            <TextInput
-              onChangeText={handleChange("cardNum")}
-              onBlur={handleBlur("cardNum")}
-              value={values.cardNum}
-              maxLength={16}
-              style={{ backgroundColor: "yellow", width: 300 }}
-            />
             {touched.cardNum && errors.cardNum && (
               <View>
                 <Text>{errors.cardNum}</Text>
@@ -211,42 +222,59 @@ function StripeForm() {
             <Text>過期日期</Text>
 
             <View style={{ display: "flex", flexDirection: "row" }}>
-              <TextInput
-                onChangeText={handleChange("expMonth")}
-                onBlur={handleBlur("expMonth")}
-                value={values.expMonth}
-                style={{ backgroundColor: "red", width: 50 }}
-                maxLength={2}
-              />
+              <View style={{ ...inputStyle }}>
+                <TextInput
+                  onChangeText={handleChange("expMonth")}
+                  onBlur={handleBlur("expMonth")}
+                  value={values.expMonth}
+                  style={{ width: 50 }}
+                  maxLength={2}
+                />
+              </View>
+
               {touched.expMonth && errors.expMonth && (
                 <View>
                   <Text>{errors.expMonth}</Text>
                 </View>
               )}
-              <Text>/</Text>
+              <View
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  marginBottom: 10,
+                  marginLeft: 4,
+                  marginRight: 4,
+                }}
+              >
+                <Text>/</Text>
+              </View>
+              <View style={{ ...inputStyle }}>
+                <TextInput
+                  onChangeText={handleChange("expYear")}
+                  onBlur={handleBlur("expYear")}
+                  value={values.expYear}
+                  style={{ width: 50 }}
+                  maxLength={2}
+                />
+              </View>
 
-              <TextInput
-                onChangeText={handleChange("expYear")}
-                onBlur={handleBlur("expYear")}
-                value={values.expYear}
-                style={{ backgroundColor: "purple", width: 50 }}
-                maxLength={2}
-              />
               {touched.expYear && errors.expYear && (
                 <View>
                   <Text>{errors.expYear}</Text>
                 </View>
               )}
             </View>
-            <Text>cvc</Text>
+            <Text>CVC</Text>
+            <View style={{ ...inputStyle }}>
+              <TextInput
+                onChangeText={handleChange("cvc")}
+                onBlur={handleBlur("cvc")}
+                value={values.cvc}
+                maxLength={3}
+                style={{ width: 100 }}
+              />
+            </View>
 
-            <TextInput
-              onChangeText={handleChange("cvc")}
-              onBlur={handleBlur("cvc")}
-              value={values.cvc}
-              maxLength={3}
-              style={{ backgroundColor: "orange", width: 100 }}
-            />
             {touched.cvc && errors.cvc && (
               <View>
                 <Text>{errors.cvc}</Text>

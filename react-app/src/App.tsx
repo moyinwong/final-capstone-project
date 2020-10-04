@@ -39,7 +39,7 @@ function App() {
     if (isAuthenticated === null) {
       dispatch(restoreLogin());
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, dispatch]);
 
   useEffect(() => {
     if (isDarkMode) {

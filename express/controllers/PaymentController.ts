@@ -80,7 +80,8 @@ export class PaymentController {
         const transfer = await this.paymentService.createTransfer(
           course.tutor_name,
           parseFloat(course.price) * 0.9,
-          chargeId
+          chargeId,
+          `${userEmail} purchased ${course.course_name}`
         );
         if (transfer.type === "StripeInvalidRequestError") {
           throw new Error(transfer);
@@ -186,7 +187,9 @@ export class PaymentController {
 
   MobilePayment = async (req: Request, res: Response) => {
     try {
-      const { stripeToken, chargeAmount } = req.body;
+      const { stripeToken, chargeAmount, cartCourses } = req.body;
+
+      console.log(cartCourses);
 
       const data = await this.paymentService.createPaymentByCharge(
         stripeToken,

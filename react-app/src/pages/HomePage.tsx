@@ -26,7 +26,13 @@ const HomePage: React.FC = () => {
                 <Button href="/signup" variant="light">立刻註冊</Button>
                 </div>
               </Col>
-              <Col ><img style={{height: '280px', margin: '30px 0px'}} src={require('./icons/geography.png')}/></Col>
+              <Col >
+                  <img 
+                      style={{height: '280px', margin: '30px 0px'}} 
+                      src={require('./icons/geography.png')} 
+                      alt="logo"
+                  />
+              </Col>
               
             {/* </div> */}
           </Row>
@@ -64,6 +70,7 @@ const HomePage: React.FC = () => {
                   <img
                     className="section-icon"
                     src={require("./icons/clock.png")}
+                    alt="icon"
                   />
                 </div>
                 <div>
@@ -79,6 +86,7 @@ const HomePage: React.FC = () => {
                   <img
                     className="section-icon"
                     src={require("./icons/goal.png")}
+                    alt="icon"
                   />
                 </div>
                 <div>
@@ -95,6 +103,7 @@ const HomePage: React.FC = () => {
                   <img
                     className="section-icon"
                     src={require("./icons/lectern.png")}
+                    alt="icon"
                   />
                 </div>
                 <div>
@@ -109,6 +118,7 @@ const HomePage: React.FC = () => {
                   <img
                     className="section-icon"
                     src={require("./icons/pencil-holder.png")}
+                    alt="icon"
                   />
                 </div>
                 <div>

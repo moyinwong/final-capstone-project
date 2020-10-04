@@ -22,15 +22,6 @@ const TutorCoursePage = () => {
     const [courses, setCourses] = useState<ICourse[]>([]);
     const [tutorInfo, setTutorInfo] = useState<ITutorInfo | null>(null);
 
-
-    useEffect(() => {
-        if (tutorEmail) {
-            getAllCourseByTutor(tutorEmail);
-            getTutorInfo();
-            getTotalStudentsByTutor();
-        }
-    }, [tutorEmail])
-
     const getTutorInfo = async () => {
         let queryRoute = '/course/tutor/info'
         const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}${queryRoute}/${tutorEmail}`)
@@ -61,6 +52,14 @@ const TutorCoursePage = () => {
         setTotalStudents(totalStudents)
     }
 
+    useEffect(() => {
+        if(tutorEmail) {
+            getAllCourseByTutor(tutorEmail);
+            getTutorInfo();
+            getTotalStudentsByTutor();
+        }
+    }, [tutorEmail, getTotalStudentsByTutor, getTutorInfo])
+
     return (
         <div>
             <div className="course-section-title-container">
@@ -73,8 +72,16 @@ const TutorCoursePage = () => {
                 </div>
                 <div className="tutor-image">
                     {tutorInfo?.image.match(/http/) ? (
-                        <img style={{ height: '150px' }} src={tutorInfo.image}></img>
-                    ) : (<img style={{ height: '150px' }} src={`http://localhost:8080/img/${tutorInfo?.image}`}></img>)}
+                        <img 
+                            style={{height: '150px'}} 
+                            src={tutorInfo.image} 
+                            alt="tutor"
+                        />
+                    ) : (<img 
+                            style={{height: '150px'}} 
+                            src={`http://localhost:8080/img/${tutorInfo?.image}`}
+                            alt="tutor"
+                        />)}
                     <div>{tutorInfo?.linkedin}</div>
                 </div>
             </div>
