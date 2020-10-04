@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ReactNode } from "react";
 import { ICourse } from "../pages/CategoryPage";
-import { Container, Col, Card, Button, Row } from "react-bootstrap";
+import { Container, Col } from "react-bootstrap";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";

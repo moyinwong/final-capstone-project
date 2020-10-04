@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
 const sleep = (time: number) => new Promise((acc) => setTimeout(acc, time));
 
 const CourseCreatePage = () => {
-  const dispatch = useDispatch();
   const classes = useStyles();
   const userEmail = useSelector((state: IRootState) => state.auth.email);
 
@@ -46,6 +45,8 @@ const CourseCreatePage = () => {
         body: formData,
       }
     );
+    const result = await res.json();
+    console.log(result)
   };
 
   const firstValidationSchema = Yup.object().shape({

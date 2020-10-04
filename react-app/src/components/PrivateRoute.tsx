@@ -1,6 +1,4 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
-import { IRootState } from '../redux/store';
 import { RouteProps, Redirect, Route } from 'react-router-dom';
 
 const PrivateRoute = ({ component, ...rest }: RouteProps) => {

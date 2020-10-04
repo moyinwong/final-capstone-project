@@ -1,5 +1,3 @@
-import userEvent from "@testing-library/user-event";
-import { type } from "os";
 import React, { useState } from "react";
 import { Alert, Button, Form, Modal } from "react-bootstrap";
 import { IThread } from "../pages/LessonPage";

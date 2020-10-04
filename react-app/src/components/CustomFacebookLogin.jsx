@@ -41,6 +41,7 @@ function CustomFacebookLogin(props) {
             src={require("../pages/icons/0000016_facebook-like-button-plugin.png")}
             onClick={renderProps.onClick}
             callback={renderProps.fBCallback}
+            alt="facebook icon"
           />
           //</button>
         )}
