@@ -32,12 +32,17 @@
     "pg": "^8.3.3",
     "stripe": "^8.100.0",
     "ts-node": "^9.0.0",
-    "typescript": "^4.0.2",
+    "typescript": "^4.0.3",
     "winston": "^3.3.3"
   },
   "scripts": {
     "start": "node index.js",
     "bs": "./build-server.sh",
     "rb": "knex migrate:rollback"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.14",
+    "jest": "^26.4.2",
+    "ts-jest": "^26.4.1"
   }
 }
