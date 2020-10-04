@@ -34,10 +34,10 @@ export function login(
       dispatch(loginSuccess(json.token, json.userId));
       dispatch(getUser(json.email));
       dispatch(checkTutor(json.isTutor));
-      if (previousLocation) {
-        dispatch(push(previousLocation));
-      } else if (previousLocation?.match(/login/)) {
+      if (previousLocation?.match(/login/) || previousLocation?.match(/signup/)) {
         dispatch(push("/"));
+      } else if (previousLocation) {
+        dispatch(push(previousLocation));
       } else {
         dispatch(push("/"));
       }

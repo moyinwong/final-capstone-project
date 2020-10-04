@@ -55,7 +55,7 @@ const UserCourse = (course:IUserCourse) => {
             await getCompletedLesson();
             await getProgress();
         })()
-    }, [getCompletedLesson, getAllLessons, getProgress])
+    }, [getCompletedLesson])
 
     // useEffect(() => {
     //     getAllLessons()

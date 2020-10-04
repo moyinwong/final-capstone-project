@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -21,9 +21,9 @@ import CustomFacebookLogin from "../components/CustomFacebookLogin";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+      {"Copyright © Clint Chow, Stanley Lau, Kelvin Wong. All rights reserved"}
+      <Link color="inherit" href="https://e-ducate.life/">
+        Browse Website
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
