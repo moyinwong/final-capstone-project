@@ -105,7 +105,11 @@ export default function Home() {
                         </View>
                         <View style={homeStyles.courseInfoContainer}>
 
-                            <Text style={homeStyles.courseTitle}>{item.course_name}</Text>
+                            <Text
+                                numberOfLines={2}
+                                ellipsizeMode='tail'
+                                style={homeStyles.courseTitle}
+                            >{item.course_name}</Text>
                             <View style={homeStyles.courseSubInfoContainer}>
                                 <Text style={homeStyles.courseInfoText}>{item.tutor_name}</Text>
                                 <Text style={homeStyles.courseInfoText}>{"總共堂數: " + item.lessons_number}</Text>
@@ -135,7 +139,7 @@ export default function Home() {
                 )}
             />
 
-            {/* 熱門課程 */}
+            {/* 最受好評課程 */}
             <View style={homeStyles.titleContainer}>
                 <Text style={homeStyles.screenTitle}>最受好評課程</Text>
             </View>

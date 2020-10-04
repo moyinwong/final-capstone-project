@@ -12,9 +12,9 @@ import LeftDrawer from "./routes/drawer/leftDrawer";
 import Login from "./screens/login/login";
 
 // Contexts
+import UserContextProvider from "./contexts/userContext";
 import CartContextProvider from "./contexts/cartContext";
 import LessonContextProvider from "./contexts/lessonContext";
-import StripeForm from "./screens/stripe/StripeForm";
 
 // Dummy Variable
 const isSignIn = true;
@@ -24,15 +24,17 @@ export default function App() {
   enableScreens();
 
   return (
-    <CartContextProvider>
-      <LessonContextProvider>
-        {isSignIn ? (
-          <NavigationContainer>{LeftDrawer()}</NavigationContainer>
-        ) : (
-          //<StripeForm />
-          <Login />
-        )}
-      </LessonContextProvider>
-    </CartContextProvider>
+    <UserContextProvider>
+      <CartContextProvider>
+        <LessonContextProvider>
+          {isSignIn ? (
+            <NavigationContainer>{LeftDrawer()}</NavigationContainer>
+          ) : (
+              //<StripeForm />
+              <Login />
+            )}
+        </LessonContextProvider>
+      </CartContextProvider>
+    </UserContextProvider>
   );
 }

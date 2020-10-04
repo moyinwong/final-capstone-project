@@ -51,6 +51,27 @@ const exerciseStyles = StyleSheet.create({
     },
     title: {
         fontSize: 20
+    },
+    submitButtonContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'flex-start',
+        marginTop: 32
+    },
+    submitButton: {
+        display: 'flex',
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 10,
+        borderRadius: 10,
+        backgroundColor: '#e96a43',
+    },
+    submitButtonText: {
+        fontSize: 20,
+        color: '#ffffff'
     }
 });
 
