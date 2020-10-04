@@ -15,11 +15,10 @@ import Cart from "../../screens/bottomTap/cartStack/cart";
 import TutorInfo from "../../screens/bottomTap/commonScreens/tutorInfo";
 import CoursesList from "../../screens/bottomTap/commonScreens/coursesList";
 import Course from "../../screens/bottomTap/commonScreens/course";
+import StripeForm from "../../screens/bottomTap/commonScreens/StripeForm";
 
 // Functions
 import stackTransition from "../../functions/stackTransition";
-import StripeForm from "../../screens/bottomTap/cartStack/StripeForm";
-import CheckoutStack from "./CheckoutStack";
 
 export default function CartStack(props: {
   navigation: { toggleDrawer: () => void };

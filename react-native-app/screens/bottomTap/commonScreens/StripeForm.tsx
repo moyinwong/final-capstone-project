@@ -170,119 +170,119 @@ function StripeForm() {
           handleSubmit,
           values,
         }) => (
-          <View>
-            <Text>電郵</Text>
-            <View style={{ ...inputStyle }}>
-              <TextInput
-                onChangeText={handleChange("email")}
-                onBlur={handleBlur("email")}
-                value={values.email}
-                style={{
-                  width: 300,
-                }}
-              />
-            </View>
-            {touched.email && errors.email && (
-              <View>
-                <Text>{errors.email}</Text>
-              </View>
-            )}
-            <Text>持卡人姓名</Text>
-            <View style={{ ...inputStyle }}>
-              <TextInput
-                onChangeText={handleChange("cardHolderName")}
-                onBlur={handleBlur("cardHolderName")}
-                value={values.cardHolderName}
-                style={{ width: 300 }}
-              />
-            </View>
-
-            {touched.cardHolderName && errors.cardHolderName && (
-              <View>
-                <Text>{errors.cardHolderName}</Text>
-              </View>
-            )}
-            <Text>信用卡號碼</Text>
-            <View style={{ ...inputStyle }}>
-              <TextInput
-                onChangeText={handleChange("cardNum")}
-                onBlur={handleBlur("cardNum")}
-                value={values.cardNum}
-                maxLength={16}
-                style={{ width: 300 }}
-              />
-            </View>
-
-            {touched.cardNum && errors.cardNum && (
-              <View>
-                <Text>{errors.cardNum}</Text>
-              </View>
-            )}
-
-            <Text>過期日期</Text>
-
-            <View style={{ display: "flex", flexDirection: "row" }}>
+            <View>
+              <Text>電郵</Text>
               <View style={{ ...inputStyle }}>
                 <TextInput
-                  onChangeText={handleChange("expMonth")}
-                  onBlur={handleBlur("expMonth")}
-                  value={values.expMonth}
-                  style={{ width: 50 }}
-                  maxLength={2}
+                  onChangeText={handleChange("email")}
+                  onBlur={handleBlur("email")}
+                  value={values.email}
+                  style={{
+                    width: 300,
+                  }}
+                />
+              </View>
+              {touched.email && errors.email && (
+                <View>
+                  <Text>{errors.email}</Text>
+                </View>
+              )}
+              <Text>持卡人姓名</Text>
+              <View style={{ ...inputStyle }}>
+                <TextInput
+                  onChangeText={handleChange("cardHolderName")}
+                  onBlur={handleBlur("cardHolderName")}
+                  value={values.cardHolderName}
+                  style={{ width: 300 }}
                 />
               </View>
 
-              {touched.expMonth && errors.expMonth && (
+              {touched.cardHolderName && errors.cardHolderName && (
                 <View>
-                  <Text>{errors.expMonth}</Text>
+                  <Text>{errors.cardHolderName}</Text>
                 </View>
               )}
-              <View
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  marginBottom: 10,
-                  marginLeft: 4,
-                  marginRight: 4,
-                }}
-              >
-                <Text>/</Text>
-              </View>
+              <Text>信用卡號碼</Text>
               <View style={{ ...inputStyle }}>
                 <TextInput
-                  onChangeText={handleChange("expYear")}
-                  onBlur={handleBlur("expYear")}
-                  value={values.expYear}
-                  style={{ width: 50 }}
-                  maxLength={2}
+                  onChangeText={handleChange("cardNum")}
+                  onBlur={handleBlur("cardNum")}
+                  value={values.cardNum}
+                  maxLength={16}
+                  style={{ width: 300 }}
                 />
               </View>
 
-              {touched.expYear && errors.expYear && (
+              {touched.cardNum && errors.cardNum && (
                 <View>
-                  <Text>{errors.expYear}</Text>
+                  <Text>{errors.cardNum}</Text>
                 </View>
               )}
-            </View>
-            <Text>CVC</Text>
-            <View style={{ ...inputStyle }}>
-              <TextInput
-                onChangeText={handleChange("cvc")}
-                onBlur={handleBlur("cvc")}
-                value={values.cvc}
-                maxLength={3}
-                style={{ width: 100 }}
-              />
-            </View>
 
-            {touched.cvc && errors.cvc && (
-              <View>
-                <Text>{errors.cvc}</Text>
+              <Text>過期日期</Text>
+
+              <View style={{ display: "flex", flexDirection: "row" }}>
+                <View style={{ ...inputStyle }}>
+                  <TextInput
+                    onChangeText={handleChange("expMonth")}
+                    onBlur={handleBlur("expMonth")}
+                    value={values.expMonth}
+                    style={{ width: 50 }}
+                    maxLength={2}
+                  />
+                </View>
+
+                {touched.expMonth && errors.expMonth && (
+                  <View>
+                    <Text>{errors.expMonth}</Text>
+                  </View>
+                )}
+                <View
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    marginBottom: 10,
+                    marginLeft: 4,
+                    marginRight: 4,
+                  }}
+                >
+                  <Text>/</Text>
+                </View>
+                <View style={{ ...inputStyle }}>
+                  <TextInput
+                    onChangeText={handleChange("expYear")}
+                    onBlur={handleBlur("expYear")}
+                    value={values.expYear}
+                    style={{ width: 50 }}
+                    maxLength={2}
+                  />
+                </View>
+
+                {touched.expYear && errors.expYear && (
+                  <View>
+                    <Text>{errors.expYear}</Text>
+                  </View>
+                )}
               </View>
-            )}
-            <Button onPress={handleSubmit} title="提交" disabled={!isValid} />
-          </View>
-        )}
+              <Text>CVC</Text>
+              <View style={{ ...inputStyle }}>
+                <TextInput
+                  onChangeText={handleChange("cvc")}
+                  onBlur={handleBlur("cvc")}
+                  value={values.cvc}
+                  maxLength={3}
+                  style={{ width: 100 }}
+                />
+              </View>
+
+              {touched.cvc && errors.cvc && (
+                <View>
+                  <Text>{errors.cvc}</Text>
+                </View>
+              )}
+              <Button onPress={handleSubmit} title="提交" disabled={!isValid} />
+            </View>
+          )}
       </Formik>
     </View>
   );

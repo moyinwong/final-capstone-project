@@ -21,7 +21,6 @@ import showModal from '../../../functions/showModal';
 
 // Data
 import envData from '../../../data/env';
-import tutorsTestData from '../../../data/tutorsTestData';
 
 export default function TutorInfo() {
 
@@ -30,7 +29,6 @@ export default function TutorInfo() {
     const route = useRoute();
 
     // Param
-
     let tutor_email = 'email';
     if (route.params) {
         tutor_email = route.params.tutor;

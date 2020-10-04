@@ -25,7 +25,7 @@ import envData from '../../../data/env';
 export default function Courses() {
 
     // Context
-    const { addCartList } = useContext(CartContext);
+    const { addCartList, setCartList, setCartSum } = useContext(CartContext);
     const { setLesson } = useContext(LessonContext);
 
     // Hooks
@@ -121,14 +121,17 @@ export default function Courses() {
         )
     }
 
+    function buyCourse(course: any) {
+        setCartList([courseInfo]);
+        setCartSum(courseInfo.price);
+        navigation.navigate('StripeForm');
+    }
+
     // Render
     // State
     const [showLessons, setShowLessons] = useState(
         true
     );
-
-    // Dummy Data
-    const isSubscribed = false;
 
     return (
         <ScrollView
@@ -172,7 +175,7 @@ export default function Courses() {
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={{ ...courseStyles.courseButton, ...courseStyles.courseBuyButton }}
-                                onPress={() => console.log('buy')}
+                                onPress={() => buyCourse(courseInfo)}
                             >
                                 <Text style={courseStyles.courseButtonText}>立即購買</Text>
                             </TouchableOpacity>

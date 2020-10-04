@@ -17,7 +17,6 @@ import HomeStack from "../stacks/homeStack";
 import SubjectStack from "../stacks/subjectStack";
 import CartStack from "../stacks/cartStack";
 import MyCoursesStack from "../stacks/myCoursesStack";
-import CheckoutStack from "../stacks/CheckoutStack";
 
 export default function BottomTap() {
   const Tab = createMaterialBottomTabNavigator();

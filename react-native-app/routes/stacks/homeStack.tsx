@@ -16,6 +16,7 @@ import TutorsList from '../../screens/bottomTap/commonScreens/tutorsList';
 import TutorInfo from '../../screens/bottomTap/commonScreens/tutorInfo';
 import CoursesList from '../../screens/bottomTap/commonScreens/coursesList';
 import Course from '../../screens/bottomTap/commonScreens/course';
+import StripeForm from "../../screens/bottomTap/commonScreens/StripeForm";
 
 // Functions
 import stackTransition from '../../functions/stackTransition';
@@ -98,6 +99,14 @@ export default function HomeStack(props: { navigation: { toggleDrawer: () => voi
                 options={{
                     title: '課堂',
                     ...stackTransition
+                }}
+            />
+            <Stack.Screen
+                name="StripeForm"
+                children={StripeForm}
+                options={{
+                    title: "信用卡資料",
+                    ...stackTransition,
                 }}
             />
         </Stack.Navigator>
