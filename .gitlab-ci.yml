@@ -7,8 +7,8 @@ stages:
 
 variables:
   POSTGRES_DB: capstone_test
-  POSTGRES_USER: postgre
-  POSTGRES_PASSWORD: postgre
+  POSTGRES_USER: kelvinwong
+  POSTGRES_PASSWORD: yin131433
   POSTGRES_HOST: postgres
 
 testing:
