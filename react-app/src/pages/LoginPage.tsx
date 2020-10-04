@@ -98,7 +98,7 @@ export default function LoginPage(state: {
   let submitHandler = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     event.preventDefault();
 
-    if (!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
+    if (!email.match(/^[\w]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
       setIsError(true);
       return;
     } else if (password.length === 0) {

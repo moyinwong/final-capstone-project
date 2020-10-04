@@ -107,7 +107,7 @@ const SignupPage = () => {
     } else if (lastName.length === 0) {
         setIsLastNameEmpty(true);
         return;
-    } else if (!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
+    } else if (!email.match(/^[\w]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
         setIsError(true);
         return;
     } else if (!password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm)) {

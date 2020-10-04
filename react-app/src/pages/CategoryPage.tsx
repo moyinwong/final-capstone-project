@@ -108,7 +108,7 @@ const CategoryPage: React.FC = () => {
     return () => {
       document.title = "e-ducate";
     };
-  }, [window.location.href]);
+  }, [categoryName]);
 
   const getAllCoursesByCategory = async () => {
     try {
