@@ -42,6 +42,15 @@ const exerciseStyles = StyleSheet.create({
     answerText: {
         fontSize: 18,
         color: '#5b96f7'
+    },
+    titleContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 24
+    },
+    title: {
+        fontSize: 20
     }
 });
 
