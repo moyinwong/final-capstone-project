@@ -27,70 +27,40 @@ export default function Home() {
     // Hooks
     const navigation = useNavigation();
 
-    // Popular Courses List
     // State
     const [popularCoursesListData, setPopularCoursesListData] = useState(
         []
     );
-
-    const popularCategoryName = 'all'
-    useFocusEffect(
-        useCallback(() => {
-            getPopularCourses(popularCategoryName);
-        }, [popularCategoryName])
-    );
-
-    // Fetch
-    async function getPopularCourses(categoryName: string) {
-        try {
-            let queryRoute: string = "/category/";
-
-            const fetchRes = await fetch(
-                `${envData.REACT_APP_BACKEND_URL}${queryRoute}${categoryName}`
-            );
-
-            const result = await fetchRes.json();
-            setPopularCoursesListData(result.courses);
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    // Good Courses List
-    // State
     const [goodCoursesListData, setGoodCoursesListData] = useState(
         []
     );
 
-    const goodCategoryName = 'all'
-    useFocusEffect(
-        useCallback(() => {
-            getGoodCourses(goodCategoryName);
-        }, [goodCategoryName])
-    );
-
     // Fetch
-    async function getGoodCourses(categoryName: string) {
+    async function getCourses(queryRoute: string, categoryName: string) {
         try {
-            let queryRoute: string = "/category/";
-
             const fetchRes = await fetch(
                 `${envData.REACT_APP_BACKEND_URL}${queryRoute}${categoryName}`
             );
 
-            //if no such category
-            if (fetchRes.status === 500) {
-                throw new Error("伺服器發生問題");
-                //dispatch(push("/404"));
-                //return;
+            const result = await fetchRes.json();
+            if (categoryName == "popular") {
+                setPopularCoursesListData(result.courses);
+            } else {
+                setGoodCoursesListData(result.courses);
             }
 
-            const result = await fetchRes.json();
-            setGoodCoursesListData(result.courses);
         } catch (err) {
             console.log(err);
         }
     }
+
+    const queryRoute = '/course/'
+    useFocusEffect(
+        useCallback(() => {
+            getCourses(queryRoute, "popular");
+            getCourses(queryRoute, "good-comment");
+        }, [queryRoute])
+    );
 
     return (
         <ScrollView

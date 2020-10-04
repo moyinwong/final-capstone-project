@@ -38,7 +38,7 @@ const TutorCoursePage = () => {
         const orderedCourses = courses.slice();
         orderedCourses.sort(
             (a: IPureCourse, b: IPureCourse) =>
-            b.id -  a.id
+                b.id - a.id
         )
         setCourses(orderedCourses);
     }
@@ -85,7 +85,7 @@ const TutorCoursePage = () => {
                     <div>{tutorInfo?.linkedin}</div>
                 </div>
             </div>
-                <h1>我教授的課程 ({courses.length})</h1>
+            <h1>我教授的課程 ({courses.length})</h1>
             <div className="course-card-container">
                 {courses.map((course, index) => (
                     <div className="course-card" key={index}>
