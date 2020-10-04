@@ -98,7 +98,6 @@ const SettingPage = () => {
     const [show, setShow] = useState(false)
     const [stripeURL, setStripeURL] = useState('')
     const [isSubmitting, setIsSubmitting] = useState(false)
-    const [stripeId, setStripeId] = useState('');
     const [stripeStatus, setStripeStatus] = useState<boolean | null>(null)
 
     const handleClose = () => setShow(false);
@@ -116,7 +115,7 @@ const SettingPage = () => {
             }
           );
 
-        if (res.status != 200) {
+        if (res.status !== 200) {
             alert('something is wrong')
             return;
         }
@@ -134,8 +133,6 @@ const SettingPage = () => {
         setIntroduction(user.introduction)
 
         if (user.stripeId) {
-            setStripeId(user.stripeId)
-
             const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/payment/check-stripe-account-status/${user.email}`,
             {
               headers: {
@@ -177,7 +174,7 @@ const SettingPage = () => {
         if (introductionField) {
             introductionField.value = introduction
         }
-    }, [firstName, lastName, email])
+    }, [firstName, lastName, email, introduction, title])
     
     //changeHandler for individual field
     let handleFirstNameChange = (
@@ -243,7 +240,7 @@ const SettingPage = () => {
       } else if (lastName.length === 0) {
           setIsLastNameEmpty(true);
           return;
-      } else if (!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
+      } else if (!email.match(/^[\w]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
           setIsError(true);
           return;
       } else if (password.length > 0 && 
@@ -289,12 +286,6 @@ const SettingPage = () => {
       }
     };
 
-    let handleBeTutor = async () => {
-      // const res = await fetch(`${}`, {
-      //   method: 'POST',
-      // })
-    }
-
     let handleStripe = async () => {
         setIsSubmitting(true)
         const res = await fetch(
@@ -305,7 +296,7 @@ const SettingPage = () => {
             },
         })
 
-        if (res.status != 200) {
+        if (res.status !== 200) {
             alert('something is wrong')
             return;
         }
@@ -452,8 +443,8 @@ const SettingPage = () => {
                   <Grid item xs={12}>
                   <TextField
                     defaultValue={title}
-                    error={isError}
-                    helperText={isError ? "必須填寫" : ""}
+                    error={isTitleEmpty}
+                    helperText={isTitleEmpty ? "必須填寫" : ""}
                     variant="outlined"
                     required
                     fullWidth
@@ -469,8 +460,8 @@ const SettingPage = () => {
                 <TextField
                   multiline
                   defaultValue={introduction}
-                  error={isError}
-                  helperText={isError ? "必須填寫" : ""}
+                  error={isIntroductionEmpty}
+                  helperText={isIntroductionEmpty ? "必須填寫" : ""}
                   variant="outlined"
                   required
                   fullWidth
@@ -565,7 +556,15 @@ const SettingPage = () => {
             <Modal.Title>前往Stripe</Modal.Title>
           </Modal.Header>
 
-          <Modal.Body><a onClick={() => setShow(false)} href={stripeURL} target="_blank">{stripeURL}</a></Modal.Body>
+          <Modal.Body>
+            <a 
+              onClick={() => setShow(false)} 
+              href={stripeURL} 
+              target="_blank" 
+              rel="noopener noreferrer">
+                {stripeURL}
+            </a>
+            </Modal.Body>
           <Modal.Footer>
             <Button color="secondary" onClick={handleClose}>
               Close
