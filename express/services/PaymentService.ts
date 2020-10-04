@@ -57,7 +57,8 @@ export class PaymentService {
   createTransfer = async (
     tutor_name: string,
     amount: number,
-    chargeId: string
+    chargeId: string,
+    description: string
   ) => {
     const [result] = await this.knex
       .select(`${tables.USERS}.stripe_id`)
@@ -73,6 +74,7 @@ export class PaymentService {
       destination: tutorStripeAccountId,
       //transfer_group: transferGroupId,
       source_transaction: chargeId,
+      description: description,
     });
 
     return transfer;

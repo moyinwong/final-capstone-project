@@ -1,10 +1,11 @@
-import React from "react";
-import { Text, TextInput, View, Alert, Button } from "react-native";
+import React, { useContext } from "react";
+import { Text, TextInput, View, Button } from "react-native";
 import { PaymentsStripe as Stripe } from "expo-payments-stripe";
-import envData from "../../data/env";
-import { Formik, Field } from "formik";
+import envData from "../../../data/env";
+import { Formik } from "formik";
 import * as yup from "yup";
 import valid from "card-validator";
+import { CartContext } from "../../../contexts/cartContext";
 
 Stripe.setOptionsAsync({
   publishableKey:
@@ -28,19 +29,19 @@ const inputStyle = {
 };
 
 function StripeForm() {
-  //
-  //
-  //
-  //
-  //
-  //
-  //some code to get cart courses
-  //
-  //
-  //
-  //
-  //
-  //
+  const cartCourses: any = useContext(CartContext);
+
+  const cartCourses: any = useContext(CartContext);
+
+  console.log(cartCourses.cartList);
+
+  let totalPrice = 0;
+
+  for (let course of cartCourses.cartList) {
+    totalPrice += Math.round(parseFloat(course.price), 2);
+  }
+
+  console.log(totalPrice);
 
   const charge = async (cardInfo: CardInfo) => {
     console.log("run");
@@ -73,7 +74,11 @@ function StripeForm() {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ stripeToken: stripeToken, chargeAmount: 101 }),
+        body: JSON.stringify({
+          stripeToken: stripeToken,
+          chargeAmount: totalPrice,
+          cartCourses: cartCourses.cartList,
+        }),
       }
     );
 
