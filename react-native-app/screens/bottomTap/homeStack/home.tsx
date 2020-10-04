@@ -49,13 +49,6 @@ export default function Home() {
                 `${envData.REACT_APP_BACKEND_URL}${queryRoute}${categoryName}`
             );
 
-            //if no such category
-            if (fetchRes.status === 500) {
-                throw new Error("伺服器發生問題");
-                //dispatch(push("/404"));
-                //return;
-            }
-
             const result = await fetchRes.json();
             setPopularCoursesListData(result.courses);
         } catch (err) {

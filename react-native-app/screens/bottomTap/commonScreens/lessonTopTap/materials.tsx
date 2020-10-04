@@ -48,13 +48,6 @@ export default function Materials(props: { navigation: { goBack: () => void; nav
                 `${envData.REACT_APP_BACKEND_URL}${queryRoute}${lesson}`
             );
 
-            //if no such category
-            if (fetchRes.status === 500) {
-                throw new Error("伺服器發生問題");
-                //dispatch(push("/404"));
-                //return;
-            }
-
             const result = await fetchRes.json();
             setLessonFiles(result.files);
         } catch (err) {
