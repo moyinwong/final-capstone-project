@@ -132,7 +132,7 @@ const LessonPage: React.FC = () => {
       await getQuestionAndAnswer(lessonName);
       await getFiles(lessonName);
     })();
-  }, [userEmail, courseName, lessonName]);
+  }, [userEmail]);
 
   useEffect(() => {
     (async () => {
@@ -140,7 +140,7 @@ const LessonPage: React.FC = () => {
       if (lessonInfo?.lesson_id && threads.length === 0)
         await getThreads(lessonInfo.lesson_id);
     })();
-  }, [lessonInfo, threads]);
+  }, [lessonInfo]);
 
   //set is ready render after retrieve all data
   useEffect(() => {

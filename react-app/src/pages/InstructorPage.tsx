@@ -61,7 +61,7 @@ const InstructorPage = () => {
             getAllCourseByTutor();
             getStripStatus();
         }
-    }, [userEmail, getAllCourseByTutor, getStripStatus])
+    }, [userEmail])
 
     return (
         <Container >

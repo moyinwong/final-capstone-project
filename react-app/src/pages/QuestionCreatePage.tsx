@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import './QuestionCreatePage.scss'
-import { Button, CircularProgress } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import { Badge } from "react-bootstrap";
 
 interface IQuestion {
@@ -24,7 +24,7 @@ const QuestionCreatePage = () => {
     const { name, value } = e.target;
     const list: IQuestion[] = [...inputList];
     inputList[index].value = value;
-    //list[index][name] = value;
+    // list[index][name] = value;
     setInputList(list);
   };
 
@@ -86,7 +86,7 @@ const QuestionCreatePage = () => {
           },
           body: JSON.stringify(inputList)
       });
-
+      const result = await res.json();
   }
 
   return (
