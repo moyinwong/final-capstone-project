@@ -10,6 +10,10 @@ interface IUser {
 
 const UserContextProvider = (props: any) => {
 
+    const [isSignedIn, setIsSignedIn] = useState(
+        false
+    );
+
     const [user, setUser] = useState(
         {}
     );
@@ -22,7 +26,7 @@ const UserContextProvider = (props: any) => {
     };
 
     return (
-        <UserContext.Provider value={{ user, userLogin, userLogout }}>
+        <UserContext.Provider value={{ isSignedIn, setIsSignedIn, user, userLogin, userLogout }}>
             { props.children}
         </UserContext.Provider>
     )
