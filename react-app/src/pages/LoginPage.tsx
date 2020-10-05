@@ -170,7 +170,7 @@ export default function LoginPage(state: {
 
           <div>或以以下帳號登入</div>
 
-          <div id="social-login-button-container">
+          {/* <div id="social-login-button-container">
             <GoogleLogin
               style={{ width: "40px", height: "40px" }}
               clientId={`${process.env.REACT_APP_GOOGLE_APP_ID}`}
@@ -191,7 +191,7 @@ export default function LoginPage(state: {
               cookiePolicy={"single_host_origin"}
             />
             <CustomFacebookLogin previousLocation={previousLocation} />
-          </div>
+          </div> */}
 
           <Grid container>
             <Grid item>

@@ -4,28 +4,6 @@ import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const Linkbar = () => {
-  // const isDarkMode = useSelector((state: IRootState) => state.dark.mode);
-
-  // const categories: string[] = [
-  //   "中文",
-  //   "英文",
-  //   "數學",
-  //   "通識",
-  //   "物理",
-  //   "化學",
-  //   "生物",
-  //   "經濟",
-  //   "歷史",
-  //   "企會財",
-  //   "ICT",
-  //   "視覺藝術",
-  //   "M1",
-  //   "M2",
-  // ];
-
-  // const darkMode = {
-  //   color: 'dark'
-  // }
 
   return (
     <div className="navigation-bar">
@@ -46,14 +24,12 @@ const Linkbar = () => {
             "視覺藝術",
             "M1",
             "M2",
-          ].map((category, i) => {
-            return (
+          ].map((category, i) => 
               <Link to={`/category/${category}`} key={`cat_${i}`} id={category}>
                 {category}
               </Link>
-            );
-          })}
-          {/* <Link to={`/category/中文`} id='中文'>中文</Link> */}
+          )}
+          {/* <Link to={`/category/中文`} key={`cat_ee`} id='English'>中文</Link> */}
           <NavDropdown title="其他" id="basic-nav-dropdown">
             <NavDropdown.Item href="/category/others/編程" key="o1">
               <Link className="dropdown-item-link" to="/category/others/編程">
