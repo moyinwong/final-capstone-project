@@ -23,7 +23,7 @@ import IUser from '../../Interfaces/IUser';
 export default function Login() {
 
     // Context
-    const { setIsSignedIn, setUser } = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
 
     // Hooks
     const navigation = useNavigation();
@@ -42,13 +42,18 @@ export default function Login() {
     const getUser = async () => {
         try {
             const jsonString = await AsyncStorage.getItem('userKey')
-            if (jsonString != null) {
-                const jsonObject = await JSON.parse(jsonString);
-                console.log(jsonObject);
+            const jsonObject = await JSON.parse(jsonString);
+            if (jsonObject != null) {
 
-                setUser(jsonObject);
-                navigation.navigate('LeftDrawer');
-                return jsonObject
+                if (jsonObject.token != null) {
+                    setUser(jsonObject);
+
+                    console.log('已自動登入');
+                    navigation.navigate('LeftDrawer');
+                    return jsonObject
+                }
+
+                return null
             } else {
                 return null
             }
@@ -74,12 +79,12 @@ export default function Login() {
 
         if (res.status == 200) {
             const json = await res.json();
-            setIsSignedIn(true);
             setUser(json);
 
             // Store User
             storeUser(json);
 
+            console.log('已登入');
             navigation.navigate('LeftDrawer');
         } else {
             Alert.alert(

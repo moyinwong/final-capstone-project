@@ -74,7 +74,9 @@ export default function Home() {
             showsVerticalScrollIndicator={false}
         >
 
-            <Text style={homeStyles.screenTitle}>{'歡迎, ' + user.email.split('@')[0]}</Text>
+            {user.email != null &&
+                (<Text style={homeStyles.screenTitle}>{'歡迎, ' + user.email.split('@')[0]}</Text>)
+            }
 
             <HomeCategories />
 
