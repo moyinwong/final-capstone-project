@@ -229,12 +229,11 @@ export class UserController {
         userInfo.password = await hashPassword(userInfo.password);
       }
 
-      // const userImage = req.file;
-      const userImageFile = (req.file as any).key
+      const userImage = req.file;
 
       let editedUserId;
-      if (userImageFile) {
-        editedUserId = await this.userService.editProfile(userInfo, userId, userImageFile)
+      if (userImage) {
+        editedUserId = await this.userService.editProfile(userInfo, userId, userImage.filename)
       } else {
         editedUserId = await this.userService.editProfile(userInfo, userId)
       }
