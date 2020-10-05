@@ -192,6 +192,29 @@ export default function Courses() {
                 </View>
             </View>
 
+            <View style={courseStyles.tutorBox}>
+                <View style={courseStyles.tutorPicContainer}>
+                    <Image
+                        style={courseStyles.tutorPic}
+                        resizeMode='cover'
+                        source={{ uri: `${envData.REACT_APP_BACKEND_FILE_URL}/img/${courseInfo.tutor_image}` }}
+                    />
+                </View>
+                <View>
+                    <Text style={courseStyles.tutorName}>{courseInfo.tutor_name}</Text>
+                </View>
+                <View style={{ marginLeft: 40 }}>
+                    <TouchableOpacity
+                        style={courseStyles.tutorCheckButton}
+                        onPress={() => navigation.navigate('TutorInfo', {
+                            tutor: courseInfo.tutor_email
+                        })}
+                    >
+                        <Text style={courseStyles.tutorCheckButtonText}>查看導師</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+
             <View>
                 <View style={courseStyles.titleContainer}>
                     <Pressable
@@ -248,7 +271,7 @@ export default function Courses() {
                 ) : (
                         <FlatList
                             style={courseStyles.infoBox}
-                            keyExtractor={(item) => item.comment}
+                            keyExtractor={(item) => { item.user_name }}
                             data={comments}
                             scrollEnabled={false}
 
@@ -273,29 +296,6 @@ export default function Courses() {
                         />
                     )}
 
-            </View>
-
-            <View style={courseStyles.tutorBox}>
-                <View style={courseStyles.tutorPicContainer}>
-                    <Image
-                        style={courseStyles.tutorPic}
-                        resizeMode='cover'
-                        source={{ uri: `${envData.REACT_APP_BACKEND_FILE_URL}/img/${courseInfo.tutor_image}` }}
-                    />
-                </View>
-                <View>
-                    <Text style={courseStyles.tutorName}>{courseInfo.tutor_name}</Text>
-                </View>
-                <View style={{ marginLeft: 40 }}>
-                    <TouchableOpacity
-                        style={courseStyles.tutorCheckButton}
-                        onPress={() => navigation.navigate('TutorInfo', {
-                            tutor: courseInfo.tutor_email
-                        })}
-                    >
-                        <Text style={courseStyles.tutorCheckButtonText}>查看導師</Text>
-                    </TouchableOpacity>
-                </View>
             </View>
 
         </ScrollView >

@@ -1,10 +1,12 @@
 // React, React Native
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { View, Text, Pressable } from 'react-native';
 
-// Screens
-import SignIn from './signIn';
-import SignUp from './signUp';
+// Context
+import { UserContext } from '../../contexts/userContext';
+
+// Navigation
+import { useNavigation } from '@react-navigation/native';
 
 // Styles
 import globalStyles from '../../styles/globalStyles';
@@ -12,31 +14,30 @@ import loginStyles from '../../styles/loginStyeles';
 
 export default function Login() {
 
-    // State
-    const [showSignInScreen, setShowSignInScreen] = useState(
-        true
-    );
+    // Context
+    const { setIsSignedIn } = useContext(UserContext);
+
+    // Hooks
+    const navigation = useNavigation();
 
     return (
         <View style={{ ...globalStyles.container, paddingTop: 30 }}>
-            <Text>Login Screen</Text>
+            <Text>登入帳戶</Text>
+
             <Pressable
                 style={loginStyles.signInUpToggle}
-                onPress={() => { setShowSignInScreen(true) }}
+                onPress={() => navigation.navigate('LeftDrawer')}
             >
-                <Text>Click to Sign In</Text>
+                <Text>登入</Text>
             </Pressable>
+
             <Pressable
                 style={loginStyles.signInUpToggle}
-                onPress={() => { setShowSignInScreen(false) }}
+                onPress={() => navigation.navigate('SignUp')}
             >
-                <Text>Click to Sign Up</Text>
+                <Text>未有帳戶? 立刻註冊</Text>
             </Pressable>
-            {showSignInScreen ? (
-                <SignIn />
-            ) : (
-                    <SignUp />
-                )}
+
         </View>
     )
 }
