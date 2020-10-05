@@ -3,10 +3,6 @@ image: node:latest
 stages:
   - server-testing
   - server-deploy
-<<<<<<< HEAD
-
-=======
->>>>>>> master
 
 variables:
   POSTGRES_DB: capstone_test
@@ -26,28 +22,6 @@ server-testing:
   script:
     - yarn jest
 
-<<<<<<< HEAD
-=======
-# react-testing:
-#   before_script:
-#     - cd react-app
-#     - yarn install
-#   stage: react-testing
-#   script:
-#     - CI=true yarn test
-
-# react-build:
-#   stage: react-build
-#   before_script:
-#     - cd react-app/
-#   script:
-#     - yarn install
-#     - yarn build
-#   artifacts:
-#     paths:
-#       - react/build
-
->>>>>>> master
 server-deploy:
   before_script:
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
@@ -72,19 +46,4 @@ server-deploy:
           yarn install;
           yarn knex migrate:latest --env production;
           forever restart index.js;"
-<<<<<<< HEAD
-=======
   
-# react-deploy:
-#   image: "python:3.6"
-#   stage: react-deploy
-#   before_script:
-#     - pip install awscli
-#   dependencies:
-#     - react-build
-#   only:
-#     - production
-#   script:
-#     - aws s3 sync react/build s3://${BUCKET_NAME} --delete
-#     - aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION} --paths "/*"
->>>>>>> master
