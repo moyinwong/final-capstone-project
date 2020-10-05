@@ -230,7 +230,6 @@ export class UserController {
       }
 
       const userImage = req.file;
-      // const userImageFile = (req.file as any).key
 
       let editedUserId;
       if (userImage) {
