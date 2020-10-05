@@ -6,7 +6,7 @@
 }
 
 .course-top-background {
-  background-image: linear-gradient(45deg, #8ff57d, #1dfdc6, #3a7cb4);;
+  background-image: linear-gradient(45deg, #8ff57d, #1dfdc6, #3a7cb4);
   width: 100vw;
   height: 400px;
   padding: 25px;
@@ -99,7 +99,7 @@
 
   > div {
     width: 76vw;
-    height: 250px;
+    //height: 250px;
     display: flex;
 
     .bottom-info-container {
@@ -131,7 +131,7 @@
     justify-content: space-between;
 
     .MuiTypography-body1 {
-      text-align:right;
+      text-align: right;
     }
   }
 }

@@ -7,7 +7,7 @@ import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { login, loginGoogleThunk } from "../redux/auth/thunk";
@@ -110,7 +110,9 @@ export default function LoginPage(state: {
   };
 
   const responseGoogle = (response: any) => {
+    console.log("called callback");
     if (response.accessToken) {
+      console.log("token: ", response);
       dispatch(loginGoogleThunk(response.accessToken, previousLocation));
     }
   };

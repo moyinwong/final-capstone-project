@@ -23,8 +23,8 @@ export default function SignUp() {
     const navigation = useNavigation();
 
     return (
-        <View style={{ ...globalStyles.container, paddingTop: 30 }}>
-            <Text>註冊</Text>
+        <View style={{ ...globalStyles.container, ...loginStyles.form }}>
+            <Text style={loginStyles.title}>註冊</Text>
 
             <Formik
                 initialValues={{ firstName: '', lastName: '', email: '', password: '' }}
@@ -36,29 +36,34 @@ export default function SignUp() {
                 {(props) => (
                     <View>
                         <TextInput
+                            style={loginStyles.input}
                             placeholder='名'
                             onChangeText={props.handleChange('firstName')}
                             value={props.values.firstName}
                         />
                         <TextInput
+                            style={loginStyles.input}
                             placeholder='姓'
                             onChangeText={props.handleChange('lastName')}
                             value={props.values.lastName}
                         />
                         <TextInput
+                            style={loginStyles.input}
                             placeholder='電郵地址'
                             onChangeText={props.handleChange('email')}
                             value={props.values.email}
                         />
                         <TextInput
+                            style={loginStyles.input}
                             placeholder='密碼'
                             onChangeText={props.handleChange('password')}
                             value={props.values.password}
                         />
                         <Pressable
+                            style={loginStyles.logInButton}
                             onPress={props.handleSubmit}
                         >
-                            <Text>註冊</Text>
+                            <Text style={loginStyles.buttonText}>註冊</Text>
                         </Pressable>
 
                     </View>
@@ -67,9 +72,10 @@ export default function SignUp() {
             </Formik>
 
             <Pressable
+                style={loginStyles.button}
                 onPress={() => navigation.navigate('Login')}
             >
-                <Text>已擁有帳戶? 立刻登入</Text>
+                <Text style={{ ...loginStyles.buttonText, color: '#5b96f7' }}>已擁有帳戶? 立刻登入</Text>
             </Pressable>
 
         </View>
