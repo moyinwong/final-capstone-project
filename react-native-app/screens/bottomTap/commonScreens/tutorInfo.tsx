@@ -182,7 +182,11 @@ export default function TutorInfo() {
                         </View>
                         <View style={tutorInfoStyles.courseInfoContainer}>
 
-                            <Text style={tutorInfoStyles.courseTitle}>{item.course_name}</Text>
+                            <Text
+                                numberOfLines={2}
+                                ellipsizeMode='tail'
+                                style={tutorInfoStyles.courseTitle}
+                            >{item.course_name}</Text>
                             <View style={tutorInfoStyles.courseSubInfoContainer}>
                                 <Text style={tutorInfoStyles.courseInfoText}>{item.tutor_name}</Text>
                                 <Text style={tutorInfoStyles.courseInfoText}>{"總共堂數: " + item.lessons_number}</Text>

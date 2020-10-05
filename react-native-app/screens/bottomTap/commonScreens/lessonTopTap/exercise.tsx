@@ -1,6 +1,6 @@
 // React, React Native
 import React, { useContext } from 'react';
-import { View, Text, Pressable } from 'react-native';
+import { View, Text, Pressable, TouchableOpacity } from 'react-native';
 
 // Context
 import { LessonContext } from '../../../../contexts/lessonContext';
@@ -53,6 +53,18 @@ export default function Exercise(props: { navigation: { goBack: () => void; }; }
                         <Text style={exerciseStyles.title}>暫未有練習</Text>
                     </View>
                 )}
+
+            {filteredQuestions[0] && (
+                <View style={exerciseStyles.submitButtonContainer}>
+                    <TouchableOpacity
+                        style={exerciseStyles.submitButton}
+                        onPress={() => console.log('提交')}
+                    >
+                        <Text style={exerciseStyles.submitButtonText}>提交</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
+
         </View>
     )
 }

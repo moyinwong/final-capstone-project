@@ -141,12 +141,20 @@ export default function CoursesList() {
                         <View style={coursesListStyles.courseInfoContainer}>
 
                             <View style={coursesListStyles.courseInfoRightContainer}>
-                                <Text style={coursesListStyles.courseTitle}>{item.course_name}</Text>
+                                <Text
+                                    numberOfLines={2}
+                                    ellipsizeMode='tail'
+                                    style={coursesListStyles.courseTitle}
+                                >{item.course_name}</Text>
                                 <View style={coursesListStyles.courseSubInfoContainer}>
                                     <View style={coursesListStyles.courseSubInfoTextContainer}>
                                         <Text style={coursesListStyles.courseInfoText}>{item.tutor_name}</Text>
                                         <Entypo style={coursesListStyles.courseInfoDot} name="dot-single" size={16} color="#555555" />
-                                        <Text style={coursesListStyles.courseInfoText}>{item.course_description}</Text>
+                                        <Text
+                                            numberOfLines={2}
+                                            ellipsizeMode='tail'
+                                            style={coursesListStyles.courseInfoText}
+                                        >{item.course_description}</Text>
                                         <Entypo style={coursesListStyles.courseInfoDot} name="dot-single" size={16} color="#555555" />
                                         <Text style={coursesListStyles.courseInfoText}>{"總共堂數: " + item.lessons_number}</Text>
                                     </View>

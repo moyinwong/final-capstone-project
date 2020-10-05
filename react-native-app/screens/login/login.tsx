@@ -18,7 +18,7 @@ export default function Login() {
     );
 
     return (
-        <View style={{...globalStyles.container, paddingTop: 30}}>
+        <View style={{ ...globalStyles.container, paddingTop: 30 }}>
             <Text>Login Screen</Text>
             <Pressable
                 style={loginStyles.signInUpToggle}
