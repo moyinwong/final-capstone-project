@@ -1,5 +1,5 @@
 // React, React Native
-import React, { useContext } from 'react';
+import React, { useContext, useCallback } from 'react';
 import { View, Text, Pressable, TextInput, Alert } from 'react-native';
 import { Formik } from 'formik';
 
@@ -7,7 +7,7 @@ import { Formik } from 'formik';
 import { UserContext } from '../../contexts/userContext';
 
 // Navigation
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 // Styles
 import globalStyles from '../../styles/globalStyles';
@@ -15,6 +15,10 @@ import loginStyles from '../../styles/loginStyles';
 
 // Data
 import envData from '../../data/env';
+import AsyncStorage from '@react-native-community/async-storage';
+
+// Interface
+import IUser from '../../Interfaces/IUser';
 
 export default function Login() {
 
@@ -23,6 +27,35 @@ export default function Login() {
 
     // Hooks
     const navigation = useNavigation();
+
+    // Store User
+    const storeUser = async (user: IUser) => {
+        try {
+            const userJSON = JSON.stringify(user)
+            await AsyncStorage.setItem('userKey', userJSON)
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    // Get User from Storage
+    const getUser = async () => {
+        try {
+            const jsonString = await AsyncStorage.getItem('userKey')
+            if (jsonString != null) {
+                const jsonObject = await JSON.parse(jsonString);
+                console.log(jsonObject);
+
+                setUser(jsonObject);
+                navigation.navigate('LeftDrawer');
+                return jsonObject
+            } else {
+                return null
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     // Submit Function
     async function submitLogin(email: string, password: string) {
@@ -43,6 +76,10 @@ export default function Login() {
             const json = await res.json();
             setIsSignedIn(true);
             setUser(json);
+
+            // Store User
+            storeUser(json);
+
             navigation.navigate('LeftDrawer');
         } else {
             Alert.alert(
@@ -58,8 +95,15 @@ export default function Login() {
                 { cancelable: true }
             )
         }
-
     }
+
+    // If User stored in Storage
+    const nothing = 'nothing'
+    useFocusEffect(
+        useCallback(() => {
+            getUser()
+        }, [nothing])
+    );
 
     return (
         <View style={{ ...globalStyles.container, ...loginStyles.form }}>
