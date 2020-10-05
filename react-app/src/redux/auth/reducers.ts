@@ -20,6 +20,7 @@ export const authReducer = (
         ...state,
         email: action.userEmail,
         isAuthenticated: true,
+        image: action.image,
       };
 
     case '@@AUTH/CHECK_TUTOR':

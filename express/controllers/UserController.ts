@@ -62,6 +62,7 @@ export class UserController {
         userId: user.id,
         email: user.email,
         isTutor: user.is_tutor,
+        image: user.image,
       });
     } catch (e) {
       logger.error(e.message);
@@ -156,6 +157,7 @@ export class UserController {
         id: user.id,
         email: user.email,
         isTutor: user.is_tutor,
+        image: user.image,
       });
     } catch (e) {
       logger.error(e.message);
@@ -213,6 +215,7 @@ export class UserController {
         id: user.id,
         email: user.email,
         isTutor: user.is_tutor,
+        image: user.image,
       });
     } catch (e) {
       logger.error(e.message);

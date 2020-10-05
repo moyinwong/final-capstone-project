@@ -12,7 +12,7 @@ const SingleCard = (course: ICourse) => {
               <Link to={`/course/${course.course_name}`}>
                 {course.image.match(/http/) ? (
                 <Card.Img variant="top" src={course.image} />
-                ) : <Card.Img id="carousel-card-img" variant="top" src={`https://api.e-ducate.life/img/${course.image}`}/>}
+                ) : <Card.Img id="carousel-card-img" variant="top" src={`${process.env.REACT_APP_BACKEND_IMAGE}/${course.image}`}/>}
                 
               </Link>
               <Card.Body className="carousel-card-body">

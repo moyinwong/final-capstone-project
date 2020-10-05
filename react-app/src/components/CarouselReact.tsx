@@ -24,7 +24,7 @@ const CarouselReact: React.FC<{
     console.log("type", type);
     if (type === "popular") {
       setTypeTopic("最熱門課程");
-      res = await fetch(`https://api.e-ducate.life/api/course/popular`);
+      res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/course/popular`);
     } else if (type === "goodComment") {
       setTypeTopic("最受好評課程");
       res = await fetch(

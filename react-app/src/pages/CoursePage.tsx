@@ -336,7 +336,7 @@ const CoursePage: React.FC = () => {
                   src={
                     course.image.match(/http/)
                       ? course.image
-                      : `https://api.e-ducate.life/img/${course.image}`
+                      : `${process.env.REACT_APP_BACKEND_IMAGE}/${course.image}`
                   }
                   alt="course"
                 />
@@ -436,7 +436,7 @@ const CoursePage: React.FC = () => {
                       {course.tutor_name}
                       {course.tutor_image?.match(/http/) ? (
                         <img className="tutor-image" src={course.tutor_image} alt="tutor profile" />
-                        ) : ( <img className="tutor-image" src={`https://api.e-ducate.life/img/${course.tutor_image}`} 
+                        ) : ( <img className="tutor-image" src={`${process.env.REACT_APP_BACKEND_IMAGE}/${course.tutor_image}`} 
                               alt="tutor profile"/>)
                       }
                     </Link> 
@@ -450,7 +450,7 @@ const CoursePage: React.FC = () => {
                   src={
                     course.image.match(/http/)
                       ? course.image
-                      : `https://api.e-ducate.life/img/${course.image}`
+                      : `${process.env.REACT_APP_BACKEND_IMAGE}/${course.image}`
                   }
                 />
                 <Card.Body>

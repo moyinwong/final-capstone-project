@@ -32,7 +32,7 @@ export function login(
     if (json.token != null) {
       localStorage.setItem("token", json.token);
       dispatch(loginSuccess(json.token, json.userId));
-      dispatch(getUser(json.email));
+      dispatch(getUser(json.email, json.image));
       dispatch(checkTutor(json.isTutor));
       if (previousLocation?.match(/login/) || previousLocation?.match(/signup/)) {
         dispatch(push("/"));
@@ -67,7 +67,7 @@ export function restoreLogin() {
 
       if (res.status === 200) {
         dispatch(loginSuccess(token, json.user.id));
-        dispatch(getUser(json.user.email));
+        dispatch(getUser(json.user.email, json.user.image));
         dispatch(checkTutor(json.user.isTutor));
         if (getState().router.location.pathname.match(/login/)) {
           dispatch(push("/"));
@@ -107,8 +107,8 @@ export const loginGoogleThunk = (
 
     if (res.status === 200) {
       localStorage.setItem("token", data.token);
-      dispatch(loginSuccess(data.tokenl, data.id));
-      dispatch(getUser(data.email));
+      dispatch(loginSuccess(data.token, data.id));
+      dispatch(getUser(data.email, data.image));
       dispatch(checkTutor(data.isTutor));
       if (previousLocation) {
         console.log("1");
@@ -143,7 +143,7 @@ export function loginFacebook(accessToken: string, previousLocation: string) {
     if (res.status === 200) {
       localStorage.setItem("token", json.token);
       dispatch(loginSuccess(json.token, json.id));
-      dispatch(getUser(json.email));
+      dispatch(getUser(json.email, json.image));
       dispatch(checkTutor(json.isTutor));
       if (previousLocation) {
         dispatch(push(previousLocation));

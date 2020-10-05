@@ -1,23 +1,24 @@
 /* Position and sizing of burger button */
 .bm-burger-button {
-  background-color: black;
+  // background-color: black;
   position: fixed;
   margin: 5px;
   width: 30px;
   height: 24px;
   left: 36px;
   top: 36px;
-  border: 6px solid black;
+  // border: 6px solid black;
 }
 
 /* Color/shape of burger icon bars */
 .bm-burger-bars {
-  background: white;
+  // background: white;
+  background: #373a47;
 }
 
 /* Color/shape of burger icon bars on hover*/
 .bm-burger-bars-hover {
-  background: #a90000;
+  background: aqua;
 }
 
 /* Position and sizing of clickable cross button */

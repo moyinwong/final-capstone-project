@@ -10,6 +10,7 @@ export interface IAuthState {
     isAuthenticated: boolean | null;
     message: string | null;
     isTutor: boolean;
+    image: string | null;
 }
 
 export const initialState: IAuthState = {
@@ -18,5 +19,6 @@ export const initialState: IAuthState = {
     email: null,
     isAuthenticated: null,
     message: '',
-    isTutor: false
+    isTutor: false,
+    image: null,
 }

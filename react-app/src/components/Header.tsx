@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { ReactReduxContext, useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
 import { push } from "connected-react-router";
 import {
@@ -9,6 +9,7 @@ import {
   Form,
   FormControl,
 } from "react-bootstrap";
+import SearchIcon from '@material-ui/icons/Search';
 import BurgerMenu from "./BurgerMenu";
 import Linkbar from "./Linkbar";
 import DarkModeSwitch from "./DarkModeSwitch";
@@ -23,6 +24,8 @@ const Header = (props: any) => {
     (state: IRootState) => state.auth.isAuthenticated
   );
   const userEmail = useSelector((state: IRootState) => state.auth.email);
+  const userImage = useSelector((state: IRootState) => state.auth.image);
+
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -48,6 +51,9 @@ const Header = (props: any) => {
   const handleSearch = async (event: any) => {
     event.preventDefault();
     let searchText = (document.getElementById('search-bar')! as HTMLInputElement).value
+    if (searchText.length === 0) {
+      return;
+    } 
 
     dispatch(push(`/search/${searchText}`))
   }
@@ -83,11 +89,10 @@ const Header = (props: any) => {
               <Form inline>
                 <FormControl
                   type="text"
-                  placeholder="Search"
                   className="mr-sm-2"
                   id="search-bar"
                 />
-                <Button onClick={handleSearch} type="submit" variant="outline-success">Search</Button>
+                <Button className="search-button" onClick={handleSearch} type="submit" variant="outline-success"><SearchIcon /></Button>
               </Form>
               <DarkModeSwitch />
             </Nav>
@@ -116,8 +121,8 @@ const Header = (props: any) => {
                     <i className="fas fa-shopping-cart"></i>
                   </button>
                   <button className="user-icon" onClick={() => setOpen(!open)}>
-                    {/* <FontAwesomeIcon icon={faUser} size="1x"/> */}
-                    <i className="far fa-user"></i>
+                    {userImage ? <img src={`${process.env.REACT_APP_BACKEND_IMAGE}/${userImage}`} /> 
+                    : <i className="far fa-user"></i>}
                   </button>
                   {open && (
                     <div ref={dropdownRef}>

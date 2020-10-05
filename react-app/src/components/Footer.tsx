@@ -7,7 +7,11 @@ const Footer = () => {
     let location = useLocation();
     let currentPath = location.pathname;
 
-    if (currentPath.match(/login/) || currentPath.match(/signup/)) {
+    if (currentPath.match(/login/) || 
+        currentPath.match(/signup/) || 
+        currentPath.match(/cart/) ||
+        currentPath.match(/my-course/) ||
+        currentPath.match(/instructor/)) {
         return null;
     }
 

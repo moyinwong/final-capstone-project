@@ -20,6 +20,7 @@ const BurgerMenu: React.FC = () => {
     (state: IRootState) => state.auth.isAuthenticated
   );
   const userEmail = useSelector((state: IRootState) => state.auth.email);
+  const userImage = useSelector((state: IRootState) => state.auth.image);
 
   const currentLocation = useLocation();
 
@@ -61,7 +62,8 @@ const BurgerMenu: React.FC = () => {
         <div className="user-info">
           <div className="user-icon-container">
             <button className="user-icon" onClick={() => setOpen(!open)}>
-              <i className="far fa-user"></i>
+              {userImage ? <img src={`${process.env.REACT_APP_BACKEND_IMAGE}/${userImage}`} /> 
+              : <i className="far fa-user"></i>}
             </button>
             {open && <DropdownMenu />}
           </div>

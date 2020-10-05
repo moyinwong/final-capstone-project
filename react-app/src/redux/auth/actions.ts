@@ -16,6 +16,7 @@ interface ILoginFail {
 interface IGetUser {
   type: "@@AUTH/GET_USER";
   userEmail: string;
+  image: string;
 }
 
 interface ICheckTutor {
@@ -35,10 +36,11 @@ export function loginSuccess(token: string, userId: number): ILoginSuccess {
   };
 }
 
-export function getUser(userEmail: string): IGetUser {
+export function getUser(userEmail: string, image: string): IGetUser {
   return {
     type: "@@AUTH/GET_USER" as "@@AUTH/GET_USER",
     userEmail,
+    image,
   };
 }
 

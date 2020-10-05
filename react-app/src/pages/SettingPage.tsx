@@ -368,7 +368,6 @@ const SettingPage = () => {
                   required
                   fullWidth
                   id="firstName"
-                  label="名"
                   autoFocus
                   onChange={handleFirstNameChange}
                 />
@@ -383,7 +382,6 @@ const SettingPage = () => {
                   required
                   fullWidth
                   id="lastName"
-                  label="姓"
                   name="lastName"
                   autoComplete="lname"
                   onChange={handleLastNameChange}
@@ -399,7 +397,6 @@ const SettingPage = () => {
                   required
                   fullWidth
                   id="email"
-                  label="電郵地址"
                   name="email"
                   autoComplete="email"
                   onChange={handleEmailChange}
@@ -414,7 +411,7 @@ const SettingPage = () => {
                   required
                   fullWidth
                   name="password"
-                  label="更加密碼"
+                  label="更改密碼"
                   type="password"
                   id="password"
                   autoComplete="current-password"
