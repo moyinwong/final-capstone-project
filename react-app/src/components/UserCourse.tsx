@@ -83,7 +83,7 @@ const UserCourse = (course:IUserCourse) => {
 
                         {course.image.match(/http/) ? (
                         <Card.Img variant="top" src={course.image} />
-                        ) : <Card.Img id="carousel-card-img" variant="top" src={`http://localhost:8080/img/${course.image}`}/>}
+                        ) : <Card.Img id="carousel-card-img" variant="top" src={`https://api.e-ducate.life/img/${course.image}`}/>}
                         
                     </Link>
                     <Card.Body className="carousel-card-body">
