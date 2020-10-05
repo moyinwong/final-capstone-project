@@ -1,9 +1,13 @@
 // React, React Native
-import React from 'react';
+import React, { useContext } from 'react';
 import { Alert } from 'react-native';
+
+// Context
+import { UserContext } from '../../contexts/userContext';
 
 // Navigation
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer'
+import { useNavigation } from '@react-navigation/native';
 
 // Icons
 import { FontAwesome, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
@@ -14,8 +18,40 @@ import BottomTap from '../bottomTap/bottomTap';
 // Screens
 import Feedback from '../../screens/leftDrawer/feedback';
 
+// Data
+import AsyncStorage from '@react-native-community/async-storage';
+
 export default function LeftDrawer() {
+
     const Drawer = createDrawerNavigator();
+
+    // Hooks
+    const navigation = useNavigation();
+
+    // Context
+    const { setUser } = useContext(UserContext);
+
+    // Log User out from Storage & Context
+    const logUserOut = async () => {
+        try {
+
+            const user = {
+                "email": null,
+                "isTutor": null,
+                "token": null,
+                "userId": null,
+            }
+
+            const userJSON = JSON.stringify(user);
+            setUser(userJSON);
+            await AsyncStorage.setItem('userKey', userJSON);
+
+            console.log('已登出');
+            navigation.navigate('Login');
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     function logoutAlert() {
         Alert.alert(
@@ -27,7 +63,7 @@ export default function LeftDrawer() {
                     onPress: () => console.log("取消"),
                     style: "cancel"
                 },
-                { text: "登出", onPress: () => console.log("登出") }
+                { text: "登出", onPress: () => logUserOut() }
             ],
             { cancelable: true }
         )
