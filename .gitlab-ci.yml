@@ -3,6 +3,7 @@ image: node:latest
 stages:
   - server-testing
   - server-deploy
+  - react-build
 
 variables:
   POSTGRES_DB: capstone_test
@@ -46,4 +47,14 @@ server-deploy:
           yarn install;
           yarn knex migrate:latest --env production;
           forever restart index.js;"
-  
+
+react-build:
+  stage: react-build
+  before_script:
+    - cd react-app/
+  script:
+    - yarn install
+    - yarn build
+  artifacts:
+    paths:
+      - react/build
