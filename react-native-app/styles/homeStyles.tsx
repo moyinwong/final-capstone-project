@@ -2,17 +2,61 @@
 import { StyleSheet } from 'react-native';
 
 const homeStyles = StyleSheet.create({
+    linearGradient: {
+        height: 285,
+        width: '100%',
+        position: 'absolute',
+        top: -100,
+        zIndex: -1,
+        borderBottomRightRadius: 20
+    },
+    welcomeText: {
+        marginTop: 12,
+        marginLeft: 16,
+        marginBottom: 12,
+        fontSize: 24
+    },
+    searchBox: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    searchText: {
+        flex: 1,
+        marginLeft: 16,
+        marginRight: 6,
+        marginBottom: 8,
+        paddingVertical: 8,
+        paddingLeft: 10,
+        borderRadius: 10,
+        fontSize: 21,
+        backgroundColor: 'rgba(255, 255, 255, 0.9)'
+    },
+    searchButton: {
+        marginRight: 16
+    },
     titleContainer: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        marginLeft: 20,
+        marginLeft: 8,
         marginBottom: 2
+    },
+    titleButton: {
+        marginRight: 10,
+        paddingVertical: 6,
+        paddingHorizontal: 10
     },
     screenTitle: {
         fontWeight: 'bold',
-        fontSize: 20
+        fontSize: 20,
+        color: '#000000'
+    },
+    nonActiveScreenTitle: {
+        fontSize: 20,
+        color: '#828282'
     },
     flatList: {
         paddingLeft: 10
