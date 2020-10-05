@@ -1,6 +1,9 @@
 // React, React Native
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
+
+// Context
+import { UserContext } from '../../../contexts/userContext';
 
 // Navigation
 import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
@@ -16,6 +19,9 @@ import myCoursesStyles from '../../../styles/myCoursesStyles';
 import envData from '../../../data/env';
 
 export default function MyCoursesList() {
+
+    // Context
+    const { user } = useContext(UserContext);
 
     // Hooks
     const navigation = useNavigation();
@@ -43,13 +49,20 @@ export default function MyCoursesList() {
     // Fetch
     async function getAllCoursesByCategory(categoryName: string) {
         try {
-            let queryRoute: string = "/category/";
+            let queryRoute: string = "/user/course-detail/all/";
+            console.log(user);
+            let userId = user.userId;
+            let token = user.token;
 
             const fetchRes = await fetch(
-                `${envData.REACT_APP_BACKEND_URL}${queryRoute}${categoryName}`
-            );
+                `${envData.REACT_APP_BACKEND_URL}${queryRoute}${userId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
 
             const result = await fetchRes.json();
+            console.log(result.courses);
             setCoursesListData(result.courses);
         } catch (err) {
             console.log(err);
@@ -61,7 +74,7 @@ export default function MyCoursesList() {
 
             <FlatList
                 style={myCoursesStyles.flatList}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item) => item.course_id.toString()}
                 data={coursesListData}
                 showsVerticalScrollIndicator={false}
 
@@ -100,7 +113,7 @@ export default function MyCoursesList() {
                                         numberOfLines={2}
                                         ellipsizeMode='tail'
                                         style={myCoursesStyles.courseInfoText}
-                                    >{item.course_description}</Text>
+                                    >{item.objective}</Text>
                                     <Text style={myCoursesStyles.courseInfoText}>{"總共堂數: " + item.lessons_number}</Text>
                                 </View>
 

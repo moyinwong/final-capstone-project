@@ -1,5 +1,5 @@
 // React, React Native
-import React, { useContext, useCallback } from 'react';
+import React, { useContext } from 'react';
 import { View, Text, Pressable, TextInput, Alert } from 'react-native';
 import { Formik } from 'formik';
 
@@ -7,7 +7,7 @@ import { Formik } from 'formik';
 import { UserContext } from '../../contexts/userContext';
 
 // Navigation
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 // Styles
 import globalStyles from '../../styles/globalStyles';
@@ -28,41 +28,7 @@ export default function Login() {
     // Hooks
     const navigation = useNavigation();
 
-    // Store User
-    const storeUser = async (user: IUser) => {
-        try {
-            const userJSON = JSON.stringify(user)
-            await AsyncStorage.setItem('userKey', userJSON)
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    // Get User from Storage
-    const getUser = async () => {
-        try {
-            const jsonString = await AsyncStorage.getItem('userKey')
-            const jsonObject = await JSON.parse(jsonString);
-            if (jsonObject != null) {
-
-                if (jsonObject.token != null) {
-                    setUser(jsonObject);
-
-                    console.log('已自動登入');
-                    navigation.navigate('LeftDrawer');
-                    return jsonObject
-                }
-
-                return null
-            } else {
-                return null
-            }
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    // Submit Function
+    // Submit Log In
     async function submitLogin(email: string, password: string) {
         let queryRoute = '/user/login';
         const res = await fetch(`${envData.REACT_APP_BACKEND_URL}${queryRoute}`, {
@@ -102,13 +68,15 @@ export default function Login() {
         }
     }
 
-    // If User stored in Storage
-    const nothing = 'nothing'
-    useFocusEffect(
-        useCallback(() => {
-            getUser()
-        }, [nothing])
-    );
+    // Store User
+    const storeUser = async (user: IUser) => {
+        try {
+            const userJSON = JSON.stringify(user)
+            await AsyncStorage.setItem('userKey', userJSON)
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     return (
         <View style={{ ...globalStyles.container, ...loginStyles.form }}>

@@ -1,6 +1,5 @@
 // React, React Native
 import React, { createContext, useState } from 'react';
-import { string } from 'yup';
 
 export const UserContext = createContext();
 

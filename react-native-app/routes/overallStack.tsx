@@ -8,6 +8,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LeftDrawer from "../routes/drawer/leftDrawer";
 
 // Screens
+import Loading from '../screens/login/loading';
 import Login from '../screens/login/login';
 import SignUp from '../screens/login/signUp';
 
@@ -19,12 +20,20 @@ export default function OverallStack() {
 
     return (
         <Stack.Navigator
-            initialRouteName="Login"
+            initialRouteName="Loading"
             headerMode="float"
             screenOptions={{
                 headerShown: false
             }}
         >
+            <Stack.Screen
+                name="Loading"
+                component={Loading}
+                options={{
+                    title: 'Loading',
+                    ...stackTransition
+                }}
+            />
             <Stack.Screen
                 name="Login"
                 component={Login}
