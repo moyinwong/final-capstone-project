@@ -58,7 +58,7 @@ const TutorCoursePage = () => {
             getTutorInfo();
             getTotalStudentsByTutor();
         }
-    }, [tutorEmail, getTotalStudentsByTutor, getTutorInfo])
+    }, [tutorEmail])
 
     return (
         <div>
