@@ -113,9 +113,7 @@ export class CourseController {
       }
 
       
-      // const courseCover = req.file.filename;
-      const courseCover = (req.file as any).key;
-
+      const courseCover = req.file.filename;
 
       const createdCourse = await this.courseService.createCourse(
         userEmail,
