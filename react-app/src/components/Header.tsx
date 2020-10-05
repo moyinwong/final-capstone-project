@@ -1,12 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
-import { logout } from "../redux/auth/actions";
 import { push } from "connected-react-router";
 import {
-  Container,
-  Row,
-  Col,
   Button,
   Navbar,
   Nav,
@@ -16,12 +12,10 @@ import {
 import BurgerMenu from "./BurgerMenu";
 import Linkbar from "./Linkbar";
 import DarkModeSwitch from "./DarkModeSwitch";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
 import "./Header.scss";
 import DropdownMenu from "./DropdownMenu";
-import { Link, useLocation } from "react-router-dom";
-import { TextField } from "@material-ui/core";
+import { useLocation } from "react-router-dom";
+
 
 const Header = (props: any) => {
   const dispatch = useDispatch();
@@ -56,8 +50,8 @@ const Header = (props: any) => {
     let searchText = (document.getElementById('search-bar')! as HTMLInputElement).value
 
     dispatch(push(`/search/${searchText}`))
-
   }
+  
   return (
     <div id="website-header">
       <div className="burger-menu">
@@ -66,9 +60,13 @@ const Header = (props: any) => {
       <div className="web-navbar">
         <Navbar bg="light" variant="light">
           <Navbar.Brand href="/">
-              <img className="website-logo" src={require("../logo.png")} />
+              <img 
+                alt='website logo'
+                className="website-logo" 
+                src={require("../logo.png")} 
+              />
           </Navbar.Brand>
-          {/* <div className='blank-space'>{' '}</div> */}
+
           <button
             className="icon-button responsive"
             onClick={() => {

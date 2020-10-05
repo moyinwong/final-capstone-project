@@ -1,42 +1,71 @@
 // React, React Native
-import React, { useState } from 'react';
-import { View, Text, Pressable } from 'react-native';
+import React, { useContext } from 'react';
+import { View, Text, Pressable, TextInput } from 'react-native';
+import { Formik } from 'formik';
 
-// Screens
-import SignIn from './signIn';
-import SignUp from './signUp';
+// Context
+import { UserContext } from '../../contexts/userContext';
+
+// Navigation
+import { useNavigation } from '@react-navigation/native';
 
 // Styles
 import globalStyles from '../../styles/globalStyles';
-import loginStyles from '../../styles/loginStyeles';
+import loginStyles from '../../styles/loginStyles';
 
 export default function Login() {
 
-    // State
-    const [showSignInScreen, setShowSignInScreen] = useState(
-        true
-    );
+    // Context
+    const { setIsSignedIn } = useContext(UserContext);
+
+    // Hooks
+    const navigation = useNavigation();
 
     return (
-        <View style={{...globalStyles.container, paddingTop: 30}}>
-            <Text>Login Screen</Text>
-            <Pressable
-                style={loginStyles.signInUpToggle}
-                onPress={() => { setShowSignInScreen(true) }}
+        <View style={{ ...globalStyles.container, ...loginStyles.form }}>
+            <Text style={loginStyles.title}>登入帳戶</Text>
+
+            <Formik
+                initialValues={{ email: '', password: '' }}
+                onSubmit={(values) =>
+                    console.log(values)
+                }
             >
-                <Text>Click to Sign In</Text>
-            </Pressable>
-            <Pressable
-                style={loginStyles.signInUpToggle}
-                onPress={() => { setShowSignInScreen(false) }}
-            >
-                <Text>Click to Sign Up</Text>
-            </Pressable>
-            {showSignInScreen ? (
-                <SignIn />
-            ) : (
-                    <SignUp />
+
+                {(props) => (
+                    <View>
+                        <TextInput
+                            style={loginStyles.input}
+                            placeholder='電郵地址'
+                            onChangeText={props.handleChange('email')}
+                            value={props.values.email}
+                        />
+                        <TextInput
+                            style={loginStyles.input}
+                            placeholder='密碼'
+                            onChangeText={props.handleChange('password')}
+                            value={props.values.password}
+                        />
+
+                        <Pressable
+                            style={loginStyles.logInButton}
+                            onPress={props.handleSubmit}
+                        >
+                            <Text style={loginStyles.buttonText}>登入</Text>
+                        </Pressable>
+
+                    </View>
                 )}
+
+            </Formik>
+
+            <Pressable
+                style={loginStyles.button}
+                onPress={() => navigation.navigate('SignUp')}
+            >
+                <Text style={{ ...loginStyles.buttonText, color: '#5b96f7' }}>未有帳戶? 立刻註冊</Text>
+            </Pressable>
+
         </View>
     )
 }

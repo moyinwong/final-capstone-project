@@ -108,7 +108,7 @@ const CategoryPage: React.FC = () => {
     return () => {
       document.title = "e-ducate";
     };
-  }, [window.location.href]);
+  }, [categoryName]);
 
   const getAllCoursesByCategory = async () => {
     try {
@@ -202,7 +202,7 @@ const CategoryPage: React.FC = () => {
         );
       });
     setCourses(newOrderedCourses);
-  }, [ratingSelection, priceSelection]);
+  }, [ratingSelection, priceSelection, initCourses]);
 
   //handle rating selection, set to element's id to selection, otherwise reset
   function handlePriceFormClick(event: React.MouseEvent<HTMLInputElement>) {

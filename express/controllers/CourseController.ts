@@ -113,7 +113,9 @@ export class CourseController {
       }
 
       
-      const courseCover = req.file.filename;
+      // const courseCover = req.file.filename;
+      const courseCover = (req.file as any).key;
+
 
       const createdCourse = await this.courseService.createCourse(
         userEmail,
@@ -184,6 +186,16 @@ export class CourseController {
 
       const lessons = await this.courseService.getAllLessons(courseId);
       return res.status(200).json({ lessons })
+    } catch (e) {
+      logger.debug(e);
+      return res.status(500).json({ message: "internal server error" });
+    }
+  }
+
+  getAllTutorInfo = async (req: Request, res: Response) => {
+    try {
+      const tutors = await this.courseService.getAllTutorInfo();
+      return res.status(200).json({ tutors })
     } catch (e) {
       logger.debug(e);
       return res.status(500).json({ message: "internal server error" });

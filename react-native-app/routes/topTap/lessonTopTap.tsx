@@ -15,11 +15,11 @@ export default function LessonTopTab() {
     return (
         <Tab.Navigator
             tabBarOptions={{
-                activeTintColor: '#5b96f7',
+                activeTintColor: '#000000',
                 inactiveTintColor: '#a5aebf',
                 indicatorStyle: {
                     height: 2,
-                    color: '#5b96f7'
+                    color: '#77fbb0'
                 },
                 labelStyle: {
                     fontSize: 16

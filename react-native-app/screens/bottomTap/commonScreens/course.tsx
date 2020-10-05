@@ -25,7 +25,7 @@ import envData from '../../../data/env';
 export default function Courses() {
 
     // Context
-    const { addCartList } = useContext(CartContext);
+    const { addCartList, setCartList, setCartSum } = useContext(CartContext);
     const { setLesson } = useContext(LessonContext);
 
     // Hooks
@@ -121,14 +121,17 @@ export default function Courses() {
         )
     }
 
+    function buyCourse(course: any) {
+        setCartList([courseInfo]);
+        setCartSum(courseInfo.price);
+        navigation.navigate('StripeForm');
+    }
+
     // Render
     // State
     const [showLessons, setShowLessons] = useState(
         true
     );
-
-    // Dummy Data
-    const isSubscribed = false;
 
     return (
         <ScrollView
@@ -172,7 +175,7 @@ export default function Courses() {
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={{ ...courseStyles.courseButton, ...courseStyles.courseBuyButton }}
-                                onPress={() => console.log('buy')}
+                                onPress={() => buyCourse(courseInfo)}
                             >
                                 <Text style={courseStyles.courseButtonText}>立即購買</Text>
                             </TouchableOpacity>
@@ -186,6 +189,29 @@ export default function Courses() {
                             </View>
                         )}
 
+                </View>
+            </View>
+
+            <View style={courseStyles.tutorBox}>
+                <View style={courseStyles.tutorPicContainer}>
+                    <Image
+                        style={courseStyles.tutorPic}
+                        resizeMode='cover'
+                        source={{ uri: `${envData.REACT_APP_BACKEND_FILE_URL}/img/${courseInfo.tutor_image}` }}
+                    />
+                </View>
+                <View>
+                    <Text style={courseStyles.tutorName}>{courseInfo.tutor_name}</Text>
+                </View>
+                <View style={{ marginLeft: 40 }}>
+                    <TouchableOpacity
+                        style={courseStyles.tutorCheckButton}
+                        onPress={() => navigation.navigate('TutorInfo', {
+                            tutor: courseInfo.tutor_email
+                        })}
+                    >
+                        <Text style={courseStyles.tutorCheckButtonText}>查看導師</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
 
@@ -245,7 +271,7 @@ export default function Courses() {
                 ) : (
                         <FlatList
                             style={courseStyles.infoBox}
-                            keyExtractor={(item) => item.comment}
+                            keyExtractor={(item) => item.user_id.toString().concat(item.comment)}
                             data={comments}
                             scrollEnabled={false}
 
@@ -270,30 +296,6 @@ export default function Courses() {
                         />
                     )}
 
-            </View>
-
-            <View style={courseStyles.tutorBox}>
-                <View style={courseStyles.tutorPicContainer}>
-                    <Image
-                        style={courseStyles.tutorPic}
-                        resizeMode='cover'
-                        source={{ uri: courseInfo.image }}
-                    />
-                </View>
-                <View>
-                    <Text style={courseStyles.tutorName}>{courseInfo.tutor_name}</Text>
-                </View>
-                <View style={{ marginLeft: 40 }}>
-                    <TouchableOpacity
-                        style={courseStyles.tutorCheckButton}
-                        onPress={() => console.log(courseInfo.tutor_name)}
-                    // onPress={() => navigation.navigate('TutorInfo', {
-                    //     tutor: tutorsTestData('all')[0]
-                    // })}
-                    >
-                        <Text style={courseStyles.tutorCheckButtonText}>查看導師</Text>
-                    </TouchableOpacity>
-                </View>
             </View>
 
         </ScrollView >

@@ -23,7 +23,6 @@ import ReactLoading from "react-loading";
 import CheckingModal from "../components/CheckingModal";
 import "./LessonPage.scss";
 import { push } from "connected-react-router";
-import { current } from "immer";
 import NewDiscussionModal from "../components/NewDiscussionModal";
 
 interface ILessInfo {
@@ -123,7 +122,7 @@ const LessonPage: React.FC = () => {
     return () => {
       document.title = "e-ducate";
     };
-  }, []);
+  }, [lessonName]);
 
   //get user right after loading from redux, default userEmail is undefined
   useEffect(() => {
@@ -434,7 +433,7 @@ const LessonPage: React.FC = () => {
                                   </Nav.Item>
                                 </Nav>
                               );
-                            }
+                            } else return; 
                           })}
                           <Nav.Item>
                             {
@@ -553,13 +552,13 @@ const LessonPage: React.FC = () => {
                                           ref={register({ required: true })}
                                         />
                                       );
-                                    }
+                                    } else return;
                                   })}
                                 </Col>
                                 {errors[e.question] && "請選擇答案"}
                               </>
                             );
-                          }
+                          } else return;
                         })}
                         <Button variant="primary" type="submit">
                           提交

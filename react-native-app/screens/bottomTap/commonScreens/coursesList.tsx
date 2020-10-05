@@ -33,9 +33,8 @@ export default function CoursesList() {
     // Param
     let coursesListParam: ICoursesListParam = {
         subject: null,
-        tutor: null,
-        user: null,
-        completedCourse: null
+        tutorName: null,
+        tutorEmail: null
     }
 
     if (route.params) {
@@ -47,6 +46,14 @@ export default function CoursesList() {
         categoryName = coursesListParam.subject;
     }
 
+    let tutorName = 'tutor', tutorEmail = 'email';
+    if (coursesListParam.tutorName) {
+        tutorName = coursesListParam.tutorName;
+    }
+    if (coursesListParam.tutorEmail) {
+        tutorEmail = coursesListParam.tutorEmail;
+    }
+
     // State
     const [coursesListData, setCoursesListData] = useState(
         []
@@ -54,25 +61,27 @@ export default function CoursesList() {
 
     useFocusEffect(
         useCallback(() => {
-            getAllCoursesByCategory(categoryName);
-        }, [categoryName])
+            getAllCourses(categoryName, tutorEmail);
+        }, [categoryName, tutorEmail])
     );
 
     // Fetch
-    async function getAllCoursesByCategory(categoryName: string) {
+    async function getAllCourses(categoryName: string, tutorEmail: string) {
         try {
-            let queryRoute: string = "/category/";
+            let queryRoute = "/category/";
+            let paramName = "param";
+
+            if (categoryName != "category") {
+                queryRoute = "/category/";
+                paramName = categoryName;
+            } else {
+                queryRoute = "/course/tutor/";
+                paramName = tutorEmail;
+            }
 
             const fetchRes = await fetch(
-                `${envData.REACT_APP_BACKEND_URL}${queryRoute}${categoryName}`
+                `${envData.REACT_APP_BACKEND_URL}${queryRoute}${paramName}`
             );
-
-            //if no such category
-            if (fetchRes.status === 500) {
-                throw new Error("伺服器發生問題");
-                //dispatch(push("/404"));
-                //return;
-            }
 
             const result = await fetchRes.json();
             setCoursesListData(result.courses);
@@ -97,15 +106,13 @@ export default function CoursesList() {
                                     <Text style={coursesListStyles.paramTitle}>{coursesListParam.subject}</Text>
                         課程</Text>
                             )
-                            : coursesListParam.tutor ? (
+                            : (
                                 <View>
                                     <Text style={coursesListStyles.screenTitle}>
-                                        <Text style={coursesListStyles.paramTitle}>{coursesListParam.tutor}</Text>
+                                        <Text style={coursesListStyles.paramTitle}>{coursesListParam.tutorName}</Text>
                         的課程</Text>
                                 </View>
-                            ) : (
-                                    <View></View>
-                                )
+                            )
                         }
                     </View>
                 }
@@ -133,23 +140,21 @@ export default function CoursesList() {
                         </View>
                         <View style={coursesListStyles.courseInfoContainer}>
 
-                            <View style={coursesListStyles.courseInfoLeftContainer}>
-                                <View style={coursesListStyles.tutorPicContainer}>
-                                    <Image
-                                        style={coursesListStyles.tutorPic}
-                                        resizeMode='cover'
-                                        source={{ uri: item.image }}
-                                    />
-                                </View>
-                            </View>
-
                             <View style={coursesListStyles.courseInfoRightContainer}>
-                                <Text style={coursesListStyles.courseTitle}>{item.course_name}</Text>
+                                <Text
+                                    numberOfLines={2}
+                                    ellipsizeMode='tail'
+                                    style={coursesListStyles.courseTitle}
+                                >{item.course_name}</Text>
                                 <View style={coursesListStyles.courseSubInfoContainer}>
                                     <View style={coursesListStyles.courseSubInfoTextContainer}>
                                         <Text style={coursesListStyles.courseInfoText}>{item.tutor_name}</Text>
                                         <Entypo style={coursesListStyles.courseInfoDot} name="dot-single" size={16} color="#555555" />
-                                        <Text style={coursesListStyles.courseInfoText}>{item.course_description}</Text>
+                                        <Text
+                                            numberOfLines={2}
+                                            ellipsizeMode='tail'
+                                            style={coursesListStyles.courseInfoText}
+                                        >{item.course_description}</Text>
                                         <Entypo style={coursesListStyles.courseInfoDot} name="dot-single" size={16} color="#555555" />
                                         <Text style={coursesListStyles.courseInfoText}>{"總共堂數: " + item.lessons_number}</Text>
                                     </View>

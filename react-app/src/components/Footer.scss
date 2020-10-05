@@ -1,0 +1,14 @@
+#website-footer {
+    background-color: gray;
+    height: 130px;
+    background-image: linear-gradient(45deg, #3a7cb4, #1dfdc6, #8ff57d);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #755e33;
+
+    .footer-logo {
+        height: 100px;
+        background-color: transparent;
+    }
+}

@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -7,7 +7,7 @@ import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { login, loginGoogleThunk } from "../redux/auth/thunk";
@@ -21,9 +21,9 @@ import CustomFacebookLogin from "../components/CustomFacebookLogin";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+      {"Copyright © Clint Chow, Stanley Lau, Kelvin Wong. All rights reserved"}
+      <Link color="inherit" href="https://e-ducate.life/">
+        Browse Website
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -98,7 +98,7 @@ export default function LoginPage(state: {
   let submitHandler = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     event.preventDefault();
 
-    if (!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
+    if (!email.match(/^[\w]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
       setIsError(true);
       return;
     } else if (password.length === 0) {
@@ -110,7 +110,10 @@ export default function LoginPage(state: {
   };
 
   const responseGoogle = (response: any) => {
+    console.log("called callback");
+    console.log(response);
     if (response.accessToken) {
+      console.log("token: ", response);
       dispatch(loginGoogleThunk(response.accessToken, previousLocation));
     }
   };
@@ -157,10 +160,6 @@ export default function LoginPage(state: {
             autoComplete="current-password"
             onChange={handlePassWordChange}
           />
-          {/* <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          /> */}
           <Button
             type="submit"
             fullWidth
@@ -198,11 +197,6 @@ export default function LoginPage(state: {
           </div>
 
           <Grid container>
-            {/* <Grid item xs>
-              <Link href="#" variant="body2">
-                忘記密碼
-              </Link>
-            </Grid> */}
             <Grid item>
               <Link href="/signup" variant="body2">
                 {"未有帳戶? 立刻註冊"}

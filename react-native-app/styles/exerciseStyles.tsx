@@ -42,6 +42,36 @@ const exerciseStyles = StyleSheet.create({
     answerText: {
         fontSize: 18,
         color: '#5b96f7'
+    },
+    titleContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 24
+    },
+    title: {
+        fontSize: 20
+    },
+    submitButtonContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'flex-start',
+        marginTop: 32
+    },
+    submitButton: {
+        display: 'flex',
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 10,
+        borderRadius: 10,
+        backgroundColor: '#e96a43',
+    },
+    submitButtonText: {
+        fontSize: 20,
+        color: '#ffffff'
     }
 });
 

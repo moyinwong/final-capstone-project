@@ -241,7 +241,7 @@ export class LessonService {
     // console.log(lessonInfo)
     let isTrial = lessonInfo.lessonIsTrial === "true";
 
-    const lessonId = await this.knex
+    const lessonIdArray = await this.knex
       .insert({
         name: lessonInfo.lessonName,
         description: lessonInfo.lessonDescription,
@@ -251,19 +251,23 @@ export class LessonService {
       })
       .into(tables.LESSONS)
       .returning("id");
+    
+    const lessonId = lessonIdArray[0];
 
     let filesUploaded: any[] = [];
 
     if (materialArray) {
       for (let material of materialArray) {
-        let fileUploaded = this.knex
+
+        let fileUploaded = await this.knex
           .insert({
-            name: material.filename,
+            name: material,
             lesson_id: lessonId,
           })
           .into(tables.FILES)
           .returning("id");
-
+        
+        console.log('line 267', fileUploaded)
         filesUploaded.push(fileUploaded);
       }
     }

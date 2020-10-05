@@ -1,9 +1,9 @@
 // React, React Native
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 
 // Navigation
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 // Functions
 import showSubscribeBox from '../../../functions/showSubscribeBox';
@@ -13,7 +13,7 @@ import globalStyles from '../../../styles/globalStyles';
 import tutorsStyles from '../../../styles/tutorsStyles';
 
 // Data
-import tutorsTestData from '../../../data/tutorsTestData';
+import envData from '../../../data/env';
 
 export default function TutorsList() {
 
@@ -21,8 +21,31 @@ export default function TutorsList() {
     const navigation = useNavigation();
 
     // State
-    const [tutorsData, setTutorsData] = useState(
-        tutorsTestData('all')
+    const [tutorsList, setTutorsList] = useState(
+        []
+    );
+
+    // Fetch
+    async function getTutorsList(category: string) {
+        try {
+            let queryRoute: string = "/course/tutor/";
+
+            const fetchRes = await fetch(
+                `${envData.REACT_APP_BACKEND_URL}${queryRoute}${category}`
+            );
+
+            const result = await fetchRes.json();
+            setTutorsList(result.tutors);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const category = "all";
+    useFocusEffect(
+        useCallback(() => {
+            getTutorsList(category);
+        }, [category])
     );
 
     return (
@@ -32,7 +55,7 @@ export default function TutorsList() {
                 numColumns={2}
                 style={tutorsStyles.flatList}
                 keyExtractor={(item) => item.id}
-                data={tutorsData}
+                data={tutorsList}
                 showsVerticalScrollIndicator={false}
 
                 ListFooterComponent={
@@ -43,21 +66,21 @@ export default function TutorsList() {
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={tutorsStyles.tutorBox}
-                        onPress={() => navigation.navigate('TutorInfo',
-                            { tutor: item }
-                        )}
+                        onPress={() => navigation.navigate('TutorInfo', {
+                            tutor: item.email
+                        })}
                         onLongPress={() => showSubscribeBox()}
                     >
                         <View style={tutorsStyles.tutorPicContainer}>
                             <Image
                                 style={tutorsStyles.tutorPic}
                                 resizeMode='cover'
-                                source={item.pic}
+                                source={{ uri: `${envData.REACT_APP_BACKEND_FILE_URL}/img/${item.image}` }}
                             />
                         </View>
                         <View style={tutorsStyles.tutorInfoContainer}>
                             <Text style={tutorsStyles.tutorName}>{item.name}</Text>
-                            <Text style={tutorsStyles.tutorInfo}>{'訂閱數: ' + item.numSubscribed}</Text>
+                            <Text style={tutorsStyles.tutorInfo}>{'總學生人數: ' + item.total_students_num}</Text>
                         </View>
                     </TouchableOpacity>
                 )}

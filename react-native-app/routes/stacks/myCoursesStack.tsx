@@ -1,5 +1,6 @@
 // React, React Native
 import React from 'react';
+import { LinearGradient } from 'expo-linear-gradient';
 
 // Navigation
 import { createStackNavigator } from '@react-navigation/stack';
@@ -15,6 +16,7 @@ import LessonTopTap from '../topTap/lessonTopTap';
 import TutorInfo from '../../screens/bottomTap/commonScreens/tutorInfo';
 import CoursesList from '../../screens/bottomTap/commonScreens/coursesList';
 import Course from '../../screens/bottomTap/commonScreens/course';
+import StripeForm from "../../screens/bottomTap/commonScreens/StripeForm";
 
 // Functions
 import stackTransition from '../../functions/stackTransition';
@@ -31,9 +33,6 @@ export default function TutorStack(props: { navigation: { toggleDrawer: () => vo
             initialRouteName="MyCourses"
             headerMode="float"
             screenOptions={{
-                headerStyle: {
-                    backgroundColor: "#5b96f7"
-                },
                 headerTintColor: '#fff',
                 headerTitleAlign: 'center',
                 headerTitleStyle: {
@@ -45,6 +44,14 @@ export default function TutorStack(props: { navigation: { toggleDrawer: () => vo
                             toggleDrawerClick();
                         }}
                     />
+                ),
+                headerBackground: () => (
+                    <LinearGradient
+                        start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                        colors={['rgba(119, 251, 176, 1)', 'rgba(166, 241, 141, 1)']}
+                        style={{ height: '100%', width: '100%' }}
+                    >
+                    </LinearGradient>
                 ),
                 headerLeftContainerStyle: {
                     marginLeft: 18
@@ -89,6 +96,14 @@ export default function TutorStack(props: { navigation: { toggleDrawer: () => vo
                 options={{
                     title: '課堂',
                     ...stackTransition
+                }}
+            />
+            <Stack.Screen
+                name="StripeForm"
+                children={StripeForm}
+                options={{
+                    title: "信用卡資料",
+                    ...stackTransition,
                 }}
             />
         </Stack.Navigator>

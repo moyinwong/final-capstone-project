@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import './InstructorPage.scss'
-import { Button, Jumbotron, Container, Row, Col, Accordion, Card, Image } from 'react-bootstrap'
+import { Button, Container, Row, Col, Accordion, Card } from 'react-bootstrap'
 import { Button as MButton} from '@material-ui/core'
 import { IRootState } from '../redux/store'
 import { useSelector } from 'react-redux'
 import LessonAccordion from '../components/LessonAccordion'
+import './InstructorPage.scss'
 
 export interface IPureCourse {
     id: number;
@@ -28,15 +28,6 @@ const InstructorPage = () => {
     const token = useSelector((state: IRootState) => state.auth.token);
     const [courses, setCourses] = useState<IPureCourse[]>([]);
     const [stripeStatus, setStripeStatus] = useState<boolean | null>(null)
-
-
-    
-    useEffect(() => {
-        if(userEmail) {
-            getAllCourseByTutor();
-            getStripStatus();
-        }
-    }, [userEmail])
 
     const getAllCourseByTutor = async () => {
         let queryRoute: string = '/course/all'
@@ -64,6 +55,13 @@ const InstructorPage = () => {
 
         setStripeStatus(stripeStatus)
     }
+
+    useEffect(() => {
+        if(userEmail) {
+            getAllCourseByTutor();
+            getStripStatus();
+        }
+    }, [userEmail])
 
     return (
         <Container >

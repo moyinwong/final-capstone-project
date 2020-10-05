@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ReactNode } from "react";
 import { ICourse } from "../pages/CategoryPage";
-import { Container, Col, Card, Button, Row } from "react-bootstrap";
+import { Container, Col } from "react-bootstrap";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -24,7 +24,7 @@ const CarouselReact: React.FC<{
     console.log("type", type);
     if (type === "popular") {
       setTypeTopic("最熱門課程");
-      res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/course/popular`);
+      res = await fetch(`https://api.e-ducate.life/api/course/popular`);
     } else if (type === "goodComment") {
       setTypeTopic("最受好評課程");
       res = await fetch(

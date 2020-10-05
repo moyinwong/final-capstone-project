@@ -28,7 +28,7 @@ const UserCourse = (course:IUserCourse) => {
         )
         const result = await res.json();
         
-        if (res.status != 200) {
+        if (res.status !== 200) {
           console.log('line: 267: something is wrong when checking completed lessons')
         } else {
           //an array of completed lessons id
