@@ -7,7 +7,7 @@ import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { login, loginGoogleThunk } from "../redux/auth/thunk";
@@ -110,7 +110,10 @@ export default function LoginPage(state: {
   };
 
   const responseGoogle = (response: any) => {
+    console.log("called callback");
+    console.log(response);
     if (response.accessToken) {
+      console.log("token: ", response);
       dispatch(loginGoogleThunk(response.accessToken, previousLocation));
     }
   };
@@ -170,7 +173,7 @@ export default function LoginPage(state: {
 
           <div>或以以下帳號登入</div>
 
-          {/* <div id="social-login-button-container">
+          <div id="social-login-button-container">
             <GoogleLogin
               style={{ width: "40px", height: "40px" }}
               clientId={`${process.env.REACT_APP_GOOGLE_APP_ID}`}
@@ -191,7 +194,7 @@ export default function LoginPage(state: {
               cookiePolicy={"single_host_origin"}
             />
             <CustomFacebookLogin previousLocation={previousLocation} />
-          </div> */}
+          </div>
 
           <Grid container>
             <Grid item>

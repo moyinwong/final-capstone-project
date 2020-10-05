@@ -191,6 +191,8 @@ export class PaymentController {
 
       console.log(cartCourses);
 
+      //wait for userEmail
+
       const data = await this.paymentService.createPaymentByCharge(
         stripeToken,
         parseFloat(chargeAmount)
