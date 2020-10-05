@@ -107,8 +107,8 @@ export class PaymentService {
   createAccountLinks = async (accountId: string) => {
     const accountLinks = await stripe.accountLinks.create({
       account: accountId,
-      refresh_url: "https://localhost:3000",
-      return_url: "https://localhost:3000",
+      refresh_url: "https://e-ducate.life",
+      return_url: "https://e-ducate.life",
       type: "account_onboarding",
     });
     return accountLinks;
