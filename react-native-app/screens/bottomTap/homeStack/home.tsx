@@ -95,6 +95,9 @@ export default function Home() {
                 initialValues={{ searchText: '' }}
                 onSubmit={(value) => {
                     console.log(value)
+                    navigation.navigate('CoursesList',
+                        { subject: value.searchText }
+                    )
                 }}
             >
                 {(props) => (
