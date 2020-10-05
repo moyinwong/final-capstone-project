@@ -40,7 +40,7 @@ react-build:
     - cd react-app/
   script:
     - yarn install
-    - yarn build
+    - yarn build CI=false
   artifacts:
     paths:
       - react/build

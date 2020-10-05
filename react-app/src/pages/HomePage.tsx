@@ -11,11 +11,6 @@ import { useSelector } from "react-redux";
 const HomePage: React.FC = () => {
   const userId = useSelector((state: IRootState) => state.auth.id);
 
-  useEffect(() => {
-    document.title = "e-ducate";
-    document.getElementById("website-header")!.style.display = "block";
-  }, []);
-
   return (
     <div>
       <section className="section-banner">

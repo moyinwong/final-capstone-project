@@ -157,10 +157,6 @@ export default function LoginPage(state: {
             autoComplete="current-password"
             onChange={handlePassWordChange}
           />
-          {/* <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          /> */}
           <Button
             type="submit"
             fullWidth
@@ -198,11 +194,6 @@ export default function LoginPage(state: {
           </div>
 
           <Grid container>
-            {/* <Grid item xs>
-              <Link href="#" variant="body2">
-                忘記密碼
-              </Link>
-            </Grid> */}
             <Grid item>
               <Link href="/signup" variant="body2">
                 {"未有帳戶? 立刻註冊"}

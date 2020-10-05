@@ -272,7 +272,8 @@ export class CourseService {
       .select(
         `${tables.USERS}.name as user_name`,
         `${tables.PURCHASED_COURSES}.comment`,
-        `${tables.PURCHASED_COURSES}.rated_score`
+        `${tables.PURCHASED_COURSES}.rated_score`,
+        `${tables.USERS}.id as user_id`
       )
       .from(`${tables.COURSES}`)
       .leftJoin(
