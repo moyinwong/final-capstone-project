@@ -1,6 +1,7 @@
 // React, React Native
 import React, { useContext, useCallback } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 // Context
 import { UserContext } from '../../contexts/userContext';
@@ -10,6 +11,7 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 // Styles
 import globalStyles from '../../styles/globalStyles';
+import loadingStyles from '../../styles/loadingStyle';
 
 // Data
 import AsyncStorage from '@react-native-community/async-storage';
@@ -60,8 +62,21 @@ export default function Loading() {
     );
 
     return (
-        <View style={{ ...globalStyles.container, paddingTop: 30 }}>
-            <Text>Loading Screen</Text>
+        <View style={{ ...globalStyles.container, paddingHorizontal: 0 }}>
+            <LinearGradient
+                start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                colors={['rgba(119, 251, 176, 1)', 'rgba(166, 241, 141, 1)']}
+                style={loadingStyles.linearGradient}
+            >
+            </LinearGradient>
+            <View style={loadingStyles.logoContainer}>
+                <Image
+                    style={loadingStyles.logoPic}
+                    resizeMode='cover'
+                    source={require('../../assets/logoTrans.png')}
+                />
+                <Text style={loadingStyles.slogan}>多種課程等緊你...</Text>
+            </View>
         </View>
     )
 }

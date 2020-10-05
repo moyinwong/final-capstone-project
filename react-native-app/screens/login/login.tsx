@@ -1,7 +1,8 @@
 // React, React Native
 import React, { useContext } from 'react';
-import { View, Text, Pressable, TextInput, Alert } from 'react-native';
+import { View, Text, Pressable, TextInput, Alert, Keyboard } from 'react-native';
 import { Formik } from 'formik';
+import { LinearGradient } from 'expo-linear-gradient';
 
 // Context
 import { UserContext } from '../../contexts/userContext';
@@ -79,8 +80,7 @@ export default function Login() {
     }
 
     return (
-        <View style={{ ...globalStyles.container, ...loginStyles.form }}>
-            <Text style={loginStyles.title}>登入帳戶</Text>
+        <View style={{ ...globalStyles.container, paddingHorizontal: 0 }}>
 
             <Formik
                 initialValues={{ email: '', password: '' }}
@@ -90,39 +90,54 @@ export default function Login() {
             >
 
                 {(props) => (
-                    <View>
-                        <TextInput
-                            style={loginStyles.input}
-                            placeholder='電郵地址'
-                            onChangeText={props.handleChange('email')}
-                            value={props.values.email}
-                        />
-                        <TextInput
-                            style={loginStyles.input}
-                            placeholder='密碼'
-                            onChangeText={props.handleChange('password')}
-                            value={props.values.password}
-                        />
-
-                        <Pressable
-                            style={loginStyles.logInButton}
-                            onPress={props.handleSubmit}
+                    <Pressable
+                        style={loginStyles.wholeScreenContainer}
+                        onPress={Keyboard.dismiss}
+                    >
+                        <LinearGradient
+                            start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                            colors={['rgba(119, 251, 176, 1)', 'rgba(166, 241, 141, 1)']}
+                            style={loginStyles.linearGradient}
                         >
-                            <Text style={loginStyles.buttonText}>登入</Text>
-                        </Pressable>
+                        </LinearGradient>
 
-                    </View>
+                        <View style={loginStyles.form}>
+                            <Text style={loginStyles.title}>登入帳戶</Text>
+
+                            <TextInput
+                                style={loginStyles.input}
+                                placeholder='電郵地址'
+                                onChangeText={props.handleChange('email')}
+                                value={props.values.email}
+                            />
+                            <TextInput
+                                style={loginStyles.input}
+                                placeholder='密碼'
+                                onChangeText={props.handleChange('password')}
+                                value={props.values.password}
+                            />
+
+                            <Pressable
+                                style={loginStyles.logInButton}
+                                onPress={props.handleSubmit}
+                            >
+                                <Text style={loginStyles.buttonText}>登入</Text>
+                            </Pressable>
+
+                            <Pressable
+                                style={loginStyles.button}
+                                onPress={() => { Keyboard.dismiss, navigation.navigate('SignUp') }}
+                            >
+                                <Text style={{ ...loginStyles.buttonText, color: '#5b96f7' }}>未有帳戶? 立刻註冊</Text>
+                            </Pressable>
+
+                        </View>
+
+                    </Pressable>
                 )}
 
             </Formik>
 
-            <Pressable
-                style={loginStyles.button}
-                onPress={() => navigation.navigate('SignUp')}
-            >
-                <Text style={{ ...loginStyles.buttonText, color: '#5b96f7' }}>未有帳戶? 立刻註冊</Text>
-            </Pressable>
-
-        </View >
+        </View>
     )
 }
