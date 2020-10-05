@@ -50,14 +50,21 @@ export default function Cart(props: { navigation: { goBack: () => void } }) {
             </View>
 
             <View style={cartStyles.courseInfoContainer}>
-              <Text style={cartStyles.courseTitle}>{item.course_name}</Text>
+              <Text
+                numberOfLines={2}
+                ellipsizeMode='tail'
+                style={cartStyles.courseTitle}
+              >{item.course_name}</Text>
               <View style={cartStyles.courseSubInfoContainer}>
                 <View style={cartStyles.courseSubInfoTextContainer}>
                   <Text style={cartStyles.courseInfoText}>
                     {item.tutor_name}
                   </Text>
-                  <Text style={cartStyles.courseInfoText}>
-                    {item.course_description}
+                  <Text
+                    numberOfLines={2}
+                    ellipsizeMode='tail'
+                    style={cartStyles.courseInfoText}
+                  >{item.course_description}
                   </Text>
                   <Text style={cartStyles.courseInfoText}>
                     {"總共堂數: " + item.lessons_number}

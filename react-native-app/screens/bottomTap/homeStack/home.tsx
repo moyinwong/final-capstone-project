@@ -1,6 +1,8 @@
 // React, React Native
 import React, { useState, useCallback, useContext } from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList, ScrollView, TextInput, Pressable } from 'react-native';
+import { Formik } from 'formik';
+import { LinearGradient } from 'expo-linear-gradient';
 
 // Context
 import { UserContext } from '../../../contexts/userContext';
@@ -9,7 +11,7 @@ import { UserContext } from '../../../contexts/userContext';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 // Icons
-import { MaterialIcons } from '@expo/vector-icons';
+import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 
 // Components
 import HomeCategories from '../../../sharedComponents/homeCategories';
@@ -39,6 +41,10 @@ export default function Home() {
     );
     const [goodCoursesListData, setGoodCoursesListData] = useState(
         []
+    );
+    // Render Popular Courses
+    const [renderPopCourses, setRenderPopCourses] = useState(
+        true
     );
 
     // Fetch
@@ -70,152 +76,198 @@ export default function Home() {
 
     return (
         <ScrollView
-            style={{ ...globalStyles.container, paddingTop: 12, paddingHorizontal: 0 }}
+            style={{ ...globalStyles.container, paddingHorizontal: 0 }}
             showsVerticalScrollIndicator={false}
         >
 
+            <LinearGradient
+                start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                colors={['rgba(119, 251, 176, 1)', 'rgba(166, 241, 141, 1)']}
+                style={homeStyles.linearGradient}
+            >
+            </LinearGradient>
+
             {user.email != null &&
-                (<Text style={homeStyles.screenTitle}>{'歡迎, ' + user.email.split('@')[0]}</Text>)
+                (<Text style={homeStyles.welcomeText}>{'歡迎, ' + user.email.split('@')[0]}</Text>)
             }
+
+            <Formik
+                initialValues={{ searchText: '' }}
+                onSubmit={(value) => {
+                    console.log(value)
+                    navigation.navigate('CoursesList',
+                        { subject: value.searchText }
+                    )Í
+                }}
+            >
+                {(props) => (
+                    <View style={homeStyles.searchBox}>
+                        <TextInput
+                            style={homeStyles.searchText}
+                            placeholder='搜尋'
+                            onChangeText={props.handleChange('searchText')}
+                            value={props.values.searchText}
+                        />
+                        <Pressable
+                            style={homeStyles.searchButton}
+                            onPress={props.handleSubmit}
+                        >
+                            <AntDesign name="search1" size={24} color="#999999" />
+                        </Pressable>
+                    </View>
+                )}
+
+            </Formik>
 
             <HomeCategories />
 
-            {/* 熱門課程 */}
             <View style={homeStyles.titleContainer}>
-                <Text style={homeStyles.screenTitle}>熱門課程</Text>
+                <Pressable
+                    style={homeStyles.titleButton}
+                    onPress={() => setRenderPopCourses(true)}
+                >
+                    <Text
+                        style={renderPopCourses ? (homeStyles.screenTitle) : (homeStyles.nonActiveScreenTitle)}
+                    >熱門課程</Text>
+                </Pressable>
+                <Pressable
+                    style={homeStyles.titleButton}
+                    onPress={() => setRenderPopCourses(false)}
+                >
+                    <Text
+                        style={!renderPopCourses ? (homeStyles.screenTitle) : (homeStyles.nonActiveScreenTitle)}
+                    >最受好評課程</Text>
+                </Pressable>
             </View>
 
-            <FlatList
-                style={homeStyles.flatList}
-                keyExtractor={(item) => item.id.toString()}
-                data={popularCoursesListData}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
+            {renderPopCourses ? (
+                <FlatList
+                    style={homeStyles.flatList}
+                    keyExtractor={(item) => item.id.toString()}
+                    data={popularCoursesListData}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
 
-                ListFooterComponent={
-                    <View style={globalStyles.homeHorizontalFooter}>
-                    </View>
-                }
-
-                renderItem={({ item }) => (
-                    <TouchableOpacity
-                        style={homeStyles.courseBox}
-                        onPress={() => navigation.navigate('Course',
-                            { courseName: item.course_name }
-                        )}
-                        // ssssssssssssssssssss
-                        onLongPress={() => showModal(false)}
-                    >
-                        <View style={homeStyles.coursePicContainer}>
-                            <Image
-                                style={homeStyles.coursePic}
-                                resizeMode='cover'
-                                source={{ uri: item.image }}
-                            />
+                    ListFooterComponent={
+                        <View style={globalStyles.homeHorizontalFooter}>
                         </View>
-                        <View style={homeStyles.courseInfoContainer}>
+                    }
 
-                            <Text
-                                numberOfLines={2}
-                                ellipsizeMode='tail'
-                                style={homeStyles.courseTitle}
-                            >{item.course_name}</Text>
-                            <View style={homeStyles.courseSubInfoContainer}>
-                                <Text style={homeStyles.courseInfoText}>{item.tutor_name}</Text>
-                                <Text style={homeStyles.courseInfoText}>{"總共堂數: " + item.lessons_number}</Text>
-                                <View style={homeStyles.courseScoreContainer}>
-                                    <Text style={homeStyles.courseInfoText}>{"評分: "}</Text>
-
-                                    <Stars score={item.rated_score} />
-
-                                    <Text style={{ ...homeStyles.courseInfoText, fontSize: 16 }}>{" (" + item.rated_num + ")"}</Text>
-                                </View>
-                                {/* sssdsfvdsvdsvdsbvsdbsdbsdbds */}
-                                {false ?
-                                    (
-                                        <View style={homeStyles.coursePriceContainer}>
-                                            <MaterialIcons name="done" size={26} color="#22c736" />
-                                            <Text style={{ ...homeStyles.coursePrice, color: '#22c736' }}>{"已購買"}</Text>
-                                        </View>
-                                    ) : (
-                                        <View style={homeStyles.coursePriceContainer}>
-                                            <Text style={homeStyles.coursePrice}>{"價錢: $" + item.price}</Text>
-                                        </View>
-                                    )}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity
+                            style={homeStyles.courseBox}
+                            onPress={() => navigation.navigate('Course',
+                                { courseName: item.course_name }
+                            )}
+                            // ssssssssssssssssssss
+                            onLongPress={() => showModal(false)}
+                        >
+                            <View style={homeStyles.coursePicContainer}>
+                                <Image
+                                    style={homeStyles.coursePic}
+                                    resizeMode='cover'
+                                    source={{ uri: item.image }}
+                                />
                             </View>
+                            <View style={homeStyles.courseInfoContainer}>
 
-                        </View>
-                    </TouchableOpacity>
-                )}
-            />
+                                <Text
+                                    numberOfLines={2}
+                                    ellipsizeMode='tail'
+                                    style={homeStyles.courseTitle}
+                                >{item.course_name}</Text>
+                                <View style={homeStyles.courseSubInfoContainer}>
+                                    <Text style={homeStyles.courseInfoText}>{item.tutor_name}</Text>
+                                    <Text style={homeStyles.courseInfoText}>{"總共堂數: " + item.lessons_number}</Text>
+                                    <View style={homeStyles.courseScoreContainer}>
+                                        <Text style={homeStyles.courseInfoText}>{"評分: "}</Text>
 
-            {/* 最受好評課程 */}
-            <View style={homeStyles.titleContainer}>
-                <Text style={homeStyles.screenTitle}>最受好評課程</Text>
-            </View>
+                                        <Stars score={item.rated_score} />
 
-            <FlatList
-                style={homeStyles.flatList}
-                keyExtractor={(item) => item.id.toString()}
-                data={goodCoursesListData}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-
-                ListFooterComponent={
-                    <View style={globalStyles.homeHorizontalFooter}>
-                    </View>
-                }
-
-                renderItem={({ item }) => (
-                    <TouchableOpacity
-                        style={homeStyles.courseBox}
-                        onPress={() => navigation.navigate('Course',
-                            { courseName: item.course_name }
-                        )}
-                        // ssssssssssssssssssss
-                        onLongPress={() => showModal(false)}
-                    >
-                        <View style={homeStyles.coursePicContainer}>
-                            <Image
-                                style={homeStyles.coursePic}
-                                resizeMode='cover'
-                                source={{ uri: item.image }}
-                            />
-                        </View>
-                        <View style={homeStyles.courseInfoContainer}>
-
-                            <Text
-                                numberOfLines={2}
-                                ellipsizeMode='tail'
-                                style={homeStyles.courseTitle}>{item.course_name}</Text>
-                            <View style={homeStyles.courseSubInfoContainer}>
-                                <Text style={homeStyles.courseInfoText}>{item.tutor_name}</Text>
-                                <Text style={homeStyles.courseInfoText}>{"總共堂數: " + item.lessons_number}</Text>
-                                <View style={homeStyles.courseScoreContainer}>
-                                    <Text style={homeStyles.courseInfoText}>{"評分: "}</Text>
-
-                                    <Stars score={item.rated_score} />
-
-                                    <Text style={{ ...homeStyles.courseInfoText, fontSize: 16 }}>{" (" + item.rated_num + ")"}</Text>
+                                        <Text style={{ ...homeStyles.courseInfoText, fontSize: 16 }}>{" (" + item.rated_num + ")"}</Text>
+                                    </View>
+                                    {/* sssdsfvdsvdsvdsbvsdbsdbsdbds */}
+                                    {false ?
+                                        (
+                                            <View style={homeStyles.coursePriceContainer}>
+                                                <MaterialIcons name="done" size={26} color="#22c736" />
+                                                <Text style={{ ...homeStyles.coursePrice, color: '#22c736' }}>{"已購買"}</Text>
+                                            </View>
+                                        ) : (
+                                            <View style={homeStyles.coursePriceContainer}>
+                                                <Text style={homeStyles.coursePrice}>{"價錢: $" + item.price}</Text>
+                                            </View>
+                                        )}
                                 </View>
-                                {/* sssdsfvdsvdsvdsbvsdbsdbsdbds */}
-                                {false ?
-                                    (
-                                        <View style={homeStyles.coursePriceContainer}>
-                                            <MaterialIcons name="done" size={26} color="#22c736" />
-                                            <Text style={{ ...homeStyles.coursePrice, color: '#22c736' }}>{"已購買"}</Text>
-                                        </View>
-                                    ) : (
-                                        <View style={homeStyles.coursePriceContainer}>
-                                            <Text style={homeStyles.coursePrice}>{"價錢: $" + item.price}</Text>
-                                        </View>
-                                    )}
-                            </View>
 
-                        </View>
-                    </TouchableOpacity>
+                            </View>
+                        </TouchableOpacity>
+                    )}
+                />
+            ) : (
+                    <FlatList
+                        style={homeStyles.flatList}
+                        keyExtractor={(item) => item.id.toString()}
+                        data={goodCoursesListData}
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}
+
+                        ListFooterComponent={
+                            <View style={globalStyles.homeHorizontalFooter}>
+                            </View>
+                        }
+
+                        renderItem={({ item }) => (
+                            <TouchableOpacity
+                                style={homeStyles.courseBox}
+                                onPress={() => navigation.navigate('Course',
+                                    { courseName: item.course_name }
+                                )}
+                                // ssssssssssssssssssss
+                                onLongPress={() => showModal(false)}
+                            >
+                                <View style={homeStyles.coursePicContainer}>
+                                    <Image
+                                        style={homeStyles.coursePic}
+                                        resizeMode='cover'
+                                        source={{ uri: item.image }}
+                                    />
+                                </View>
+                                <View style={homeStyles.courseInfoContainer}>
+
+                                    <Text
+                                        numberOfLines={2}
+                                        ellipsizeMode='tail'
+                                        style={homeStyles.courseTitle}>{item.course_name}</Text>
+                                    <View style={homeStyles.courseSubInfoContainer}>
+                                        <Text style={homeStyles.courseInfoText}>{item.tutor_name}</Text>
+                                        <Text style={homeStyles.courseInfoText}>{"總共堂數: " + item.lessons_number}</Text>
+                                        <View style={homeStyles.courseScoreContainer}>
+                                            <Text style={homeStyles.courseInfoText}>{"評分: "}</Text>
+
+                                            <Stars score={item.rated_score} />
+
+                                            <Text style={{ ...homeStyles.courseInfoText, fontSize: 16 }}>{" (" + item.rated_num + ")"}</Text>
+                                        </View>
+                                        {/* sssdsfvdsvdsvdsbvsdbsdbsdbds */}
+                                        {false ?
+                                            (
+                                                <View style={homeStyles.coursePriceContainer}>
+                                                    <MaterialIcons name="done" size={26} color="#22c736" />
+                                                    <Text style={{ ...homeStyles.coursePrice, color: '#22c736' }}>{"已購買"}</Text>
+                                                </View>
+                                            ) : (
+                                                <View style={homeStyles.coursePriceContainer}>
+                                                    <Text style={homeStyles.coursePrice}>{"價錢: $" + item.price}</Text>
+                                                </View>
+                                            )}
+                                    </View>
+
+                                </View>
+                            </TouchableOpacity>
+                        )}
+                    />
                 )}
-            />
 
             <View style={globalStyles.homeVerticalFooter}>
             </View>
