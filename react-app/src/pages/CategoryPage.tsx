@@ -15,8 +15,8 @@ import FlattedCard from "../components/FlattedCard";
 import Rating from "react-rating";
 import { useDispatch } from "react-redux";
 //import { push } from "connected-react-router";
-import "./CategoryPage.scss";
 import { push } from "connected-react-router";
+import "./CategoryPage.scss";
 
 export interface ICourse {
   course_name: string;

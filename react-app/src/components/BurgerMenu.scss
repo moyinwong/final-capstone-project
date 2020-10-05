@@ -18,7 +18,7 @@
 
 /* Color/shape of burger icon bars on hover*/
 .bm-burger-bars-hover {
-  background: aqua;
+  background: lightseagreen;
 }
 
 /* Position and sizing of clickable cross button */
@@ -144,4 +144,29 @@
 
 .dropdown:hover .dropdown-caret {
   color: rgba(65, 233, 255, 0.623);
+}
+
+.bm-menu-wrap .form-inline {
+  position: relative;
+
+  .form-control {
+    color: black;
+    border-radius: 1.5rem!important;
+    border: 1px solid #e1e2e4;
+  }
+
+  .search-button:hover {
+    color: #fff;
+    background: #28a745;
+    border-color: none;
+  }
+
+  .search-button {
+    height: 38px;
+    border: none;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    border-radius: 1.5rem;
+  }
 }

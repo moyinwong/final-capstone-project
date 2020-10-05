@@ -1,6 +1,4 @@
 #website-footer {
-    background-color: gray;
-    height: 100px;
     background-image: linear-gradient(45deg, #3a7cb4, #1dfdc6, #8ff57d);
     display: flex;
     justify-content: center;
@@ -11,4 +9,7 @@
         height: 90px;
         background-color: transparent;
     }
+    // position: fixed;
+    // bottom: 0;
+    // width: 100%;
 }

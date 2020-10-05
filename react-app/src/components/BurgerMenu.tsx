@@ -1,17 +1,16 @@
 import { slide as Menu } from "react-burger-menu";
 import React, { useState, useEffect } from "react";
-//import { faUser } from "@fortawesome/free-solid-svg-icons";
-//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import "./BurgerMenu.scss";
 import { Link, useLocation } from "react-router-dom";
 import DarkModeSwitch from "./DarkModeSwitch";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Navbar, Button } from "react-bootstrap";
+import { Navbar, Button, FormControl, Form } from "react-bootstrap";
 import { IRootState } from "../redux/store";
 import { push } from "connected-react-router";
 import DropdownMenu from "./DropdownMenu";
+import SearchIcon from '@material-ui/icons/Search';
+import "./BurgerMenu.scss";
+
 
 const BurgerMenu: React.FC = () => {
   const dispatch = useDispatch();
@@ -39,6 +38,16 @@ const BurgerMenu: React.FC = () => {
     }
   }, [open])
   
+  const handleSearch = async (event: any) => {
+    event.preventDefault();
+    let searchText = (document.getElementById('search-bar')! as HTMLInputElement).value
+    if (searchText.length === 0) {
+      return;
+    } 
+
+    dispatch(push(`/search/${searchText}`))
+  }
+
   const categories: string[] = [
     "中文",
     "英文",
@@ -81,6 +90,15 @@ const BurgerMenu: React.FC = () => {
           登入
         </Button>
       )}
+
+      <Form inline>
+        <FormControl
+          type="text"
+          className="mr-sm-2"
+          id="search-bar"
+        />
+        <Button className="search-button" onClick={handleSearch} type="submit" variant="outline-success"><SearchIcon /></Button>
+      </Form>
 
       <DarkModeSwitch />
       {categories.map((category, i) => {
