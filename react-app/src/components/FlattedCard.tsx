@@ -30,7 +30,7 @@ const FlattedCard = (props: ICourse) => {
       ) : (
         <div className='img-container'>
           <img
-            src={`http://localhost:8080/img/${props.image}`}
+            src={`https://api.e-ducate.life/img/${props.image}`}
             alt={props.course_name}
             onClick={handleImgClick}
           />

@@ -3,10 +3,11 @@ image: node:latest
 stages:
   - server-testing
   - server-deploy
+  - react-build
 
 variables:
   POSTGRES_DB: capstone_test
-  POSTGRES_USER: postgre
+  POSTGRES_USER: postgre 
   POSTGRES_PASSWORD: postgre
   POSTGRES_HOST: postgres
 
@@ -21,25 +22,6 @@ server-testing:
   stage: server-testing
   script:
     - yarn jest
-
-# react-testing:
-#   before_script:
-#     - cd react-app
-#     - yarn install
-#   stage: react-testing
-#   script:
-#     - CI=true yarn test
-
-# react-build:
-#   stage: react-build
-#   before_script:
-#     - cd react-app/
-#   script:
-#     - yarn install
-#     - yarn build
-#   artifacts:
-#     paths:
-#       - react/build
 
 server-deploy:
   before_script:
@@ -65,16 +47,14 @@ server-deploy:
           yarn install;
           yarn knex migrate:latest --env production;
           forever restart index.js;"
-  
-# react-deploy:
-#   image: "python:3.6"
-#   stage: react-deploy
-#   before_script:
-#     - pip install awscli
-#   dependencies:
-#     - react-build
-#   only:
-#     - production
-#   script:
-#     - aws s3 sync react/build s3://${BUCKET_NAME} --delete
-#     - aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION} --paths "/*"
+
+react-build:
+  stage: react-build
+  before_script:
+    - cd react-app/
+  script:
+    - yarn install
+    - yarn build
+  artifacts:
+    paths:
+      - react/build
