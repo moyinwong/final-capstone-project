@@ -271,7 +271,7 @@ export default function Courses() {
                 ) : (
                         <FlatList
                             style={courseStyles.infoBox}
-                            keyExtractor={(item) => { item.user_name }}
+                            keyExtractor={(item) => item.user_id.toString().concat(item.comment)}
                             data={comments}
                             scrollEnabled={false}
 
