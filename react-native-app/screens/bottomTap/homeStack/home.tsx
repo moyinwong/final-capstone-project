@@ -28,7 +28,7 @@ import envData from '../../../data/env';
 export default function Home() {
 
     // Context
-    const { isSignedIn, user } = useContext(UserContext);
+    const { user } = useContext(UserContext);
 
     // Hooks
     const navigation = useNavigation();
@@ -74,7 +74,7 @@ export default function Home() {
             showsVerticalScrollIndicator={false}
         >
 
-            <Text style={homeStyles.screenTitle}>{'歡迎 ' + user.email.split('@')[0]}</Text>
+            <Text style={homeStyles.screenTitle}>{'歡迎, ' + user.email.split('@')[0]}</Text>
 
             <HomeCategories />
 
