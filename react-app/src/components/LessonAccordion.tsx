@@ -34,7 +34,7 @@ const LessonAccordion = (course: IPureCourse) => {
         <>
             <Accordion.Toggle as={Card.Header} eventKey={`${course.id}`}>
                 {course.image.match(/http/) ? <Image src={course.image} fluid></Image> : 
-                <Image src={`https://tecky-final-capstone-project-upload.s3.ap-southeast-1.amazonaws.com/${course.image}`} fluid />
+                <Image src={`https://api.e-ducate.life/img/${course.image}`} fluid />
                 }
                 <div className="accordion-course-name">{course.name}</div>
             </Accordion.Toggle>
