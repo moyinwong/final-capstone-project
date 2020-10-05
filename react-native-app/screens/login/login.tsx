@@ -22,11 +22,10 @@ export default function Login() {
     const navigation = useNavigation();
 
     return (
-        <View style={{ ...globalStyles.container, paddingTop: 30 }}>
+        <View style={{ ...globalStyles.container, ...loginStyles.form }}>
             <Text style={loginStyles.title}>登入帳戶</Text>
 
             <Formik
-                style={loginStyles.form}
                 initialValues={{ email: '', password: '' }}
                 onSubmit={(values) =>
                     console.log(values)

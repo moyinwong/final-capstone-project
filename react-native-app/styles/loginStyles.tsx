@@ -3,11 +3,8 @@ import { StyleSheet } from 'react-native';
 
 const loginStyles = StyleSheet.create({
     form: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        paddingHorizontal: 100
+        paddingTop: 30,
+        paddingHorizontal: 24
     },
     title: {
         width: '100%',
@@ -17,7 +14,12 @@ const loginStyles = StyleSheet.create({
     },
     input: {
         fontSize: 20,
-        paddingVertical: 24
+        marginBottom: 24,
+        paddingVertical: 24,
+        paddingHorizontal: 12,
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: '#c0c0c0'
     },
     logInButton: {
         display: 'flex',
