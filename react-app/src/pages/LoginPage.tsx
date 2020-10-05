@@ -111,6 +111,7 @@ export default function LoginPage(state: {
 
   const responseGoogle = (response: any) => {
     console.log("called callback");
+    console.log(response);
     if (response.accessToken) {
       console.log("token: ", response);
       dispatch(loginGoogleThunk(response.accessToken, previousLocation));
