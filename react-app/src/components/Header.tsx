@@ -66,7 +66,7 @@ const Header = (props: any) => {
                 src={require("../logo.png")} 
               />
           </Navbar.Brand>
-          {/* <div className='blank-space'>{' '}</div> */}
+
           <button
             className="icon-button responsive"
             onClick={() => {
