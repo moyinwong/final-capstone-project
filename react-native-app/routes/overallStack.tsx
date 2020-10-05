@@ -27,7 +27,7 @@ export default function OverallStack() {
         >
             <Stack.Screen
                 name="Login"
-                children={Login}
+                component={Login}
                 options={{
                     title: 'Login',
                     ...stackTransition
@@ -35,7 +35,7 @@ export default function OverallStack() {
             />
             <Stack.Screen
                 name="SignUp"
-                children={SignUp}
+                component={SignUp}
                 options={{
                     title: 'SignUp',
                     ...stackTransition
