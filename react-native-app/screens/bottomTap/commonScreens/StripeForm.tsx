@@ -1,11 +1,21 @@
+// React, React Native
 import React, { useContext } from "react";
 import { Text, TextInput, View, Button } from "react-native";
+
+// Stripe
 import { PaymentsStripe as Stripe } from "expo-payments-stripe";
-import envData from "../../../data/env";
+
+// Form
 import { Formik } from "formik";
 import * as yup from "yup";
 import valid from "card-validator";
+
+// Context
+import { UserContext } from '../../../contexts/userContext';
 import { CartContext } from "../../../contexts/cartContext";
+
+// Data
+import envData from "../../../data/env";
 
 Stripe.setOptionsAsync({
   publishableKey:
@@ -29,6 +39,9 @@ const inputStyle = {
 };
 
 function StripeForm() {
+
+  // Context
+  const { user } = useContext(UserContext);
   const cartCourses: any = useContext(CartContext);
 
   console.log(cartCourses.cartList);

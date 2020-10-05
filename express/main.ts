@@ -2,6 +2,8 @@ import express from "express";
 import multer from "multer";
 import bodyParser from "body-parser";
 import cors from "cors";
+import aws from 'aws-sdk';
+import multerS3 from 'multer-s3';
 
 const app = express();
 
@@ -13,19 +15,36 @@ const knex = Knex(knexConfig["development"]);
 //use CORS
 app.use(cors());
 
-//set up body parser
-
-//storage file
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, `${__dirname}/public/img`);
-  },
-  filename: function (req, file, cb) {
-    cb(null, `${file.fieldname}-${Date.now()}.${file.mimetype.split("/")[1]}`);
-  },
+const s3 = new aws.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: 'ap-southeast-1'
 });
 
-export const upload = multer({ storage });
+export const upload = multer({
+  storage: multerS3({
+      s3: s3,
+      bucket: 'tecky-final-capstone-project-upload',
+      metadata: (req,file,cb)=>{
+          cb(null,{fieldName: file.fieldname});
+      },
+      key: (req,file,cb)=>{
+          cb(null,`${file.fieldname}-${Date.now()}.${file.mimetype.split('/')[1]}`);
+      }
+  })
+})
+
+//storage file
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, `${__dirname}/public/img`);
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, `${file.fieldname}-${Date.now()}.${file.mimetype.split("/")[1]}`);
+//   },
+// });
+
+// export const upload = multer({ storage });
 
 //storage file
 const fileStorage = multer.diskStorage({
@@ -45,6 +64,7 @@ const fileStorage = multer.diskStorage({
 
 export const fileUpload = multer({ storage: fileStorage });
 
+//set up body parser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 

@@ -7,9 +7,12 @@ import { Button } from "react-bootstrap";
 import { IRootState } from "../redux/store";
 import { useSelector } from "react-redux";
 //import DropdownMenu from "../components/DropdownMenu";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 const HomePage: React.FC = () => {
   const userId = useSelector((state: IRootState) => state.auth.id);
+  console.log()
 
   return (
     <div>

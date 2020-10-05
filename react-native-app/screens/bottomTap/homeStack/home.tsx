@@ -1,6 +1,9 @@
 // React, React Native
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList, ScrollView } from 'react-native';
+
+// Context
+import { UserContext } from '../../../contexts/userContext';
 
 // Navigation
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
@@ -23,6 +26,9 @@ import homeStyles from '../../../styles/homeStyles';
 import envData from '../../../data/env';
 
 export default function Home() {
+
+    // Context
+    const { user } = useContext(UserContext);
 
     // Hooks
     const navigation = useNavigation();
@@ -67,6 +73,8 @@ export default function Home() {
             style={{ ...globalStyles.container, paddingTop: 12, paddingHorizontal: 0 }}
             showsVerticalScrollIndicator={false}
         >
+
+            <Text style={homeStyles.screenTitle}>{'歡迎, ' + user.email.split('@')[0]}</Text>
 
             <HomeCategories />
 
