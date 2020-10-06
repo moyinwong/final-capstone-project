@@ -34,18 +34,21 @@ export default function CoursesList() {
     let coursesListParam: ICoursesListParam = {
         subject: null,
         tutorName: null,
-        tutorEmail: null
+        tutorEmail: null,
+        searchFor: null
     }
 
     if (route.params) {
         coursesListParam = route.params;
     }
 
+    // Category
     let categoryName = 'category';
     if (coursesListParam.subject) {
         categoryName = coursesListParam.subject;
     }
 
+    // Tutor
     let tutorName = 'tutor', tutorEmail = 'email';
     if (coursesListParam.tutorName) {
         tutorName = coursesListParam.tutorName;
@@ -53,6 +56,9 @@ export default function CoursesList() {
     if (coursesListParam.tutorEmail) {
         tutorEmail = coursesListParam.tutorEmail;
     }
+
+    // Search
+    let searchFor = 'search';
 
     // State
     const [coursesListData, setCoursesListData] = useState(
