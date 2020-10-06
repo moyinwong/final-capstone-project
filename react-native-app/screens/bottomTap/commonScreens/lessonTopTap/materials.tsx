@@ -8,7 +8,7 @@ import * as Linking from 'expo-linking';
 import { LessonContext } from '../../../../contexts/lessonContext';
 
 // Navigation
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 // Styles
 import globalStyles from '../../../../styles/globalStyles';
@@ -23,6 +23,7 @@ export default function Materials(props: { navigation: { goBack: () => void; nav
     const { lessonName } = useContext(LessonContext);
 
     // Hooks
+    const navigation = useNavigation();
     const isFocused = useIsFocused();
 
     // Lesson Files
@@ -63,6 +64,15 @@ export default function Materials(props: { navigation: { goBack: () => void; nav
 
     return (
         <View style={globalStyles.container}>
+
+            <TouchableOpacity
+                style={materialsStyles.goBackButton}
+                onPress={() => navigation.pop()
+                }
+            >
+
+                <Text style={materialsStyles.goBackText}>返回課程</Text>
+            </TouchableOpacity>
 
             <FlatList
                 style={materialsStyles.filesContainer}

@@ -5,17 +5,33 @@ import { View, Text, Pressable, TouchableOpacity } from 'react-native';
 // Context
 import { LessonContext } from '../../../../contexts/lessonContext';
 
+// Navigation
+import { useNavigation } from '@react-navigation/native';
+
 // Styles
 import globalStyles from '../../../../styles/globalStyles';
 import exerciseStyles from '../../../../styles/exerciseStyles';
 
-export default function Exercise(props: { navigation: { goBack: () => void; }; }) {
+export default function Exercise() {
 
     // Context
     const { questionsAnswers, filteredQuestions, saveAnswer } = useContext(LessonContext);
 
+    // Hooks
+    const navigation = useNavigation();
+
     return (
         <View style={globalStyles.container}>
+
+            <TouchableOpacity
+                style={exerciseStyles.goBackButton}
+                onPress={() => navigation.pop()
+                }
+            >
+
+                <Text style={exerciseStyles.goBackText}>返回課程</Text>
+            </TouchableOpacity>
+            
             {filteredQuestions[0] ? (
                 filteredQuestions.map(questionItem => {
                     return (
