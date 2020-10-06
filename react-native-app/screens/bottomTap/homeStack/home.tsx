@@ -94,9 +94,10 @@ export default function Home() {
             <Formik
                 initialValues={{ searchText: '' }}
                 onSubmit={(value) => {
-                    console.log(value)
+                    let tempValue = value.searchText;
+                    value.searchText = '';
                     navigation.navigate('CoursesList',
-                        { subject: value.searchText }
+                        { searchFor: tempValue }
                     )
                 }}
             >
