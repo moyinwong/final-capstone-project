@@ -260,7 +260,7 @@ export function FormikStepper({children, ...props}: FormikConfig<FormikValues>) 
                 {/* back button */}
                 {step > 0 ? (
                     <Button disabled={isSubmitting} onClick={() => setStep(step => step - 1)}>
-                        Back
+                        上一頁
                     </Button>
                 ) : null}
 
@@ -276,7 +276,7 @@ export function FormikStepper({children, ...props}: FormikConfig<FormikValues>) 
                         console.log(values)
                     }}
                 >
-                    {isSubmitting ? 'Submitting' : isLastStep() ? 'Submit' : 'Next'}
+                    {isSubmitting ? '提交中' : isLastStep() ? '提交' : '下一頁'}
                 </Button>}
 
                 {completed && <div>成功建立課堂<i className="fas fa-check-circle"></i></div>}

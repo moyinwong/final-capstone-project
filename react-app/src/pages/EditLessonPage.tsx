@@ -1,8 +1,12 @@
-import { Container, Grid, InputLabel, MenuItem, Select, TextField, FormControl, makeStyles, Button, FormHelperText } from '@material-ui/core'
+import { Container, Grid, InputLabel, MenuItem, Select, TextField, FormControl, makeStyles, Button, FormHelperText, CircularProgress } from '@material-ui/core'
+import { push } from 'connected-react-router';
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import {useDropzone} from 'react-dropzone';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import './EditLessonPage.scss'
+
+const sleep = (time: number) => new Promise((acc) => setTimeout(acc, time))
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -18,6 +22,7 @@ const EditLessonPage = () => {
     const param: { lessonName: string} = useParams();
     const { lessonName } = param;
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     //related to input field
     const [lessonTitle, setLessonName] =  useState("");
@@ -30,6 +35,9 @@ const EditLessonPage = () => {
     const [isTrialEmpty, setIsTrialEmpty] = useState(false);
     const [isDescriptionEmpty, setIsDescriptionEmpty] = useState(false);
     const [isVideoURLEmpty, setVideoURLEmpty] = useState(false);
+
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [completed, setCompleted] = useState(false)
 
 
     const {acceptedFiles, getRootProps, getInputProps} = useDropzone();
@@ -49,8 +57,12 @@ const EditLessonPage = () => {
     
         const result = await res.json();
         const { lessonInfo } = result;
+        if (!lessonInfo.is_trial) {
+            setIsTrial('false');
+        } else {
+            setIsTrial('true');
+        }
         setLessonName(lessonInfo.lesson_name);
-        setIsTrial(lessonInfo.is_trial);
         setDescription(lessonInfo.lesson_description);
         setVideoURL(lessonInfo.video_url)
     };
@@ -127,6 +139,7 @@ const EditLessonPage = () => {
 
     let handleSubmit = async (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
         event.preventDefault();
+        setIsSubmitting(true);
 
         if (lessonTitle.length < 4) {
             setIsLessonNameValid(true);
@@ -160,8 +173,11 @@ const EditLessonPage = () => {
             })
             const result = await res.json();
             console.log(result);
-            
-        }
+            await sleep(1000);
+            setCompleted(true);
+            await sleep(1000);
+            dispatch(push('/instructor'))
+        }   
     }
 
     
@@ -169,7 +185,8 @@ const EditLessonPage = () => {
     return (
         <div>
             <Container id="edit-lesson-container" component="main" maxWidth="md">
-                <form  noValidate autoComplete="off">
+                <Button href="/instructor" variant="contained" color="secondary" size="large">Exit</Button>
+                <form id="edit-lesson-form"  noValidate autoComplete="off">
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             {lessonTitle.length ?
@@ -297,15 +314,21 @@ const EditLessonPage = () => {
                         </Grid>
 
                     </Grid>
+                    
+                    {!completed &&
+                        <Button
+                            startIcon={isSubmitting ? <CircularProgress size="1rem" /> : null}
+                            id={isSubmitting ? 'submitting-button' : "submit-button"}
+                            type="submit" 
+                            variant="contained" 
+                            onClick={handleSubmit}
+                            disabled={isSubmitting ? true : false}
+                        >
+                            {isSubmitting ? '提交中' : '提交'}
+                        </Button>
+                    }
+                    {completed && <div>成功建立課堂<i className="fas fa-check-circle"></i></div>}
 
-                    <Button 
-                        type="submit" 
-                        variant="contained" 
-                        color="primary"
-                        onClick={handleSubmit}
-                    >
-                        提交
-                    </Button>
                 </form>
             </Container>
         </div>
