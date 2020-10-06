@@ -1,6 +1,6 @@
 // React, React Native
 import React, { useContext } from "react";
-import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
+import { View, Text, Image, TouchableOpacity, FlatList, Alert } from "react-native";
 
 // Navigation
 import { useNavigation } from "@react-navigation/native";
@@ -24,6 +24,25 @@ export default function Cart(props: { navigation: { goBack: () => void } }) {
 
   // Hooks
   const navigation = useNavigation();
+
+  function pay() {
+    if (cartSum != 0) {
+      navigation.navigate("StripeForm");
+    } else {
+      Alert.alert(
+        "無需付款",
+        "請先將課程加到購物車",
+        [
+          {
+            text: "取消",
+            onPress: () => console.log("取消"),
+            style: "cancel"
+          }
+        ],
+        { cancelable: true }
+      )
+    }
+  }
 
   return (
     <View style={{ ...globalStyles.container, paddingHorizontal: 0 }}>
@@ -96,7 +115,7 @@ export default function Cart(props: { navigation: { goBack: () => void } }) {
         <View>
           <TouchableOpacity
             style={cartStyles.payButton}
-            onPress={() => navigation.navigate("StripeForm")}
+            onPress={() => pay()}
           >
             <Text style={cartStyles.payText}>付款</Text>
           </TouchableOpacity>

@@ -8,9 +8,6 @@ import { UserContext } from '../../../contexts/userContext';
 // Navigation
 import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
 
-// Functions
-import showCommentOrRateBox from '../../../functions/showCommentOrRateBox';
-
 // Styles
 import globalStyles from '../../../styles/globalStyles';
 import myCoursesStyles from '../../../styles/myCoursesStyles';
@@ -89,7 +86,6 @@ export default function MyCoursesList() {
                         onPress={() => navigation.navigate('Course',
                             { courseName: item.course_name }
                         )}
-                        onLongPress={() => showCommentOrRateBox()}
                     >
                         <View style={myCoursesStyles.coursePicContainer}>
                             <Image

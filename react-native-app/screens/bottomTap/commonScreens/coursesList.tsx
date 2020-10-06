@@ -18,9 +18,6 @@ import coursesListStyles from '../../../styles/coursesListStyles';
 // Interfaces
 import ICoursesListParam from '../../../Interfaces/ICoursesListParam';
 
-// Methods
-import showModal from '../../../functions/showModal';
-
 // Data
 import envData from '../../../data/env';
 
@@ -145,8 +142,6 @@ export default function CoursesList() {
                         onPress={() => navigation.navigate('Course',
                             { courseName: item.course_name }
                         )}
-                        // sssssssssssssssssssssssss
-                        onLongPress={() => showModal(true)}
                     >
                         <View style={coursesListStyles.coursePicContainer}>
                             <Image

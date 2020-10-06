@@ -1,9 +1,13 @@
 // React, React Native
 import React, { useContext, useState } from "react";
-import { Text, TextInput, View, Button, ActivityIndicator } from "react-native";
+import { Text, TextInput, View, Pressable, ActivityIndicator, TouchableOpacity, Keyboard } from "react-native";
+import { LinearGradient } from 'expo-linear-gradient';
 
 // Stripe
 import { PaymentsStripe as Stripe } from "expo-payments-stripe";
+
+// Navigation
+import { useNavigation } from "@react-navigation/native";
 
 // Form
 import { Formik } from "formik";
@@ -16,6 +20,9 @@ import { CartContext } from "../../../contexts/cartContext";
 
 // Data
 import envData from "../../../data/env";
+
+// Styles
+import stripeFormStyles from '../../../styles/stripeFormStyles';
 
 Stripe.setOptionsAsync({
   publishableKey:
@@ -32,19 +39,14 @@ interface CardInfo {
   cvc: string;
 }
 
-const inputStyle = {
-  borderBottomColor: "black",
-  borderBottomWidth: 2,
-  marginBottom: 10,
-};
-
-function StripeForm() {
+export default function StripeForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isDone, setIsDone] = useState<boolean>(false);
   const [displayMessage, setDisplayMessage] = useState<string>("");
   // Context
   const { user } = useContext(UserContext);
   const cartCourses: any = useContext(CartContext);
+  const navigation = useNavigation();
 
   //console.log(user);
 
@@ -117,6 +119,15 @@ function StripeForm() {
       setIsDone(true);
       console.log(`isDone: ${isDone} should be true`);
     }
+
+    if (result.message == 'success') {
+      cartCourses.setCartList([]);
+      cartCourses.setCartSum(0);
+      cartCourses.setCartNum(0);
+      cartCourses.storeCartList([]);
+      cartCourses.storeCartSum(0);
+      navigation.navigate('Home');
+    }
   };
 
   //yup schema
@@ -172,15 +183,18 @@ function StripeForm() {
   });
 
   return (
-    <View
-      style={{
-        display: "flex",
-        height: "100%",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
+    <Pressable
+      style={stripeFormStyles.wholeScreen}
+      onPress={Keyboard.dismiss}
     >
+
+      <LinearGradient
+        start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+        colors={['rgba(119, 251, 176, 1)', 'rgba(166, 241, 141, 1)']}
+        style={stripeFormStyles.linearGradient}
+      >
+      </LinearGradient>
+
       {isLoading && (
         <View
           style={{
@@ -235,16 +249,14 @@ function StripeForm() {
           handleSubmit,
           values,
         }) => (
-            <View>
-              <Text>電郵</Text>
-              <View style={{ ...inputStyle }}>
+            <View style={stripeFormStyles.form}>
+              <Text style={stripeFormStyles.text}>電郵</Text>
+              <View style={stripeFormStyles.inputLine}>
                 <TextInput
                   onChangeText={handleChange("email")}
                   onBlur={handleBlur("email")}
                   value={values.email}
-                  style={{
-                    width: 300,
-                  }}
+                  style={stripeFormStyles.input}
                 />
               </View>
               {touched.email && errors.email && (
@@ -252,13 +264,13 @@ function StripeForm() {
                   <Text style={{ color: "red" }}>{errors.email}</Text>
                 </View>
               )}
-              <Text>持卡人姓名</Text>
-              <View style={{ ...inputStyle }}>
+              <Text style={stripeFormStyles.text}>持卡人姓名</Text>
+              <View style={stripeFormStyles.inputLine}>
                 <TextInput
                   onChangeText={handleChange("cardHolderName")}
                   onBlur={handleBlur("cardHolderName")}
                   value={values.cardHolderName}
-                  style={{ width: 300 }}
+                  style={stripeFormStyles.input}
                 />
               </View>
 
@@ -267,14 +279,15 @@ function StripeForm() {
                   <Text style={{ color: "red" }}>{errors.cardHolderName}</Text>
                 </View>
               )}
-              <Text>信用卡號碼</Text>
-              <View style={{ ...inputStyle }}>
+              <Text style={stripeFormStyles.text}>信用卡號碼</Text>
+              <View style={stripeFormStyles.inputLine}>
                 <TextInput
                   onChangeText={handleChange("cardNum")}
                   onBlur={handleBlur("cardNum")}
                   value={values.cardNum}
                   maxLength={16}
-                  style={{ width: 300 }}
+                  style={stripeFormStyles.input}
+                  keyboardType='numeric'
                 />
               </View>
 
@@ -284,16 +297,17 @@ function StripeForm() {
                 </View>
               )}
 
-              <Text>過期日期</Text>
+              <Text style={stripeFormStyles.text}>過期日期</Text>
 
               <View style={{ display: "flex", flexDirection: "row" }}>
-                <View style={{ ...inputStyle }}>
+                <View style={stripeFormStyles.inputLine}>
                   <TextInput
                     onChangeText={handleChange("expMonth")}
                     onBlur={handleBlur("expMonth")}
                     value={values.expMonth}
-                    style={{ width: 50 }}
+                    style={{ ...stripeFormStyles.input, width: 60 }}
                     maxLength={2}
+                    keyboardType='numeric'
                   />
                 </View>
 
@@ -311,15 +325,16 @@ function StripeForm() {
                     marginRight: 4,
                   }}
                 >
-                  <Text>/</Text>
+                  <Text style={stripeFormStyles.text}>/</Text>
                 </View>
-                <View style={{ ...inputStyle }}>
+                <View style={stripeFormStyles.inputLine}>
                   <TextInput
                     onChangeText={handleChange("expYear")}
                     onBlur={handleBlur("expYear")}
                     value={values.expYear}
-                    style={{ width: 50 }}
+                    style={{ ...stripeFormStyles.input, width: 60 }}
                     maxLength={2}
+                    keyboardType='numeric'
                   />
                 </View>
 
@@ -329,33 +344,32 @@ function StripeForm() {
                   </View>
                 )}
               </View>
-              <Text>CVC</Text>
-              <View style={{ ...inputStyle }}>
+              <Text style={stripeFormStyles.text}>CVC</Text>
+              <View style={stripeFormStyles.inputLine}>
                 <TextInput
                   onChangeText={handleChange("cvc")}
                   onBlur={handleBlur("cvc")}
                   value={values.cvc}
                   maxLength={3}
-                  style={{ width: 100 }}
+                  style={stripeFormStyles.input}
+                  keyboardType='numeric'
                 />
               </View>
 
               {touched.cvc && errors.cvc && (
                 <View>
-                  <Text>{errors.cvc}</Text>
+                  <Text style={{ color: "red" }}>{errors.cvc}</Text>
                 </View>
               )}
-              <Button
+              <TouchableOpacity
+                style={stripeFormStyles.button}
                 onPress={handleSubmit}
-                title="提交"
-                disabled={!isValid}
-                style={{ zIndex: 1 }}
-              />
+              >
+                <Text style={stripeFormStyles.buttonText}>提交</Text>
+              </TouchableOpacity>
             </View>
           )}
       </Formik>
-    </View>
+    </Pressable>
   );
-}
-
-export default StripeForm;
+};

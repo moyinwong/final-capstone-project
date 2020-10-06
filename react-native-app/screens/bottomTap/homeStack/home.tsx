@@ -17,9 +17,6 @@ import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import HomeCategories from '../../../sharedComponents/homeCategories';
 import Stars from '../../../sharedComponents/stars';
 
-// Functions
-import showModal from '../../../functions/showModal';
-
 // Styles
 import globalStyles from '../../../styles/globalStyles';
 import homeStyles from '../../../styles/homeStyles';
@@ -160,8 +157,6 @@ export default function Home() {
                             onPress={() => navigation.navigate('Course',
                                 { courseName: item.course_name }
                             )}
-                            // ssssssssssssssssssss
-                            onLongPress={() => showModal(false)}
                         >
                             <View style={homeStyles.coursePicContainer}>
                                 <Image
@@ -224,8 +219,6 @@ export default function Home() {
                                 onPress={() => navigation.navigate('Course',
                                     { courseName: item.course_name }
                                 )}
-                                // ssssssssssssssssssss
-                                onLongPress={() => showModal(false)}
                             >
                                 <View style={homeStyles.coursePicContainer}>
                                     <Image

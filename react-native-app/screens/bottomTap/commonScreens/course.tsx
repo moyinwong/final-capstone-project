@@ -46,6 +46,9 @@ export default function Courses() {
     const [courseInfo, setCourseInfo] = useState(
         []
     );
+    const [courseScore, setCourseScore] = useState(
+        0
+    );
 
     // Fetch
     async function getCourseInfo(courseName: string) {
@@ -59,6 +62,7 @@ export default function Courses() {
             const result = await fetchRes.json();
             checkDuplicate(result.course.id);
             setCourseInfo(result.course);
+            setCourseScore(result.course.rated_score);
         } catch (err) {
             console.log(err);
         }
@@ -210,12 +214,13 @@ export default function Courses() {
                     <View style={courseStyles.courseScoreContainer}>
                         <Text style={courseStyles.courseInfoText}>{"評分: "}</Text>
 
-                        <Stars score={courseInfo.rated_score} />
+                        {courseScore != 0 && (
+                            <Stars score={courseScore} />
+                        )}
 
                         <Text style={{ ...courseStyles.courseInfoText, fontSize: 16 }}>{" (" + courseInfo.rated_num + ")"}</Text>
                     </View>
-                    {/* sdsdgdsgsdgvsgbsdgbsrbhsbhsrbhsrrs */}
-                    {true && <Text style={courseStyles.coursePrice}>{'價錢: $' + courseInfo.price}</Text>}
+                    <Text style={courseStyles.coursePrice}>{'價錢: $' + courseInfo.price}</Text>
 
                     {!accessRight ? (
                         <View style={courseStyles.courseButtonContainer}>
@@ -304,7 +309,7 @@ export default function Courses() {
                         style={courseStyles.infoBox}
                         keyExtractor={(item) => item.lesson_id.toString()}
                         data={lessonsInfo}
-                        scrollEnabled={false}
+                        showsVerticalScrollIndicator={false}
 
                         ListHeaderComponent={
                             <Text style={courseStyles.DescriptionText}>{'簡介: ' + courseInfo.course_description}</Text>
@@ -338,7 +343,7 @@ export default function Courses() {
                             style={courseStyles.infoBox}
                             keyExtractor={(item) => item.user_id.toString().concat(item.comment)}
                             data={comments}
-                            scrollEnabled={false}
+                            showsVerticalScrollIndicator={false}
 
                             ItemSeparatorComponent={() => (
                                 <View style={courseStyles.separator}></View>

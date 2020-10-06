@@ -15,10 +15,6 @@ import tutorInfoStyles from '../../../styles/tutorInfoStyles';
 // Components
 import Stars from '../../../sharedComponents/stars';
 
-// Functions
-import showSubscribeBox from '../../../functions/showSubscribeBox';
-import showModal from '../../../functions/showModal';
-
 // Data
 import envData from '../../../data/env';
 
@@ -170,8 +166,6 @@ export default function TutorInfo() {
                         onPress={() => navigation.navigate('Course',
                             { courseName: item.course_name }
                         )}
-                        // ssssssdddfvesfgergerger
-                        onLongPress={() => showModal(false)}
                     >
                         <View style={tutorInfoStyles.coursePicContainer}>
                             <Image

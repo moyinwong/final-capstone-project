@@ -5,9 +5,6 @@ import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 // Navigation
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
-// Functions
-import showSubscribeBox from '../../../functions/showSubscribeBox';
-
 // Styles
 import globalStyles from '../../../styles/globalStyles';
 import tutorsStyles from '../../../styles/tutorsStyles';
@@ -69,7 +66,6 @@ export default function TutorsList() {
                         onPress={() => navigation.navigate('TutorInfo', {
                             tutor: item.email
                         })}
-                        onLongPress={() => showSubscribeBox()}
                     >
                         <View style={tutorsStyles.tutorPicContainer}>
                             <Image
