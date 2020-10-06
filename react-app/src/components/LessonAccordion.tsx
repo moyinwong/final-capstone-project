@@ -42,10 +42,18 @@ const LessonAccordion = (course: IPureCourse) => {
                 <Card.Body>
                     {lessons.length === 0 && <div>未有堂喎，快啲加返啦</div>}
                     {lessons.map((lesson, i) => 
-                    <div key={i}>
-                        {i + 1}: {lesson.lesson_name}
-                        <Link to={`/instructor/lesson/question/${lesson.lesson_name}`}><Button>增加課堂問題</Button></Link>
-                    </div>)}
+                        <div key={i}>
+                            {i + 1}: {lesson.lesson_name}
+                            <div className="lesson-box">
+                                <Link to={`/instructor/lesson/question/${lesson.lesson_name}`}>
+                                    <Button>增加課堂問題</Button>
+                                </Link>
+                                <Link to={`/instructor/lesson/edit/${lesson.lesson_name}`}>
+                                    <Button className="edit-button" variant="warning">編輯課堂</Button>
+                                </Link>
+                            </div>
+                        </div>)
+                    }
                     <Link to={`/instructor/lesson/creation/${course.name}`}><Button className="course-creation-button" variant="success">增加課堂</Button></Link>
                 </Card.Body>
             </Accordion.Collapse>

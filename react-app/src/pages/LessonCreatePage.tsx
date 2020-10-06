@@ -9,10 +9,9 @@ import { Card, CardContent, MenuItem, FormControl,
     InputLabel, Button, Box, Stepper, Step, StepLabel, CircularProgress} from '@material-ui/core'
 import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux';
-import { IRootState } from '../redux/store';
 import { push } from 'connected-react-router';
 import {useDropzone} from 'react-dropzone';
-import { ContactsOutlined } from '@material-ui/icons'
+
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -261,7 +260,7 @@ export function FormikStepper({children, ...props}: FormikConfig<FormikValues>) 
                 {/* back button */}
                 {step > 0 ? (
                     <Button disabled={isSubmitting} onClick={() => setStep(step => step - 1)}>
-                        Back
+                        上一頁
                     </Button>
                 ) : null}
 
@@ -277,7 +276,7 @@ export function FormikStepper({children, ...props}: FormikConfig<FormikValues>) 
                         console.log(values)
                     }}
                 >
-                    {isSubmitting ? 'Submitting' : isLastStep() ? 'Submit' : 'Next'}
+                    {isSubmitting ? '提交中' : isLastStep() ? '提交' : '下一頁'}
                 </Button>}
 
                 {completed && <div>成功建立課堂<i className="fas fa-check-circle"></i></div>}

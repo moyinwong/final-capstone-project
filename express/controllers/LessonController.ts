@@ -143,6 +143,38 @@ export class LessonController {
     }
   };
 
+  editLesson = async (req: Request, res: Response) => {
+    try {
+      const { lessonName } = req.params;
+      const lessonInfo: ILessonWithoutCourseId = req.body;
+      let courseMaterial = req.files;
+
+      let materialArray: any[] = [];
+      if (courseMaterial.length > 0) {
+        for (let material of courseMaterial) {
+          materialArray.push(material.filename);
+          console.log("materialarray", materialArray);
+        }
+        // let courseMaterial = req.files
+        const createdLesson = await this.lessonService.editLesson(
+          lessonInfo,
+          lessonName,
+          materialArray
+        );
+        return res.status(200).json({ createdLesson });
+      } else {
+        const createdLesson = await this.lessonService.editLesson(
+          lessonInfo,
+          lessonName
+        );
+        return res.status(200).json({ createdLesson });
+      }
+    } catch(e) {
+      logger.debug(e);
+      return res.status(500).json({ message: "internal server error" });
+    }
+  }
+  
   createLessonQuestion = async (req: Request, res: Response) => {
     try {
       const { lessonName } = req.params;
@@ -266,4 +298,5 @@ export class LessonController {
       return res.status(500).json({ message: "internal server error" });
     }
   };
+
 }

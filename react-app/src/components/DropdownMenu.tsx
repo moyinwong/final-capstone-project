@@ -16,7 +16,6 @@ const DropdownMenu = () => {
             <Link to={`/setting/${userId}`} className="menu-item">更改帳戶資料</Link>
             {isTutor ? <Link to="/instructor" className="menu-item">老師介面</Link> : ""}
             <Link to={`/my-course/${userId}`} className="menu-item">我的課程</Link>
-            <Link to="#" className="menu-item">收件箱</Link>
             <Link onClick={() => {
                   localStorage.removeItem("token");
                   dispatch(logout());
