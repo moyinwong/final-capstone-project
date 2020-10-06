@@ -5,6 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 // Context
 import { UserContext } from '../../contexts/userContext';
+import { CartContext } from '../../contexts/cartContext';
 
 // Navigation
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
@@ -20,6 +21,7 @@ export default function Loading() {
 
     // Context
     const { setUser } = useContext(UserContext);
+    const { setCartList, setCartSum } = useContext(CartContext);
 
     // Hooks
     const navigation = useNavigation();
@@ -51,12 +53,44 @@ export default function Loading() {
         }
     }
 
+    // Get Cart List from Storage
+    const getCartList = async () => {
+        try {
+            const jsonString = await AsyncStorage.getItem('cartListKey')
+
+            if (jsonString) {
+                const jsonObject = await JSON.parse(jsonString);
+                setCartList(jsonObject);
+            }
+            return null
+
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    const getCartSum = async () => {
+        try {
+            const numString = await AsyncStorage.getItem('cartSumKey')
+
+            if (numString) {
+                const numObject = await parseInt(numString);
+                setCartSum(numObject);
+            }
+            return null
+
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     // Check if User stored in Storage
     const nothing = 'nothing'
     useFocusEffect(
         useCallback(() => {
             setTimeout(() => {
                 getUser()
+                getCartList()
+                getCartSum()
             }, 1200)
         }, [nothing])
     );
