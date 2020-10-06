@@ -50,7 +50,8 @@ const Header = (props: any) => {
 
   const handleSearch = async (event: any) => {
     event.preventDefault();
-    let searchText = (document.getElementById('search-bar')! as HTMLInputElement).value
+    let searchText = (document.getElementById('search-bar-normal')! as HTMLInputElement).value
+    console.log(searchText)
     if (searchText.length === 0) {
       return;
     } 
@@ -84,16 +85,18 @@ const Header = (props: any) => {
             )}
             <i className="fas fa-shopping-cart"></i>
           </button>
-          <div className="mr-auto search-bar">
+          <div className="mr-auto ">
             <Nav>
-              <Form inline>
-                <FormControl
-                  type="text"
-                  className="mr-sm-2"
-                  id="search-bar"
-                />
-                <Button className="search-button" onClick={handleSearch} type="submit" variant="outline-success"><SearchIcon /></Button>
-              </Form>
+
+            <Form inline>
+              <FormControl
+                type="text"
+                className="mr-sm-2"
+                id="search-bar-normal"
+              />
+              <Button className="search-button" onClick={handleSearch} type="submit" variant="outline-success"><SearchIcon /></Button>
+            </Form>
+
               <DarkModeSwitch />
             </Nav>
           </div>
