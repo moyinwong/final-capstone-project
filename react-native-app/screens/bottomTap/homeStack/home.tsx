@@ -97,7 +97,7 @@ export default function Home() {
                     console.log(value)
                     navigation.navigate('CoursesList',
                         { subject: value.searchText }
-                    )Í
+                    )
                 }}
             >
                 {(props) => (
