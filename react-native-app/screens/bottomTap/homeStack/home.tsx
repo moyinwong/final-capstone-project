@@ -131,44 +131,15 @@ export default function Home() {
                 ? homeStyles.screenTitle
                 : homeStyles.nonActiveScreenTitle
             }
-          >
-            熱門課程
-          </Text>
-        </Pressable>
-        <Pressable
-          style={homeStyles.titleButton}
-          onPress={() => setRenderPopCourses(false)}
-        >
-          <Text
-            style={
-              !renderPopCourses
-                ? homeStyles.screenTitle
-                : homeStyles.nonActiveScreenTitle
-            }
-          >
-            最受好評課程
-          </Text>
-        </Pressable>
-      </View>
 
-      {renderPopCourses ? (
-        <FlatList
-          style={homeStyles.flatList}
-          keyExtractor={(item) => item.id.toString()}
-          data={popularCoursesListData}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          ListFooterComponent={
-            <View style={globalStyles.homeHorizontalFooter}></View>
-          }
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={homeStyles.courseBox}
-              onPress={() =>
-                navigation.navigate("Course", { courseName: item.course_name })
-              }
-              // ssssssssssssssssssss
-              onLongPress={() => showModal(false)}
+            <Formik
+                initialValues={{ searchText: '' }}
+                onSubmit={(value) => {
+                    console.log(value)
+                    navigation.navigate('CoursesList',
+                        { subject: value.searchText }
+                    )
+                }}
             >
               <View style={homeStyles.coursePicContainer}>
                 <Image
