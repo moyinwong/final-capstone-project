@@ -16,11 +16,21 @@ const CartContextProvider = (props: any) => {
 
     const addCartList = (course: ICourse) => {
         setCartList([...cartList, course]);
-        setCartSum(cartSum + parseInt(course.price));
+
+        let tempSum = 0;
+        for (let item of cartList) {
+            tempSum += (parseInt(item.price));
+        }
+        setCartSum(tempSum);
     };
     const removeCartList = (course: ICourse) => {
         setCartList(cartList.filter(item => item.id! !== course.id));
-        setCartSum(cartSum - parseInt(course.price));
+
+        let tempSum = 0;
+        for (let item of cartList) {
+            tempSum += (parseInt(item.price));
+        }
+        setCartSum(tempSum);
     };
 
     return (
