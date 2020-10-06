@@ -1,5 +1,6 @@
 // React, React Native
 import React from "react";
+import { View, Text } from 'react-native';
 
 // Navigation
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
@@ -17,6 +18,8 @@ import HomeStack from "../stacks/homeStack";
 import SubjectStack from "../stacks/subjectStack";
 import CartStack from "../stacks/cartStack";
 import MyCoursesStack from "../stacks/myCoursesStack";
+
+import CartIcon from '../../sharedComponents/cartIcon';
 
 export default function BottomTap() {
   const Tab = createMaterialBottomTabNavigator();
@@ -56,7 +59,7 @@ export default function BottomTap() {
         options={{
           tabBarLabel: "購物車",
           tabBarIcon: ({ color }) => (
-            <AntDesign name="shoppingcart" color={color} size={24} />
+            <CartIcon color={color} />
           ),
         }}
       />

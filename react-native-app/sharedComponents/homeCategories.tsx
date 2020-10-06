@@ -1,9 +1,12 @@
 // React, React Native
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
 // Navigation
 import { useNavigation } from '@react-navigation/native';
+
+// Context
+import { CartContext } from "../contexts/cartContext";
 
 // Icons
 import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons';
@@ -13,6 +16,10 @@ import homeCategoriesStyles from '../styles/homeCategoriesStyles';
 
 export default function HomeCategories() {
 
+    // Context
+    const { cartNum } = useContext(CartContext);
+
+    // Hooks
     const navigation = useNavigation();
 
     return (
@@ -56,6 +63,9 @@ export default function HomeCategories() {
                         { screen: 'Cart' }
                     )}
                 >
+                    {cartNum !== 0 && (
+                        <Text style={homeCategoriesStyles.cartNum}>{cartNum}</Text>
+                    )}
                     <AntDesign name="shoppingcart" color={'#e96a43'} size={32} />
                     <Text style={homeCategoriesStyles.text}>購物車</Text>
                 </TouchableOpacity>

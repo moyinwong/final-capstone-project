@@ -10,6 +10,7 @@ import { FontAwesome } from '@expo/vector-icons';
 
 // Routes
 import LessonTopTap from '../topTap/lessonTopTap';
+import TrialTopTap from "../topTap/trialTopTap";
 
 // Screens
 import Home from '../../screens/bottomTap/homeStack/home';
@@ -105,6 +106,14 @@ export default function HomeStack(props: { navigation: { toggleDrawer: () => voi
                 options={{
                     title: '課堂',
                     ...stackTransition
+                }}
+            />
+            <Stack.Screen
+                name="Trial"
+                children={TrialTopTap}
+                options={{
+                    title: "課堂",
+                    ...stackTransition,
                 }}
             />
             <Stack.Screen

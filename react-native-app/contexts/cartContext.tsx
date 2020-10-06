@@ -17,6 +17,7 @@ const CartContextProvider = (props: any) => {
 
     const [cartList, setCartList] = useState(list);
     const [cartSum, setCartSum] = useState(0);
+    const [cartNum, setCartNum] = useState(0);
 
     const addCartList = (course: ICourse) => {
         // Check
@@ -34,33 +35,35 @@ const CartContextProvider = (props: any) => {
                 { cancelable: true }
             )
         } else {
+            let tempArray = [...cartList, course];
             let tempSum = 0;
-            for (let item of cartList) {
+
+            for (let item of tempArray) {
                 tempSum += (parseInt(item.price));
             }
-            tempSum += (parseInt(course.price));
 
-            storeCartList([...cartList, course]);
+            storeCartList(tempArray);
             storeCartSum(tempSum);
 
-            setCartList([...cartList, course]);
-
+            setCartList(tempArray);
             setCartSum(tempSum);
+            setCartNum(tempArray.length);
         }
     };
     const removeCartList = (course: ICourse) => {
+        let tempArray = cartList.filter(item => item.id! !== course.id);
         let tempSum = 0;
-        for (let item of cartList) {
+
+        for (let item of tempArray) {
             tempSum += (parseInt(item.price));
         }
-        tempSum -= (parseInt(course.price));
 
-        storeCartList(cartList.filter(item => item.id! !== course.id));
+        storeCartList(tempArray);
         storeCartSum(tempSum);
 
-        setCartList(cartList.filter(item => item.id! !== course.id));
-
+        setCartList(tempArray);
         setCartSum(tempSum);
+        setCartNum(tempArray.length);
     };
     const checkDuplicate = (course: ICourse) => {
         for (let item of cartList) {
@@ -90,7 +93,12 @@ const CartContextProvider = (props: any) => {
     }
 
     return (
-        <CartContext.Provider value={{ cartList, cartSum, addCartList, removeCartList, checkDuplicate, setCartList, setCartSum }}>
+        <CartContext.Provider value={{
+            cartList, cartSum, addCartList, removeCartList,
+            checkDuplicate, setCartList, setCartSum,
+            cartNum, setCartNum,
+            storeCartList, storeCartSum
+        }}>
             { props.children}
         </CartContext.Provider>
     )

@@ -10,6 +10,7 @@ import { FontAwesome } from "@expo/vector-icons";
 
 // Routes
 import LessonTopTap from "../topTap/lessonTopTap";
+import TrialTopTap from "../topTap/trialTopTap";
 
 // Screens
 import Cart from "../../screens/bottomTap/cartStack/cart";
@@ -52,12 +53,12 @@ export default function CartStack(props: {
         ),
         headerBackground: () => (
           <LinearGradient
-              start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-              colors={['rgba(119, 251, 176, 1)', 'rgba(166, 241, 141, 1)']}
-              style={{ height: '100%', width: '100%' }}
+            start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+            colors={['rgba(119, 251, 176, 1)', 'rgba(166, 241, 141, 1)']}
+            style={{ height: '100%', width: '100%' }}
           >
           </LinearGradient>
-      ),
+        ),
         headerLeftContainerStyle: {
           marginLeft: 18,
         }
@@ -98,6 +99,14 @@ export default function CartStack(props: {
       <Stack.Screen
         name="Lesson"
         children={LessonTopTap}
+        options={{
+          title: "課堂",
+          ...stackTransition,
+        }}
+      />
+      <Stack.Screen
+        name="Trial"
+        children={TrialTopTap}
         options={{
           title: "課堂",
           ...stackTransition,

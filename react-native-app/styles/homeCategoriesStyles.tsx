@@ -41,6 +41,13 @@ const homeCategoriesStyles = StyleSheet.create({
     text: {
         fontSize: 26,
         color: '#000000'
+    },
+    cartNum: {
+        fontSize: 19,
+        color: '#e96a43',
+        position: 'absolute',
+        top: 19,
+        right: 62
     }
 });
 

@@ -10,6 +10,7 @@ import { FontAwesome } from '@expo/vector-icons';
 
 // Routes
 import LessonTopTap from '../topTap/lessonTopTap';
+import TrialTopTap from "../topTap/trialTopTap";
 
 // Screens
 import MyCoursesList from '../../screens/bottomTap/myCoursesStack/MyCoursesList';
@@ -96,6 +97,14 @@ export default function TutorStack(props: { navigation: { toggleDrawer: () => vo
                 options={{
                     title: '課堂',
                     ...stackTransition
+                }}
+            />
+            <Stack.Screen
+                name="Trial"
+                children={TrialTopTap}
+                options={{
+                    title: "課堂",
+                    ...stackTransition,
                 }}
             />
             <Stack.Screen

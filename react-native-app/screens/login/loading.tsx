@@ -21,7 +21,7 @@ export default function Loading() {
 
     // Context
     const { setUser } = useContext(UserContext);
-    const { setCartList, setCartSum } = useContext(CartContext);
+    const { setCartList, setCartSum, setCartNum } = useContext(CartContext);
 
     // Hooks
     const navigation = useNavigation();
@@ -61,6 +61,7 @@ export default function Loading() {
             if (jsonString) {
                 const jsonObject = await JSON.parse(jsonString);
                 setCartList(jsonObject);
+                setCartNum(jsonObject.length);
             }
             return null
 

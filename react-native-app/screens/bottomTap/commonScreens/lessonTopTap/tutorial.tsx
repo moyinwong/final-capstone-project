@@ -63,7 +63,7 @@ export default function Tutorial(this: any, props: { navigation: { goBack: () =>
 
             const result = await fetchRes.json();
             let link = await (result.lessonInfo.video_url.split('youtu.be/')[1]);
-            let descriptionText = await (result.lessonInfo.lesson_description.split(" ").join(""));
+            let descriptionText = await (result.lessonInfo.lesson_description.split("   ").join(" "));
             setVideoLink(link);
             setVideoDescription(descriptionText);
         } catch (err) {

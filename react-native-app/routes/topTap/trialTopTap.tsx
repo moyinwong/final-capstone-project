@@ -11,7 +11,7 @@ import Materials from '../../screens/bottomTap/commonScreens/lessonTopTap/materi
 
 const Tab = createMaterialTopTabNavigator();
 
-export default function LessonTopTab() {
+export default function TrialTopTab() {
     return (
         <Tab.Navigator
             tabBarOptions={{
@@ -36,7 +36,7 @@ export default function LessonTopTab() {
             <Tab.Screen
                 name="Exercise"
                 component={Exercise}
-                initialParams={{ viewingCondition: 'purchased' }}
+                initialParams={{ viewingCondition: 'trial' }}
                 options={{
                     title: "練習"
                 }}
@@ -44,7 +44,7 @@ export default function LessonTopTab() {
             <Tab.Screen
                 name="Materials"
                 component={Materials}
-                initialParams={{ viewingCondition: 'purchased' }}
+                initialParams={{ viewingCondition: 'trial' }}
                 options={{
                     title: "教材"
                 }}

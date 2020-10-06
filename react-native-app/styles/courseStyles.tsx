@@ -67,6 +67,19 @@ const coursesListStyles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: '#22c736',
     },
+    courseAddedButton: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 8,
+        width: 135,
+        borderRadius: 10
+    },
+    courseAddedButtonText: {
+        fontSize: 19,
+        color: '#22c736'
+    },
     courseBuyButton: {
         paddingVertical: 8,
         paddingHorizontal: 24,

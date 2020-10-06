@@ -11,6 +11,7 @@ import { FontAwesome } from '@expo/vector-icons';
 // Routes
 import SubjectTopTap from '../topTap/subjectTopTap';
 import LessonTopTap from '../topTap/lessonTopTap';
+import TrialTopTap from "../topTap/trialTopTap";
 
 // Screens
 import TutorInfo from '../../screens/bottomTap/commonScreens/tutorInfo';
@@ -96,6 +97,14 @@ export default function SubjectStack(props: { navigation: { toggleDrawer: () => 
                 options={{
                     title: '課堂',
                     ...stackTransition
+                }}
+            />
+            <Stack.Screen
+                name="Trial"
+                children={TrialTopTap}
+                options={{
+                    title: "課堂",
+                    ...stackTransition,
                 }}
             />
             <Stack.Screen

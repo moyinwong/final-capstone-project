@@ -1,6 +1,6 @@
 // React, React Native
 import React, { useState, useContext, useCallback } from 'react';
-import { View, Text, Image, TouchableOpacity, FlatList, ScrollView, Pressable, Alert } from 'react-native';
+import { View, Text, Image, TouchableOpacity, FlatList, Pressable, Alert } from 'react-native';
 
 // Navigation
 import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
@@ -27,7 +27,7 @@ export default function Courses() {
 
     // Context
     const { user } = useContext(UserContext);
-    const { addCartList, setCartList, setCartSum } = useContext(CartContext);
+    const { cartList, addCartList, setCartList, setCartSum, storeCartList, storeCartSum, setCartNum } = useContext(CartContext);
     const { setLesson } = useContext(LessonContext);
 
     // Hooks
@@ -57,6 +57,7 @@ export default function Courses() {
             );
 
             const result = await fetchRes.json();
+            checkDuplicate(result.course.id);
             setCourseInfo(result.course);
         } catch (err) {
             console.log(err);
@@ -116,6 +117,22 @@ export default function Courses() {
         }
     }
 
+    // Check in Cart List?
+    // State
+    const [inCartList, setInCartList] = useState(
+        false
+    );
+
+    function checkDuplicate(courseId: number) {
+        for (let item of cartList) {
+            if (courseId == item.id) {
+                setInCartList(true);
+                return
+            }
+        }
+        setInCartList(false);
+    }
+
     useFocusEffect(
         useCallback(() => {
             getCourseInfo(courseName);
@@ -125,9 +142,14 @@ export default function Courses() {
     );
 
     function goToLesson(lesson_name: string, is_trial: boolean) {
-        if (accessRight || is_trial) {
+        if (accessRight) {
             setLesson(lesson_name);
             navigation.navigate('Lesson',
+                { lesson: lesson_name }
+            )
+        } else if (is_trial) {
+            setLesson(lesson_name);
+            navigation.navigate('Trial',
                 { lesson: lesson_name }
             )
         } else {
@@ -147,9 +169,18 @@ export default function Courses() {
     }
 
     function buyCourse(course: any) {
+        setInCartList(true);
         setCartList([courseInfo]);
         setCartSum(courseInfo.price);
+        storeCartList([courseInfo]);
+        storeCartSum(courseInfo.price);
+        setCartNum(1);
         navigation.navigate('StripeForm');
+    }
+
+    function addCourseToList(course: any) {
+        addCartList(course);
+        setInCartList(true);
     }
 
     // Render
@@ -159,10 +190,7 @@ export default function Courses() {
     );
 
     return (
-        <ScrollView
-            style={globalStyles.container}
-            showsVerticalScrollIndicator={false}
-        >
+        <View style={globalStyles.container}>
 
             <View
                 style={courseStyles.courseBox}
@@ -191,12 +219,20 @@ export default function Courses() {
 
                     {!accessRight ? (
                         <View style={courseStyles.courseButtonContainer}>
-                            <TouchableOpacity
-                                style={courseStyles.courseButton}
-                                onPress={() => addCartList(courseInfo)}
-                            >
-                                <Text style={courseStyles.courseButtonText}>加到購物車</Text>
-                            </TouchableOpacity>
+                            {inCartList ? (
+                                <View style={courseStyles.courseAddedButton}>
+                                    <MaterialIcons name="done" size={26} color="#22c736" />
+                                    <Text style={courseStyles.courseAddedButtonText}>已在購物車</Text>
+                                </View>
+                            ) : (
+                                    <TouchableOpacity
+                                        style={courseStyles.courseButton}
+                                        onPress={() => addCourseToList(courseInfo)}
+                                    >
+                                        <Text style={courseStyles.courseButtonText}>加到購物車</Text>
+                                    </TouchableOpacity>
+                                )}
+
                             <TouchableOpacity
                                 style={{ ...courseStyles.courseButton, ...courseStyles.courseBuyButton }}
                                 onPress={() => buyCourse(courseInfo)}
@@ -327,6 +363,6 @@ export default function Courses() {
 
             </View>
 
-        </ScrollView >
+        </View >
     )
 }

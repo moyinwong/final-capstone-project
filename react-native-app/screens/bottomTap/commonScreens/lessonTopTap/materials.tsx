@@ -8,7 +8,7 @@ import * as Linking from 'expo-linking';
 import { LessonContext } from '../../../../contexts/lessonContext';
 
 // Navigation
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useRoute, useFocusEffect, useNavigation } from '@react-navigation/native';
 
 // Styles
 import globalStyles from '../../../../styles/globalStyles';
@@ -23,8 +23,17 @@ export default function Materials(props: { navigation: { goBack: () => void; nav
     const { lessonName } = useContext(LessonContext);
 
     // Hooks
+    const route = useRoute();
     const navigation = useNavigation();
-    const isFocused = useIsFocused();
+
+    // Params
+    let viewingCondition = '';
+
+    if (route.params) {
+        if (route.params.viewingCondition) {
+            viewingCondition = route.params.viewingCondition;
+        }
+    }
 
     // Lesson Files
     // State
@@ -74,35 +83,42 @@ export default function Materials(props: { navigation: { goBack: () => void; nav
                 <Text style={materialsStyles.goBackText}>返回課程</Text>
             </TouchableOpacity>
 
-            <FlatList
-                style={materialsStyles.filesContainer}
-                keyExtractor={(item) => item.file_name}
-                data={lessonFiles}
-                scrollEnabled={true}
+            {viewingCondition == 'purchased' ? (
+                <FlatList
+                    style={materialsStyles.filesContainer}
+                    keyExtractor={(item) => item.file_name}
+                    data={lessonFiles}
+                    scrollEnabled={true}
 
-                ListHeaderComponent={
+                    ListHeaderComponent={
+                        <View style={materialsStyles.titleContainer}>
+                            {lessonFiles[0] ? (
+                                <Text style={materialsStyles.title}>可供下載：</Text>
+                            ) : (
+                                    <Text style={materialsStyles.title}>暫未有教材</Text>
+                                )}
+                        </View>
+                    }
+
+                    ItemSeparatorComponent={() => (
+                        <View style={materialsStyles.separator}></View>
+                    )}
+
+                    renderItem={({ item }) => (
+                        <TouchableOpacity
+                            style={materialsStyles.fileBox}
+                            onPress={() => Linking.openURL(`${envData.REACT_APP_BACKEND_FILE_URL}/file/${item.file_name}`)}
+                        >
+                            <Text style={materialsStyles.fileText}>{item.file_name}</Text>
+                        </TouchableOpacity>
+                    )}
+                />
+            ) : (
                     <View style={materialsStyles.titleContainer}>
-                        {lessonFiles[0] ? (
-                            <Text style={materialsStyles.title}>可供下載：</Text>
-                        ) : (
-                                <Text style={materialsStyles.title}>暫未有教材</Text>
-                            )}
+                        <Text style={{ ...materialsStyles.title, marginTop: 24 }}>請先購買此課程</Text>
                     </View>
-                }
-
-                ItemSeparatorComponent={() => (
-                    <View style={materialsStyles.separator}></View>
                 )}
 
-                renderItem={({ item }) => (
-                    <TouchableOpacity
-                        style={materialsStyles.fileBox}
-                        onPress={() => Linking.openURL(`${envData.REACT_APP_BACKEND_FILE_URL}/file/${item.file_name}`)}
-                    >
-                        <Text style={materialsStyles.fileText}>{item.file_name}</Text>
-                    </TouchableOpacity>
-                )}
-            />
 
         </View>
     )
