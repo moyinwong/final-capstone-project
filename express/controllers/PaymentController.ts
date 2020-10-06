@@ -187,20 +187,40 @@ export class PaymentController {
 
   MobilePayment = async (req: Request, res: Response) => {
     try {
-      const { stripeToken, chargeAmount, cartCourses } = req.body;
+      const { userEmail, stripeToken, chargeAmount, cartCourses } = req.body;
 
-      console.log(cartCourses);
-
-      //wait for userEmail
+      //console.log(cartCourses);
 
       const data = await this.paymentService.createPaymentByCharge(
         stripeToken,
         parseFloat(chargeAmount)
       );
 
-      console.log(data);
-
       if (data.status !== "succeeded") throw new Error(data.message);
+
+      let chargeId: string = data.id;
+
+      for (let course of cartCourses) {
+        const transfer = await this.paymentService.createTransfer(
+          course.tutor_name,
+          parseFloat(course.price) * 0.9,
+          chargeId,
+          `${userEmail} purchased ${course.course_name}`
+        );
+        //console.log(transfer);
+        if (transfer.type === "StripeInvalidRequestError") {
+          throw new Error(transfer);
+        } else {
+          const addCourseRes = await this.paymentService.addUserPurchasedCourse(
+            userEmail,
+            parseInt(course.id),
+            parseFloat(course.price)
+          );
+          logger.info(addCourseRes);
+        }
+
+        logger.info(transfer);
+      }
 
       return res.json({ message: "success" });
     } catch (err) {
