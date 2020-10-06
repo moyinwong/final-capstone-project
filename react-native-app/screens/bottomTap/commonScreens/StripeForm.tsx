@@ -1,6 +1,6 @@
 // React, React Native
-import React, { useContext } from "react";
-import { Text, TextInput, View, Button } from "react-native";
+import React, { useContext, useState } from "react";
+import { Text, TextInput, View, Button, ActivityIndicator } from "react-native";
 
 // Stripe
 import { PaymentsStripe as Stripe } from "expo-payments-stripe";
@@ -11,7 +11,7 @@ import * as yup from "yup";
 import valid from "card-validator";
 
 // Context
-import { UserContext } from '../../../contexts/userContext';
+import { UserContext } from "../../../contexts/userContext";
 import { CartContext } from "../../../contexts/cartContext";
 
 // Data
@@ -39,12 +39,18 @@ const inputStyle = {
 };
 
 function StripeForm() {
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isDone, setIsDone] = useState<boolean>(false);
+  const [displayMessage, setDisplayMessage] = useState<string>("");
   // Context
   const { user } = useContext(UserContext);
   const cartCourses: any = useContext(CartContext);
 
-  console.log(cartCourses.cartList);
+  //console.log(user);
+
+  const userEmail = user.email;
+
+  //console.log(cartCourses.cartList);
 
   let totalPrice = 0;
 
@@ -52,9 +58,10 @@ function StripeForm() {
     totalPrice += Math.round(parseFloat(course.price), 2);
   }
 
-  console.log(totalPrice);
+  //console.log(totalPrice);
 
   const charge = async (cardInfo: CardInfo) => {
+    setIsLoading(true);
     console.log("run");
 
     const params = {
@@ -71,7 +78,7 @@ function StripeForm() {
 
     const token: any = await Stripe.createTokenWithCardAsync(params);
 
-    console.log(token);
+    //console.log(token);
 
     const stripeToken = token.tokenId;
 
@@ -86,6 +93,7 @@ function StripeForm() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          userEmail,
           stripeToken: stripeToken,
           chargeAmount: totalPrice,
           cartCourses: cartCourses.cartList,
@@ -95,7 +103,16 @@ function StripeForm() {
 
     const result = await fetchRes.json();
 
-    console.log(result.message); //should be success
+    console.log("result: ", result.message); //should be success
+
+    setIsLoading(false);
+    if (result.message === "success") {
+      setDisplayMessage("已成功付款");
+      setIsDone(true);
+    } else {
+      setDisplayMessage("伺服器錯誤");
+      setIsDone(true);
+    }
   };
 
   //yup schema
@@ -160,7 +177,38 @@ function StripeForm() {
         alignItems: "center",
       }}
     >
-      <Text>Stripe Form</Text>
+      {isLoading && (
+        <View
+          style={{
+            backgroundColor: "#00ffbb",
+            width: "100%",
+            height: "100%",
+            position: "absolute",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 100000,
+          }}
+        >
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      )}
+      {isDone && (
+        <View
+          style={{
+            backgroundColor: "#00ffbb",
+            width: "100%",
+            height: "100%",
+            position: "absolute",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 100000,
+          }}
+        >
+          <Text>{displayMessage}</Text>
+        </View>
+      )}
 
       <Formik
         initialValues={{
@@ -183,119 +231,124 @@ function StripeForm() {
           handleSubmit,
           values,
         }) => (
-            <View>
-              <Text>電郵</Text>
-              <View style={{ ...inputStyle }}>
-                <TextInput
-                  onChangeText={handleChange("email")}
-                  onBlur={handleBlur("email")}
-                  value={values.email}
-                  style={{
-                    width: 300,
-                  }}
-                />
-              </View>
-              {touched.email && errors.email && (
-                <View>
-                  <Text>{errors.email}</Text>
-                </View>
-              )}
-              <Text>持卡人姓名</Text>
-              <View style={{ ...inputStyle }}>
-                <TextInput
-                  onChangeText={handleChange("cardHolderName")}
-                  onBlur={handleBlur("cardHolderName")}
-                  value={values.cardHolderName}
-                  style={{ width: 300 }}
-                />
-              </View>
-
-              {touched.cardHolderName && errors.cardHolderName && (
-                <View>
-                  <Text>{errors.cardHolderName}</Text>
-                </View>
-              )}
-              <Text>信用卡號碼</Text>
-              <View style={{ ...inputStyle }}>
-                <TextInput
-                  onChangeText={handleChange("cardNum")}
-                  onBlur={handleBlur("cardNum")}
-                  value={values.cardNum}
-                  maxLength={16}
-                  style={{ width: 300 }}
-                />
-              </View>
-
-              {touched.cardNum && errors.cardNum && (
-                <View>
-                  <Text>{errors.cardNum}</Text>
-                </View>
-              )}
-
-              <Text>過期日期</Text>
-
-              <View style={{ display: "flex", flexDirection: "row" }}>
-                <View style={{ ...inputStyle }}>
-                  <TextInput
-                    onChangeText={handleChange("expMonth")}
-                    onBlur={handleBlur("expMonth")}
-                    value={values.expMonth}
-                    style={{ width: 50 }}
-                    maxLength={2}
-                  />
-                </View>
-
-                {touched.expMonth && errors.expMonth && (
-                  <View>
-                    <Text>{errors.expMonth}</Text>
-                  </View>
-                )}
-                <View
-                  style={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    marginBottom: 10,
-                    marginLeft: 4,
-                    marginRight: 4,
-                  }}
-                >
-                  <Text>/</Text>
-                </View>
-                <View style={{ ...inputStyle }}>
-                  <TextInput
-                    onChangeText={handleChange("expYear")}
-                    onBlur={handleBlur("expYear")}
-                    value={values.expYear}
-                    style={{ width: 50 }}
-                    maxLength={2}
-                  />
-                </View>
-
-                {touched.expYear && errors.expYear && (
-                  <View>
-                    <Text>{errors.expYear}</Text>
-                  </View>
-                )}
-              </View>
-              <Text>CVC</Text>
-              <View style={{ ...inputStyle }}>
-                <TextInput
-                  onChangeText={handleChange("cvc")}
-                  onBlur={handleBlur("cvc")}
-                  value={values.cvc}
-                  maxLength={3}
-                  style={{ width: 100 }}
-                />
-              </View>
-
-              {touched.cvc && errors.cvc && (
-                <View>
-                  <Text>{errors.cvc}</Text>
-                </View>
-              )}
-              <Button onPress={handleSubmit} title="提交" disabled={!isValid} />
+          <View>
+            <Text>電郵</Text>
+            <View style={{ ...inputStyle }}>
+              <TextInput
+                onChangeText={handleChange("email")}
+                onBlur={handleBlur("email")}
+                value={values.email}
+                style={{
+                  width: 300,
+                }}
+              />
             </View>
-          )}
+            {touched.email && errors.email && (
+              <View>
+                <Text style={{ color: "red" }}>{errors.email}</Text>
+              </View>
+            )}
+            <Text>持卡人姓名</Text>
+            <View style={{ ...inputStyle }}>
+              <TextInput
+                onChangeText={handleChange("cardHolderName")}
+                onBlur={handleBlur("cardHolderName")}
+                value={values.cardHolderName}
+                style={{ width: 300 }}
+              />
+            </View>
+
+            {touched.cardHolderName && errors.cardHolderName && (
+              <View>
+                <Text style={{ color: "red" }}>{errors.cardHolderName}</Text>
+              </View>
+            )}
+            <Text>信用卡號碼</Text>
+            <View style={{ ...inputStyle }}>
+              <TextInput
+                onChangeText={handleChange("cardNum")}
+                onBlur={handleBlur("cardNum")}
+                value={values.cardNum}
+                maxLength={16}
+                style={{ width: 300 }}
+              />
+            </View>
+
+            {touched.cardNum && errors.cardNum && (
+              <View>
+                <Text style={{ color: "red" }}>{errors.cardNum}</Text>
+              </View>
+            )}
+
+            <Text>過期日期</Text>
+
+            <View style={{ display: "flex", flexDirection: "row" }}>
+              <View style={{ ...inputStyle }}>
+                <TextInput
+                  onChangeText={handleChange("expMonth")}
+                  onBlur={handleBlur("expMonth")}
+                  value={values.expMonth}
+                  style={{ width: 50 }}
+                  maxLength={2}
+                />
+              </View>
+
+              {touched.expMonth && errors.expMonth && (
+                <View>
+                  <Text style={{ color: "red" }}>{errors.expMonth}</Text>
+                </View>
+              )}
+              <View
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  marginBottom: 10,
+                  marginLeft: 4,
+                  marginRight: 4,
+                }}
+              >
+                <Text>/</Text>
+              </View>
+              <View style={{ ...inputStyle }}>
+                <TextInput
+                  onChangeText={handleChange("expYear")}
+                  onBlur={handleBlur("expYear")}
+                  value={values.expYear}
+                  style={{ width: 50 }}
+                  maxLength={2}
+                />
+              </View>
+
+              {touched.expYear && errors.expYear && (
+                <View>
+                  <Text style={{ color: "red" }}>{errors.expYear}</Text>
+                </View>
+              )}
+            </View>
+            <Text>CVC</Text>
+            <View style={{ ...inputStyle }}>
+              <TextInput
+                onChangeText={handleChange("cvc")}
+                onBlur={handleBlur("cvc")}
+                value={values.cvc}
+                maxLength={3}
+                style={{ width: 100 }}
+              />
+            </View>
+
+            {touched.cvc && errors.cvc && (
+              <View>
+                <Text>{errors.cvc}</Text>
+              </View>
+            )}
+            <Button
+              onPress={handleSubmit}
+              title="提交"
+              disabled={!isValid}
+              style={{ zIndex: 1 }}
+            />
+          </View>
+        )}
       </Formik>
     </View>
   );
