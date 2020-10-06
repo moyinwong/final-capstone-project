@@ -25,3 +25,13 @@
         color: rgb(59, 59, 59)
     }
 }
+
+.lesson-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .edit-button {
+        margin-left: 20px;
+    }
+}

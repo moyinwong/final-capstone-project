@@ -3,6 +3,7 @@ import { lessonController, fileUpload } from "../main";
 
 export const lessonRoutes = express.Router();
 
+lessonRoutes.put("/edit/:lessonName", fileUpload.array('files', 10), lessonController.editLesson);
 lessonRoutes.get("/summary/:course/:user", lessonController.courseLessons);
 lessonRoutes.get("/summary/:course", lessonController.courseLessons);
 lessonRoutes.get("/info/:lesson", lessonController.lesson);

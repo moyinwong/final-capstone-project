@@ -158,6 +158,8 @@ export class LessonService {
       .where(`${tables.LESSONS}.name`, lessonName)
       .limit(1);
     return lesson;
+
+
   };
 
   getLessonQuestionAndAnswer = async (lessonName: string) => {
@@ -259,7 +261,7 @@ export class LessonService {
     if (materialArray) {
       for (let material of materialArray) {
 
-        let fileUploaded = await this.knex
+        let fileUploadedId = await this.knex
           .insert({
             name: material,
             lesson_id: lessonId,
@@ -267,13 +269,53 @@ export class LessonService {
           .into(tables.FILES)
           .returning("id");
         
-        console.log('line 267', fileUploaded)
-        filesUploaded.push(fileUploaded);
+        console.log('line 267', fileUploadedId)
+        filesUploaded.push(fileUploadedId);
       }
     }
 
     return lessonId;
   };
+
+  editLesson = async (lessonInfo: ILessonWithoutCourseId, lessonName: string, materialArray?: any[]) => {
+    const lesson = await this.knex
+      .select("id")
+      .from(tables.LESSONS)
+      .where("name", lessonName)
+      .first();
+    const lessonId = lesson.id;
+
+    let isTrial = lessonInfo.lessonIsTrial === "true";
+
+    const updatedLessonId = await this.knex(tables.LESSONS)
+      .where('id', lessonId)
+      .update({
+        name: lessonInfo.lessonName,
+        description: lessonInfo.lessonDescription,
+        is_trial: isTrial,
+        video_url: lessonInfo.lessonVideoUrl,
+      }, ['id'])
+  
+    let filesUploaded: any[] = [];
+    if (materialArray) {
+      for (let material of materialArray) {
+
+        let fileUploadedId = await this.knex
+          .insert({
+            name: material,
+            lesson_id: lessonId,
+          })
+          .into(tables.FILES)
+          .returning("id");
+        
+        console.log('line 267', fileUploadedId)
+        filesUploaded.push(fileUploadedId);
+      }
+    }
+
+    return updatedLessonId
+
+  }
 
   createLessonQuestion = async (
     question: string,

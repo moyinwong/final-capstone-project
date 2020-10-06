@@ -28,6 +28,7 @@ import SettingPage from "./pages/SettingPage";
 import TutorCoursePage from "./pages/TutorCoursePage";
 import SearchResultPage from "./pages/SearchResultPage";
 import Footer from "./components/Footer";
+import EditLessonPage from "./pages/EditLessonPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -97,6 +98,11 @@ function App() {
           path="/my-course/:userId"
           exact={true}
           component={UserCoursePage}
+        />
+        <PrivateRoute
+          path="/instructor/lesson/edit/:lessonName"
+          exact={true}
+          component={EditLessonPage}
         />
         <PrivateRoute
           path="/instructor/course/creation"

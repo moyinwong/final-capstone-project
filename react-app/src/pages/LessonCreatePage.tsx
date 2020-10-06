@@ -9,10 +9,9 @@ import { Card, CardContent, MenuItem, FormControl,
     InputLabel, Button, Box, Stepper, Step, StepLabel, CircularProgress} from '@material-ui/core'
 import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux';
-import { IRootState } from '../redux/store';
 import { push } from 'connected-react-router';
 import {useDropzone} from 'react-dropzone';
-import { ContactsOutlined } from '@material-ui/icons'
+
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
