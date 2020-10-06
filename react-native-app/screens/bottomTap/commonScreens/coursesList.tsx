@@ -59,6 +59,9 @@ export default function CoursesList() {
 
     // Search
     let searchFor = 'search';
+    if (coursesListParam.searchFor) {
+        searchFor = coursesListParam.searchFor;
+    }
 
     // State
     const [coursesListData, setCoursesListData] = useState(
@@ -80,9 +83,12 @@ export default function CoursesList() {
             if (categoryName != "category") {
                 queryRoute = "/category/";
                 paramName = categoryName;
-            } else {
+            } else if (tutorEmail != 'email') {
                 queryRoute = "/course/tutor/";
                 paramName = tutorEmail;
+            } else {
+                queryRoute = "/course/search?search=";
+                paramName = searchFor;
             }
 
             const fetchRes = await fetch(
@@ -112,12 +118,17 @@ export default function CoursesList() {
                                     <Text style={coursesListStyles.paramTitle}>{coursesListParam.subject}</Text>
                         課程</Text>
                             )
-                            : (
+                            : (coursesListParam.tutorName ? (
                                 <View>
                                     <Text style={coursesListStyles.screenTitle}>
                                         <Text style={coursesListStyles.paramTitle}>{coursesListParam.tutorName}</Text>
                         的課程</Text>
                                 </View>
+                            ) : (
+                                    <Text style={coursesListStyles.screenTitle}>與
+                                        <Text style={coursesListStyles.paramTitle}>{coursesListParam.searchFor}</Text>
+                                        相關的課程</Text>
+                                )
                             )
                         }
                     </View>

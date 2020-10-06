@@ -62,6 +62,7 @@ function StripeForm() {
 
   const charge = async (cardInfo: CardInfo) => {
     setIsLoading(true);
+    console.log(`isLoading: ${isLoading} should be true`);
     console.log("run");
 
     const params = {
@@ -106,12 +107,15 @@ function StripeForm() {
     console.log("result: ", result.message); //should be success
 
     setIsLoading(false);
+    console.log(`isLoading: ${isLoading} should be false`);
     if (result.message === "success") {
       setDisplayMessage("已成功付款");
       setIsDone(true);
+      console.log(`isDone: ${isDone} should be true`);
     } else {
       setDisplayMessage("伺服器錯誤");
       setIsDone(true);
+      console.log(`isDone: ${isDone} should be true`);
     }
   };
 
@@ -231,124 +235,124 @@ function StripeForm() {
           handleSubmit,
           values,
         }) => (
-          <View>
-            <Text>電郵</Text>
-            <View style={{ ...inputStyle }}>
-              <TextInput
-                onChangeText={handleChange("email")}
-                onBlur={handleBlur("email")}
-                value={values.email}
-                style={{
-                  width: 300,
-                }}
-              />
-            </View>
-            {touched.email && errors.email && (
-              <View>
-                <Text style={{ color: "red" }}>{errors.email}</Text>
-              </View>
-            )}
-            <Text>持卡人姓名</Text>
-            <View style={{ ...inputStyle }}>
-              <TextInput
-                onChangeText={handleChange("cardHolderName")}
-                onBlur={handleBlur("cardHolderName")}
-                value={values.cardHolderName}
-                style={{ width: 300 }}
-              />
-            </View>
-
-            {touched.cardHolderName && errors.cardHolderName && (
-              <View>
-                <Text style={{ color: "red" }}>{errors.cardHolderName}</Text>
-              </View>
-            )}
-            <Text>信用卡號碼</Text>
-            <View style={{ ...inputStyle }}>
-              <TextInput
-                onChangeText={handleChange("cardNum")}
-                onBlur={handleBlur("cardNum")}
-                value={values.cardNum}
-                maxLength={16}
-                style={{ width: 300 }}
-              />
-            </View>
-
-            {touched.cardNum && errors.cardNum && (
-              <View>
-                <Text style={{ color: "red" }}>{errors.cardNum}</Text>
-              </View>
-            )}
-
-            <Text>過期日期</Text>
-
-            <View style={{ display: "flex", flexDirection: "row" }}>
+            <View>
+              <Text>電郵</Text>
               <View style={{ ...inputStyle }}>
                 <TextInput
-                  onChangeText={handleChange("expMonth")}
-                  onBlur={handleBlur("expMonth")}
-                  value={values.expMonth}
-                  style={{ width: 50 }}
-                  maxLength={2}
+                  onChangeText={handleChange("email")}
+                  onBlur={handleBlur("email")}
+                  value={values.email}
+                  style={{
+                    width: 300,
+                  }}
+                />
+              </View>
+              {touched.email && errors.email && (
+                <View>
+                  <Text style={{ color: "red" }}>{errors.email}</Text>
+                </View>
+              )}
+              <Text>持卡人姓名</Text>
+              <View style={{ ...inputStyle }}>
+                <TextInput
+                  onChangeText={handleChange("cardHolderName")}
+                  onBlur={handleBlur("cardHolderName")}
+                  value={values.cardHolderName}
+                  style={{ width: 300 }}
                 />
               </View>
 
-              {touched.expMonth && errors.expMonth && (
+              {touched.cardHolderName && errors.cardHolderName && (
                 <View>
-                  <Text style={{ color: "red" }}>{errors.expMonth}</Text>
+                  <Text style={{ color: "red" }}>{errors.cardHolderName}</Text>
                 </View>
               )}
-              <View
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  marginBottom: 10,
-                  marginLeft: 4,
-                  marginRight: 4,
-                }}
-              >
-                <Text>/</Text>
-              </View>
+              <Text>信用卡號碼</Text>
               <View style={{ ...inputStyle }}>
                 <TextInput
-                  onChangeText={handleChange("expYear")}
-                  onBlur={handleBlur("expYear")}
-                  value={values.expYear}
-                  style={{ width: 50 }}
-                  maxLength={2}
+                  onChangeText={handleChange("cardNum")}
+                  onBlur={handleBlur("cardNum")}
+                  value={values.cardNum}
+                  maxLength={16}
+                  style={{ width: 300 }}
                 />
               </View>
 
-              {touched.expYear && errors.expYear && (
+              {touched.cardNum && errors.cardNum && (
                 <View>
-                  <Text style={{ color: "red" }}>{errors.expYear}</Text>
+                  <Text style={{ color: "red" }}>{errors.cardNum}</Text>
                 </View>
               )}
-            </View>
-            <Text>CVC</Text>
-            <View style={{ ...inputStyle }}>
-              <TextInput
-                onChangeText={handleChange("cvc")}
-                onBlur={handleBlur("cvc")}
-                value={values.cvc}
-                maxLength={3}
-                style={{ width: 100 }}
+
+              <Text>過期日期</Text>
+
+              <View style={{ display: "flex", flexDirection: "row" }}>
+                <View style={{ ...inputStyle }}>
+                  <TextInput
+                    onChangeText={handleChange("expMonth")}
+                    onBlur={handleBlur("expMonth")}
+                    value={values.expMonth}
+                    style={{ width: 50 }}
+                    maxLength={2}
+                  />
+                </View>
+
+                {touched.expMonth && errors.expMonth && (
+                  <View>
+                    <Text style={{ color: "red" }}>{errors.expMonth}</Text>
+                  </View>
+                )}
+                <View
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    marginBottom: 10,
+                    marginLeft: 4,
+                    marginRight: 4,
+                  }}
+                >
+                  <Text>/</Text>
+                </View>
+                <View style={{ ...inputStyle }}>
+                  <TextInput
+                    onChangeText={handleChange("expYear")}
+                    onBlur={handleBlur("expYear")}
+                    value={values.expYear}
+                    style={{ width: 50 }}
+                    maxLength={2}
+                  />
+                </View>
+
+                {touched.expYear && errors.expYear && (
+                  <View>
+                    <Text style={{ color: "red" }}>{errors.expYear}</Text>
+                  </View>
+                )}
+              </View>
+              <Text>CVC</Text>
+              <View style={{ ...inputStyle }}>
+                <TextInput
+                  onChangeText={handleChange("cvc")}
+                  onBlur={handleBlur("cvc")}
+                  value={values.cvc}
+                  maxLength={3}
+                  style={{ width: 100 }}
+                />
+              </View>
+
+              {touched.cvc && errors.cvc && (
+                <View>
+                  <Text>{errors.cvc}</Text>
+                </View>
+              )}
+              <Button
+                onPress={handleSubmit}
+                title="提交"
+                disabled={!isValid}
+                style={{ zIndex: 1 }}
               />
             </View>
-
-            {touched.cvc && errors.cvc && (
-              <View>
-                <Text>{errors.cvc}</Text>
-              </View>
-            )}
-            <Button
-              onPress={handleSubmit}
-              title="提交"
-              disabled={!isValid}
-              style={{ zIndex: 1 }}
-            />
-          </View>
-        )}
+          )}
       </Formik>
     </View>
   );

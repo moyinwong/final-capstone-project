@@ -20,7 +20,7 @@ const homeStyles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'flex-start'
     },
     searchText: {
         flex: 1,
@@ -34,7 +34,8 @@ const homeStyles = StyleSheet.create({
         backgroundColor: 'rgba(255, 255, 255, 0.9)'
     },
     searchButton: {
-        marginRight: 16
+        padding: 10,
+        marginRight: 6
     },
     titleContainer: {
         display: 'flex',

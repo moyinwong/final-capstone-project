@@ -1,6 +1,6 @@
 // React, React Native
 import React, { useState, useCallback, useContext } from 'react';
-import { View, Text, Alert } from 'react-native';
+import { View, Text, Alert, TouchableOpacity } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import YoutubePlayer from "react-native-youtube-iframe";
 
@@ -8,7 +8,7 @@ import YoutubePlayer from "react-native-youtube-iframe";
 import { LessonContext } from '../../../../contexts/lessonContext';
 
 // Navigation
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 // Styles
 import globalStyles from '../../../../styles/globalStyles';
@@ -23,6 +23,7 @@ export default function Tutorial(this: any, props: { navigation: { goBack: () =>
     const { lessonName } = useContext(LessonContext);
 
     // Hooks
+    const navigation = useNavigation();
     const isFocused = useIsFocused();
     const [playing, setPlaying] = useState(true);
 
@@ -78,6 +79,16 @@ export default function Tutorial(this: any, props: { navigation: { goBack: () =>
 
     return (
         <View style={globalStyles.container}>
+
+            <TouchableOpacity
+                style={tutorialStyles.goBackButton}
+                onPress={() => navigation.pop()
+                }
+            >
+
+                <Text style={tutorialStyles.goBackText}>返回課程</Text>
+            </TouchableOpacity>
+
             {isFocused ? (
                 <View style={tutorialStyles.videoContainer}>
                     <YoutubePlayer

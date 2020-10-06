@@ -113,7 +113,7 @@ export default function Home() {
                             style={homeStyles.searchButton}
                             onPress={props.handleSubmit}
                         >
-                            <AntDesign name="search1" size={24} color="#999999" />
+                            <AntDesign name="search1" size={26} color="#999999" />
                         </Pressable>
                     </View>
                 )}

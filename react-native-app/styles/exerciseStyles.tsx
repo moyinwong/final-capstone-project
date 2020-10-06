@@ -2,8 +2,19 @@
 import { StyleSheet } from 'react-native';
 
 const exerciseStyles = StyleSheet.create({
+    goBackButton: {
+        marginTop: 8,
+        marginLeft: 8,
+        paddingVertical: 8,
+        width: 100
+    },
+    goBackText: {
+        fontSize: 18,
+        color: '#5b96f7'
+    },
     questionBox: {
-        marginVertical: 10,
+        marginTop: 6,
+        marginBottom: 10,
         paddingVertical: 8,
         paddingHorizontal: 8,
         borderTopLeftRadius: 8,

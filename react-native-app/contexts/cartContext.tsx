@@ -5,6 +5,9 @@ import { Alert } from 'react-native';
 // Interface
 import ICourse from '../Interfaces/ICourse';
 
+// Data
+import AsyncStorage from '@react-native-community/async-storage';
+
 export const CartContext = createContext();
 
 const CartContextProvider = (props: any) => {
@@ -37,6 +40,9 @@ const CartContextProvider = (props: any) => {
             }
             tempSum += (parseInt(course.price));
 
+            storeCartList([...cartList, course]);
+            storeCartSum(tempSum);
+
             setCartList([...cartList, course]);
 
             setCartSum(tempSum);
@@ -49,6 +55,9 @@ const CartContextProvider = (props: any) => {
         }
         tempSum -= (parseInt(course.price));
 
+        storeCartList(cartList.filter(item => item.id! !== course.id));
+        storeCartSum(tempSum);
+
         setCartList(cartList.filter(item => item.id! !== course.id));
 
         setCartSum(tempSum);
@@ -60,6 +69,24 @@ const CartContextProvider = (props: any) => {
             }
         }
         return false
+    }
+
+    // Async Storage
+    const storeCartList = async (courseList: ICourse[]) => {
+        try {
+            const cartListJSON = JSON.stringify(courseList)
+            await AsyncStorage.setItem('cartListKey', cartListJSON)
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    const storeCartSum = async (courseSum: number) => {
+        try {
+            const cartSumString = courseSum.toString();
+            await AsyncStorage.setItem('cartSumKey', cartSumString)
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     return (
