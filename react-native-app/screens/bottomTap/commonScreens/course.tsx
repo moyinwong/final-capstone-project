@@ -1,11 +1,12 @@
 // React, React Native
 import React, { useState, useContext, useCallback } from 'react';
-import { View, Text, Image, TouchableOpacity, FlatList, ScrollView, Pressable } from 'react-native';
+import { View, Text, Image, TouchableOpacity, FlatList, ScrollView, Pressable, Alert } from 'react-native';
 
 // Navigation
 import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
 
 // Context
+import { UserContext } from '../../../contexts/userContext';
 import { CartContext } from '../../../contexts/cartContext';
 import { LessonContext } from '../../../contexts/lessonContext';
 
@@ -25,6 +26,7 @@ import envData from '../../../data/env';
 export default function Courses() {
 
     // Context
+    const { user } = useContext(UserContext);
     const { addCartList, setCartList, setCartSum } = useContext(CartContext);
     const { setLesson } = useContext(LessonContext);
 
@@ -67,17 +69,26 @@ export default function Courses() {
         []
     );
 
+    // Access Right
+    const [accessRight, setAccessRight] = useState(
+        false
+    );
+
     // Fetch
     async function getLessonsInfo(courseName: string) {
         try {
             let queryRoute: string = "/lesson/summary/";
 
             const fetchRes = await fetch(
-                `${envData.REACT_APP_BACKEND_URL}${queryRoute}${courseName}`
+                `${envData.REACT_APP_BACKEND_URL}${queryRoute}${courseName}/${user.email}`
             );
 
             const result = await fetchRes.json();
             setLessonsInfo(result.lessons);
+
+            if (result.lessons[0].user_email) {
+                setAccessRight(true);
+            };
         } catch (err) {
             console.log(err);
         }
@@ -113,12 +124,26 @@ export default function Courses() {
         }, [courseName])
     );
 
-    function goToLesson(lesson_name: string) {
-        setLesson(lesson_name);
-
-        navigation.navigate('Lesson',
-            { lesson: lesson_name }
-        )
+    function goToLesson(lesson_name: string, is_trial: boolean) {
+        if (accessRight || is_trial) {
+            setLesson(lesson_name);
+            navigation.navigate('Lesson',
+                { lesson: lesson_name }
+            )
+        } else {
+            Alert.alert(
+                "無法觀看",
+                "請先購買此課程",
+                [
+                    {
+                        text: "取消",
+                        onPress: () => console.log("取消"),
+                        style: "cancel"
+                    }
+                ],
+                { cancelable: true }
+            )
+        }
     }
 
     function buyCourse(course: any) {
@@ -164,8 +189,7 @@ export default function Courses() {
                     {/* sdsdgdsgsdgvsgbsdgbsrbhsbhsrbhsrrs */}
                     {true && <Text style={courseStyles.coursePrice}>{'價錢: $' + courseInfo.price}</Text>}
 
-                    {/* sdsdgdsgsdgvsgbsdgbsrbhsbhsrbhsrrs */}
-                    {true ? (
+                    {!accessRight ? (
                         <View style={courseStyles.courseButtonContainer}>
                             <TouchableOpacity
                                 style={courseStyles.courseButton}
@@ -257,14 +281,19 @@ export default function Courses() {
                         renderItem={({ item }) => (
                             <TouchableOpacity
                                 style={courseStyles.lessonBox}
-                                onPress={() => goToLesson(item.lesson_name)}
+                                onPress={() => goToLesson(item.lesson_name, item.is_trial)}
                             >
                                 <Text style={courseStyles.lessonText}>{item.lesson_name}</Text>
-                                {item.is_trial &&
+                                {accessRight ? (
                                     <View style={courseStyles.trialTextContainer}>
-                                        <Text style={courseStyles.trialText}>可免費試堂</Text>
+                                        <Text style={courseStyles.trialText}>前往課堂</Text>
                                     </View>
-                                }
+                                ) : (
+                                        item.is_trial &&
+                                        <View style={courseStyles.trialTextContainer}>
+                                            <Text style={courseStyles.trialText}>可免費試堂</Text>
+                                        </View>
+                                    )}
                             </TouchableOpacity>
                         )}
                     />
