@@ -23,7 +23,9 @@
 }
 
 .tab-content {
-  height: 100%;
+  min-height: 1329px;
+  // margin-left: -15px;
+  // margin-right: 0;
 
   #description-container {
     display: flex;
@@ -76,6 +78,8 @@
 }
 
 .topic-nav {
+  margin-top: 30px;
+
   .topic-nav-item {
     width: 100%;
   }
@@ -104,12 +108,19 @@
   .active {
     background-color: rgb(133, 231, 157) !important;
   }
+
+  button {
+    margin-top: 20px;
+  }
 }
 
 .thread-container {
+  margin-top: 30px;
+
   .card {
     box-shadow: none !important;
     border: 1px solid rgba(19, 32, 32, 0.404);
+    margin-bottom: 10px;
   }
 
   .thread {

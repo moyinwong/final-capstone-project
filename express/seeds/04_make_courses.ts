@@ -19,7 +19,7 @@ export async function seed(knex: Knex): Promise<void> {
       name: faker.system.fileName(),
       price: Math.floor(Math.random() * 500) + 40,
       category_id: randomCategoryId,
-      tutor_id: randomIntFromInterval(2, 10),
+      tutor_id: randomIntFromInterval(3, 10),
       // 1 - 10 (tutor id)
       image: `https://picsum.photos/seed/picsum${i}/777/434`,
       description: faker.commerce.productDescription(),
