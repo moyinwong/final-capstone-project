@@ -79,7 +79,7 @@ const TutorCoursePage = () => {
                         />
                     ) : (<img 
                             style={{height: '150px'}} 
-                            src={`http://localhost:8080/img/${tutorInfo?.image}`}
+                            src={`${process.env.REACT_APP_BACKEND_IMAGE}/${tutorInfo?.image}`}
                             alt="tutor"
                         />)}
                     <div>{tutorInfo?.linkedin}</div>

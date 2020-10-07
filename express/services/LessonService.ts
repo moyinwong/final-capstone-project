@@ -70,7 +70,7 @@ export class LessonService {
 
     let lessons: Array<ILesson>;
 
-    console.log(checkUserIsTutor);
+    //console.log(checkUserIsTutor);
     if (checkUserIsTutor.length != 0) {
       console.log("hello");
       lessons = await this.knex
@@ -158,8 +158,6 @@ export class LessonService {
       .where(`${tables.LESSONS}.name`, lessonName)
       .limit(1);
     return lesson;
-
-
   };
 
   getLessonQuestionAndAnswer = async (lessonName: string) => {
@@ -253,14 +251,13 @@ export class LessonService {
       })
       .into(tables.LESSONS)
       .returning("id");
-    
+
     const lessonId = lessonIdArray[0];
 
     let filesUploaded: any[] = [];
 
     if (materialArray) {
       for (let material of materialArray) {
-
         let fileUploadedId = await this.knex
           .insert({
             name: material,
@@ -268,8 +265,8 @@ export class LessonService {
           })
           .into(tables.FILES)
           .returning("id");
-        
-        console.log('line 267', fileUploadedId)
+
+        //console.log("line 267", fileUploadedId);
         filesUploaded.push(fileUploadedId);
       }
     }
@@ -277,7 +274,11 @@ export class LessonService {
     return lessonId;
   };
 
-  editLesson = async (lessonInfo: ILessonWithoutCourseId, lessonName: string, materialArray?: any[]) => {
+  editLesson = async (
+    lessonInfo: ILessonWithoutCourseId,
+    lessonName: string,
+    materialArray?: any[]
+  ) => {
     const lesson = await this.knex
       .select("id")
       .from(tables.LESSONS)
@@ -288,18 +289,20 @@ export class LessonService {
     let isTrial = lessonInfo.lessonIsTrial === "true";
 
     const updatedLessonId = await this.knex(tables.LESSONS)
-      .where('id', lessonId)
-      .update({
-        name: lessonInfo.lessonName,
-        description: lessonInfo.lessonDescription,
-        is_trial: isTrial,
-        video_url: lessonInfo.lessonVideoUrl,
-      }, ['id'])
-  
+      .where("id", lessonId)
+      .update(
+        {
+          name: lessonInfo.lessonName,
+          description: lessonInfo.lessonDescription,
+          is_trial: isTrial,
+          video_url: lessonInfo.lessonVideoUrl,
+        },
+        ["id"]
+      );
+
     let filesUploaded: any[] = [];
     if (materialArray) {
       for (let material of materialArray) {
-
         let fileUploadedId = await this.knex
           .insert({
             name: material,
@@ -307,15 +310,14 @@ export class LessonService {
           })
           .into(tables.FILES)
           .returning("id");
-        
-        console.log('line 267', fileUploadedId)
+
+        //console.log("line 267", fileUploadedId);
         filesUploaded.push(fileUploadedId);
       }
     }
 
-    return updatedLessonId
-
-  }
+    return updatedLessonId;
+  };
 
   createLessonQuestion = async (
     question: string,
@@ -401,7 +403,7 @@ export class LessonService {
       .into(tables.LESSON_COMPLETION)
       .returning("id");
 
-    console.log(completionId);
+    //console.log(completionId);
     return completionId[0];
   };
 

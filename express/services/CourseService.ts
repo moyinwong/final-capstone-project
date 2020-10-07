@@ -175,7 +175,7 @@ export class CourseService {
       .orderBy("rated_score", "desc")
       .limit(8);
 
-    console.log(courses);
+    //console.log(courses);
 
     return courses;
   };
@@ -318,7 +318,7 @@ export class CourseService {
       .where("email", userEmail);
     const userId = userIdArray[0];
 
-    console.log(courseInfo.courseSubcategory);
+    //console.log(courseInfo.courseSubcategory);
     let course;
     if (courseInfo.courseSubcategory) {
       course = await this.knex
@@ -404,52 +404,55 @@ export class CourseService {
     return lessons[0];
   };
 
-
   getAllTutorInfo = async () => {
     const tutors = await this.knex(tables.USERS)
       .select(
-        'users.id',
-        'users.name',
-        'users.image',
-        'users.linkedin',
-        'users.email', 
-        'users.title', 
-        'users.introduction',
+        "users.id",
+        "users.name",
+        "users.image",
+        "users.linkedin",
+        "users.email",
+        "users.title",
+        "users.introduction"
       )
-      .count('purchased_courses.id', {as : 'total_students_num'})
+      .count("purchased_courses.id", { as: "total_students_num" })
       .from(tables.USERS)
-      .where('is_tutor', true)
-      .join(tables.COURSES, `${tables.COURSES}.tutor_id`, 'users.id')
-      .join(tables.PURCHASED_COURSES, `${tables.PURCHASED_COURSES}.course_id`, 'courses.id')
-      .groupBy(
-        'users.id',
-        'users.name',
-        'users.image',
-        'users.linkedin',
-        'users.email', 
-        'users.title', 
-        'users.introduction'
+      .where("is_tutor", true)
+      .join(tables.COURSES, `${tables.COURSES}.tutor_id`, "users.id")
+      .join(
+        tables.PURCHASED_COURSES,
+        `${tables.PURCHASED_COURSES}.course_id`,
+        "courses.id"
       )
-  
+      .groupBy(
+        "users.id",
+        "users.name",
+        "users.image",
+        "users.linkedin",
+        "users.email",
+        "users.title",
+        "users.introduction"
+      );
+
     return tutors;
-  }
+  };
 
   getTutorInfo = async (tutorEmail: string) => {
     const tutor = await this.knex(tables.USERS)
-    .select(
-      'id',
-      'name',
-      'image',
-      'linkedin',
-      'email', 
-      'title', 
-      'introduction'
-    )
-    .where('email', tutorEmail)
-    .first()
+      .select(
+        "id",
+        "name",
+        "image",
+        "linkedin",
+        "email",
+        "title",
+        "introduction"
+      )
+      .where("email", tutorEmail)
+      .first();
 
     return tutor;
-  }
+  };
 
   getCourseDetailByTutor = async (tutorEmail: string) => {
     const courses = await this.knex
@@ -536,7 +539,7 @@ export class CourseService {
       .limit(500);
 
     return courses;
-  }
+  };
 
   getTotalStudentNumberOfTutor = async (tutorEmail: string) => {
     const userIdArray = await this.knex
@@ -546,17 +549,21 @@ export class CourseService {
     const userId = userIdArray[0].id;
 
     const totalStudentNumber = await this.knex
-    .count('purchased_courses.id', {as : 'student_num'})
-    .from(tables.COURSES)
-    .join(tables.PURCHASED_COURSES, `${tables.PURCHASED_COURSES}.course_id`, 'courses.id')
-    .where('courses.tutor_id', userId)
-    .first()
+      .count("purchased_courses.id", { as: "student_num" })
+      .from(tables.COURSES)
+      .join(
+        tables.PURCHASED_COURSES,
+        `${tables.PURCHASED_COURSES}.course_id`,
+        "courses.id"
+      )
+      .where("courses.tutor_id", userId)
+      .first();
 
     return totalStudentNumber;
-  }
+  };
 
   getCourseBySearch = async (searchText: string) => {
-    console.log(searchText)
+    //console.log(searchText)
     const courses = await this.knex
       .with(
         "T1",
@@ -626,11 +633,10 @@ export class CourseService {
         "tutor_name",
         "image"
       )
-      .where("course_name", 'Ilike', `%${searchText}%`)
-      .orWhere("course_description", 'Ilike', `%${searchText}%`)
-      .orWhere("objective", 'Ilike', `%${searchText}%`)
+      .where("course_name", "Ilike", `%${searchText}%`)
+      .orWhere("course_description", "Ilike", `%${searchText}%`)
+      .orWhere("objective", "Ilike", `%${searchText}%`);
 
     return courses;
-
-  }
+  };
 }

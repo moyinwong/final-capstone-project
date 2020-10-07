@@ -14,93 +14,100 @@ interface INewUser {
 export class UserService {
   constructor(private knex: Knex) {}
 
-  signup = async(userInfo: INewUser, userImage?: string) => {
+  signup = async (userInfo: INewUser, userImage?: string) => {
     let userId: any;
     if (userImage) {
-      userId = (await this.knex
-      .insert({
-        email: userInfo.email,
-        password: userInfo.password,
-        name: userInfo.name,
-        image: userImage
-      })
-      .into(tables.USERS)
-      .returning('id'))[0]
-
+      userId = (
+        await this.knex
+          .insert({
+            email: userInfo.email,
+            password: userInfo.password,
+            name: userInfo.name,
+            image: userImage,
+          })
+          .into(tables.USERS)
+          .returning("id")
+      )[0];
     } else {
-      userId = (await this.knex
-        .insert({
-          email: userInfo.email,
-          password: userInfo.password,
-          name: userInfo.name,
-          image: 'user-image-placeholder.png'
-        })
-        .into(tables.USERS)
-        .returning('id'))[0]
+      userId = (
+        await this.knex
+          .insert({
+            email: userInfo.email,
+            password: userInfo.password,
+            name: userInfo.name,
+            image: "user-image-placeholder.png",
+          })
+          .into(tables.USERS)
+          .returning("id")
+      )[0];
     }
-    return userId
-  }
+    return userId;
+  };
 
-  editProfile = async(userInfo: INewUser, userId: number, userImage?: string) => {
+  editProfile = async (
+    userInfo: INewUser,
+    userId: number,
+    userImage?: string
+  ) => {
     let editedUserId: any;
     if (userImage && userInfo.password) {
-      editedUserId = (await this.knex(tables.USERS)
-        .where('id', userId)
-        .update({
+      editedUserId = await this.knex(tables.USERS).where("id", userId).update(
+        {
           email: userInfo.email,
           password: userInfo.password,
           name: userInfo.name,
           image: userImage,
           title: userInfo.title,
           introduction: userInfo.introduction,
-        }, ['id'])
-      )
+        },
+        ["id"]
+      );
     } else if (userInfo.password) {
-      editedUserId = (await this.knex(tables.USERS)
-        .where('id', userId)
-        .update({
+      editedUserId = await this.knex(tables.USERS).where("id", userId).update(
+        {
           email: userInfo.email,
           password: userInfo.password,
           name: userInfo.name,
           title: userInfo.title,
           introduction: userInfo.introduction,
-        }, ['id'])
-      )
+        },
+        ["id"]
+      );
     } else if (userImage) {
-      editedUserId = (await this.knex(tables.USERS)
-        .where('id', userId)
-        .update({
+      editedUserId = await this.knex(tables.USERS).where("id", userId).update(
+        {
           email: userInfo.email,
           name: userInfo.name,
           image: userImage,
           title: userInfo.title,
           introduction: userInfo.introduction,
-        }, ['id'])
-      )
+        },
+        ["id"]
+      );
     } else {
-      editedUserId = (await this.knex(tables.USERS)
-        .where('id', userId)
-        .update({
+      editedUserId = await this.knex(tables.USERS).where("id", userId).update(
+        {
           email: userInfo.email,
           name: userInfo.name,
           title: userInfo.title,
           introduction: userInfo.introduction,
-        }, ['id'])
-      )
+        },
+        ["id"]
+      );
     }
 
-    console.log(editedUserId)
+    //console.log(editedUserId)
 
     return editedUserId;
-  }
+  };
 
   registerAsTutor = async (userEmail: string) => {
     // const user = await this.knex(tables.USERS)
     // .insert({
     //   is_tutor: true
     // })
-    console.log('line: 93 userService')
-  }
+    //console.log("line: 93 userService");
+  };
 
   getUserByEmail = async (email: string) => {
     const user = await this.knex<IUser>(tables.USERS)
@@ -143,7 +150,7 @@ export class UserService {
       .select("*")
       .where(`${tables.USERS}.google_id`, googleId)
       .first();
-    console.log(user);
+    //console.log(user);
     return user;
   };
 
@@ -181,15 +188,17 @@ export class UserService {
     userEmail: string,
     courseName: string
   ) => {
-    const userId = (await this.knex(tables.USERS)
-      .select('id')
-      .where('email', userEmail)
-      .first()).id;
+    const userId = (
+      await this.knex(tables.USERS)
+        .select("id")
+        .where("email", userEmail)
+        .first()
+    ).id;
 
     const checkUserIsTutor = await this.knex(tables.COURSES)
-      .select('courses.name')
-      .where('name', courseName)
-      .andWhere('tutor_id', userId)
+      .select("courses.name")
+      .where("name", courseName)
+      .andWhere("tutor_id", userId);
 
     if (checkUserIsTutor.length !== 0) {
       return true;
@@ -237,41 +246,44 @@ export class UserService {
 
   getAllCoursesDetail = async (userId: number) => {
     const courses = await this.knex
-    .select(
-      'purchased_courses.course_id',
-      'courses.category_id',
-      'courses.subcategory_id',
-      'courses.name as course_name',
-      'courses.image',
-      'courses.description',
-      'courses.objective',
-      'courses.prerequisites',
-      'users.name as tutor_name',
-      'users.email as tutor_email',
-      'users.title as tutor_title',
-      'users.introduction as tutor_introduction',
-    )
-    .from(tables.PURCHASED_COURSES)
-    .join(tables.COURSES, `${tables.COURSES}.id`, 'purchased_courses.course_id')
-    .join(tables.LESSONS, `${tables.LESSONS}.id`, 'courses.id')
-    .join(tables.USERS, `${tables.USERS}.id`, `courses.tutor_id`)
-    .groupBy(
-      'purchased_courses.course_id',
-      'courses.category_id',
-      'courses.subcategory_id',
-      'courses.name',
-      'courses.image',
-      'courses.description',
-      'courses.objective',
-      'courses.prerequisites',
-      'users.name',
-      'users.email',
-      'users.title',
-      'users.introduction',
-    )
-    .where(`${tables.PURCHASED_COURSES}.user_id`, userId)
- 
-    return courses;
-  }
+      .select(
+        "purchased_courses.course_id",
+        "courses.category_id",
+        "courses.subcategory_id",
+        "courses.name as course_name",
+        "courses.image",
+        "courses.description",
+        "courses.objective",
+        "courses.prerequisites",
+        "users.name as tutor_name",
+        "users.email as tutor_email",
+        "users.title as tutor_title",
+        "users.introduction as tutor_introduction"
+      )
+      .from(tables.PURCHASED_COURSES)
+      .join(
+        tables.COURSES,
+        `${tables.COURSES}.id`,
+        "purchased_courses.course_id"
+      )
+      .join(tables.LESSONS, `${tables.LESSONS}.id`, "courses.id")
+      .join(tables.USERS, `${tables.USERS}.id`, `courses.tutor_id`)
+      .groupBy(
+        "purchased_courses.course_id",
+        "courses.category_id",
+        "courses.subcategory_id",
+        "courses.name",
+        "courses.image",
+        "courses.description",
+        "courses.objective",
+        "courses.prerequisites",
+        "users.name",
+        "users.email",
+        "users.title",
+        "users.introduction"
+      )
+      .where(`${tables.PURCHASED_COURSES}.user_id`, userId);
 
+    return courses;
+  };
 }

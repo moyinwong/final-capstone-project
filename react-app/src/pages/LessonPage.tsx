@@ -88,7 +88,7 @@ const LessonPage: React.FC = () => {
   const param: { courseName: string; lessonName: string } = useParams();
   const { courseName, lessonName } = param;
 
-  console.log(courseName, lessonName);
+  //console.log(courseName, lessonName);
 
   const token = localStorage.getItem("token");
   let userEmail: undefined | null | string = undefined;
@@ -136,7 +136,7 @@ const LessonPage: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      console.log("hahahaahahh");
+      //console.log("hahahaahahh");
       if (lessonInfo?.lesson_id && threads.length === 0)
         await getThreads(lessonInfo.lesson_id);
     })();
@@ -167,7 +167,7 @@ const LessonPage: React.FC = () => {
 
     const result = await fetchRes.json();
 
-    console.log("result: ", result);
+    //console.log("result: ", result);
     if (result) {
       setIsAllowAccess(true);
       setUserRight(result.is_allow);
@@ -177,7 +177,7 @@ const LessonPage: React.FC = () => {
   };
 
   const getLessonInfo = async (lessonName: string) => {
-    console.log(lessonName);
+    //console.log(lessonName);
     let queryRoute: string = "/lesson/info/";
     const fetchRes = await fetch(
       `${process.env.REACT_APP_BACKEND_URL}${queryRoute}${lessonName}`
@@ -185,7 +185,7 @@ const LessonPage: React.FC = () => {
 
     const result = await fetchRes.json();
     const { lessonInfo } = result;
-    console.log("info: ", lessonInfo);
+    //console.log("info: ", lessonInfo);
     setIsSubCategory(lessonInfo.category_id === 15);
     if (lessonInfo.is_trial) {
       setIsAllowAccess(true);
@@ -226,7 +226,7 @@ const LessonPage: React.FC = () => {
 
     //sort the thread by discussion id
     threads.sort((a: IThread, b: IThread) => a.discussion_id - b.discussion_id);
-    console.log("threads :", threads);
+    //console.log("threads :", threads);
     setThreads(threads);
   };
 
@@ -245,7 +245,7 @@ const LessonPage: React.FC = () => {
       }
     );
     const { result } = await fetchRes.json();
-    console.log(result);
+    //console.log(result);
     let transferResult: { question: string; isCorrect: string }[] = [];
     for (let eachResult of result) {
       let [key] = Object.keys(eachResult);
@@ -351,7 +351,7 @@ const LessonPage: React.FC = () => {
                       controls={true}
                       onEnded={() => {
                         //testing
-                        console.log(userEmail);
+                        //console.log(userEmail);
                       }}
                     />
                   </div>
@@ -374,7 +374,7 @@ const LessonPage: React.FC = () => {
                       <div key={i}>
                         {" "}
                         <a
-                          href={`http://localhost:8080/file/${e.file_name}`}
+                          href={`${process.env.REACT_APP_BACKEND_FILE}/${e.file_name}`}
                           download
                         >
                           {e.file_name}
@@ -433,7 +433,7 @@ const LessonPage: React.FC = () => {
                                   </Nav.Item>
                                 </Nav>
                               );
-                            } else return; 
+                            } else return;
                           })}
                           <Nav.Item>
                             {

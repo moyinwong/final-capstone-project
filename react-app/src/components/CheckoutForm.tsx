@@ -138,7 +138,7 @@ const CheckoutForm: React.FC<{
   pastLocation: string | undefined;
 }> = (props) => {
   //console.log("props: ", props.immediatePurchaseCourse);
-  console.log("past: ", props.pastLocation);
+  //console.log("past: ", props.pastLocation);
   const dispatch = useDispatch();
   const stripe = useStripe();
   const elements = useElements();
@@ -218,14 +218,14 @@ const CheckoutForm: React.FC<{
     if (error) {
       console.log("[error]", error);
     } else {
-      console.log("[PaymentMethod]", paymentMethod);
+      //console.log("[PaymentMethod]", paymentMethod);
     }
     setIsLoading(true);
     const confirmRes = await stripe.confirmCardPayment(paymentIntent, {
       payment_method: paymentMethod?.id,
     });
 
-    console.log(confirmRes);
+    //console.log(confirmRes);
 
     if (confirmRes.error) {
       setError({ message: confirmRes.error.message as string });
@@ -276,7 +276,7 @@ const CheckoutForm: React.FC<{
       return;
     }
 
-    console.log("courses: ", courses);
+    //console.log("courses: ", courses);
 
     let queryRoute: string = "/payment/create-payment-intent";
 
@@ -301,8 +301,8 @@ const CheckoutForm: React.FC<{
       paymentIntentSecret: string;
     } = await fetchRes.json();
     const { paymentIntentSecret } = paymentIntentObj;
-    console.log(paymentIntentSecret);
-    console.log("obj" + paymentIntentObj);
+    //console.log(paymentIntentSecret);
+    //console.log("obj" + paymentIntentObj);
     setPaymentIntent(paymentIntentSecret);
   };
 

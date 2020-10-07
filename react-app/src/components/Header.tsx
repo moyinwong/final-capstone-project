@@ -2,21 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import { ReactReduxContext, useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../redux/store";
 import { push } from "connected-react-router";
-import {
-  Button,
-  Navbar,
-  Nav,
-  Form,
-  FormControl,
-} from "react-bootstrap";
-import SearchIcon from '@material-ui/icons/Search';
+import { Button, Navbar, Nav, Form, FormControl } from "react-bootstrap";
+import SearchIcon from "@material-ui/icons/Search";
 import BurgerMenu from "./BurgerMenu";
 import Linkbar from "./Linkbar";
 import DarkModeSwitch from "./DarkModeSwitch";
 import "./Header.scss";
 import DropdownMenu from "./DropdownMenu";
 import { useLocation } from "react-router-dom";
-
 
 const Header = (props: any) => {
   const dispatch = useDispatch();
@@ -50,15 +43,17 @@ const Header = (props: any) => {
 
   const handleSearch = async (event: any) => {
     event.preventDefault();
-    let searchText = (document.getElementById('search-bar-normal')! as HTMLInputElement).value
-    console.log(searchText)
+    let searchText = (document.getElementById(
+      "search-bar-normal"
+    )! as HTMLInputElement).value;
+    //console.log(searchText);
     if (searchText.length === 0) {
       return;
-    } 
+    }
 
-    dispatch(push(`/search/${searchText}`))
-  }
-  
+    dispatch(push(`/search/${searchText}`));
+  };
+
   return (
     <div id="website-header">
       <div className="burger-menu">
@@ -67,11 +62,11 @@ const Header = (props: any) => {
       <div className="web-navbar">
         <Navbar bg="light" variant="light">
           <Navbar.Brand href="/">
-              <img 
-                alt='website logo'
-                className="website-logo" 
-                src={require("../logo.png")} 
-              />
+            <img
+              alt="website logo"
+              className="website-logo"
+              src={require("../logo.png")}
+            />
           </Navbar.Brand>
 
           <button
@@ -87,15 +82,21 @@ const Header = (props: any) => {
           </button>
           <div className="mr-auto ">
             <Nav>
-
-            <Form inline>
-              <FormControl
-                type="text"
-                className="mr-sm-2"
-                id="search-bar-normal"
-              />
-              <Button className="search-button" onClick={handleSearch} type="submit" variant="outline-success"><SearchIcon /></Button>
-            </Form>
+              <Form inline>
+                <FormControl
+                  type="text"
+                  className="mr-sm-2"
+                  id="search-bar-normal"
+                />
+                <Button
+                  className="search-button"
+                  onClick={handleSearch}
+                  type="submit"
+                  variant="outline-success"
+                >
+                  <SearchIcon />
+                </Button>
+              </Form>
 
               <DarkModeSwitch />
             </Nav>
@@ -124,8 +125,14 @@ const Header = (props: any) => {
                     <i className="fas fa-shopping-cart"></i>
                   </button>
                   <button className="user-icon" onClick={() => setOpen(!open)}>
-                    {userImage ? <img src={`${process.env.REACT_APP_BACKEND_IMAGE}/${userImage}`} /> 
-                    : <i className="far fa-user"></i>}
+                    {userImage ? userImage.match(/http/) ? (<img src={userImage} alt="user"/>
+                    ) : (
+                      <img
+                        src={`${process.env.REACT_APP_BACKEND_IMAGE}/${userImage}`}
+                      />
+                    ) : (
+                      <i className="far fa-user"></i>
+                    )}
                   </button>
                   {open && (
                     <div ref={dropdownRef}>
@@ -144,6 +151,9 @@ const Header = (props: any) => {
                   dispatch(push("/cart"));
                 }}
               >
+                {cartCoursesNum !== 0 && (
+                  <div className="cart-course-num">{cartCoursesNum}</div>
+                )}
                 <i className="fas fa-shopping-cart"></i>
               </div>
               <Button
