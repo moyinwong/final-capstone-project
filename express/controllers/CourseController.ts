@@ -123,7 +123,7 @@ export class CourseController {
         newCourseInfo,
         courseCover
       );
-      //console.log(createdCourse);
+      logger.debug(createdCourse);
 
       res.status(200).json({ message: "successfully created course" });
     } catch (e) {
