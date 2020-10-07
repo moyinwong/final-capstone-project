@@ -21,7 +21,7 @@ const CarouselReact: React.FC<{
 
   const getCourses = async (type: string) => {
     let res;
-    console.log("type", type);
+    //console.log("type", type);
     if (type === "popular") {
       setTypeTopic("最熱門課程");
       res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/course/popular`);

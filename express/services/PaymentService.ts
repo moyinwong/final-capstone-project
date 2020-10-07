@@ -47,7 +47,7 @@ export class PaymentService {
   };
 
   retrievePaymentIntent = async (paymentIntentSecret: string) => {
-    console.log("hehehhe" + paymentIntentSecret);
+    //console.log("hehehhe" + paymentIntentSecret);
     const paymentIntentId = paymentIntentSecret.split("_secret_")[0];
     const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
 

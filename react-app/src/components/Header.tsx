@@ -46,7 +46,7 @@ const Header = (props: any) => {
     let searchText = (document.getElementById(
       "search-bar-normal"
     )! as HTMLInputElement).value;
-    console.log(searchText);
+    //console.log(searchText);
     if (searchText.length === 0) {
       return;
     }

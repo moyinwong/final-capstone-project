@@ -46,7 +46,7 @@ const CommentModal: React.FC<{
 
       const result = await fetchRes.json();
 
-      console.log(fetchRes.status);
+      //console.log(fetchRes.status);
 
       if (
         fetchRes.status === 500 ||

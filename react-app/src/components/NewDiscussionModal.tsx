@@ -31,7 +31,7 @@ const NewDiscussionModal: React.FC<{
 
     //sort the thread by discussion id
     threads.sort((a: IThread, b: IThread) => a.discussion_id - b.discussion_id);
-    console.log("threads :", threads);
+    //console.log("threads :", threads);
     props.setThreads(threads);
   };
 
@@ -47,7 +47,7 @@ const NewDiscussionModal: React.FC<{
         newContent,
       };
 
-      console.log(fetchBody);
+      //console.log(fetchBody);
 
       let queryRoute: string =
         props.type === "topic"
@@ -68,7 +68,7 @@ const NewDiscussionModal: React.FC<{
 
       const result = await fetchRes.json();
 
-      console.log(fetchRes.status);
+      //console.log(fetchRes.status);
 
       if (
         fetchRes.status === 500 ||

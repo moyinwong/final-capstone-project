@@ -75,7 +75,9 @@ const CoursePage: React.FC = () => {
   const [isShowAlert, setIsShowAlert] = useState(false);
   const [alertMsg, setAlertMsg] = useState<string>("");
   const [courseId, setCourseId] = useState<number | null>(null);
-  const [checkBoxState, setCheckBoxState] = useState<{ [key: string]: boolean }>({})
+  const [checkBoxState, setCheckBoxState] = useState<{
+    [key: string]: boolean;
+  }>({});
   const currentLocation = useLocation();
 
   //run once when init
@@ -119,8 +121,7 @@ const CoursePage: React.FC = () => {
   //run once when init, for retrieving completed lessons
   useEffect(() => {
     getCompletedLesson();
-  }, [courseId])
-
+  }, [courseId]);
 
   const getAllCoursesByCategory = async (courseName: string) => {
     //console.log(courseName);
@@ -142,7 +143,7 @@ const CoursePage: React.FC = () => {
 
     const result = await fetchRes.json();
     const course: ICourse = result.course;
-    console.log(course);
+    //console.log(course);
 
     return course;
     //console.log(course);
@@ -187,7 +188,8 @@ const CoursePage: React.FC = () => {
     //console.log("user: ", userEmail);
     let queryRoute: string = "/lesson/summary/";
     const fetchRes = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}${queryRoute}${courseName}/${userEmail ? userEmail : ""
+      `${process.env.REACT_APP_BACKEND_URL}${queryRoute}${courseName}/${
+        userEmail ? userEmail : ""
       }`
     );
 
@@ -218,7 +220,7 @@ const CoursePage: React.FC = () => {
     const shuffleArr = shuffle(
       resultArr.filter((e: any) => e.comment !== null)
     );
-    console.log(shuffleArr);
+    //console.log(shuffleArr);
     setComments(shuffleArr);
     setIsReady(true);
   };
@@ -235,50 +237,57 @@ const CoursePage: React.FC = () => {
 
   //handle click on complete lesson checkbox, insert data into backend
   const handleCheckBoxChange = async (event: any, lessonId: number) => {
-    setCheckBoxState({ ...checkBoxState, [event.target.name]: event.target.checked });
+    setCheckBoxState({
+      ...checkBoxState,
+      [event.target.name]: event.target.checked,
+    });
     // console.log(event.target.checked)
-    let queryRoute = '/lesson/completion'
+    let queryRoute = "/lesson/completion";
     const res = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}${queryRoute}/${courseId}/${lessonId}/${userId}`, {
-      method: 'POST',
-    })
+      `${process.env.REACT_APP_BACKEND_URL}${queryRoute}/${courseId}/${lessonId}/${userId}`,
+      {
+        method: "POST",
+      }
+    );
     const result = await res.json();
 
     if (res.status !== 200) {
-      setAlertMsg(result.message)
+      setAlertMsg(result.message);
       setIsShowAlert(true);
-      await sleep(2000)
+      await sleep(2000);
       setIsShowAlert(false);
     } else {
-      console.log('line:248' + result.completionId)
+      //console.log("line:248" + result.completionId);
     }
-    console.log(checkBoxState)
-  }
+    //console.log(checkBoxState);
+  };
 
   //get all completed lessons by user
   const getCompletedLesson = async () => {
-    let queryRoute = '/course/completion'
+    let queryRoute = "/course/completion";
     const res = await fetch(
       `${process.env.REACT_APP_BACKEND_URL}${queryRoute}?courseId=${courseId}&userId=${userId}`
-    )
+    );
     const result = await res.json();
 
     if (res.status !== 200) {
-      console.log('line: 267: something is wrong when checking completed lessons')
+      //console.log(
+      //   "line: 267: something is wrong when checking completed lessons"
+      // );
     } else {
       //an array of completed lessons id
       let lessonIdArray = result.completedLessonId;
 
       //mark the checkbox property related to specific lesson as true
-      let checkBoxObj: { [key: string]: boolean } = {}
+      let checkBoxObj: { [key: string]: boolean } = {};
       for (let i = 0; i < lessonIdArray.length; i++) {
-        let lessonId = lessonIdArray[i]['lesson_id']
-        let checkBox = `checked${lessonId}`
+        let lessonId = lessonIdArray[i]["lesson_id"];
+        let checkBox = `checked${lessonId}`;
         checkBoxObj[checkBox] = true;
       }
-      setCheckBoxState(checkBoxObj)
+      setCheckBoxState(checkBoxObj);
     }
-  }
+  };
 
   return (
     <>
@@ -304,7 +313,8 @@ const CoursePage: React.FC = () => {
                   onClick={() =>
                     dispatch(
                       push(
-                        `/category/others/${subcategories[course.subcategory_id - 1]
+                        `/category/others/${
+                          subcategories[course.subcategory_id - 1]
                         }/`
                       )
                     )
@@ -314,16 +324,16 @@ const CoursePage: React.FC = () => {
                 </Breadcrumb.Item>
               </>
             ) : (
-                <Breadcrumb.Item
-                  onClick={() =>
-                    dispatch(
-                      push(`/category/${categories[course.category_id - 1]}/`)
-                    )
-                  }
-                >
-                  {categories[course.category_id - 1]}課程
-                </Breadcrumb.Item>
-              )}
+              <Breadcrumb.Item
+                onClick={() =>
+                  dispatch(
+                    push(`/category/${categories[course.category_id - 1]}/`)
+                  )
+                }
+              >
+                {categories[course.category_id - 1]}課程
+              </Breadcrumb.Item>
+            )}
 
             <Breadcrumb.Item active>{course.course_name}</Breadcrumb.Item>
           </Breadcrumb>
@@ -350,46 +360,48 @@ const CoursePage: React.FC = () => {
                           已評價
                         </Button>
                       ) : lessons[0].tutor_id === userId ? (
-                        <Button variant="success" disabled>導師不能評價</Button>
+                        <Button variant="success" disabled>
+                          導師不能評價
+                        </Button>
                       ) : (
-                            <CommentModal
-                              userEmail={userEmail}
-                              courseName={courseName}
-                              token={token}
-                            />
-                          )}
+                        <CommentModal
+                          userEmail={userEmail}
+                          courseName={courseName}
+                          token={token}
+                        />
+                      )}
                     </div>
                   ) : (
-                      <>
-                        {cartCourses.findIndex(
-                          (e) => e.course_name === courseName
-                        ) !== -1 ? (
-                            <Button variant="success" disabled>
-                              已加到購物車
-                            </Button>
-                          ) : (
-                            <Button
-                              variant="success"
-                              onClick={handleCartButtonClick}
-                            >
-                              加到購物車
-                            </Button>
-                          )}
+                    <>
+                      {cartCourses.findIndex(
+                        (e) => e.course_name === courseName
+                      ) !== -1 ? (
+                        <Button variant="success" disabled>
+                          已加到購物車
+                        </Button>
+                      ) : (
                         <Button
-                          variant="outline-danger"
-                          onClick={() => {
-                            dispatch(
-                              push("/payment", {
-                                pastLocation: currentLocation,
-                                course,
-                              })
-                            );
-                          }}
+                          variant="success"
+                          onClick={handleCartButtonClick}
                         >
-                          立即購買
+                          加到購物車
+                        </Button>
+                      )}
+                      <Button
+                        variant="outline-danger"
+                        onClick={() => {
+                          dispatch(
+                            push("/payment", {
+                              pastLocation: currentLocation,
+                              course,
+                            })
+                          );
+                        }}
+                      >
+                        立即購買
                       </Button>
-                      </>
-                    )}
+                    </>
+                  )}
                 </div>
               </div>
               <div className="course-info-container">
@@ -397,7 +409,9 @@ const CoursePage: React.FC = () => {
                 <div className="course-objective">{course.objective}</div>
                 <div className="course-rating">
                   <span>
-                    {course.rated_score ? (Math.round(parseFloat(course.rated_score) * 100)) / 100 : 0}
+                    {course.rated_score
+                      ? Math.round(parseFloat(course.rated_score) * 100) / 100
+                      : 0}
                   </span>
                   {
                     <Rating
@@ -430,15 +444,25 @@ const CoursePage: React.FC = () => {
                 <div className="tutor-name">
                   導師:
                   <span>
-                    <Link style={{ display: 'inline', marginLeft: '10px' }} to={`/tutor/${course.tutor_email}`}>
+                    <Link
+                      style={{ display: "inline", marginLeft: "10px" }}
+                      to={`/tutor/${course.tutor_email}`}
+                    >
                       {course.tutor_name}
                       {course.tutor_image?.match(/http/) ? (
-                        <img className="tutor-image" src={course.tutor_image} alt="tutor profile" />
-                      ) : (<img className="tutor-image" src={`${process.env.REACT_APP_BACKEND_IMAGE}/${course.tutor_image}`}
-                        alt="tutor profile" />)
-                      }
+                        <img
+                          className="tutor-image"
+                          src={course.tutor_image}
+                          alt="tutor profile"
+                        />
+                      ) : (
+                        <img
+                          className="tutor-image"
+                          src={`${process.env.REACT_APP_BACKEND_IMAGE}/${course.tutor_image}`}
+                          alt="tutor profile"
+                        />
+                      )}
                     </Link>
-
                   </span>
                 </div>
               </div>
@@ -464,44 +488,44 @@ const CoursePage: React.FC = () => {
                             已評價
                           </Button>
                         ) : (
-                            <CommentModal
-                              userEmail={userEmail}
-                              courseName={courseName}
-                              token={token}
-                            />
-                          )}
+                          <CommentModal
+                            userEmail={userEmail}
+                            courseName={courseName}
+                            token={token}
+                          />
+                        )}
                       </>
                     ) : (
-                        <>
-                          {cartCourses.findIndex(
-                            (e) => e.course_name === courseName
-                          ) !== -1 ? (
-                              <Button variant="success" disabled>
-                                已加到購物車
-                              </Button>
-                            ) : (
-                              <Button
-                                variant="success"
-                                onClick={handleCartButtonClick}
-                              >
-                                加到購物車
-                              </Button>
-                            )}
+                      <>
+                        {cartCourses.findIndex(
+                          (e) => e.course_name === courseName
+                        ) !== -1 ? (
+                          <Button variant="success" disabled>
+                            已加到購物車
+                          </Button>
+                        ) : (
                           <Button
-                            variant="outline-danger"
-                            onClick={() => {
-                              dispatch(
-                                push("/payment", {
-                                  pastLocation: currentLocation,
-                                  course,
-                                })
-                              );
-                            }}
+                            variant="success"
+                            onClick={handleCartButtonClick}
                           >
-                            立即購買
+                            加到購物車
+                          </Button>
+                        )}
+                        <Button
+                          variant="outline-danger"
+                          onClick={() => {
+                            dispatch(
+                              push("/payment", {
+                                pastLocation: currentLocation,
+                                course,
+                              })
+                            );
+                          }}
+                        >
+                          立即購買
                         </Button>
-                        </>
-                      )}
+                      </>
+                    )}
                   </div>
                 </Card.Body>
               </Card>
@@ -529,19 +553,29 @@ const CoursePage: React.FC = () => {
                             >
                               {i + 1 + ". " + e.lesson_name}
                             </Accordion.Toggle>
-                            {e.user_email ?
+                            {e.user_email ? (
                               <FormControlLabel
-                                disabled={checkBoxState[`checked${e.lesson_id}`] || false}
-                                control={<Checkbox
-                                  checked={checkBoxState[`checked${e.lesson_id}`] || false}
-                                  onChange={(event) => {
-                                    handleCheckBoxChange(event, e.lesson_id)
-                                  }}
-                                  name={`checked${e.lesson_id}`} />}
+                                disabled={
+                                  checkBoxState[`checked${e.lesson_id}`] ||
+                                  false
+                                }
+                                control={
+                                  <Checkbox
+                                    checked={
+                                      checkBoxState[`checked${e.lesson_id}`] ||
+                                      false
+                                    }
+                                    onChange={(event) => {
+                                      handleCheckBoxChange(event, e.lesson_id);
+                                    }}
+                                    name={`checked${e.lesson_id}`}
+                                  />
+                                }
                                 label="完成"
-                              /> : ''
-                            }
-
+                              />
+                            ) : (
+                              ""
+                            )}
                           </Card.Header>
                           <Accordion.Collapse eventKey="0">
                             <Card.Body>
@@ -573,8 +607,8 @@ const CoursePage: React.FC = () => {
                                   可免費試堂
                                 </Button>
                               ) : (
-                                    ""
-                                  )}
+                                ""
+                              )}
                             </Card.Body>
                           </Accordion.Collapse>
                         </Card>
@@ -639,8 +673,8 @@ const CoursePage: React.FC = () => {
                       })
                       .slice(0, commentsNum)
                   ) : (
-                      <div>暫無評分</div>
-                    )}
+                    <div>暫無評分</div>
+                  )}
                 </div>
               </div>
             </div>

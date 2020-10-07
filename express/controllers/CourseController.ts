@@ -9,7 +9,7 @@ export class CourseController {
   popularCourses = async (req: Request, res: Response) => {
     try {
       const courses = await this.courseService.getMostPurchasedCourses();
-      console.log(courses.length);
+      //console.log(courses.length);
       res.json({ courses: courses });
     } catch (e) {
       console.log(e.message);
@@ -20,7 +20,7 @@ export class CourseController {
   goodCommentCourses = async (req: Request, res: Response) => {
     try {
       const courses = await this.courseService.getBestRatingCommentCourses();
-      console.log(courses.length);
+      //console.log(courses.length);
       res.json({ courses: courses });
     } catch (e) {
       console.log(e.message);
@@ -35,7 +35,7 @@ export class CourseController {
       if (!courseInfo) {
         return res.status(401).json({ message: "no such course" });
       }
-      console.log(courseInfo);
+      //console.log(courseInfo);
       return res.json({ course: courseInfo });
     } catch (e) {
       console.log(e.message);
@@ -88,19 +88,23 @@ export class CourseController {
       let courseSubcategory;
 
       let courseCategoryId = parseInt(courseCategory);
-      console.log('line 91: ' + courseCategoryId)
-      if(courseCategoryId == 151 || courseCategoryId == 152 
-        || courseCategoryId == 153 || courseCategoryId == 154) {
-          courseSubcategory = courseCategoryId - 150
-          newCourseInfo = {
-            courseTitle: courseTitle,
-            courseCategory: 15,
-            courseSubcategory: courseSubcategory,
-            coursePrice: parseInt(coursePrice),
-            courseDescription: courseDescription,
-            courseObjective: courseObjective,
-            coursePrerequisite: coursePrerequisite,
-          };
+      //console.log('line 91: ' + courseCategoryId)
+      if (
+        courseCategoryId == 151 ||
+        courseCategoryId == 152 ||
+        courseCategoryId == 153 ||
+        courseCategoryId == 154
+      ) {
+        courseSubcategory = courseCategoryId - 150;
+        newCourseInfo = {
+          courseTitle: courseTitle,
+          courseCategory: 15,
+          courseSubcategory: courseSubcategory,
+          coursePrice: parseInt(coursePrice),
+          courseDescription: courseDescription,
+          courseObjective: courseObjective,
+          coursePrerequisite: coursePrerequisite,
+        };
       } else {
         newCourseInfo = {
           courseTitle: courseTitle,
@@ -112,7 +116,6 @@ export class CourseController {
         };
       }
 
-      
       const courseCover = req.file.filename;
 
       const createdCourse = await this.courseService.createCourse(
@@ -120,7 +123,7 @@ export class CourseController {
         newCourseInfo,
         courseCover
       );
-      console.log(createdCourse);
+      //console.log(createdCourse);
 
       res.status(200).json({ message: "successfully created course" });
     } catch (e) {
@@ -151,7 +154,7 @@ export class CourseController {
         comment,
         parseInt(rating)
       );
-      console.log(result);
+      //console.log(result);
 
       if (result !== 1)
         return res.status(400).json({ message: "fail to update" });
@@ -165,40 +168,42 @@ export class CourseController {
 
   checkCompletion = async (req: Request, res: Response) => {
     try {
-      const courseId:number = parseInt(req.query.courseId as any)
-      const userId = parseInt(req.query.userId as any)
-      
-      const completedLessonId = await this.courseService.checkCompletion(courseId, userId);
-      console.log(completedLessonId)
-      return res.status(200).json({ completedLessonId })
+      const courseId: number = parseInt(req.query.courseId as any);
+      const userId = parseInt(req.query.userId as any);
 
+      const completedLessonId = await this.courseService.checkCompletion(
+        courseId,
+        userId
+      );
+      //console.log(completedLessonId)
+      return res.status(200).json({ completedLessonId });
     } catch (e) {
       logger.debug(e);
       return res.status(500).json({ message: "internal server error" });
     }
-  }
+  };
 
   getAllLessons = async (req: Request, res: Response) => {
     try {
-      const courseId = parseInt(req.params.courseId)
+      const courseId = parseInt(req.params.courseId);
 
       const lessons = await this.courseService.getAllLessons(courseId);
-      return res.status(200).json({ lessons })
+      return res.status(200).json({ lessons });
     } catch (e) {
       logger.debug(e);
       return res.status(500).json({ message: "internal server error" });
     }
-  }
+  };
 
   getAllTutorInfo = async (req: Request, res: Response) => {
     try {
       const tutors = await this.courseService.getAllTutorInfo();
-      return res.status(200).json({ tutors })
+      return res.status(200).json({ tutors });
     } catch (e) {
       logger.debug(e);
       return res.status(500).json({ message: "internal server error" });
     }
-  }
+  };
 
   getTutorInfo = async (req: Request, res: Response) => {
     try {
@@ -211,45 +216,49 @@ export class CourseController {
       logger.debug(e);
       return res.status(500).json({ message: "internal server error" });
     }
-  }
+  };
 
   getCourseDetailByTutor = async (req: Request, res: Response) => {
     try {
       const { tutorEmail } = req.params;
-      const courses = await this.courseService.getCourseDetailByTutor(tutorEmail)
+      const courses = await this.courseService.getCourseDetailByTutor(
+        tutorEmail
+      );
 
-      return res.status(200).json({ courses })
+      return res.status(200).json({ courses });
     } catch (e) {
       logger.debug(e);
       return res.status(500).json({ message: "internal server error" });
     }
-  }
+  };
 
   getTotalStudentNumberOfTutor = async (req: Request, res: Response) => {
     try {
       const { tutorEmail } = req.params;
-      const totalStudentNumber = await this.courseService.getTotalStudentNumberOfTutor(tutorEmail)
+      const totalStudentNumber = await this.courseService.getTotalStudentNumberOfTutor(
+        tutorEmail
+      );
 
-      return res.status(200).json({ totalStudentNumber })
+      return res.status(200).json({ totalStudentNumber });
     } catch (e) {
       logger.debug(e);
       return res.status(500).json({ message: "internal server error" });
     }
-  }
+  };
 
   getCourseBySearch = async (req: Request, res: Response) => {
     try {
-      let searchText = '';
+      let searchText = "";
       if (req.query.search) {
         searchText = req.query.search as any;
       }
 
       const courses = await this.courseService.getCourseBySearch(searchText);
 
-      return res.status(200).json({ courses })
+      return res.status(200).json({ courses });
     } catch (e) {
       logger.debug(e);
       return res.status(500).json({ message: "internal server error" });
     }
-  }
+  };
 }
