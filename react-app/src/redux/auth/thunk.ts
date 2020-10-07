@@ -34,7 +34,10 @@ export function login(
       dispatch(loginSuccess(json.token, json.userId));
       dispatch(getUser(json.email, json.image));
       dispatch(checkTutor(json.isTutor));
-      if (previousLocation?.match(/login/) || previousLocation?.match(/signup/)) {
+      if (
+        previousLocation?.match(/login/) ||
+        previousLocation?.match(/signup/)
+      ) {
         dispatch(push("/"));
       } else if (previousLocation) {
         dispatch(push(previousLocation));
@@ -42,7 +45,7 @@ export function login(
         dispatch(push("/"));
       }
     } else if (res.status === 401) {
-      console.log(res.status);
+      //console.log(res.status);
       dispatch(loginFail("Wrong email/password"));
     }
   };
@@ -111,7 +114,7 @@ export const loginGoogleThunk = (
       dispatch(getUser(data.email, data.image));
       dispatch(checkTutor(data.isTutor));
       if (previousLocation) {
-        console.log("1");
+        //console.log("1");
         dispatch(push(previousLocation));
       } else if (previousLocation?.match(/login/)) {
         dispatch(push("/"));

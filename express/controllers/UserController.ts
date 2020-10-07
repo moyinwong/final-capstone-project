@@ -17,22 +17,25 @@ export class UserController {
 
       let userId: number;
       if (userImage) {
-        userId = await this.userService.signup(userInfo, userImage.filename)
+        userId = await this.userService.signup(userInfo, userImage.filename);
       } else {
-        userId = await this.userService.signup(userInfo)
+        userId = await this.userService.signup(userInfo);
       }
-      res.status(200).json({ userId })
-
-    } catch(e) {
+      res.status(200).json({ userId });
+    } catch (e) {
       console.log(e.message);
 
-      if(e.message.match(/duplicate key value violates unique constraint "users_email_unique"/)) {
-        res.status(500).json({message: '電郵地址已註冊'})
+      if (
+        e.message.match(
+          /duplicate key value violates unique constraint "users_email_unique"/
+        )
+      ) {
+        res.status(500).json({ message: "電郵地址已註冊" });
       } else {
-        res.status(500).json({message: 'signup: internal server error'})
+        res.status(500).json({ message: "signup: internal server error" });
       }
     }
-  }
+  };
 
   login = async (req: Request, res: Response) => {
     logger.debug(req.body.email);
@@ -76,7 +79,7 @@ export class UserController {
     const user = await this.userService.registerAsTutor(userEmail);
 
     return user;
-  }
+  };
 
   getInfo = async (req: Request, res: Response) => {
     try {
@@ -91,7 +94,7 @@ export class UserController {
           isTutor: user?.is_tutor,
           title: user?.title,
           introduction: user?.introduction,
-          stripeId: user?.stripe_id
+          stripeId: user?.stripe_id,
         },
       });
     } catch (e) {
@@ -190,7 +193,7 @@ export class UserController {
       //debug
       logger.debug(user);
 
-      console.log(result)
+      //console.log(result)
       if (!user) {
         const password = await hashPassword("noPasswordProvided");
         user = (
@@ -236,18 +239,21 @@ export class UserController {
 
       let editedUserId;
       if (userImage) {
-        editedUserId = await this.userService.editProfile(userInfo, userId, userImage.filename)
+        editedUserId = await this.userService.editProfile(
+          userInfo,
+          userId,
+          userImage.filename
+        );
       } else {
-        editedUserId = await this.userService.editProfile(userInfo, userId)
+        editedUserId = await this.userService.editProfile(userInfo, userId);
       }
 
-      res.status(200).json({ editedUserId })
-
-    } catch(e) {
+      res.status(200).json({ editedUserId });
+    } catch (e) {
       logger.error(e);
-      res.status(500).json({ message: 'editProfile: internal server error'})
+      res.status(500).json({ message: "editProfile: internal server error" });
     }
-  }
+  };
 
   allowUserAccessCourse = async (req: Request, res: Response) => {
     try {
@@ -282,11 +288,10 @@ export class UserController {
     try {
       const userId = parseInt(req.params.userId);
       const courses = await this.userService.getAllCoursesDetail(userId);
-      res.status(200).json({ courses })
-    } catch(e) {
+      res.status(200).json({ courses });
+    } catch (e) {
       logger.error(e);
-      res.status(500).json({ message: 'internal server error'})
+      res.status(500).json({ message: "internal server error" });
     }
-  }
-
+  };
 }

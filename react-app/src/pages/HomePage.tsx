@@ -12,7 +12,7 @@ dotenv.config();
 
 const HomePage: React.FC = () => {
   const userId = useSelector((state: IRootState) => state.auth.id);
-  console.log()
+  //console.log()
 
   return (
     <div>
@@ -20,21 +20,29 @@ const HomePage: React.FC = () => {
         <Container fluid="lg">
           <Row>
             {/* <div className="section-banner-container"> */}
-              <Col >
-                <div className="section-banner-text">
-                <div style={{color: '#212121'}}>仲去補習社？	&bull;	&bull;	&bull;</div>
-                <div style={{fontSize: '30px', color: '#777272'}}>用E-DUCATE上堂，我地幫你搞掂！</div>
-                {userId === null && <Button href="/signup" variant="light">立刻註冊</Button>}
+            <Col>
+              <div className="section-banner-text">
+                <div style={{ color: "#212121" }}>
+                  仲去補習社？ &bull; &bull; &bull;
                 </div>
-              </Col>
-              <Col >
-                  <img 
-                      style={{height: '280px', margin: '30px 0px'}} 
-                      src={require('./icons/geography.png')} 
-                      alt="logo"
-                  />
-              </Col>
-              
+                <div style={{ fontSize: "30px", color: "#777272" }}>
+                  用E-DUCATE上堂，我地幫你搞掂！
+                </div>
+                {userId === null && (
+                  <Button href="/signup" variant="light">
+                    立刻註冊
+                  </Button>
+                )}
+              </div>
+            </Col>
+            <Col>
+              <img
+                style={{ height: "280px", margin: "30px 0px" }}
+                src={require("./icons/geography.png")}
+                alt="logo"
+              />
+            </Col>
+
             {/* </div> */}
           </Row>
         </Container>

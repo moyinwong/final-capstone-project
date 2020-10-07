@@ -119,7 +119,7 @@ export class LessonController {
       if (courseMaterial.length > 0) {
         for (let material of courseMaterial) {
           materialArray.push(material.filename);
-          console.log("materialarray", materialArray);
+          //console.log("materialarray", materialArray);
         }
         // let courseMaterial = req.files
         const createdLesson = await this.lessonService.createLesson(
@@ -153,7 +153,7 @@ export class LessonController {
       if (courseMaterial.length > 0) {
         for (let material of courseMaterial) {
           materialArray.push(material.filename);
-          console.log("materialarray", materialArray);
+          //console.log("materialarray", materialArray);
         }
         // let courseMaterial = req.files
         const createdLesson = await this.lessonService.editLesson(
@@ -169,12 +169,12 @@ export class LessonController {
         );
         return res.status(200).json({ createdLesson });
       }
-    } catch(e) {
+    } catch (e) {
       logger.debug(e);
       return res.status(500).json({ message: "internal server error" });
     }
-  }
-  
+  };
+
   createLessonQuestion = async (req: Request, res: Response) => {
     try {
       const { lessonName } = req.params;
@@ -193,7 +193,7 @@ export class LessonController {
         questionAndAnswersId.push(questionId);
       }
 
-      console.log(questionAndAnswersId);
+      //console.log(questionAndAnswersId);
 
       return res
         .status(200)
@@ -298,5 +298,4 @@ export class LessonController {
       return res.status(500).json({ message: "internal server error" });
     }
   };
-
 }
