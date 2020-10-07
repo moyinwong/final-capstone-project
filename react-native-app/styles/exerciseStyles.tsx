@@ -83,6 +83,14 @@ const exerciseStyles = StyleSheet.create({
     submitButtonText: {
         fontSize: 20,
         color: '#ffffff'
+    },
+    answerContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        marginTop: 6
+    },
+    answerDisplay: {
+        fontSize: 18
     }
 });
 

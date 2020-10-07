@@ -1,12 +1,18 @@
 // React, React Native
-import React, { useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { View, Text, Pressable, TouchableOpacity } from 'react-native';
 
 // Context
 import { LessonContext } from '../../../../contexts/lessonContext';
 
 // Navigation
-import { useRoute, useNavigation } from '@react-navigation/native';
+import { useRoute, useNavigation, useFocusEffect } from '@react-navigation/native';
+
+// Data
+import envData from '../../../../data/env';
+
+// Icons
+import { MaterialIcons, Entypo } from '@expo/vector-icons';
 
 // Styles
 import globalStyles from '../../../../styles/globalStyles';
@@ -15,7 +21,7 @@ import exerciseStyles from '../../../../styles/exerciseStyles';
 export default function Exercise() {
 
     // Context
-    const { questionsAnswers, filteredQuestions, saveAnswer } = useContext(LessonContext);
+    const { lessonName, questionsAnswers, filteredQuestions, saveAnswer, correctAnswers, setCorrectAnswers } = useContext(LessonContext);
 
     // Hooks
     const route = useRoute();
@@ -29,6 +35,44 @@ export default function Exercise() {
             viewingCondition = route.params.viewingCondition;
         }
     }
+
+    // Submit
+    async function submitAnswers() {
+        let tempAnswers: any = {};
+        for (let item of questionsAnswers) {
+            if (item.isSelected) {
+                let key = item.question;
+                tempAnswers[key] = item.answer_body;
+            }
+        }
+
+        let queryRoute = '/lesson/check/';
+        const res = await fetch(`${envData.REACT_APP_BACKEND_URL}${queryRoute}${lessonName}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                ...tempAnswers
+            }),
+        });
+        const json = await res.json();
+
+        let tempObject: any = {};
+        for (let item of json.result) {
+            let tempKey = Object.keys(item)[0];
+            tempObject[tempKey] = item[tempKey];
+        }
+
+        setCorrectAnswers(tempObject);
+    }
+
+    let nothing = 'nothing';
+    useFocusEffect(
+        useCallback(() => {
+            setCorrectAnswers([]);
+        }, [nothing])
+    );
 
     return (
         <View style={globalStyles.container}>
@@ -64,6 +108,7 @@ export default function Exercise() {
                                             {answerItem.isSelected ? (
                                                 <View style={exerciseStyles.selectedBox}>
                                                     <Text style={{ ...exerciseStyles.answerText, color: '#ffffff' }}>{answerItem.answer_body}</Text>
+
                                                 </View>
                                             ) : (
                                                     <View style={exerciseStyles.nonSelectedBox}>
@@ -73,6 +118,19 @@ export default function Exercise() {
                                         </Pressable>
                                     )
                                 })}
+                                {correctAnswers[questionItem.question] && (
+                                    correctAnswers[questionItem.question] == 'correct' ? (
+                                        <View style={exerciseStyles.answerContainer}>
+                                            <MaterialIcons name="done" size={24} color="#22c736" />
+                                            <Text style={{ ...exerciseStyles.answerDisplay, color: "#22c736" }}>正確</Text>
+                                        </View>
+                                    ) : (
+                                            <View style={exerciseStyles.answerContainer}>
+                                                <Entypo name="cross" size={24} color="#e96a43" />
+                                                <Text style={{ ...exerciseStyles.answerDisplay, color: "#e96a43" }}>錯誤</Text>
+                                            </View>
+                                        )
+                                )}
                             </View>
                         )
                     })
@@ -92,7 +150,7 @@ export default function Exercise() {
                 <View style={exerciseStyles.submitButtonContainer}>
                     <TouchableOpacity
                         style={exerciseStyles.submitButton}
-                        onPress={() => console.log('提交')}
+                        onPress={() => submitAnswers()}
                     >
                         <Text style={exerciseStyles.submitButtonText}>提交</Text>
                     </TouchableOpacity>

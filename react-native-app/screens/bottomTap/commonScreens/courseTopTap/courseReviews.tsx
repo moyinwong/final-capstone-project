@@ -69,13 +69,22 @@ export default function Courses() {
                 showsVerticalScrollIndicator={false}
 
                 ListHeaderComponent={
-                    <TouchableOpacity
-                        style={courseReviewsStyles.goBackButton}
-                        onPress={() => navigation.pop()
-                        }
-                    >
-                        <Text style={courseReviewsStyles.goBackText}>返回</Text>
-                    </TouchableOpacity>
+                    <View style={{ display: 'flex', flexDirection: 'row' }}>
+                        <TouchableOpacity
+                            style={courseReviewsStyles.goBackButton}
+                            onPress={() => navigation.pop()
+                            }
+                        >
+                            <Text style={courseReviewsStyles.goBackText}>返回</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={courseReviewsStyles.goBackButton}
+                            onPress={() => navigation.pop()
+                            }
+                        >
+                            <Text style={courseReviewsStyles.goBackText}>返回</Text>
+                        </TouchableOpacity>
+                    </View>
                 }
 
                 ItemSeparatorComponent={() => (

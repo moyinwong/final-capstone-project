@@ -27,6 +27,10 @@ const LessonContextProvider = (props: any) => {
         []
     );
 
+    const [correctAnswers, setCorrectAnswers] = useState(
+        []
+    );
+
     const getQuestionsAnswers = async (lesson: string) => {
         try {
             let queryRoute: string = "/lesson/question/";
@@ -83,7 +87,9 @@ const LessonContextProvider = (props: any) => {
             // Set Lesson
             lessonName, setLesson,
             // Exercise
-            questionsAnswers, filteredQuestions, saveAnswer
+            questionsAnswers, filteredQuestions, saveAnswer,
+            // Checking
+            correctAnswers, setCorrectAnswers
         }}>
             { props.children}
         </LessonContext.Provider>
