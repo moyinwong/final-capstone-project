@@ -1,6 +1,6 @@
 // React, React Native
 import React, { useContext, useState } from "react";
-import { Text, TextInput, View, Pressable, ActivityIndicator, TouchableOpacity, Keyboard, Modal } from "react-native";
+import { Text, TextInput, View, Pressable, TouchableOpacity, Keyboard } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 
 // Stripe
@@ -48,11 +48,7 @@ export default function StripeForm() {
   const cartCourses: any = useContext(CartContext);
   const navigation = useNavigation();
 
-  //console.log(user);
-
   const userEmail = user.email;
-
-  //console.log(cartCourses.cartList);
 
   let totalPrice = 0;
 
@@ -60,14 +56,9 @@ export default function StripeForm() {
     totalPrice += Math.round(parseFloat(course.price), 2);
   }
 
-  //console.log(totalPrice);
-
   const charge = async (cardInfo: CardInfo) => {
-    // setIsLoading(true);
-    // console.log(`isLoading: ${isLoading} should be true`);
     console.log("run");
 
-    // Testing
     navigation.navigate('PaymentLoading');
 
     const params = {
@@ -83,8 +74,6 @@ export default function StripeForm() {
     };
 
     const token: any = await Stripe.createTokenWithCardAsync(params);
-
-    //console.log(token);
 
     const stripeToken = token.tokenId;
 
@@ -115,9 +104,6 @@ export default function StripeForm() {
     console.log(`isLoading: ${isLoading} should be false`);
 
     if (result.message === "success") {
-      // setDisplayMessage("已成功付款");
-      // setIsDone(true);
-      // console.log(`isDone: ${isDone} should be true`);
 
       cartCourses.setCartList([]);
       cartCourses.setCartSum(0);
@@ -125,12 +111,8 @@ export default function StripeForm() {
       cartCourses.storeCartList([]);
       cartCourses.storeCartSum(0);
 
-      // Testing
       navigation.navigate('PaymentSuccess');
     } else {
-      // setDisplayMessage("伺服器錯誤");
-      // setIsDone(true);
-      // console.log(`isDone: ${isDone} should be true`);
 
       navigation.navigate('PaymentFail');
     }
@@ -157,7 +139,6 @@ export default function StripeForm() {
         "test-number", // this is used internally by yup
         "無效信用卡", //validation message
         (value) => {
-          //console.log(valid.number(value).isValid);
           return valid.number(value).isValid;
         }
       ) // return true false based on validation
@@ -166,7 +147,6 @@ export default function StripeForm() {
     expMonth: yup
       .string()
       .test("test-expirymonth", "錯誤月份", (value: any) => {
-        //console.log(valid.expirationMonth(value).isValid);
         return valid.expirationMonth(value).isValid;
       })
       .max(2)
@@ -174,7 +154,6 @@ export default function StripeForm() {
     expYear: yup
       .string()
       .test("test-expiryyear", "錯誤年份", (value: any) => {
-        //console.log(valid.expirationYear(value).isValid);
         return valid.expirationYear(value).isValid;
       })
       .max(2)
@@ -182,7 +161,6 @@ export default function StripeForm() {
     cvc: yup
       .string()
       .test("cvc", "無效cvc", (value: any) => {
-        //console.log(valid.cvv(value).isValid);
         return valid.cvv(value).isValid;
       })
       .max(3)
@@ -201,39 +179,6 @@ export default function StripeForm() {
         style={stripeFormStyles.linearGradient}
       >
       </LinearGradient>
-
-      {/* {isLoading && (
-        <View
-          style={{
-            backgroundColor: "#00ffbb",
-            width: "100%",
-            height: "100%",
-            position: "absolute",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 100000,
-          }}
-        >
-          <ActivityIndicator size="large" color="#0000ff" />
-        </View>
-      )}
-      {isDone && (
-        <View
-          style={{
-            backgroundColor: "#00ffbb",
-            width: "100%",
-            height: "100%",
-            position: "absolute",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 100000,
-          }}
-        >
-          <Text>{displayMessage}</Text>
-        </View>
-      )} */}
 
       <Formik
         initialValues={{

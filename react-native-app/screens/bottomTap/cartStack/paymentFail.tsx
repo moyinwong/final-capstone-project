@@ -23,7 +23,9 @@ export default function PaymentFail() {
     useFocusEffect(
         useCallback(() => {
             setTimeout(() => {
-                navigation.navigate('Cart')
+                navigation.navigate('Cart',
+                    { screen: 'Cart' }
+                )
             }, 1200)
         }, [nothing])
     );

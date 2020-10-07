@@ -23,7 +23,9 @@ export default function PaymentSuccess() {
     useFocusEffect(
         useCallback(() => {
             setTimeout(() => {
-                navigation.navigate('Home')
+                navigation.navigate('Home',
+                    { screen: 'Home' }
+                )
             }, 1200)
         }, [nothing])
     );
