@@ -51,6 +51,7 @@ function Copyright() {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
+      minHeight: '1100px'
     },
     avatar: {
       margin: theme.spacing(1),
@@ -544,9 +545,6 @@ const SettingPage = () => {
         </div>
 
         {errMessage && <Alert variant="success">{errMessage}</Alert>}
-        <Box mt={5}>
-          <Copyright />
-        </Box>
 
         <Modal show={show} onHide={handleClose} centered>
           <Modal.Header closeButton>
