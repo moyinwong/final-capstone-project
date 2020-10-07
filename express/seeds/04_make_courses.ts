@@ -17,7 +17,7 @@ export async function seed(knex: Knex): Promise<void> {
     const randomCategoryId: number = Math.floor(Math.random() * 15) + 1;
     const randomObj: any = {
       name: faker.system.fileName(),
-      price: Math.floor(Math.random() * 500) + 40,
+      price: Math.floor(Math.random() * 70) + 40,
       category_id: randomCategoryId,
       tutor_id: randomIntFromInterval(3, 10),
       // 1 - 10 (tutor id)

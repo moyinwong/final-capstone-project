@@ -33,29 +33,35 @@ export async function seed(knex: Knex): Promise<void> {
       user_id: 1,
       discussion_id: 1,
       content:
+        "我覺得sony最好用",
+    },
+    {
+      user_id: 1,
+      discussion_id: 2,
+      content:
         "岩阿我都覺得係\n",
     },
     {
       user_id: 1,
-      discussion_id: 1,
+      discussion_id: 2,
       content:
         "我都唔識喎\n",
     },
     {
       user_id: 1,
-      discussion_id: 1,
+      discussion_id: 2,
       content:
         "不如問返老師\n",
     },
     {
       user_id: 1,
-      discussion_id: 1,
+      discussion_id: 2,
       content:
         "留TG再講\n",
     },
     {
       user_id: 1,
-      discussion_id: 1,
+      discussion_id: 2,
       content:
         "唔知喎\n",
     },
@@ -64,78 +70,6 @@ export async function seed(knex: Knex): Promise<void> {
       discussion_id: 1,
       content:
         "你試下睇返條片\n",
-    },
-    {
-      user_id: 1,
-      discussion_id: 1,
-      content:
-        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
-    },
-    {
-      user_id: 1,
-      discussion_id: 1,
-      content:
-        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
-    },
-    {
-      user_id: 1,
-      discussion_id: 1,
-      content:
-        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
-    },
-    {
-      user_id: 1,
-      discussion_id: 1,
-      content:
-        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
-    },
-    {
-      user_id: 1,
-      discussion_id: 1,
-      content:
-        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
-    },
-    {
-      user_id: 1,
-      discussion_id: 1,
-      content:
-        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
-    },
-    {
-      user_id: 1,
-      discussion_id: 1,
-      content:
-        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
-    },
-    {
-      user_id: 1,
-      discussion_id: 2,
-      content:
-        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
-    },
-    {
-      user_id: 1,
-      discussion_id: 2,
-      content:
-        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
-    },
-    {
-      user_id: 1,
-      discussion_id: 2,
-      content:
-        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
-    },
-    {
-      user_id: 1,
-      discussion_id: 1,
-      content:
-        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
-    },
-    {
-      user_id: 1,
-      discussion_id: 1,
-      content:
-        "uidfhdjfhaldshflashdfahdslfhldsfh\ndsjfhahfdlkahdflhsddjfhajskdhfladsfhjsdf\n",
     },
     {
       user_id: 1,

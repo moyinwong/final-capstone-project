@@ -41,11 +41,27 @@ export async function seed(knex: Knex): Promise<void> {
       comment: "教得十分仔細！",
     },
     {
+      user_id: 10,
+      course_id: 1,
+      payment_method: "credit card",
+      paid_amount: 99,
+      rated_score: 5,
+      comment: "教得好好！",
+    },
+    {
+      user_id: 9,
+      course_id: 1,
+      payment_method: "credit card",
+      paid_amount: 99,
+      rated_score: 5,
+      comment: "老師有耐性！",
+    },
+    {
       user_id: 2,
       course_id: 1,
       payment_method: "credit card",
       paid_amount: 99,
-      rated_score: 3,
+      rated_score: 5,
       comment: "清楚易明，但仍有需要改善的地方",
     },
     {
