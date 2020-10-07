@@ -1,6 +1,6 @@
 // React, React Native
 import React, { useContext, useState } from "react";
-import { Text, TextInput, View, Pressable, ActivityIndicator, TouchableOpacity, Keyboard } from "react-native";
+import { Text, TextInput, View, Pressable, ActivityIndicator, TouchableOpacity, Keyboard, Modal } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 
 // Stripe
@@ -63,9 +63,12 @@ export default function StripeForm() {
   //console.log(totalPrice);
 
   const charge = async (cardInfo: CardInfo) => {
-    setIsLoading(true);
-    console.log(`isLoading: ${isLoading} should be true`);
+    // setIsLoading(true);
+    // console.log(`isLoading: ${isLoading} should be true`);
     console.log("run");
+
+    // Testing
+    navigation.navigate('PaymentLoading');
 
     const params = {
       // mandatory
@@ -110,24 +113,28 @@ export default function StripeForm() {
 
     setIsLoading(false);
     console.log(`isLoading: ${isLoading} should be false`);
-    if (result.message === "success") {
-      setDisplayMessage("已成功付款");
-      setIsDone(true);
-      console.log(`isDone: ${isDone} should be true`);
-    } else {
-      setDisplayMessage("伺服器錯誤");
-      setIsDone(true);
-      console.log(`isDone: ${isDone} should be true`);
-    }
 
-    if (result.message == 'success') {
+    if (result.message === "success") {
+      // setDisplayMessage("已成功付款");
+      // setIsDone(true);
+      // console.log(`isDone: ${isDone} should be true`);
+
       cartCourses.setCartList([]);
       cartCourses.setCartSum(0);
       cartCourses.setCartNum(0);
       cartCourses.storeCartList([]);
       cartCourses.storeCartSum(0);
-      navigation.navigate('Home');
+
+      // Testing
+      navigation.navigate('PaymentSuccess');
+    } else {
+      // setDisplayMessage("伺服器錯誤");
+      // setIsDone(true);
+      // console.log(`isDone: ${isDone} should be true`);
+
+      navigation.navigate('PaymentFail');
     }
+
   };
 
   //yup schema
@@ -195,7 +202,7 @@ export default function StripeForm() {
       >
       </LinearGradient>
 
-      {isLoading && (
+      {/* {isLoading && (
         <View
           style={{
             backgroundColor: "#00ffbb",
@@ -226,7 +233,7 @@ export default function StripeForm() {
         >
           <Text>{displayMessage}</Text>
         </View>
-      )}
+      )} */}
 
       <Formik
         initialValues={{

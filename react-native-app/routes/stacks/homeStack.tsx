@@ -19,9 +19,13 @@ import TutorInfo from '../../screens/bottomTap/commonScreens/tutorInfo';
 import CoursesList from '../../screens/bottomTap/commonScreens/coursesList';
 import Course from '../../screens/bottomTap/commonScreens/course';
 import StripeForm from "../../screens/bottomTap/commonScreens/StripeForm";
+import PaymentLoading from "../../screens/bottomTap/cartStack/paymentLoading";
+import PaymentSuccess from "../../screens/bottomTap/cartStack/paymentSuccess";
+import PaymentFail from "../../screens/bottomTap/cartStack/paymentFail";
 
 // Functions
 import stackTransition from '../../functions/stackTransition';
+import paymentTransition from "../../functions/paymentTransition";
 
 export default function HomeStack(props: { navigation: { toggleDrawer: () => void; }; }) {
     const Stack = createStackNavigator();
@@ -122,6 +126,33 @@ export default function HomeStack(props: { navigation: { toggleDrawer: () => voi
                 options={{
                     title: "信用卡資料",
                     ...stackTransition,
+                }}
+            />
+            <Stack.Screen
+                name="PaymentLoading"
+                children={PaymentLoading}
+                options={{
+                    headerShown: false,
+                    title: "付款處理中",
+                    ...paymentTransition,
+                }}
+            />
+            <Stack.Screen
+                name="PaymentSuccess"
+                children={PaymentSuccess}
+                options={{
+                    headerShown: false,
+                    title: "付款成功",
+                    ...paymentTransition,
+                }}
+            />
+            <Stack.Screen
+                name="PaymentFail"
+                children={PaymentFail}
+                options={{
+                    headerShown: false,
+                    title: "付款失敗",
+                    ...paymentTransition,
                 }}
             />
         </Stack.Navigator>
