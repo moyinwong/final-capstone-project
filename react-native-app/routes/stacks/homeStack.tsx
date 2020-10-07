@@ -84,6 +84,7 @@ export default function HomeStack(props: { navigation: { toggleDrawer: () => voi
                 name="Course"
                 component={Course}
                 options={{
+                    headerShown: false,
                     title: '課程',
                     ...stackTransition
                 }}

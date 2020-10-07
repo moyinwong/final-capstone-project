@@ -194,7 +194,7 @@ export default function Courses() {
     );
 
     return (
-        <View style={globalStyles.container}>
+        <View style={{ ...globalStyles.container, paddingHorizontal: 0 }}>
 
             <View
                 style={courseStyles.courseBox}

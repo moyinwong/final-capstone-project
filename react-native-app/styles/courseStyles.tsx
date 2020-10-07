@@ -3,8 +3,8 @@ import { StyleSheet } from 'react-native';
 
 const coursesListStyles = StyleSheet.create({
     courseBox: {
-        marginVertical: 8,
-        marginHorizontal: 2,
+        marginBottom: 8,
+        marginHorizontal: 0,
         borderRadius: 12,
         overflow: 'hidden',
         paddingBottom: 10,
