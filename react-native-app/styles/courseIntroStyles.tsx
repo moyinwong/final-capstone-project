@@ -1,7 +1,7 @@
 // React, React Native
 import { StyleSheet } from 'react-native';
 
-const coursesListStyles = StyleSheet.create({
+const courseIntroStyles = StyleSheet.create({
     courseBox: {
         marginBottom: 8,
         marginHorizontal: 0,
@@ -98,6 +98,23 @@ const coursesListStyles = StyleSheet.create({
         fontSize: 19,
         color: '#22c736'
     },
+    courseIntroContainer: {
+        marginTop: 8,
+        marginBottom: 12,
+        marginHorizontal: 2,
+        borderRadius: 12,
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        backgroundColor: '#ffffff',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
     tutorBox: {
         marginTop: 8,
         marginBottom: 12,
@@ -148,96 +165,7 @@ const coursesListStyles = StyleSheet.create({
     tutorCheckButtonText: {
         fontSize: 19,
         color: '#e96a43'
-    },
-    titleContainer: {
-        display: 'flex',
-        flexDirection: 'row'
-    },
-    titleSubContainer: {
-        marginTop: 6,
-        marginBottom: 8,
-        marginRight: 16
-    },
-    infoBox: {
-        marginTop: 3,
-        marginBottom: 12,
-        marginHorizontal: 2,
-        borderRadius: 12,
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'hidden',
-        paddingVertical: 10,
-        paddingHorizontal: 10,
-        backgroundColor: '#ffffff',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5
-    },
-    activeInfoTitle: {
-        marginLeft: 6,
-        fontSize: 22,
-        color: '#000000'
-    },
-    inActiveInfoTitle: {
-        marginLeft: 6,
-        fontSize: 22,
-        color: '#828282'
-    },
-    DescriptionText: {
-        marginTop: 3,
-        marginBottom: 12,
-        fontSize: 18
-    },
-    infoText: {
-        marginVertical: 3,
-        fontSize: 18
-    },
-    lessonBox: {
-        marginVertical: 3
-    },
-    lessonText: {
-        fontSize: 18,
-        color: '#5b96f7'
-    },
-    trialTextContainer: {
-        marginTop: 6,
-        width: 135,
-        borderColor: '#22c736',
-        borderWidth: 1,
-        borderRadius: 8,
-        paddingVertical: 8,
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    trialText: {
-        fontSize: 18,
-        color: '#22c736'
-    },
-    commentBox: {
-        marginVertical: 3
-    },
-    infoComment: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    infoCommentUser: {
-        fontSize: 16,
-        color: '#666666'
-    },
-    separator: {
-        marginVertical: 10,
-        width: '100%',
-        borderBottomColor: '#cccccc',
-        borderBottomWidth: 1
     }
 });
 
-export default coursesListStyles;
+export default courseIntroStyles;

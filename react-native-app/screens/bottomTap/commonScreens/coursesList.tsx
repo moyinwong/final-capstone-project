@@ -1,9 +1,12 @@
 // React, React Native
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 
 // Navigation
 import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
+
+// Context
+import { CourseContext } from '../../../contexts/courseContext';
 
 // Icons
 import { Entypo } from '@expo/vector-icons';
@@ -22,6 +25,8 @@ import ICoursesListParam from '../../../Interfaces/ICoursesListParam';
 import envData from '../../../data/env';
 
 export default function CoursesList() {
+    // Context
+    const { setCourseName } = useContext(CourseContext);
 
     // Hooks
     const navigation = useNavigation();
@@ -139,9 +144,10 @@ export default function CoursesList() {
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={coursesListStyles.courseBox}
-                        onPress={() => navigation.navigate('Course',
-                            { courseName: item.course_name }
-                        )}
+                        onPress={() => {
+                            setCourseName(item.course_name),
+                                navigation.navigate("Course", { screen: 'CourseIntro' })
+                        }}
                     >
                         <View style={coursesListStyles.coursePicContainer}>
                             <Image

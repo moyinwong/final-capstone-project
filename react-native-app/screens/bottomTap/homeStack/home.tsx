@@ -6,6 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 // Context
 import { UserContext } from '../../../contexts/userContext';
+import { CourseContext } from '../../../contexts/courseContext';
 
 // Navigation
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
@@ -28,6 +29,7 @@ export default function Home() {
 
     // Context
     const { user } = useContext(UserContext);
+    const { setCourseName } = useContext(CourseContext);
 
     // Hooks
     const navigation = useNavigation();
@@ -154,9 +156,10 @@ export default function Home() {
                     renderItem={({ item }) => (
                         <TouchableOpacity
                             style={homeStyles.courseBox}
-                            onPress={() => navigation.navigate('Course',
-                                { courseName: item.course_name }
-                            )}
+                            onPress={() => {
+                                setCourseName(item.course_name),
+                                    navigation.navigate("Course", { screen: 'CourseIntro' })
+                            }}
                         >
                             <View style={homeStyles.coursePicContainer}>
                                 <Image
@@ -216,9 +219,10 @@ export default function Home() {
                         renderItem={({ item }) => (
                             <TouchableOpacity
                                 style={homeStyles.courseBox}
-                                onPress={() => navigation.navigate('Course',
-                                    { courseName: item.course_name }
-                                )}
+                                onPress={() => {
+                                    setCourseName(item.course_name),
+                                        navigation.navigate("Course", { screen: 'CourseIntro' })
+                                }}
                             >
                                 <View style={homeStyles.coursePicContainer}>
                                     <Image

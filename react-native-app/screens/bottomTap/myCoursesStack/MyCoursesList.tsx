@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 
 // Context
 import { UserContext } from '../../../contexts/userContext';
+import { CourseContext } from '../../../contexts/courseContext';
 
 // Navigation
 import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
@@ -19,6 +20,7 @@ export default function MyCoursesList() {
 
     // Context
     const { user } = useContext(UserContext);
+    const { setCourseName } = useContext(CourseContext);
 
     // Hooks
     const navigation = useNavigation();
@@ -83,9 +85,10 @@ export default function MyCoursesList() {
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={myCoursesStyles.courseBox}
-                        onPress={() => navigation.navigate('Course',
-                            { courseName: item.course_name }
-                        )}
+                        onPress={() => {
+                            setCourseName(item.course_name),
+                                navigation.navigate("Course", { screen: 'CourseIntro' })
+                        }}
                     >
                         <View style={myCoursesStyles.coursePicContainer}>
                             <Image

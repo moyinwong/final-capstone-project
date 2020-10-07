@@ -11,6 +11,7 @@ import OverallStack from './routes/overallStack';
 // Contexts
 import UserContextProvider from "./contexts/userContext";
 import CartContextProvider from "./contexts/cartContext";
+import CourseContextProvider from "./contexts/courseContext";
 import LessonContextProvider from "./contexts/lessonContext";
 
 export default function App() {
@@ -20,9 +21,11 @@ export default function App() {
   return (
     <UserContextProvider>
       <CartContextProvider>
-        <LessonContextProvider>
-          <NavigationContainer>{OverallStack()}</NavigationContainer>
-        </LessonContextProvider>
+        <CourseContextProvider>
+          <LessonContextProvider>
+            <NavigationContainer>{OverallStack()}</NavigationContainer>
+          </LessonContextProvider>
+        </CourseContextProvider>
       </CartContextProvider>
     </UserContextProvider>
   );

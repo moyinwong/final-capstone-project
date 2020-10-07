@@ -10,13 +10,13 @@ import { FontAwesome } from '@expo/vector-icons';
 
 // Routes
 import SubjectTopTap from '../topTap/subjectTopTap';
+import CourseTopTap from '../topTap/courseTopTap';
 import LessonTopTap from '../topTap/lessonTopTap';
 import TrialTopTap from "../topTap/trialTopTap";
 
 // Screens
 import TutorInfo from '../../screens/bottomTap/commonScreens/tutorInfo';
 import CoursesList from '../../screens/bottomTap/commonScreens/coursesList';
-import Course from '../../screens/bottomTap/commonScreens/course';
 import StripeForm from "../../screens/bottomTap/commonScreens/StripeForm";
 import PaymentLoading from "../../screens/bottomTap/cartStack/paymentLoading";
 import PaymentSuccess from "../../screens/bottomTap/cartStack/paymentSuccess";
@@ -81,7 +81,7 @@ export default function SubjectStack(props: { navigation: { toggleDrawer: () => 
             />
             <Stack.Screen
                 name="Course"
-                component={Course}
+                children={CourseTopTap}
                 options={{
                     title: '課程',
                     ...stackTransition

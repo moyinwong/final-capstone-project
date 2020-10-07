@@ -9,6 +9,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { FontAwesome } from '@expo/vector-icons';
 
 // Routes
+import CourseTopTap from '../topTap/courseTopTap';
 import LessonTopTap from '../topTap/lessonTopTap';
 import TrialTopTap from "../topTap/trialTopTap";
 
@@ -17,7 +18,6 @@ import Home from '../../screens/bottomTap/homeStack/home';
 import TutorsList from '../../screens/bottomTap/commonScreens/tutorsList';
 import TutorInfo from '../../screens/bottomTap/commonScreens/tutorInfo';
 import CoursesList from '../../screens/bottomTap/commonScreens/coursesList';
-import Course from '../../screens/bottomTap/commonScreens/course';
 import StripeForm from "../../screens/bottomTap/commonScreens/StripeForm";
 import PaymentLoading from "../../screens/bottomTap/cartStack/paymentLoading";
 import PaymentSuccess from "../../screens/bottomTap/cartStack/paymentSuccess";
@@ -82,9 +82,8 @@ export default function HomeStack(props: { navigation: { toggleDrawer: () => voi
             />
             <Stack.Screen
                 name="Course"
-                component={Course}
+                children={CourseTopTap}
                 options={{
-                    headerShown: false,
                     title: '課程',
                     ...stackTransition
                 }}

@@ -7,12 +7,10 @@ import { useNavigation } from "@react-navigation/native";
 
 // Context
 import { CartContext } from "../../../contexts/cartContext";
+import { CourseContext } from '../../../contexts/courseContext';
 
 // Icons
 import { MaterialIcons } from "@expo/vector-icons";
-
-// Functions
-import showCommentOrRateBox from "../../../functions/showCommentOrRateBox";
 
 // Styles
 import globalStyles from "../../../styles/globalStyles";
@@ -21,6 +19,7 @@ import cartStyles from "../../../styles/cartStyles";
 export default function Cart(props: { navigation: { goBack: () => void } }) {
   // Context
   const { cartList, cartSum, removeCartList } = useContext(CartContext);
+  const { setCourseName } = useContext(CourseContext);
 
   // Hooks
   const navigation = useNavigation();
@@ -55,10 +54,10 @@ export default function Cart(props: { navigation: { goBack: () => void } }) {
         renderItem={({ item }) => (
           <TouchableOpacity
             style={cartStyles.courseBox}
-            onPress={() =>
-              navigation.navigate("Course", { courseName: item.course_name })
-            }
-            onLongPress={() => showCommentOrRateBox()}
+            onPress={() => {
+              setCourseName(item.course_name),
+                navigation.navigate("Course", { screen: 'CourseIntro' })
+            }}
           >
             <View style={cartStyles.coursePicContainer}>
               <Image
