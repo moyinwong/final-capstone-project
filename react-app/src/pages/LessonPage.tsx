@@ -374,7 +374,7 @@ const LessonPage: React.FC = () => {
                       <div key={i}>
                         {" "}
                         <a
-                          href={`http://localhost:8080/file/${e.file_name}`}
+                          href={`${process.env.REACT_APP_BACKEND_FILE}/${e.file_name}`}
                           download
                         >
                           {e.file_name}

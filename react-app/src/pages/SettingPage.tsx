@@ -354,7 +354,7 @@ const SettingPage = () => {
   };
 
   return (
-    <Container component="main" maxWidth="md">
+    <Container id="setting-container" component="main" maxWidth="md">
       <CssBaseline />
       <div className={classes.paper}>
         {/* <Avatar className={classes.avatar}> */}
@@ -371,7 +371,7 @@ const SettingPage = () => {
           ) : (
             <Image
               id="edit-user-image"
-              src={`http://localhost:8080/img/${profilePicture}`}
+              src={`${process.env.REACT_APP_BACKEND_IMAGE}/${profilePicture}`}
             />
           )}
         </div>
@@ -561,9 +561,6 @@ const SettingPage = () => {
       </div>
 
       {errMessage && <Alert variant="success">{errMessage}</Alert>}
-      <Box mt={5}>
-        <Copyright />
-      </Box>
 
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>

@@ -125,7 +125,8 @@ const Header = (props: any) => {
                     <i className="fas fa-shopping-cart"></i>
                   </button>
                   <button className="user-icon" onClick={() => setOpen(!open)}>
-                    {userImage ? (
+                    {userImage ? userImage.match(/http/) ? (<img src={userImage} alt="user"/>
+                    ) : (
                       <img
                         src={`${process.env.REACT_APP_BACKEND_IMAGE}/${userImage}`}
                       />
