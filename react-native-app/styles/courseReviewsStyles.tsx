@@ -2,31 +2,32 @@
 import { StyleSheet } from 'react-native';
 
 const courseReviewsStyles = StyleSheet.create({
-    infoBox: {
-        marginTop: 3,
-        marginBottom: 12,
-        marginHorizontal: 2,
-        borderRadius: 12,
-        display: 'flex',
-        flexDirection: 'column',
-        paddingVertical: 10,
-        paddingHorizontal: 10,
-        backgroundColor: '#ffffff',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5
+    goBackButton: {
+        marginTop: 6,
+        marginLeft: 8,
+        marginBottom: 2,
+        paddingVertical: 8,
+        width: 100
+    },
+    goBackText: {
+        fontSize: 18,
+        color: '#5b96f7'
+    },
+    flatListContainer: {
+        paddingHorizontal: 10
     },
     infoText: {
         marginVertical: 3,
         fontSize: 18
     },
     commentBox: {
-        marginVertical: 3
+        marginTop: 3,
+        marginBottom: 12,
+        borderRadius: 12,
+        display: 'flex',
+        flexDirection: 'column',
+        paddingVertical: 4,
+        paddingHorizontal: 12,
     },
     infoComment: {
         display: 'flex',
@@ -38,8 +39,8 @@ const courseReviewsStyles = StyleSheet.create({
         color: '#666666'
     },
     separator: {
-        marginVertical: 10,
-        width: '100%',
+        marginVertical: 8,
+        marginHorizontal: 10,
         borderBottomColor: '#cccccc',
         borderBottomWidth: 1
     }

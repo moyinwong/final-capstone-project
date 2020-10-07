@@ -126,6 +126,14 @@ export default function Courses() {
     return (
         <View style={globalStyles.container}>
 
+            <TouchableOpacity
+                style={courseIntroStyles.goBackButton}
+                onPress={() => navigation.pop()
+                }
+            >
+                <Text style={courseIntroStyles.goBackText}>返回</Text>
+            </TouchableOpacity>
+
             <View
                 style={courseIntroStyles.courseBox}
             >
@@ -138,11 +146,12 @@ export default function Courses() {
                 </View>
                 <View style={courseIntroStyles.courseInfoContainer}>
                     <Text style={courseIntroStyles.courseTitle}>{courseInfo.course_name}</Text>
-                    <Text style={courseIntroStyles.courseInfoText}>{courseInfo.objective}</Text>
+                    <Text style={{ ...courseIntroStyles.courseInfoText, marginBottom: 9 }}>{courseInfo.objective}</Text>
+                    <Text style={{ ...courseIntroStyles.courseInfoText, marginBottom: 9 }}>{courseInfo.course_description}</Text>
                     <Text style={courseIntroStyles.courseInfoText}>{'學生人數: ' + courseInfo.purchased_users_num}</Text>
 
                     <View style={courseIntroStyles.courseScoreContainer}>
-                        <Text style={courseIntroStyles.courseInfoText}>{"評分: "}</Text>
+                        <Text style={{ ...courseIntroStyles.courseInfoText, marginBottom: 9 }}>{"評分: "}</Text>
 
                         {courseScore != 0 && (
                             <Stars score={courseScore} />
@@ -150,7 +159,9 @@ export default function Courses() {
 
                         <Text style={{ ...courseIntroStyles.courseInfoText, fontSize: 16 }}>{" (" + courseInfo.rated_num + ")"}</Text>
                     </View>
-                    <Text style={courseIntroStyles.coursePrice}>{'價錢: $' + courseInfo.price}</Text>
+                    {!accessRight && (
+                        <Text style={courseIntroStyles.coursePrice}>{'價錢: $' + courseInfo.price}</Text>
+                    )}
 
                     {!accessRight ? (
                         <View style={courseIntroStyles.courseButtonContainer}>
@@ -185,28 +196,28 @@ export default function Courses() {
                         )}
 
                 </View>
+            </View>
 
-                <View style={courseIntroStyles.tutorBox}>
-                    <View style={courseIntroStyles.tutorPicContainer}>
-                        <Image
-                            style={courseIntroStyles.tutorPic}
-                            resizeMode='cover'
-                            source={{ uri: `${envData.REACT_APP_BACKEND_FILE_URL}/img/${courseInfo.tutor_image}` }}
-                        />
-                    </View>
-                    <View>
-                        <Text style={courseIntroStyles.tutorName}>{courseInfo.tutor_name}</Text>
-                    </View>
-                    <View style={{ marginLeft: 40 }}>
-                        <TouchableOpacity
-                            style={courseIntroStyles.tutorCheckButton}
-                            onPress={() => navigation.navigate('TutorInfo', {
-                                tutor: courseInfo.tutor_email
-                            })}
-                        >
-                            <Text style={courseIntroStyles.tutorCheckButtonText}>查看導師</Text>
-                        </TouchableOpacity>
-                    </View>
+            <View style={courseIntroStyles.tutorBox}>
+                <View style={courseIntroStyles.tutorPicContainer}>
+                    <Image
+                        style={courseIntroStyles.tutorPic}
+                        resizeMode='cover'
+                        source={{ uri: `${envData.REACT_APP_BACKEND_FILE_URL}/img/${courseInfo.tutor_image}` }}
+                    />
+                </View>
+                <View>
+                    <Text style={courseIntroStyles.tutorName}>{courseInfo.tutor_name}</Text>
+                </View>
+                <View style={{ marginLeft: 40 }}>
+                    <TouchableOpacity
+                        style={courseIntroStyles.tutorCheckButton}
+                        onPress={() => navigation.navigate('TutorInfo', {
+                            tutor: courseInfo.tutor_email
+                        })}
+                    >
+                        <Text style={courseIntroStyles.tutorCheckButtonText}>查看導師</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
 

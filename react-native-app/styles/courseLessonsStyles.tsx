@@ -2,7 +2,22 @@
 import { StyleSheet } from 'react-native';
 
 const courseLessonsStyles = StyleSheet.create({
-    infoBox: {
+    goBackButton: {
+        marginTop: 6,
+        marginLeft: 8,
+        marginBottom: 2,
+        paddingVertical: 8,
+        width: 100
+    },
+    goBackText: {
+        fontSize: 18,
+        color: '#5b96f7'
+    },
+    infoText: {
+        marginVertical: 3,
+        fontSize: 18
+    },
+    lessonBox: {
         marginTop: 3,
         marginBottom: 12,
         marginHorizontal: 2,
@@ -15,27 +30,25 @@ const courseLessonsStyles = StyleSheet.create({
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 2,
+            height: 1,
         },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5
+        shadowOpacity: 0.20,
+        shadowRadius: 1.41,
+        elevation: 2,
     },
-    infoText: {
-        marginVertical: 3,
-        fontSize: 18
-    },
-    lessonBox: {
-        marginVertical: 3
+    lessonTextMargin: {
+        fontSize: 18,
+        color: '#000000',
+        marginVertical: 14
     },
     lessonText: {
         fontSize: 18,
-        color: '#5b96f7'
+        color: '#000000'
     },
     trialTextContainer: {
         marginTop: 6,
         width: 135,
-        borderColor: '#22c736',
+        borderColor: '#e96a43',
         borderWidth: 1,
         borderRadius: 8,
         paddingVertical: 8,
@@ -46,13 +59,7 @@ const courseLessonsStyles = StyleSheet.create({
     },
     trialText: {
         fontSize: 18,
-        color: '#22c736'
-    },
-    separator: {
-        marginVertical: 10,
-        width: '100%',
-        borderBottomColor: '#cccccc',
-        borderBottomWidth: 1
+        color: '#e96a43'
     }
 });
 

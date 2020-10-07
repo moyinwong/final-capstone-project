@@ -95,32 +95,33 @@ export default function Courses() {
         <View style={globalStyles.container}>
 
             <FlatList
-                style={courseLessonsStyles.infoBox}
                 keyExtractor={(item) => item.lesson_id.toString()}
                 data={lessonsInfo}
                 scrollEnabled={true}
                 showsVerticalScrollIndicator={false}
 
-                ItemSeparatorComponent={() => (
-                    <View style={courseLessonsStyles.separator}></View>
-                )}
+                ListHeaderComponent={
+                    <TouchableOpacity
+                        style={courseLessonsStyles.goBackButton}
+                        onPress={() => navigation.pop()
+                        }
+                    >
+                        <Text style={courseLessonsStyles.goBackText}>返回</Text>
+                    </TouchableOpacity>
+                }
 
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={courseLessonsStyles.lessonBox}
                         onPress={() => goToLesson(item.lesson_name, item.is_trial)}
                     >
-                        <Text style={courseLessonsStyles.lessonText}>{item.lesson_name}</Text>
-                        {accessRight ? (
+                        <Text style={(item.is_trial && !accessRight) ? courseLessonsStyles.lessonText : courseLessonsStyles.lessonTextMargin}>{item.lesson_name}</Text>
+                        {
+                            (item.is_trial && !accessRight) &&
                             <View style={courseLessonsStyles.trialTextContainer}>
-                                <Text style={courseLessonsStyles.trialText}>前往課堂</Text>
+                                <Text style={courseLessonsStyles.trialText}>可免費試堂</Text>
                             </View>
-                        ) : (
-                                item.is_trial &&
-                                <View style={courseLessonsStyles.trialTextContainer}>
-                                    <Text style={courseLessonsStyles.trialText}>可免費試堂</Text>
-                                </View>
-                            )}
+                        }
                     </TouchableOpacity>
                 )}
             />

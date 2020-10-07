@@ -1,9 +1,9 @@
 // React, React Native
 import React, { useState, useContext, useCallback } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 
 // Navigation
-import { useFocusEffect } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 // Context
 import { UserContext } from '../../../../contexts/userContext';
@@ -27,6 +27,9 @@ export default function Courses() {
     // Context
     const { user } = useContext(UserContext);
     const { courseName } = useContext(CourseContext);
+
+    // Hooks
+    const navigation = useNavigation();
 
     // Comments
     // State
@@ -60,11 +63,20 @@ export default function Courses() {
         <View style={globalStyles.container}>
 
             <FlatList
-                style={courseReviewsStyles.infoBox}
                 keyExtractor={(item) => item.user_id.toString().concat(item.comment)}
                 data={comments}
                 scrollEnabled={true}
                 showsVerticalScrollIndicator={false}
+
+                ListHeaderComponent={
+                    <TouchableOpacity
+                        style={courseReviewsStyles.goBackButton}
+                        onPress={() => navigation.pop()
+                        }
+                    >
+                        <Text style={courseReviewsStyles.goBackText}>返回</Text>
+                    </TouchableOpacity>
+                }
 
                 ItemSeparatorComponent={() => (
                     <View style={courseReviewsStyles.separator}></View>

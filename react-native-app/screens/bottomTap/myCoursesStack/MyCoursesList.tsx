@@ -87,7 +87,7 @@ export default function MyCoursesList() {
                         style={myCoursesStyles.courseBox}
                         onPress={() => {
                             setCourseName(item.course_name),
-                                navigation.navigate("Course", { screen: 'CourseIntro' })
+                                navigation.navigate("Course", { screen: 'CourseLessons' })
                         }}
                     >
                         <View style={myCoursesStyles.coursePicContainer}>

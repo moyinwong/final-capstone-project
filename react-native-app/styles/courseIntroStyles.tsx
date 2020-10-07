@@ -2,7 +2,19 @@
 import { StyleSheet } from 'react-native';
 
 const courseIntroStyles = StyleSheet.create({
+    goBackButton: {
+        marginTop: 6,
+        marginLeft: 8,
+        marginBottom: 2,
+        paddingVertical: 8,
+        width: 100
+    },
+    goBackText: {
+        fontSize: 18,
+        color: '#5b96f7'
+    },
     courseBox: {
+        marginTop: 4,
         marginBottom: 8,
         marginHorizontal: 0,
         borderRadius: 12,
