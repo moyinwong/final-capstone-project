@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import { View, Text, Pressable, TextInput, Alert, Keyboard } from 'react-native';
 import { Formik } from 'formik';
 import { LinearGradient } from 'expo-linear-gradient';
+import * as Linking from 'expo-linking';
 
 // Context
 import { UserContext } from '../../contexts/userContext';
@@ -127,7 +128,7 @@ export default function Login() {
 
                             <Pressable
                                 style={loginStyles.button}
-                                onPress={() => { Keyboard.dismiss, navigation.navigate('SignUp') }}
+                                onPress={() => { Keyboard.dismiss, Linking.openURL(`https://e-ducate.life/signup`) }}
                             >
                                 <Text style={{ ...loginStyles.buttonText, color: '#5b96f7' }}>未有帳戶? 立刻註冊</Text>
                             </Pressable>

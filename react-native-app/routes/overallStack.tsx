@@ -10,7 +10,6 @@ import LeftDrawer from "../routes/drawer/leftDrawer";
 // Screens
 import Loading from '../screens/login/loading';
 import Login from '../screens/login/login';
-import SignUp from '../screens/login/signUp';
 
 // Functions
 import stackTransition from '../functions/stackTransition';
@@ -39,14 +38,6 @@ export default function OverallStack() {
                 component={Login}
                 options={{
                     title: 'Login',
-                    ...stackTransition
-                }}
-            />
-            <Stack.Screen
-                name="SignUp"
-                component={SignUp}
-                options={{
-                    title: 'SignUp',
                     ...stackTransition
                 }}
             />

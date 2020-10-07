@@ -1,7 +1,6 @@
 // React, React Native
 import React, { useState, useCallback, useContext } from 'react';
 import { View, Text, FlatList, TouchableOpacity } from 'react-native';
-import { useIsFocused } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
 
 // Context
