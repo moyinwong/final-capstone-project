@@ -121,7 +121,7 @@ export default function TutorInfo() {
                     <Image
                         style={tutorInfoStyles.tutorPic}
                         resizeMode='cover'
-                        source={{ uri: `${envData.REACT_APP_BACKEND_FILE_URL}/img/${tutorInfo.image}` }}
+                        source={{ uri: `${envData.REACT_APP_BACKEND_IMAGE}/${tutorInfo.image}` }}
                     />
                 </View>
 

@@ -1,6 +1,7 @@
 // React, React Native
 import React, { useContext } from 'react';
 import { Alert } from 'react-native';
+import * as Linking from 'expo-linking';
 
 // Context
 import { UserContext } from '../../contexts/userContext';
@@ -10,13 +11,10 @@ import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerI
 import { useNavigation } from '@react-navigation/native';
 
 // Icons
-import { FontAwesome, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 
 // Routes
 import BottomTap from '../bottomTap/bottomTap';
-
-// Screens
-import Feedback from '../../screens/leftDrawer/feedback';
 
 // Data
 import AsyncStorage from '@react-native-community/async-storage';
@@ -76,6 +74,10 @@ export default function LeftDrawer() {
                 return (
                     <DrawerContentScrollView {...props}>
                         <DrawerItemList {...props} />
+                        <DrawerItem label="瀏灠網站"
+                            icon={({ color }) => <Entypo name="browser" color={color} size={24} />}
+                            onPress={() => Linking.openURL(`https://e-ducate.life`)}
+                        />
                         <DrawerItem label="登出"
                             icon={({ color }) => <MaterialCommunityIcons name="logout" color={color} size={24} />}
                             onPress={() => logoutAlert()}
@@ -89,14 +91,6 @@ export default function LeftDrawer() {
                     title: '主頁',
                     drawerIcon: ({ color }) => (
                         <FontAwesome name="home" color={color} size={24} />
-                    ),
-                }}
-            />
-            <Drawer.Screen name="Feedback" component={Feedback}
-                options={{
-                    title: '提交意見',
-                    drawerIcon: ({ color }) => (
-                        <MaterialIcons name="feedback" color={color} size={24} />
                     ),
                 }}
             />

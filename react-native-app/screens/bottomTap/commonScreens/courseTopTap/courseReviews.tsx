@@ -1,6 +1,6 @@
 // React, React Native
 import React, { useState, useContext, useCallback } from 'react';
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Modal, Pressable, TextInput, Alert } from 'react-native';
 
 // Navigation
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
@@ -13,7 +13,7 @@ import { CourseContext } from '../../../../contexts/courseContext';
 import Stars from '../../../../sharedComponents/stars';
 
 // Icons
-import { Octicons } from '@expo/vector-icons';
+import { FontAwesome, Octicons } from '@expo/vector-icons';
 
 // Styles
 import globalStyles from '../../../../styles/globalStyles';
@@ -30,6 +30,134 @@ export default function Courses() {
 
     // Hooks
     const navigation = useNavigation();
+
+    // Review Right?
+    const [isTutor, setIsTutor] = useState(
+        false
+    );
+    const [reviewed, setReviewed] = useState(
+        false
+    );
+
+    // Show Modal
+    const [displayModal, setDisplayModal] = useState(
+        false
+    );
+    const [textInputValue, setTextInputValue] = useState(
+        ''
+    );
+    const [ratingValue, setRatingValue] = useState(
+        0
+    )
+
+    async function submitReview() {
+        if ((textInputValue == '') && (ratingValue == 0)) {
+            Alert.alert(
+                "未填寫評價及評分",
+                "請先填寫評價及評分",
+                [
+                    {
+                        text: "取消",
+                        onPress: () => console.log("取消"),
+                        style: "cancel"
+                    },
+                ],
+                { cancelable: true }
+            )
+            return;
+
+        } else if (textInputValue == '') {
+            Alert.alert(
+                "未填寫評價",
+                "請先填寫評價",
+                [
+                    {
+                        text: "取消",
+                        onPress: () => console.log("取消"),
+                        style: "cancel"
+                    },
+                ],
+                { cancelable: true }
+            )
+            return;
+
+        } else if (ratingValue == 0) {
+            Alert.alert(
+                "未評分",
+                "請先評分",
+                [
+                    {
+                        text: "取消",
+                        onPress: () => console.log("取消"),
+                        style: "cancel"
+                    },
+                ],
+                { cancelable: true }
+            )
+            return;
+        }
+
+        setDisplayModal(false);
+
+        try {
+            const fetchBody = {
+                userEmail: user.email,
+                courseName: courseName,
+                textInputValue,
+                ratingValue,
+            };
+
+            const queryRoute = "/course/comment/update";
+            const res = await fetch(`${envData.REACT_APP_BACKEND_URL}${queryRoute}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${user.token}`,
+                },
+                body: JSON.stringify({
+                    ...fetchBody
+                }),
+            });
+
+            const result = await res.json();
+
+            if (
+                res.status === 500 ||
+                res.status === 401 ||
+                res.status === 400
+            ) {
+                throw new Error(result.message);
+            }
+
+            Alert.alert(
+                "評價成功",
+                "已成功評價",
+                [
+                    {
+                        text: "取消",
+                        onPress: () => console.log("取消"),
+                        style: "cancel"
+                    },
+                ],
+                { cancelable: true }
+            )
+
+        } catch (err) {
+            console.log(err);
+            Alert.alert(
+                "評價失敗",
+                "未能評價, 請再試一次",
+                [
+                    {
+                        text: "取消",
+                        onPress: () => console.log("取消"),
+                        style: "cancel"
+                    },
+                ],
+                { cancelable: true }
+            )
+        }
+    }
 
     // Comments
     // State
@@ -53,14 +181,142 @@ export default function Courses() {
         }
     }
 
+    // Access Right
+    // State
+    const [accessRight, setAccessRight] = useState(
+        false
+    );
+
+    // Fetch
+    async function getAccessRight(courseName: string) {
+        try {
+            let queryRoute: string = "/lesson/summary/";
+
+            const fetchRes = await fetch(
+                `${envData.REACT_APP_BACKEND_URL}${queryRoute}${courseName}/${user.email}`
+            );
+
+            const result = await fetchRes.json();
+
+            if (result.lessons[0].user_email) {
+                setAccessRight(true);
+            };
+
+            if (result.lessons[0].tutor_id == user.userId) {
+                setIsTutor(true);
+            } else if (result.lessons[0].comment) {
+                setReviewed(true);
+            }
+
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     useFocusEffect(
         useCallback(() => {
             getComments(courseName);
+            getAccessRight(courseName);
         }, [courseName])
     );
 
     return (
         <View style={globalStyles.container}>
+
+            <Modal
+                style={courseReviewsStyles.modal}
+                animationType="fade"
+                transparent={true}
+                visible={displayModal}
+                onDismiss={() => setDisplayModal(false)}
+            >
+                <Pressable
+                    style={courseReviewsStyles.modalTransBackground}
+                    onPress={() => setDisplayModal(false)}
+                >
+                    <View style={courseReviewsStyles.modalBox}>
+
+                        <View>
+                            <Text style={courseReviewsStyles.modalTitleText}>請填寫評價</Text>
+                        </View>
+
+                        <View>
+                            <TextInput
+                                style={courseReviewsStyles.textInput}
+                                value={textInputValue}
+                                onChangeText={text => setTextInputValue(text)}
+                                multiline={true}
+                            />
+                        </View>
+
+                        <View style={courseReviewsStyles.starsContainer}>
+                            <Text style={courseReviewsStyles.ratingText}>評分: </Text>
+
+                            <TouchableOpacity
+                                style={courseReviewsStyles.starHolder}
+                                onPress={() => setRatingValue(1)}
+                            >
+                                {(ratingValue >= 1) ? (
+                                    <FontAwesome name="star" size={25} color="#fadd4d" />
+                                ) : (
+                                        <FontAwesome name="star" size={25} color="#cfd9ea" />
+                                    )}
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={courseReviewsStyles.starHolder}
+                                onPress={() => setRatingValue(2)}
+                            >
+                                {(ratingValue >= 2) ? (
+                                    <FontAwesome name="star" size={25} color="#fadd4d" />
+                                ) : (
+                                        <FontAwesome name="star" size={25} color="#cfd9ea" />
+                                    )}
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={courseReviewsStyles.starHolder}
+                                onPress={() => setRatingValue(3)}
+                            >
+                                {(ratingValue >= 3) ? (
+                                    <FontAwesome name="star" size={25} color="#fadd4d" />
+                                ) : (
+                                        <FontAwesome name="star" size={25} color="#cfd9ea" />
+                                    )}
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={courseReviewsStyles.starHolder}
+                                onPress={() => setRatingValue(4)}
+                            >
+                                {(ratingValue >= 4) ? (
+                                    <FontAwesome name="star" size={25} color="#fadd4d" />
+                                ) : (
+                                        <FontAwesome name="star" size={25} color="#cfd9ea" />
+                                    )}
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={courseReviewsStyles.starHolder}
+                                onPress={() => setRatingValue(5)}
+                            >
+                                {(ratingValue >= 5) ? (
+                                    <FontAwesome name="star" size={25} color="#fadd4d" />
+                                ) : (
+                                        <FontAwesome name="star" size={25} color="#cfd9ea" />
+                                    )}
+                            </TouchableOpacity>
+
+                        </View>
+
+                        <View style={courseReviewsStyles.submitButtonContainer}>
+                            <TouchableOpacity
+                                style={courseReviewsStyles.reviewButton}
+                                onPress={() => submitReview()}
+                            >
+                                <Text style={courseReviewsStyles.reviewText}>提交</Text>
+                            </TouchableOpacity>
+                        </View>
+
+                    </View>
+                </Pressable>
+            </Modal>
 
             <FlatList
                 keyExtractor={(item) => item.user_id.toString().concat(item.comment)}
@@ -69,21 +325,42 @@ export default function Courses() {
                 showsVerticalScrollIndicator={false}
 
                 ListHeaderComponent={
-                    <View style={{ display: 'flex', flexDirection: 'row' }}>
+                    <View>
                         <TouchableOpacity
                             style={courseReviewsStyles.goBackButton}
-                            onPress={() => navigation.pop()
-                            }
+                            onPress={() => navigation.pop()}
                         >
                             <Text style={courseReviewsStyles.goBackText}>返回</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity
-                            style={courseReviewsStyles.goBackButton}
-                            onPress={() => navigation.pop()
-                            }
-                        >
-                            <Text style={courseReviewsStyles.goBackText}>返回</Text>
-                        </TouchableOpacity>
+
+                        {accessRight && (
+                            isTutor ? (
+                                <View style={courseReviewsStyles.reviewButtonContainer}>
+                                    <View style={courseReviewsStyles.reviewNotAllowedButton}>
+                                        <Text style={courseReviewsStyles.reviewNotAllotedText}>導師不能評價</Text>
+                                    </View>
+                                </View>
+                            ) : (
+                                    reviewed ? (
+                                        < View style={courseReviewsStyles.reviewButtonContainer}>
+                                            <View style={courseReviewsStyles.reviewNotAllowedButton}>
+                                                <Text style={courseReviewsStyles.reviewNotAllotedText}>已評價</Text>
+                                            </View>
+                                        </View>
+                                    ) : (
+                                            < View style={courseReviewsStyles.reviewButtonContainer}>
+                                                <TouchableOpacity
+                                                    style={courseReviewsStyles.reviewButton}
+                                                    onPress={() => setDisplayModal(true)}
+                                                >
+                                                    <Text style={courseReviewsStyles.reviewText}>新増評價</Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                        )
+                                )
+
+                        )}
+
                     </View>
                 }
 

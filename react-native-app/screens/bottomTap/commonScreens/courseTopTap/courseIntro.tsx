@@ -203,7 +203,7 @@ export default function Courses() {
                     <Image
                         style={courseIntroStyles.tutorPic}
                         resizeMode='cover'
-                        source={{ uri: `${envData.REACT_APP_BACKEND_FILE_URL}/img/${courseInfo.tutor_image}` }}
+                        source={{ uri: `${envData.REACT_APP_BACKEND_IMAGE}/${courseInfo.tutor_image}` }}
                     />
                 </View>
                 <View>

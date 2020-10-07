@@ -43,13 +43,14 @@ const myCoursesStyles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        paddingVertical: 7,
+        paddingVertical: 8,
         paddingLeft: 9
     },
     courseTitle: {
         textAlignVertical: 'center',
         fontSize: 20,
-        color: '#000000'
+        color: '#000000',
+        marginBottom: 6
     },
     courseSubInfoContainer: {
         flex: 1
@@ -61,22 +62,8 @@ const myCoursesStyles = StyleSheet.create({
         alignItems: 'flex-start'
     },
     courseInfoText: {
-        fontSize: 17,
+        fontSize: 18,
         color: '#555555'
-    },
-    courseInfoDot: {
-        alignSelf: 'center'
-    },
-    courseSubInfoLowerContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        paddingRight: 16
-    },
-    coursePrice: {
-        fontSize: 17,
-        color: '#e96a43'
     }
 });
 

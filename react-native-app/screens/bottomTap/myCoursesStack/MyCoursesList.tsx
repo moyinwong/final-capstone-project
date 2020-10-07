@@ -107,17 +107,12 @@ export default function MyCoursesList() {
                             <View style={myCoursesStyles.courseSubInfoContainer}>
 
                                 <View style={myCoursesStyles.courseSubInfoTextContainer}>
-                                    <Text style={myCoursesStyles.courseInfoText}>{item.tutor_name}</Text>
+                                    <Text style={{ ...myCoursesStyles.courseInfoText, color: '#e96a43' }}>{item.tutor_name}</Text>
                                     <Text
                                         numberOfLines={2}
                                         ellipsizeMode='tail'
                                         style={myCoursesStyles.courseInfoText}
                                     >{item.objective}</Text>
-                                    <Text style={myCoursesStyles.courseInfoText}>{"總共堂數: " + item.lessons_number}</Text>
-                                </View>
-
-                                <View style={myCoursesStyles.courseSubInfoLowerContainer}>
-                                    <Text style={myCoursesStyles.coursePrice}>{"價錢: $" + item.price}</Text>
                                 </View>
 
                             </View>

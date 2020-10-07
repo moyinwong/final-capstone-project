@@ -71,7 +71,7 @@ export default function TutorsList() {
                             <Image
                                 style={tutorsStyles.tutorPic}
                                 resizeMode='cover'
-                                source={{ uri: `${envData.REACT_APP_BACKEND_FILE_URL}/img/${item.image}` }}
+                                source={{ uri: `${envData.REACT_APP_BACKEND_IMAGE}/${item.image}` }}
                             />
                         </View>
                         <View style={tutorsStyles.tutorInfoContainer}>

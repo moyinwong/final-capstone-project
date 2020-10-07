@@ -106,7 +106,7 @@ export default function Materials(props: { navigation: { goBack: () => void; nav
                     renderItem={({ item }) => (
                         <TouchableOpacity
                             style={materialsStyles.fileBox}
-                            onPress={() => Linking.openURL(`${envData.REACT_APP_BACKEND_FILE_URL}/file/${item.file_name}`)}
+                            onPress={() => Linking.openURL(`${envData.REACT_APP_BACKEND_FILE_URL}/${item.file_name}`)}
                         >
                             <Text style={materialsStyles.fileText}>{item.file_name}</Text>
                         </TouchableOpacity>
