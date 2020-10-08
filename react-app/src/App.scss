@@ -24,13 +24,14 @@ a {
   img {
     filter: invert(100%) hue-rotate(180deg) !important;
   }
-  video {
+
+  .react-player {
     filter: invert(100%) hue-rotate(180deg) !important;
   }
 
-  iframe {
-    filter: invert(100%) hue-rotate(180deg) !important;
-  }
+  // .player-wrapper iframe {
+  //   filter: invert(100%) hue-rotate(180deg) !important;
+  // }
 }
 
 .warning-alert {
