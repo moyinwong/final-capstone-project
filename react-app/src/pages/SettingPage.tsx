@@ -241,25 +241,30 @@ const SettingPage = () => {
     if (firstName.length === 0) {
       setIsFirstNameEmpty(true);
       return;
-    } else if (lastName.length === 0) {
+    } if (lastName.length === 0) {
       setIsLastNameEmpty(true);
       return;
-    } else if (!email.match(/^[\w]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
+    } if (!email.match(/^[\w]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
       setIsError(true);
       return;
-    } else if (
+    } if (
       password.length > 0 &&
       !password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm)
     ) {
       setIsEmpty(true);
       return;
-    } else if (title.length === 0) {
-      setIsTitleEmpty(true);
-      return;
-    } else if (title.length === 0) {
-      setIsIntroductionEmpty(true);
-      return;
-    } else {
+    } if (title !== null && title !== 'null') {
+      if (title.length === 0) {
+        setIsTitleEmpty(true);
+        return;
+      } 
+    } if (introduction !== null && introduction !== 'null') {
+      if (introduction.length === 0) {
+        setIsIntroductionEmpty(true);
+        return;
+      } 
+    } 
+
       let fullName = `${lastName} ${firstName}`;
       let formData = new FormData();
       formData.append("email", email);
@@ -292,7 +297,7 @@ const SettingPage = () => {
       } else {
         setErrMessage(result.message);
       }
-    }
+    
   };
 
   let handleStripe = async () => {

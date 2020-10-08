@@ -72,7 +72,7 @@ const LessonCreatePage = () => {
   const firstValidationSchema = Yup.object().shape({
     lessonName: Yup.string()
       .min(4, "不如寫多啲")
-      .max(20, "不如寫少啲")
+      .max(50, "不如寫少啲")
       .required("必須填寫"),
     lessonIsTrial: Yup.string().required("必須填寫"),
   });

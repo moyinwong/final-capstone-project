@@ -52,27 +52,27 @@ const CourseCreatePage = () => {
   const firstValidationSchema = Yup.object().shape({
     courseTitle: Yup.string()
       .min(3, "不如寫多啲")
-      .max(15, "不如寫少啲")
+      .max(50, "不如寫少啲")
       .required("必須填寫"),
     courseCategory: Yup.string().required("Required"),
   });
 
   const secondValidationSchema = Yup.object().shape({
     coursePrice: Yup.number()
-      .min(0, "最低價錢為$0")
+      .min(40, "最低價錢為$40")
       .max(100000, "太貴啦")
       .required("必須填寫"),
     courseObjective: Yup.string()
       .min(5, "不如寫多啲")
-      .max(50, "不如寫少啲")
+      .max(100, "不如寫少啲")
       .required("必須填寫"),
     courseDescription: Yup.string()
       .min(5, "不如寫多啲")
-      .max(50, "不如寫少啲")
+      .max(100, "不如寫少啲")
       .required("必須填寫"),
     coursePrerequisite: Yup.string()
       .min(5, "不如寫多啲")
-      .max(50, "不如寫少啲")
+      .max(100, "不如寫少啲")
       .required("必須填寫"),
   });
 

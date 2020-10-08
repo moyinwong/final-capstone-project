@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import './QuestionCreatePage.scss'
-import { Button } from "@material-ui/core";
+import { Box, Button } from "@material-ui/core";
 import { Badge } from "react-bootstrap";
 
 interface IQuestion {
@@ -94,6 +94,19 @@ const QuestionCreatePage = () => {
       <h3>
         建立練習問題
       </h3>
+
+      <div className="course-creation-header">
+        <Box paddingTop={2}>
+          <Button
+            href="/instructor"
+            variant="contained"
+            color="secondary"
+            size="large"
+          >
+            Exit
+          </Button>
+        </Box>
+      </div>
 
       {inputList.map((input, i) => {
         return (
