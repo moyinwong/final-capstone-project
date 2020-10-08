@@ -119,7 +119,10 @@ export default function Courses() {
                 }),
             });
 
+            console.log(fetchBody);
+
             const result = await res.json();
+            console.log(result);
 
             if (
                 res.status === 500 ||
@@ -127,20 +130,23 @@ export default function Courses() {
                 res.status === 400
             ) {
                 throw new Error(result.message);
-            }
+            } else {
+                getComments(courseName);
+                getAccessRight(courseName);
 
-            Alert.alert(
-                "評價成功",
-                "已成功評價",
-                [
-                    {
-                        text: "取消",
-                        onPress: () => console.log("取消"),
-                        style: "cancel"
-                    },
-                ],
-                { cancelable: true }
-            )
+                Alert.alert(
+                    "評價成功",
+                    "已成功評價",
+                    [
+                        {
+                            text: "取消",
+                            onPress: () => console.log("取消"),
+                            style: "cancel"
+                        },
+                    ],
+                    { cancelable: true }
+                )
+            }
 
         } catch (err) {
             console.log(err);
@@ -165,6 +171,13 @@ export default function Courses() {
         []
     );
 
+    interface IComment {
+        comment?: string | null
+        rated_score?: string | number | null
+        user_id: number | null
+        user_name: string | null
+    }
+
     // Fetch
     async function getComments(courseName: string) {
         try {
@@ -175,7 +188,12 @@ export default function Courses() {
             );
 
             const result = await fetchRes.json();
-            setComments(result.comments);
+
+            let filteredComments = result.comments.filter((item: IComment) =>
+                item.comment != null && item.rated_score != null
+            )
+
+            setComments(filteredComments);
         } catch (err) {
             console.log(err);
         }
