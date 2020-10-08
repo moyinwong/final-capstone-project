@@ -27,6 +27,10 @@ a {
   video {
     filter: invert(100%) hue-rotate(180deg) !important;
   }
+
+  iframe {
+    filter: invert(100%) hue-rotate(180deg) !important;
+  }
 }
 
 .warning-alert {
