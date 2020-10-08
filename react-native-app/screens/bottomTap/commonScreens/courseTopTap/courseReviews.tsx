@@ -103,8 +103,8 @@ export default function Courses() {
             const fetchBody = {
                 userEmail: user.email,
                 courseName: courseName,
-                textInputValue,
-                ratingValue,
+                comment: textInputValue,
+                rating: ratingValue,
             };
 
             const queryRoute = "/course/comment/update";
