@@ -18,7 +18,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © Clint Chow, Stanley Lau, Kelvin Wong. All rights reserved"}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="https://e-ducate.life/">
         Browse Website
       </Link>{" "}
       {new Date().getFullYear()}

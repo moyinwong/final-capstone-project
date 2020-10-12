@@ -98,7 +98,7 @@ const SettingPage = () => {
   const [show, setShow] = useState(false);
   const [stripeURL, setStripeURL] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [stripeStatus, setStripeStatus] = useState<boolean | null>(null);
+  const [stripeStatus, setStripeStatus] = useState<boolean | null | undefined>(undefined);
 
   const handleClose = () => setShow(false);
 
@@ -143,6 +143,8 @@ const SettingPage = () => {
 
       setStripeStatus(stripeStatus);
       //console.log(stripeStatus)
+    } else {
+      setStripeStatus(null)
     }
   };
 
