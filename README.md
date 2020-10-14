@@ -1,8 +1,8 @@
 # final-capstone-project
 
-#Teammate: Stanley Lau, Clint Chow
+## Teammate: Stanley Lau, Clint Chow
 
-#Welcome to browse our website: https://e-ducate.life
+## Welcome to browse our website: https://e-ducate.life
 It is an online educational platform with complete CRUD functionality
 
 Our team developed both Web and Mobile App for this project. 
