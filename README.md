@@ -1,7 +1,5 @@
 # final-capstone-project
 
-## Teammate: Stanley Lau, Clint Chow
-
 ## Welcome to browse our website: https://e-ducate.life
 It is an online educational platform with complete CRUD functionality
 
@@ -14,4 +12,4 @@ The backend is deployed through Gitlab CI/CD on AWS EC2 while the React App is d
 
 The mobile app is developed in React Native
 
-
+## Teammate: Stanley Lau, Clint Chow
